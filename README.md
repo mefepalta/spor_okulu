@@ -46,6 +46,15 @@ Viewer users can:
 
 Newly registered users are automatically created with the `viewer` role.
 
+### Coach
+
+Coach users can:
+
+- View students, coaches, groups, payments, and reports.
+- Manage attendance records.
+- Manage announcements.
+- They cannot manage core records such as students, coaches, groups, or payments.
+
 ## Technologies Used
 
 - Flutter
