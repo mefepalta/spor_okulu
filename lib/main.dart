@@ -25,6 +25,20 @@ Future<Object?> _initializeFirebase() async {
   }
 }
 
+Widget _limitedTextScaleBuilder(BuildContext context, Widget? child) {
+  final mediaQuery = MediaQuery.of(context);
+
+  return MediaQuery(
+    data: mediaQuery.copyWith(
+      textScaler: mediaQuery.textScaler.clamp(
+        minScaleFactor: 0.9,
+        maxScaleFactor: 1.15,
+      ),
+    ),
+    child: child ?? const SizedBox.shrink(),
+  );
+}
+
 class SporOkuluApp extends StatelessWidget {
   final Object? firebaseSetupError;
 
@@ -38,6 +52,7 @@ class SporOkuluApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: AppTheme.lightTheme,
         home: FirebaseSetupScreen(error: firebaseSetupError!),
+        builder: _limitedTextScaleBuilder,
       );
     }
 
@@ -47,6 +62,7 @@ class SporOkuluApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       initialRoute: AppRoutes.login,
       routes: AppRoutes.routes,
+      builder: _limitedTextScaleBuilder,
     );
   }
 }

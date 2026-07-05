@@ -235,6 +235,17 @@ class FirestoreService {
     );
   }
 
+  Stream<List<Announcement>> watchAnnouncements() {
+    return _announcements
+        .orderBy('createdAt', descending: true)
+        .snapshots()
+        .map((snapshot) {
+          return snapshot.docs.map((doc) {
+            return Announcement.fromJson({...doc.data(), 'id': doc.id});
+          }).toList();
+        });
+  }
+
   Future<Announcement> addAnnouncement(Announcement announcement) {
     return _addDocument<Announcement>(
       collection: _announcements,

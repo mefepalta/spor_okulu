@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../constants/app_constants.dart';
 import '../routes/app_routes.dart';
 import '../services/auth_service.dart';
+import '../services/user_role_service.dart';
 import 'register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -20,6 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
 
   final AuthService _authService = AuthService();
+  final UserRoleService _userRoleService = UserRoleService();
 
   bool _isPasswordVisible = false;
   bool _isLoading = false;
@@ -50,6 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
       await credential.user?.reload();
       final refreshedUser = _authService.currentUser;
+      final userRole = await _userRoleService.getCurrentUserRole();
 
       if (refreshedUser == null) {
         throw FirebaseAuthException(
@@ -58,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
         );
       }
 
-      if (!refreshedUser.emailVerified) {
+      if (!refreshedUser.emailVerified && userRole == 'viewer') {
         if (!mounted) {
           return;
         }
@@ -83,6 +86,16 @@ class _LoginScreenState extends State<LoginScreen> {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text(_authErrorMessage(error))));
+    } catch (error) {
+      if (!mounted) {
+        return;
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Giriş kontrolü sırasında bir hata oluştu: $error'),
+        ),
+      );
     } finally {
       if (mounted) {
         setState(() {
@@ -134,6 +147,51 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  Future<void> _resetPassword() async {
+    final email = _emailController.text.trim();
+
+    if (email.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Şifre sıfırlamak için önce e-posta adresini yaz.'),
+        ),
+      );
+      return;
+    }
+
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+
+      if (!mounted) {
+        return;
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Şifre sıfırlama bağlantısı e-posta adresine gönderildi.',
+          ),
+        ),
+      );
+    } on FirebaseAuthException catch (error) {
+      String message = 'Şifre sıfırlama sırasında bir hata oluştu.';
+
+      if (error.code == 'invalid-email') {
+        message = 'Geçerli bir e-posta adresi gir.';
+      } else if (error.code == 'user-not-found') {
+        message = 'Bu e-posta adresiyle kayıtlı kullanıcı bulunamadı.';
+      }
+
+      if (!mounted) {
+        return;
+      }
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(message)));
+    }
+  }
+
   String _authErrorMessage(FirebaseAuthException error) {
     switch (error.code) {
       case 'invalid-email':
@@ -144,8 +202,20 @@ class _LoginScreenState extends State<LoginScreen> {
       case 'wrong-password':
       case 'invalid-credential':
         return 'E-posta veya Şifre hatalı.';
+      case 'network-request-failed':
+        return 'İnternet bağlantısı kurulamadı. Bağlantıyı kontrol edip tekrar dene.';
+      case 'operation-not-allowed':
+        return 'Firebase Console içinde Email/Password giriş yöntemi aktif değil.';
+      case 'configuration-not-found':
+        return 'Firebase Authentication yapılandırması bulunamadı. Firebase Console ayarlarını kontrol et.';
+      case 'app-not-authorized':
+        return 'Bu Android uygulaması Firebase projesi için yetkili görünmüyor.';
+      case 'invalid-api-key':
+        return 'Firebase API anahtarı geçersiz görünüyor.';
+      case 'too-many-requests':
+        return 'Çok fazla giriş denemesi yapıldı. Bir süre sonra tekrar dene.';
       default:
-        return 'Giriş yapılamadı. Firebase ayarlarını ve kullanıcıyi kontrol et.';
+        return 'Giriş yapılamadı. Hata kodu: ${error.code}';
     }
   }
 
@@ -256,7 +326,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         _isLoading ? 'Giriş yapılıyor...' : 'Giriş Yap',
                       ),
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 8),
+                    TextButton(
+                      onPressed: _resetPassword,
+                      child: const Text('Şifremi unuttum'),
+                    ),
+                    const SizedBox(height: 8),
                     TextButton(
                       onPressed: () {
                         Navigator.push(

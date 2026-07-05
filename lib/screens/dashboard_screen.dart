@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../models/app_models.dart';
@@ -11,6 +13,7 @@ import 'attendance_screen.dart';
 import 'coaches_screen.dart';
 import 'groups_screen.dart';
 import 'payments_screen.dart';
+import 'profile_screen.dart';
 import 'reports_screen.dart';
 import 'students_screen.dart';
 
@@ -25,6 +28,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final AuthService _authService = AuthService();
   final FirestoreService _firestoreService = FirestoreService();
   final UserRoleService _userRoleService = UserRoleService();
+  StreamSubscription<List<Announcement>>? _announcementSubscription;
 
   final List<Student> _students = [];
   final List<Coach> _coaches = [];
@@ -33,11 +37,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final List<PaymentRecord> _payments = [];
   final List<Announcement> _announcements = [];
 
-  bool _isAdmin = false;
+  String _userRole = 'viewer';
+  int _knownAnnouncementCount = 0;
+  int _unreadAnnouncementCount = 0;
+  bool _hasStartedAnnouncementListener = false;
+  bool _hasReceivedInitialAnnouncementSnapshot = false;
   bool _isLoading = true;
   String? _errorMessage;
 
-  bool get _canManage => !_isLoading && _isAdmin;
+  bool get _isAdmin => _userRole == 'admin';
+  bool get _isCoach => _userRole == 'coach';
+
+  bool get _canManageCore => _isAdmin;
+  bool get _canManageAttendance => _isAdmin || _isCoach;
+  bool get _canManageAnnouncements => _isAdmin || _isCoach;
 
   @override
   void initState() {
@@ -45,9 +58,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
     _loadAllData();
   }
 
+  @override
+  void dispose() {
+    _announcementSubscription?.cancel();
+    super.dispose();
+  }
+
   Future<void> _loadAllData() async {
     try {
-      final isAdmin = await _userRoleService.isCurrentUserAdmin();
+      final userRole = await _userRoleService.getCurrentUserRole();
       final loadedStudents = await _firestoreService.loadStudents();
       final loadedCoaches = await _firestoreService.loadCoaches();
       final loadedGroups = await _firestoreService.loadGroups();
@@ -61,7 +80,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       }
 
       setState(() {
-        _isAdmin = isAdmin;
+        _userRole = userRole;
 
         _students
           ..clear()
@@ -87,9 +106,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ..clear()
           ..addAll(loadedAnnouncements);
 
+        _knownAnnouncementCount = loadedAnnouncements.length;
         _isLoading = false;
         _errorMessage = null;
       });
+
+      _startAnnouncementListener();
     } catch (error) {
       if (!mounted) {
         return;
@@ -100,6 +122,72 @@ class _DashboardScreenState extends State<DashboardScreen> {
         _errorMessage = 'Veriler yüklenirken bir hata oluştu: $error';
       });
     }
+  }
+
+  void _startAnnouncementListener() {
+    if (_hasStartedAnnouncementListener) {
+      return;
+    }
+
+    _hasStartedAnnouncementListener = true;
+
+    _announcementSubscription = _firestoreService.watchAnnouncements().listen((
+      announcements,
+    ) {
+      if (!mounted) {
+        return;
+      }
+
+      final currentCount = announcements.length;
+
+      if (!_hasReceivedInitialAnnouncementSnapshot) {
+        setState(() {
+          _hasReceivedInitialAnnouncementSnapshot = true;
+          _knownAnnouncementCount = currentCount;
+          _announcements
+            ..clear()
+            ..addAll(announcements);
+        });
+        return;
+      }
+
+      if (currentCount > _knownAnnouncementCount) {
+        final newCount = currentCount - _knownAnnouncementCount;
+
+        setState(() {
+          _knownAnnouncementCount = currentCount;
+          _unreadAnnouncementCount += newCount;
+          _announcements
+            ..clear()
+            ..addAll(announcements);
+        });
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              newCount == 1
+                  ? 'Yeni bir duyuru yayınlandı.'
+                  : '$newCount yeni duyuru yayınlandı.',
+            ),
+            action: SnackBarAction(
+              label: 'Görüntüle',
+              onPressed: () {
+                _openAnnouncementsScreen(context);
+              },
+            ),
+          ),
+        );
+
+        return;
+      }
+
+      setState(() {
+        _knownAnnouncementCount = currentCount;
+        _announcements
+          ..clear()
+          ..addAll(announcements);
+      });
+    });
   }
 
   Future<void> _addStudent(Student student) async {
@@ -133,7 +221,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       MaterialPageRoute(
         builder: (context) => StudentsScreen(
           students: _students,
-          isAdmin: _canManage,
+          isAdmin: _canManageCore,
           onAddStudent: _addStudent,
           onDeleteStudent: _deleteStudent,
           onUpdateStudent: _updateStudent,
@@ -173,7 +261,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       MaterialPageRoute(
         builder: (context) => CoachesScreen(
           coaches: _coaches,
-          isAdmin: _canManage,
+          isAdmin: _canManageCore,
           onAddCoach: _addCoach,
           onDeleteCoach: _deleteCoach,
           onUpdateCoach: _updateCoach,
@@ -214,7 +302,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         builder: (context) => GroupsScreen(
           groups: _groups,
           coaches: _coaches,
-          isAdmin: _canManage,
+          isAdmin: _canManageCore,
           onAddGroup: _addGroup,
           onDeleteGroup: _deleteGroup,
           onUpdateGroup: _updateGroup,
@@ -263,7 +351,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           groups: _groups,
           students: _students,
           attendanceRecords: _attendanceRecords,
-          isAdmin: _canManage,
+          isAdmin: _canManageAttendance,
           onAddAttendanceRecord: _addAttendanceRecord,
           onDeleteAttendanceRecord: _deleteAttendanceRecord,
           onUpdateAttendanceRecord: _updateAttendanceRecord,
@@ -304,7 +392,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         builder: (context) => PaymentsScreen(
           students: _students,
           payments: _payments,
-          isAdmin: _canManage,
+          isAdmin: _canManageCore,
           onAddPayment: _addPayment,
           onDeletePayment: _deletePayment,
           onUpdatePayment: _updatePayment,
@@ -346,12 +434,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   void _openAnnouncementsScreen(BuildContext context) {
+    setState(() {
+      _unreadAnnouncementCount = 0;
+    });
+
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => AnnouncementsScreen(
           announcements: _announcements,
-          isAdmin: _canManage,
+          isAdmin: _canManageAnnouncements,
           onAddAnnouncement: _addAnnouncement,
           onDeleteAnnouncement: _deleteAnnouncement,
           onUpdateAnnouncement: _updateAnnouncement,
@@ -376,6 +468,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
+  void _openProfileScreen(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ProfileScreen(userRole: _userRole),
+      ),
+    );
+  }
+
   Future<void> _logout(BuildContext context) async {
     await _authService.signOut();
 
@@ -392,14 +493,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final title = _isAdmin
-        ? 'Spor Okulu Yönetimi'
-        : 'Spor Okulu Yönetimi - Görüntüleme';
-
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(
+          _isAdmin
+              ? 'Spor Okulu'
+              : _isCoach
+              ? 'Spor Okulu - Antrenör'
+              : 'Spor Okulu - Görüntüleme',
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
         actions: [
+          IconButton(
+            onPressed: () {
+              _openProfileScreen(context);
+            },
+            icon: const Icon(Icons.account_circle),
+          ),
           IconButton(
             onPressed: () {
               _logout(context);
@@ -431,6 +542,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       crossAxisCount: 2,
       crossAxisSpacing: 12,
       mainAxisSpacing: 12,
+      childAspectRatio: 0.9,
       children: [
         DashboardCard(
           icon: Icons.people,
@@ -475,7 +587,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
         DashboardCard(
           icon: Icons.campaign,
           title: 'Duyurular',
-          subtitle: '${_announcements.length} duyuru',
+          subtitle: _unreadAnnouncementCount > 0
+              ? '${_announcements.length} duyuru - $_unreadAnnouncementCount yeni'
+              : '${_announcements.length} duyuru',
           onTap: () {
             _openAnnouncementsScreen(context);
           },

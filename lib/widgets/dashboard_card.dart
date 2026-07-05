@@ -4,14 +4,14 @@ class DashboardCard extends StatelessWidget {
   final IconData icon;
   final String title;
   final String subtitle;
-  final VoidCallback? onTap;
+  final VoidCallback onTap;
 
   const DashboardCard({
     super.key,
     required this.icon,
     required this.title,
     required this.subtitle,
-    this.onTap,
+    required this.onTap,
   });
 
   @override
@@ -19,28 +19,36 @@ class DashboardCard extends StatelessWidget {
     return Card(
       elevation: 3,
       child: InkWell(
+        borderRadius: BorderRadius.circular(8),
         onTap: onTap,
-        borderRadius: BorderRadius.circular(12),
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(14),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, size: 42, color: Colors.indigo),
-              const SizedBox(height: 12),
-              Text(
-                title,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+              Icon(icon, size: 38, color: Colors.indigo),
+              const SizedBox(height: 14),
+              Flexible(
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    title,
+                    maxLines: 1,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ),
-              const SizedBox(height: 6),
+              const SizedBox(height: 8),
               Text(
                 subtitle,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: Colors.grey),
+                style: TextStyle(fontSize: 15, color: Colors.grey.shade600),
               ),
             ],
           ),

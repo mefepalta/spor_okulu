@@ -2,8 +2,66 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function role() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && role() == "admin";
+    }
+
+    function isCoach() {
+      return isSignedIn() && role() == "coach";
+    }
+
+    function isAdminOrCoach() {
+      return isAdmin() || isCoach();
+    }
+
+    match /users/{userId} {
+      allow read: if isSignedIn() && (request.auth.uid == userId || isAdmin());
+      allow create: if isSignedIn()
+        && request.auth.uid == userId
+        && request.resource.data.role == "viewer";
+      allow update, delete: if isAdmin();
+    }
+
+    match /students/{document} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    match /coaches/{document} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    match /groups/{document} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    match /payments/{document} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    match /attendanceRecords/{document} {
+      allow read: if isSignedIn();
+      allow write: if isAdminOrCoach();
+    }
+
+    match /announcements/{document} {
+      allow read: if isSignedIn();
+      allow write: if isAdminOrCoach();
+    }
+
     match /{document=**} {
-      allow read, write: if request.auth != null;
+      allow read, write: if false;
     }
   }
 }
