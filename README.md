@@ -22,6 +22,8 @@ This application is designed to manage students, coaches, training groups, atten
 - Reports screen
 - Profile screen
 - Android and iOS compatible Flutter structure
+- Coach role with limited management permissions
+- In-app announcement notifications using Firestore realtime updates
 
 ## Roles
 
