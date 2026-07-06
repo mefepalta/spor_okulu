@@ -53,7 +53,6 @@ jobs:
 
       - run: |
           cd ios
-          pod repo update
-          pod install
+          pod install --repo-update
 
       - run: flutter build ios --no-codesign
