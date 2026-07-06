@@ -425,7 +425,7 @@ class _AddPaymentScreenState extends State<AddPaymentScreen> {
 
   final List<String> _statuses = const ['Ödendi', 'Bekliyor', 'Gecikti'];
 
-  String? _selectedStudentName;
+  String? _selectedStudentId;
   String? _selectedStatus;
 
   @override
@@ -437,15 +437,27 @@ class _AddPaymentScreenState extends State<AddPaymentScreen> {
     final payment = widget.payment;
 
     if (payment != null) {
-      _selectedStudentName = payment.studentName;
       _selectedStatus = payment.status;
       _periodController.text = payment.period;
       _amountController.text = payment.amount.toString();
       _dateController.text = payment.dateText;
       _noteController.text = payment.note;
+
+      // Önce id ile, eski kayıtlar için ada göre eşleştir.
+      if (payment.studentId.isNotEmpty &&
+          widget.students.any((s) => s.id == payment.studentId)) {
+        _selectedStudentId = payment.studentId;
+      } else {
+        final matchByName = widget.students
+            .where((s) => s.name == payment.studentName)
+            .toList();
+        if (matchByName.isNotEmpty) {
+          _selectedStudentId = matchByName.first.id;
+        }
+      }
     } else {
       if (widget.students.isNotEmpty) {
-        _selectedStudentName = widget.students.first.name;
+        _selectedStudentId = widget.students.first.id;
       }
 
       final now = DateTime.now();
@@ -455,16 +467,15 @@ class _AddPaymentScreenState extends State<AddPaymentScreen> {
 
       _dateController.text = '$day.$month.$year';
     }
+  }
 
-    if (_selectedStudentName != null) {
-      final studentStillExists = widget.students.any((student) {
-        return student.name == _selectedStudentName;
-      });
-
-      if (!studentStillExists && widget.students.isNotEmpty) {
-        _selectedStudentName = widget.students.first.name;
+  Student? get _selectedStudent {
+    for (final student in widget.students) {
+      if (student.id == _selectedStudentId) {
+        return student;
       }
     }
+    return null;
   }
 
   @override
@@ -483,15 +494,17 @@ class _AddPaymentScreenState extends State<AddPaymentScreen> {
       return;
     }
 
-    if (_selectedStudentName == null) {
+    final student = _selectedStudent;
+    if (student == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Önce bir öğrenci eklemelisin.')),
+        const SnackBar(content: Text('Önce bir öğrenci seçmelisin.')),
       );
       return;
     }
 
     final payment = PaymentRecord(
-      studentName: _selectedStudentName!,
+      studentId: student.id,
+      studentName: student.name,
       period: _periodController.text.trim(),
       amount: int.parse(_amountController.text.trim()),
       status: _selectedStatus!,
@@ -525,7 +538,7 @@ class _AddPaymentScreenState extends State<AddPaymentScreen> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     DropdownButtonFormField<String>(
-                      initialValue: _selectedStudentName,
+                      initialValue: _selectedStudentId,
                       decoration: const InputDecoration(
                         labelText: 'Öğrenci',
                         border: OutlineInputBorder(),
@@ -533,13 +546,13 @@ class _AddPaymentScreenState extends State<AddPaymentScreen> {
                       ),
                       items: widget.students.map((student) {
                         return DropdownMenuItem<String>(
-                          value: student.name,
+                          value: student.id,
                           child: Text(student.name),
                         );
                       }).toList(),
                       onChanged: (value) {
                         setState(() {
-                          _selectedStudentName = value;
+                          _selectedStudentId = value;
                         });
                       },
                       validator: (value) {

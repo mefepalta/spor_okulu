@@ -8,10 +8,12 @@ import '../routes/app_routes.dart';
 import '../services/auth_service.dart';
 import '../services/firestore_service.dart';
 import '../services/parent_service.dart';
+import '../services/user_management_service.dart';
 import '../services/user_role_service.dart';
 import '../widgets/dashboard_card.dart';
 import 'announcements_screen.dart';
 import 'attendance_screen.dart';
+import 'child_attendance_screen.dart';
 import 'coaches_screen.dart';
 import 'events_screen.dart';
 import 'groups_screen.dart';
@@ -21,6 +23,7 @@ import 'performance_screen.dart';
 import 'profile_screen.dart';
 import 'reports_screen.dart';
 import 'students_screen.dart';
+import 'users_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -34,6 +37,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final FirestoreService _firestoreService = FirestoreService();
   final UserRoleService _userRoleService = UserRoleService();
   final ParentService _parentService = ParentService();
+  final UserManagementService _userManagementService = UserManagementService();
   StreamSubscription<List<Announcement>>? _announcementSubscription;
 
   final List<Student> _students = [];
@@ -46,6 +50,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final List<PlannedEvent> _events = [];
   final List<EventResponse> _eventResponses = [];
   final List<ParentAccount> _parents = [];
+  final List<UserAccount> _users = [];
   List<String> _assignedStudentIds = const [];
 
   String _userRole = AppRoles.viewer;
@@ -61,6 +66,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
   bool get _isParent => _userRole == AppRoles.parent;
 
   bool get _canManageCore => _isAdmin;
+  bool get _canManageGroups => _isAdmin || _isCoach;
+  bool get _canViewPayments => _isAdmin || _isCoach;
   bool get _canManageAttendance => _isAdmin || _isCoach;
   bool get _canManageAnnouncements => _isAdmin || _isCoach;
   bool get _canManagePerformance => _isAdmin || _isCoach;
@@ -84,6 +91,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
         .toList();
   }
 
+  /// Velinin göreceği duyurular (Herkes veya Veliler hedefli). Diğer roller
+  /// yönetici olduğundan tüm duyuruları görür.
+  List<Announcement> _visibleAnnouncements(List<Announcement> all) {
+    if (!_isParent) {
+      return all;
+    }
+    return all
+        .where(
+          (announcement) =>
+              AnnouncementAudience.isVisibleToParent(announcement.targetAudience),
+        )
+        .toList();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -99,24 +120,67 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Future<void> _loadAllData() async {
     try {
       final userRole = await _userRoleService.getCurrentUserRole();
-      final loadedStudents = await _firestoreService.loadStudents();
-      final loadedCoaches = await _firestoreService.loadCoaches();
-      final loadedGroups = await _firestoreService.loadGroups();
-      final loadedAttendanceRecords = await _firestoreService
-          .loadAttendanceRecords();
-      final loadedPayments = await _firestoreService.loadPayments();
-      final loadedAnnouncements = await _firestoreService.loadAnnouncements();
-      final loadedPerformance = await _firestoreService
-          .loadPerformanceRecords();
-      final loadedEvents = await _firestoreService.loadEvents();
-      final loadedResponses = await _firestoreService.loadEventResponses();
+      final isAdmin = userRole == AppRoles.admin;
+      final isCoach = userRole == AppRoles.coach;
+      final isParent = userRole == AppRoles.parent;
+      final isViewer = userRole == AppRoles.viewer;
+      final isStaff = isAdmin || isCoach || isViewer;
 
-      final assignedStudentIds = userRole == AppRoles.parent
-          ? await _userRoleService.getCurrentUserStudentIds()
-          : const <String>[];
-      final loadedParents = userRole == AppRoles.admin
-          ? await _parentService.loadParents()
-          : const <ParentAccount>[];
+      // Herkesin (veliler dahil) okuyabildiği koleksiyonlar.
+      final loadedAnnouncements = await _firestoreService.loadAnnouncements();
+      final loadedEvents = await _firestoreService.loadEvents();
+
+      // Rol bazlı yükleme: her rol yalnızca yetkili olduğu veriyi çeker.
+      // Böylece veli/görüntüleyici, başkalarının hassas verisini indirmez ve
+      // Firestore kurallarıyla uyumlu kalır.
+      var loadedStudents = const <Student>[];
+      var loadedCoaches = const <Coach>[];
+      var loadedGroups = const <TrainingGroup>[];
+      var loadedAttendanceRecords = const <AttendanceRecord>[];
+      var loadedPayments = const <PaymentRecord>[];
+      var loadedPerformance = const <PerformanceRecord>[];
+      var loadedResponses = const <EventResponse>[];
+      var assignedStudentIds = const <String>[];
+      var loadedParents = const <ParentAccount>[];
+      var loadedUsers = const <UserAccount>[];
+
+      if (isParent) {
+        assignedStudentIds = await _userRoleService.getCurrentUserStudentIds();
+        loadedStudents = await _firestoreService.loadStudentsByIds(
+          assignedStudentIds,
+        );
+        loadedPerformance = await _firestoreService
+            .loadPerformanceRecordsForStudents(assignedStudentIds);
+        loadedPayments = await _firestoreService.loadPaymentsForStudents(
+          assignedStudentIds,
+        );
+        loadedAttendanceRecords = await _firestoreService
+            .loadAttendanceForStudents(assignedStudentIds);
+
+        final uid = _authService.currentUser?.uid;
+        loadedResponses = uid == null
+            ? const []
+            : await _firestoreService.loadEventResponsesForParent(uid);
+      } else if (isStaff) {
+        loadedStudents = await _firestoreService.loadStudents();
+        loadedCoaches = await _firestoreService.loadCoaches();
+        loadedGroups = await _firestoreService.loadGroups();
+        loadedAttendanceRecords = await _firestoreService
+            .loadAttendanceRecords();
+        loadedPerformance = await _firestoreService.loadPerformanceRecords();
+        loadedResponses = await _firestoreService.loadEventResponses();
+
+        // Ödemeleri yalnızca admin ve antrenör okuyabilir.
+        if (isAdmin || isCoach) {
+          loadedPayments = await _firestoreService.loadPayments();
+        }
+
+        // Veli ve kullanıcı yönetimi yalnızca admin içindir.
+        if (isAdmin) {
+          loadedParents = await _parentService.loadParents();
+          loadedUsers = await _userManagementService.loadUsers();
+        }
+      }
 
       if (!mounted) {
         return;
@@ -166,7 +230,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ..clear()
           ..addAll(loadedParents);
 
-        _knownAnnouncementCount = loadedAnnouncements.length;
+        _users
+          ..clear()
+          ..addAll(loadedUsers);
+
+        _knownAnnouncementCount =
+            _visibleAnnouncements(loadedAnnouncements).length;
         _isLoading = false;
         _errorMessage = null;
       });
@@ -198,7 +267,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
         return;
       }
 
-      final currentCount = announcements.length;
+      // Badge/bildirim yalnızca role görünür duyurulara göre hesaplanır;
+      // liste tam olarak saklanır (yönetici ekranı hepsini gösterir).
+      final currentCount = _visibleAnnouncements(announcements).length;
 
       if (!_hasReceivedInitialAnnouncementSnapshot) {
         setState(() {
@@ -362,7 +433,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
         builder: (context) => GroupsScreen(
           groups: _groups,
           coaches: _coaches,
-          isAdmin: _canManageCore,
+          students: _students,
+          canManage: _canManageGroups,
+          canDelete: _canManageCore,
           onAddGroup: _addGroup,
           onDeleteGroup: _deleteGroup,
           onUpdateGroup: _updateGroup,
@@ -502,7 +575,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       context,
       MaterialPageRoute(
         builder: (context) => AnnouncementsScreen(
-          announcements: _announcements,
+          announcements: _visibleAnnouncements(_announcements),
           isAdmin: _canManageAnnouncements,
           onAddAnnouncement: _addAnnouncement,
           onDeleteAnnouncement: _deleteAnnouncement,
@@ -639,6 +712,44 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
+  // --- Kullanıcılar / Roller ---
+
+  Future<void> _reloadUsersAndParents() async {
+    final users = await _userManagementService.loadUsers();
+    final parents = await _parentService.loadParents();
+
+    if (!mounted) {
+      return;
+    }
+
+    setState(() {
+      _users
+        ..clear()
+        ..addAll(users);
+      _parents
+        ..clear()
+        ..addAll(parents);
+    });
+  }
+
+  Future<void> _setUserRole(String uid, String role) async {
+    await _userManagementService.setRole(uid, role);
+    await _reloadUsersAndParents();
+  }
+
+  void _openUsersScreen(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => UsersScreen(
+          users: _users,
+          currentUserUid: _authService.currentUser?.uid ?? '',
+          onSetRole: _setUserRole,
+        ),
+      ),
+    );
+  }
+
   void _openReportsScreen(BuildContext context) {
     Navigator.push(
       context,
@@ -650,6 +761,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
           attendanceRecords: _attendanceRecords,
           payments: _payments,
           announcements: _announcements,
+        ),
+      ),
+    );
+  }
+
+  /// Velinin çocuğunun yoklama geçmişi (salt-okunur, çocuğa özel).
+  void _openChildAttendanceScreen(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ChildAttendanceScreen(
+          children: _myChildren,
+          records: _attendanceRecords,
         ),
       ),
     );
@@ -740,8 +864,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  /// Veli panosu: üstte Performans Analizi ile Etkinlikler yan yana, altta
-  /// tam genişlikte Duyurular kartı.
+  /// Veli panosu: Performans/Etkinlikler ve Yoklama/Ödemeler ikişerli satırlar,
+  /// altta tam genişlikte Duyurular kartı.
   Widget _buildParentBody(BuildContext context) {
     final childCount = _myChildren.length;
 
@@ -749,14 +873,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
       padding: const EdgeInsets.all(16),
       children: [
         SizedBox(
-          height: 190,
+          height: 170,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
                 child: DashboardCard(
                   icon: Icons.query_stats,
-                  title: 'Performans Analizi',
+                  title: 'Performans',
                   subtitle: childCount == 1
                       ? '1 öğrenci'
                       : '$childCount öğrenci',
@@ -781,11 +905,42 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
         const SizedBox(height: 12),
         SizedBox(
+          height: 170,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: DashboardCard(
+                  icon: Icons.check_circle,
+                  title: 'Yoklama',
+                  subtitle: '${_attendanceRecords.length} kayıt',
+                  onTap: () {
+                    _openChildAttendanceScreen(context);
+                  },
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: DashboardCard(
+                  icon: Icons.payment,
+                  title: 'Ödemeler',
+                  subtitle: '${_payments.length} kayıt',
+                  onTap: () {
+                    _openPaymentsScreen(context);
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 12),
+        SizedBox(
           height: 150,
           child: DashboardCard(
             icon: Icons.campaign,
             title: 'Duyurular',
-            subtitle: '${_announcements.length} duyuru',
+            subtitle:
+                '${_visibleAnnouncements(_announcements).length} duyuru',
             onTap: () {
               _openAnnouncementsScreen(context);
             },
@@ -830,14 +985,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
           _openAttendanceScreen(context);
         },
       ),
-      DashboardCard(
-        icon: Icons.payment,
-        title: 'Ödemeler',
-        subtitle: '${_payments.length} ödeme kaydı',
-        onTap: () {
-          _openPaymentsScreen(context);
-        },
-      ),
+      // Ödemeler yalnızca admin ve antrenöre görünür (finansal veri).
+      if (_canViewPayments)
+        DashboardCard(
+          icon: Icons.payment,
+          title: 'Ödemeler',
+          subtitle: '${_payments.length} ödeme kaydı',
+          onTap: () {
+            _openPaymentsScreen(context);
+          },
+        ),
       DashboardCard(
         icon: Icons.campaign,
         title: 'Duyurular',
@@ -884,6 +1041,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
           subtitle: '${_parents.length} veli',
           onTap: () {
             _openParentsScreen(context);
+          },
+        ),
+      // Kullanıcı/rol yönetimi yalnızca admin için.
+      if (_isAdmin)
+        DashboardCard(
+          icon: Icons.manage_accounts,
+          title: 'Kullanıcılar',
+          subtitle: '${_users.length} kullanıcı',
+          onTap: () {
+            _openUsersScreen(context);
           },
         ),
     ];

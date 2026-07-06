@@ -7,6 +7,12 @@ class UserRoleService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  /// Kullanıcı belgesini döndürür.
+  ///
+  /// Ağ/timeout gibi geçici hatalarda hata yeniden fırlatılır; böylece çağıran
+  /// taraf "yükleme başarısız" gösterir. Aksi halde anlık bir bağlantı sorunu
+  /// admin'i sessizce görüntüleyici rolüne düşürebilirdi. Yalnızca belge gerçek
+  /// anlamda yoksa (kullanıcı yok) null döner.
   Future<Map<String, dynamic>?> _currentUserData() async {
     final user = _auth.currentUser;
 
@@ -14,16 +20,13 @@ class UserRoleService {
       return null;
     }
 
-    try {
-      final userDoc = await _firestore
-          .collection('users')
-          .doc(user.uid)
-          .get()
-          .timeout(const Duration(seconds: 8));
-      return userDoc.data();
-    } catch (_) {
-      return null;
-    }
+    final userDoc = await _firestore
+        .collection('users')
+        .doc(user.uid)
+        .get()
+        .timeout(const Duration(seconds: 8));
+
+    return userDoc.data();
   }
 
   Future<String> getCurrentUserRole() async {

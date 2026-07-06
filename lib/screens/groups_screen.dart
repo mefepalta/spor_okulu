@@ -8,7 +8,13 @@ import '../widgets/empty_state.dart';
 class GroupsScreen extends StatefulWidget {
   final List<TrainingGroup> groups;
   final List<Coach> coaches;
-  final bool isAdmin;
+  final List<Student> students;
+
+  /// Ekleme/düzenleme yetkisi (admin veya antrenör).
+  final bool canManage;
+
+  /// Silme yetkisi (yalnızca admin).
+  final bool canDelete;
   final Future<void> Function(TrainingGroup group) onAddGroup;
   final Future<void> Function(int index) onDeleteGroup;
   final Future<void> Function(int index, TrainingGroup updatedGroup)
@@ -18,7 +24,9 @@ class GroupsScreen extends StatefulWidget {
     super.key,
     required this.groups,
     required this.coaches,
-    required this.isAdmin,
+    required this.students,
+    required this.canManage,
+    required this.canDelete,
     required this.onAddGroup,
     required this.onDeleteGroup,
     required this.onUpdateGroup,
@@ -35,7 +43,10 @@ class _GroupsScreenState extends State<GroupsScreen> {
     final newGroup = await Navigator.push<TrainingGroup>(
       context,
       MaterialPageRoute(
-        builder: (context) => AddGroupScreen(coaches: widget.coaches),
+        builder: (context) => AddGroupScreen(
+          coaches: widget.coaches,
+          students: widget.students,
+        ),
       ),
     );
 
@@ -59,8 +70,9 @@ class _GroupsScreenState extends State<GroupsScreen> {
         builder: (context) => GroupDetailScreen(
           groups: widget.groups,
           coaches: widget.coaches,
+          students: widget.students,
           index: index,
-          isAdmin: widget.isAdmin,
+          canManage: widget.canManage,
           onUpdateGroup: widget.onUpdateGroup,
         ),
       ),
@@ -126,7 +138,7 @@ class _GroupsScreenState extends State<GroupsScreen> {
           group.branch.toLowerCase().contains(query) ||
           group.coachName.toLowerCase().contains(query);
     }).toList();
-    final canAddGroup = widget.isAdmin && widget.coaches.isNotEmpty;
+    final canAddGroup = widget.canManage && widget.coaches.isNotEmpty;
 
     return Scaffold(
       appBar: AppBar(title: const Text('Gruplar')),
@@ -152,7 +164,7 @@ class _GroupsScreenState extends State<GroupsScreen> {
                 ? EmptyState(
                     icon: Icons.groups,
                     title: 'Henüz grup yok',
-                    message: widget.isAdmin
+                    message: widget.canManage
                         ? widget.coaches.isNotEmpty
                               ? 'Yeni grup eklemek için sağ alttaki + butonunu kullan.'
                               : 'Grup eklemek için once en az bir antrenör ekle.'
@@ -185,10 +197,11 @@ class _GroupsScreenState extends State<GroupsScreen> {
                           title: Text(group.name),
                           subtitle: Text(
                             '${group.branch} • ${group.schedule}\n'
-                            'Antrenör: ${group.coachName}',
+                            'Antrenör: ${group.coachName} • '
+                            '${group.studentIds.length}/${group.capacity} öğrenci',
                           ),
                           isThreeLine: true,
-                          trailing: widget.isAdmin
+                          trailing: widget.canDelete
                               ? IconButton(
                                   icon: const Icon(
                                     Icons.delete,
@@ -219,8 +232,9 @@ class _GroupsScreenState extends State<GroupsScreen> {
 class GroupDetailScreen extends StatefulWidget {
   final List<TrainingGroup> groups;
   final List<Coach> coaches;
+  final List<Student> students;
   final int index;
-  final bool isAdmin;
+  final bool canManage;
   final Future<void> Function(int index, TrainingGroup updatedGroup)
   onUpdateGroup;
 
@@ -228,8 +242,9 @@ class GroupDetailScreen extends StatefulWidget {
     super.key,
     required this.groups,
     required this.coaches,
+    required this.students,
     required this.index,
-    required this.isAdmin,
+    required this.canManage,
     required this.onUpdateGroup,
   });
 
@@ -240,12 +255,24 @@ class GroupDetailScreen extends StatefulWidget {
 class _GroupDetailScreenState extends State<GroupDetailScreen> {
   TrainingGroup get _group => widget.groups[widget.index];
 
+  String _memberName(String studentId) {
+    for (final student in widget.students) {
+      if (student.id == studentId) {
+        return '${student.name} • ${student.branch}';
+      }
+    }
+    return 'Bilinmeyen öğrenci';
+  }
+
   Future<void> _openEditGroupScreen() async {
     final updatedGroup = await Navigator.push<TrainingGroup>(
       context,
       MaterialPageRoute(
-        builder: (context) =>
-            AddGroupScreen(coaches: widget.coaches, group: _group),
+        builder: (context) => AddGroupScreen(
+          coaches: widget.coaches,
+          students: widget.students,
+          group: _group,
+        ),
       ),
     );
 
@@ -269,7 +296,7 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Grup Detayı'),
-        actions: widget.isAdmin
+        actions: widget.canManage
             ? [
                 IconButton(
                   onPressed: _openEditGroupScreen,
@@ -338,11 +365,53 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
             child: ListTile(
               leading: const Icon(Icons.people),
               title: const Text('Kapasite'),
-              subtitle: Text('${group.capacity} kişi'),
+              subtitle: Text(
+                '${group.studentIds.length}/${group.capacity} kişi',
+              ),
+            ),
+          ),
+          const SizedBox(height: 8),
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Icon(Icons.groups_2, color: Colors.indigo),
+                      const SizedBox(width: 12),
+                      Text(
+                        'Üyeler (${group.studentIds.length})',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  if (group.studentIds.isEmpty)
+                    const Text(
+                      'Henüz öğrenci atanmadı.',
+                      style: TextStyle(color: Colors.grey),
+                    )
+                  else
+                    ...group.studentIds.map((studentId) {
+                      final name = _memberName(studentId);
+                      return ListTile(
+                        dense: true,
+                        contentPadding: EdgeInsets.zero,
+                        leading: const Icon(Icons.person, size: 20),
+                        title: Text(name),
+                      );
+                    }),
+                ],
+              ),
             ),
           ),
           const SizedBox(height: 20),
-          if (widget.isAdmin)
+          if (widget.canManage)
             ElevatedButton.icon(
               onPressed: _openEditGroupScreen,
               icon: const Icon(Icons.edit),
@@ -364,9 +433,15 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
 
 class AddGroupScreen extends StatefulWidget {
   final List<Coach> coaches;
+  final List<Student> students;
   final TrainingGroup? group;
 
-  const AddGroupScreen({super.key, required this.coaches, this.group});
+  const AddGroupScreen({
+    super.key,
+    required this.coaches,
+    required this.students,
+    this.group,
+  });
 
   @override
   State<AddGroupScreen> createState() => _AddGroupScreenState();
@@ -390,8 +465,9 @@ class _AddGroupScreenState extends State<AddGroupScreen> {
     'Pazar',
   ];
 
-  String? _selectedCoachName;
+  String? _selectedCoachId;
   String? _selectedDay;
+  final Set<String> _selectedStudentIds = {};
 
   @override
   void initState() {
@@ -400,7 +476,7 @@ class _AddGroupScreenState extends State<AddGroupScreen> {
     _selectedDay = _days.first;
 
     if (widget.coaches.isNotEmpty) {
-      _selectedCoachName = widget.coaches.first.name;
+      _selectedCoachId = widget.coaches.first.id;
     }
 
     final group = widget.group;
@@ -409,6 +485,7 @@ class _AddGroupScreenState extends State<AddGroupScreen> {
       _nameController.text = group.name;
       _branchController.text = group.branch;
       _capacityController.text = group.capacity.toString();
+      _selectedStudentIds.addAll(group.studentIds);
 
       final scheduleParts = group.schedule.trim().split(' ');
 
@@ -420,14 +497,53 @@ class _AddGroupScreenState extends State<AddGroupScreen> {
         _timeController.text = scheduleParts[1];
       }
 
-      final coachStillExists = widget.coaches.any((coach) {
-        return coach.name == group.coachName;
-      });
-
-      if (coachStillExists) {
-        _selectedCoachName = group.coachName;
+      // Önce id ile, eski kayıtlar için ada göre eşleştir.
+      final coachById = widget.coaches.any((coach) => coach.id == group.coachId);
+      if (group.coachId.isNotEmpty && coachById) {
+        _selectedCoachId = group.coachId;
+      } else {
+        final matchByName = widget.coaches
+            .where((coach) => coach.name == group.coachName)
+            .toList();
+        if (matchByName.isNotEmpty) {
+          _selectedCoachId = matchByName.first.id;
+        }
       }
     }
+  }
+
+  Coach? get _selectedCoach {
+    for (final coach in widget.coaches) {
+      if (coach.id == _selectedCoachId) {
+        return coach;
+      }
+    }
+    return null;
+  }
+
+  Future<void> _openMemberSelection() async {
+    final capacity = int.tryParse(_capacityController.text.trim());
+
+    final selected = await Navigator.push<Set<String>>(
+      context,
+      MaterialPageRoute(
+        builder: (context) => _SelectMembersScreen(
+          students: widget.students,
+          initialSelected: _selectedStudentIds,
+          capacity: capacity,
+        ),
+      ),
+    );
+
+    if (selected == null) {
+      return;
+    }
+
+    setState(() {
+      _selectedStudentIds
+        ..clear()
+        ..addAll(selected);
+    });
   }
 
   @override
@@ -446,9 +562,23 @@ class _AddGroupScreenState extends State<AddGroupScreen> {
       return;
     }
 
-    if (_selectedCoachName == null) {
+    final coach = _selectedCoach;
+    if (coach == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Önce bir antrenör eklemelisin.')),
+        const SnackBar(content: Text('Önce bir antrenör seçmelisin.')),
+      );
+      return;
+    }
+
+    final capacity = int.parse(_capacityController.text.trim());
+    if (_selectedStudentIds.length > capacity) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Seçilen öğrenci sayısı (${_selectedStudentIds.length}) '
+            'kapasiteyi ($capacity) aşıyor.',
+          ),
+        ),
       );
       return;
     }
@@ -458,9 +588,11 @@ class _AddGroupScreenState extends State<AddGroupScreen> {
     final group = TrainingGroup(
       name: _nameController.text.trim(),
       branch: _branchController.text.trim(),
-      coachName: _selectedCoachName!,
+      coachId: coach.id,
+      coachName: coach.name,
       schedule: '$_selectedDay $normalizedTime',
-      capacity: int.parse(_capacityController.text.trim()),
+      capacity: capacity,
+      studentIds: _selectedStudentIds.toList(),
     );
 
     Navigator.pop(context, group);
@@ -527,7 +659,7 @@ class _AddGroupScreenState extends State<AddGroupScreen> {
                     ),
                     const SizedBox(height: 12),
                     DropdownButtonFormField<String>(
-                      initialValue: _selectedCoachName,
+                      initialValue: _selectedCoachId,
                       decoration: const InputDecoration(
                         labelText: 'Antrenör',
                         border: OutlineInputBorder(),
@@ -535,13 +667,13 @@ class _AddGroupScreenState extends State<AddGroupScreen> {
                       ),
                       items: widget.coaches.map((coach) {
                         return DropdownMenuItem<String>(
-                          value: coach.name,
+                          value: coach.id,
                           child: Text('${coach.name} - ${coach.branch}'),
                         );
                       }).toList(),
                       onChanged: (value) {
                         setState(() {
-                          _selectedCoachName = value;
+                          _selectedCoachId = value;
                         });
                       },
                       validator: (value) {
@@ -624,6 +756,35 @@ class _AddGroupScreenState extends State<AddGroupScreen> {
                         return null;
                       },
                     ),
+                    const SizedBox(height: 12),
+                    Card(
+                      margin: EdgeInsets.zero,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4),
+                        side: BorderSide(color: Colors.grey.shade400),
+                      ),
+                      child: ListTile(
+                        leading: const Icon(Icons.groups_2),
+                        title: const Text('Üyeler'),
+                        subtitle: Text(
+                          _selectedStudentIds.isEmpty
+                              ? 'Öğrenci seçilmedi'
+                              : '${_selectedStudentIds.length} öğrenci seçildi',
+                        ),
+                        trailing: const Icon(Icons.chevron_right),
+                        onTap: widget.students.isEmpty
+                            ? null
+                            : _openMemberSelection,
+                      ),
+                    ),
+                    if (widget.students.isEmpty)
+                      const Padding(
+                        padding: EdgeInsets.only(top: 8),
+                        child: Text(
+                          'Üye eklemek için önce öğrenci kaydı gerekir.',
+                          style: TextStyle(fontSize: 12, color: Colors.grey),
+                        ),
+                      ),
                     const SizedBox(height: 20),
                     ElevatedButton.icon(
                       onPressed: _saveGroup,
@@ -635,6 +796,143 @@ class _AddGroupScreenState extends State<AddGroupScreen> {
                   ],
                 ),
               ),
+      ),
+    );
+  }
+}
+
+/// Gruba öğrenci (üye) seçme ekranı — çoklu seçim, aramalı, kapasite duyarlı.
+class _SelectMembersScreen extends StatefulWidget {
+  final List<Student> students;
+  final Set<String> initialSelected;
+  final int? capacity;
+
+  const _SelectMembersScreen({
+    required this.students,
+    required this.initialSelected,
+    required this.capacity,
+  });
+
+  @override
+  State<_SelectMembersScreen> createState() => _SelectMembersScreenState();
+}
+
+class _SelectMembersScreenState extends State<_SelectMembersScreen> {
+  late final Set<String> _selected;
+  String _searchQuery = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _selected = {...widget.initialSelected};
+  }
+
+  bool get _overCapacity =>
+      widget.capacity != null && _selected.length > widget.capacity!;
+
+  @override
+  Widget build(BuildContext context) {
+    final query = _searchQuery.toLowerCase();
+    final filtered = widget.students.where((student) {
+      return student.name.toLowerCase().contains(query) ||
+          student.branch.toLowerCase().contains(query);
+    }).toList();
+
+    final capacityText = widget.capacity == null
+        ? '${_selected.length} seçildi'
+        : '${_selected.length}/${widget.capacity} seçildi';
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Üye Seç'),
+        actions: [
+          TextButton(
+            onPressed: _overCapacity
+                ? null
+                : () => Navigator.pop(context, _selected),
+            child: Text(
+              'Kaydet',
+              style: TextStyle(
+                color: _overCapacity ? Colors.white54 : Colors.white,
+              ),
+            ),
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: TextField(
+              decoration: const InputDecoration(
+                labelText: 'Öğrenci ara',
+                prefixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(),
+              ),
+              onChanged: (value) {
+                setState(() {
+                  _searchQuery = value;
+                });
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              children: [
+                Icon(
+                  _overCapacity ? Icons.error_outline : Icons.people,
+                  color: _overCapacity ? Colors.red : Colors.indigo,
+                  size: 20,
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  capacityText,
+                  style: TextStyle(
+                    color: _overCapacity ? Colors.red : null,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                if (_overCapacity) ...[
+                  const SizedBox(width: 8),
+                  const Expanded(
+                    child: Text(
+                      'Kapasite aşıldı',
+                      style: TextStyle(color: Colors.red, fontSize: 12),
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ),
+          const SizedBox(height: 8),
+          Expanded(
+            child: widget.students.isEmpty
+                ? const EmptyState(
+                    icon: Icons.people_outline,
+                    title: 'Öğrenci yok',
+                    message: 'Önce öğrenci eklenmeli.',
+                  )
+                : ListView(
+                    children: filtered.map((student) {
+                      return CheckboxListTile(
+                        value: _selected.contains(student.id),
+                        title: Text(student.name),
+                        subtitle: Text('${student.branch} • ${student.age} yaş'),
+                        onChanged: (checked) {
+                          setState(() {
+                            if (checked == true) {
+                              _selected.add(student.id);
+                            } else {
+                              _selected.remove(student.id);
+                            }
+                          });
+                        },
+                      );
+                    }).toList(),
+                  ),
+          ),
+        ],
       ),
     );
   }

@@ -11,6 +11,20 @@ class AppRoles {
   static bool isValid(String role) => all.contains(role);
 }
 
+/// Duyuruların hedef kitlesi seçenekleri.
+class AnnouncementAudience {
+  static const String everyone = 'Herkes';
+  static const String students = 'Öğrenciler';
+  static const String coaches = 'Antrenörler';
+  static const String parents = 'Veliler';
+
+  static const List<String> all = [everyone, students, coaches, parents];
+
+  /// Bir velinin görmesi gereken duyuru mu? (Herkes veya Veliler hedefli.)
+  static bool isVisibleToParent(String audience) =>
+      audience == everyone || audience == parents;
+}
+
 /// Antrenörlerin girdiği, velilerin karşılaştırma grafiğinde gördüğü
 /// önceden tanımlı performans ölçütleri. Değerler 0-100 arası puandır.
 class PerformanceMetrics {

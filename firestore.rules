@@ -18,12 +18,30 @@ service cloud.firestore {
       return isSignedIn() && role() == "coach";
     }
 
+    function isViewer() {
+      return isSignedIn() && role() == "viewer";
+    }
+
     function isParent() {
       return isSignedIn() && role() == "veli";
     }
 
     function isAdminOrCoach() {
       return isAdmin() || isCoach();
+    }
+
+    // Personel = uygulamanın kadro/operasyon verisini okuyabilenler.
+    function isStaff() {
+      return isAdmin() || isCoach() || isViewer();
+    }
+
+    // Giriş yapan veliye atanmış öğrenci kimlikleri (yoksa boş liste).
+    function ownStudentIds() {
+      let userData =
+          get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+      return userData.keys().hasAny(['studentIds']) && userData.studentIds is list
+          ? userData.studentIds
+          : [];
     }
 
     match /users/{userId} {
@@ -34,55 +52,71 @@ service cloud.firestore {
       allow update, delete: if isAdmin();
     }
 
-    match /students/{document} {
-      allow read: if isSignedIn();
+    // Öğrenciler: personel hepsini; veli yalnızca kendi çocuğunu okuyabilir.
+    match /students/{studentId} {
+      allow read: if isStaff() || (isParent() && studentId in ownStudentIds());
       allow write: if isAdmin();
     }
 
     match /coaches/{document} {
-      allow read: if isSignedIn();
+      allow read: if isStaff();
       allow write: if isAdmin();
     }
 
+    // Gruplar: antrenör oluşturup düzenleyebilir; silmek yalnızca admin.
     match /groups/{document} {
-      allow read: if isSignedIn();
-      allow write: if isAdmin();
+      allow read: if isStaff();
+      allow create, update: if isAdminOrCoach();
+      allow delete: if isAdmin();
     }
 
+    // Ödemeler: admin/antrenör hepsini; veli yalnızca kendi çocuğununkini.
     match /payments/{document} {
-      allow read: if isSignedIn();
+      allow read: if isAdminOrCoach()
+        || (isParent()
+            && resource.data.keys().hasAny(['studentId'])
+            && resource.data.studentId in ownStudentIds());
       allow write: if isAdmin();
     }
 
+    // Yoklama: personel hepsini; veli yalnızca çocuğunu içeren kayıtları.
     match /attendanceRecords/{document} {
-      allow read: if isSignedIn();
+      allow read: if isStaff()
+        || (isParent()
+            && resource.data.keys().hasAny(['studentIds'])
+            && resource.data.studentIds.hasAny(ownStudentIds()));
       allow write: if isAdminOrCoach();
     }
 
+    // Duyuruları herkes (veliler dahil) okuyabilir; personel yazar.
     match /announcements/{document} {
       allow read: if isSignedIn();
       allow write: if isAdminOrCoach();
     }
 
-    // Antrenör/admin performans girer; herkes (veliler dahil) okuyabilir.
+    // Performans: personel hepsini; veli yalnızca kendi çocuğununkini okur.
     match /performanceRecords/{document} {
-      allow read: if isSignedIn();
+      allow read: if isStaff()
+        || (isParent() && resource.data.studentId in ownStudentIds());
       allow write: if isAdminOrCoach();
     }
 
-    // Antrenör/admin etkinlik planlar; herkes okuyabilir.
+    // Etkinlikleri herkes okuyabilir; personel planlar.
     match /plannedEvents/{document} {
       allow read: if isSignedIn();
       allow write: if isAdminOrCoach();
     }
 
-    // Veliler kendi katılım cevaplarını yazabilir; antrenör/admin hepsini
-    // görüp yönetebilir.
+    // Katılım cevapları: personel hepsini; veli yalnızca kendi cevaplarını
+    // okur. Veli yazarken cevabın kendi UID'siyle ve kendi çocuğu için
+    // olduğunu doğrularız.
     match /eventResponses/{document} {
-      allow read: if isSignedIn();
+      allow read: if isStaff()
+        || (isParent() && resource.data.parentUid == request.auth.uid);
       allow write: if isAdminOrCoach()
         || (isParent()
-            && request.resource.data.parentUid == request.auth.uid);
+            && request.resource.data.parentUid == request.auth.uid
+            && request.resource.data.studentId in ownStudentIds());
     }
 
     match /{document=**} {

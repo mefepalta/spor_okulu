@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../constants/app_roles.dart';
 import '../models/app_models.dart';
 import '../utils/validators.dart';
 import '../widgets/empty_state.dart';
@@ -325,12 +326,7 @@ class _AddAnnouncementScreenState extends State<AddAnnouncementScreen> {
   final TextEditingController _contentController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
 
-  final List<String> _targetAudiences = const [
-    'Herkes',
-    'Öğrenciler',
-    'Antrenörler',
-    'Veliler',
-  ];
+  final List<String> _targetAudiences = AnnouncementAudience.all;
 
   String? _selectedTargetAudience;
 

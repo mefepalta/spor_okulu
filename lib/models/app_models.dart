@@ -90,34 +90,47 @@ class TrainingGroup {
   final String id;
   final String name;
   final String branch;
+
+  /// Antrenör referansı: [coachId] kalıcı bağ, [coachName] görüntü içindir.
+  /// Eski kayıtlarda [coachId] boş olabilir; o durumda ada göre çalışılır.
+  final String coachId;
   final String coachName;
   final String schedule;
   final int capacity;
+
+  /// Gruba atanmış öğrenci kimlikleri (kadro).
+  final List<String> studentIds;
 
   const TrainingGroup({
     this.id = '',
     required this.name,
     required this.branch,
+    this.coachId = '',
     required this.coachName,
     required this.schedule,
     required this.capacity,
+    this.studentIds = const [],
   });
 
   TrainingGroup copyWith({
     String? id,
     String? name,
     String? branch,
+    String? coachId,
     String? coachName,
     String? schedule,
     int? capacity,
+    List<String>? studentIds,
   }) {
     return TrainingGroup(
       id: id ?? this.id,
       name: name ?? this.name,
       branch: branch ?? this.branch,
+      coachId: coachId ?? this.coachId,
       coachName: coachName ?? this.coachName,
       schedule: schedule ?? this.schedule,
       capacity: capacity ?? this.capacity,
+      studentIds: studentIds ?? this.studentIds,
     );
   }
 
@@ -126,10 +139,12 @@ class TrainingGroup {
       'id': id,
       'name': name,
       'branch': branch,
+      'coachId': coachId,
       'coachName': coachName,
       'schedule': schedule,
       'dayTime': schedule,
       'capacity': capacity,
+      'studentIds': studentIds,
     };
   }
 
@@ -138,68 +153,103 @@ class TrainingGroup {
       id: json['id'] ?? '',
       name: json['name'],
       branch: json['branch'],
+      coachId: json['coachId'] ?? '',
       coachName: json['coachName'],
       schedule: json['schedule'] ?? json['dayTime'],
       capacity: (json['capacity'] as num).toInt(),
+      studentIds: List<String>.from(json['studentIds'] ?? const []),
     );
   }
 }
 
 class AttendanceRecord {
   final String id;
+  final String groupId;
   final String groupName;
   final String dateText;
   final List<String> presentStudentNames;
   final List<String> absentStudentNames;
 
+  /// ID bazlı katılım listeleri (kalıcı bağ). İsim listeleri görüntü içindir.
+  final List<String> presentStudentIds;
+  final List<String> absentStudentIds;
+
+  /// Kayda dahil tüm öğrenci kimlikleri (gelen + gelmeyen). Velinin "çocuğumu
+  /// içeren kayıtlar" sorgusunu (array-contains) yapabilmesi için tutulur.
+  final List<String> studentIds;
+
   const AttendanceRecord({
     this.id = '',
+    this.groupId = '',
     required this.groupName,
     required this.dateText,
     required this.presentStudentNames,
     required this.absentStudentNames,
+    this.presentStudentIds = const [],
+    this.absentStudentIds = const [],
+    this.studentIds = const [],
   });
 
   AttendanceRecord copyWith({
     String? id,
+    String? groupId,
     String? groupName,
     String? dateText,
     List<String>? presentStudentNames,
     List<String>? absentStudentNames,
+    List<String>? presentStudentIds,
+    List<String>? absentStudentIds,
+    List<String>? studentIds,
   }) {
     return AttendanceRecord(
       id: id ?? this.id,
+      groupId: groupId ?? this.groupId,
       groupName: groupName ?? this.groupName,
       dateText: dateText ?? this.dateText,
       presentStudentNames: presentStudentNames ?? this.presentStudentNames,
       absentStudentNames: absentStudentNames ?? this.absentStudentNames,
+      presentStudentIds: presentStudentIds ?? this.presentStudentIds,
+      absentStudentIds: absentStudentIds ?? this.absentStudentIds,
+      studentIds: studentIds ?? this.studentIds,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'id': id,
+      'groupId': groupId,
       'groupName': groupName,
       'dateText': dateText,
       'date': dateText,
       'presentStudentNames': presentStudentNames,
       'absentStudentNames': absentStudentNames,
+      'presentStudentIds': presentStudentIds,
+      'absentStudentIds': absentStudentIds,
+      'studentIds': studentIds,
     };
   }
 
   factory AttendanceRecord.fromJson(Map<String, dynamic> json) {
     return AttendanceRecord(
       id: json['id'] ?? '',
+      groupId: json['groupId'] ?? '',
       groupName: json['groupName'],
       dateText: json['dateText'] ?? json['date'],
       presentStudentNames: List<String>.from(json['presentStudentNames'] ?? []),
       absentStudentNames: List<String>.from(json['absentStudentNames'] ?? []),
+      presentStudentIds: List<String>.from(json['presentStudentIds'] ?? []),
+      absentStudentIds: List<String>.from(json['absentStudentIds'] ?? []),
+      studentIds: List<String>.from(json['studentIds'] ?? []),
     );
   }
 }
 
 class PaymentRecord {
   final String id;
+
+  /// Öğrenci referansı: [studentId] kalıcı bağ, [studentName] görüntü içindir.
+  /// Eski kayıtlarda [studentId] boş olabilir.
+  final String studentId;
   final String studentName;
   final String period;
   final int amount;
@@ -209,6 +259,7 @@ class PaymentRecord {
 
   const PaymentRecord({
     this.id = '',
+    this.studentId = '',
     required this.studentName,
     required this.period,
     required this.amount,
@@ -219,6 +270,7 @@ class PaymentRecord {
 
   PaymentRecord copyWith({
     String? id,
+    String? studentId,
     String? studentName,
     String? period,
     int? amount,
@@ -228,6 +280,7 @@ class PaymentRecord {
   }) {
     return PaymentRecord(
       id: id ?? this.id,
+      studentId: studentId ?? this.studentId,
       studentName: studentName ?? this.studentName,
       period: period ?? this.period,
       amount: amount ?? this.amount,
@@ -240,6 +293,7 @@ class PaymentRecord {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
+      'studentId': studentId,
       'studentName': studentName,
       'period': period,
       'month': period,
@@ -254,6 +308,7 @@ class PaymentRecord {
   factory PaymentRecord.fromJson(Map<String, dynamic> json) {
     return PaymentRecord(
       id: json['id'] ?? '',
+      studentId: json['studentId'] ?? '',
       studentName: json['studentName'],
       period: json['period'] ?? json['month'],
       amount: (json['amount'] as num).toInt(),
@@ -292,6 +347,48 @@ class ParentAccount {
     return ParentAccount(
       uid: uid,
       email: json['email'] ?? '',
+      studentIds: List<String>.from(json['studentIds'] ?? const []),
+    );
+  }
+}
+
+/// Uygulamaya kayıtlı herhangi bir kullanıcı hesabı (rolünden bağımsız).
+///
+/// Admin'in "Kullanıcılar" ekranında rol atadığı kayıttır. [role] ham haliyle
+/// tutulur; geçerli değerler [AppRoles] içinde tanımlıdır.
+class UserAccount {
+  final String uid;
+  final String email;
+  final String role;
+  final List<String> studentIds;
+
+  const UserAccount({
+    required this.uid,
+    required this.email,
+    required this.role,
+    this.studentIds = const [],
+  });
+
+  UserAccount copyWith({
+    String? uid,
+    String? email,
+    String? role,
+    List<String>? studentIds,
+  }) {
+    return UserAccount(
+      uid: uid ?? this.uid,
+      email: email ?? this.email,
+      role: role ?? this.role,
+      studentIds: studentIds ?? this.studentIds,
+    );
+  }
+
+  factory UserAccount.fromJson(String uid, Map<String, dynamic> json) {
+    final rawRole = json['role'];
+    return UserAccount(
+      uid: uid,
+      email: json['email'] ?? '',
+      role: rawRole is String ? rawRole.trim().toLowerCase() : 'viewer',
       studentIds: List<String>.from(json['studentIds'] ?? const []),
     );
   }

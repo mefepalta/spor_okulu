@@ -205,7 +205,9 @@ class _TakeAttendanceScreenState extends State<TakeAttendanceScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _dateController = TextEditingController();
 
-  String? _selectedGroupName;
+  String? _selectedGroupId;
+
+  /// Öğrenci kimliğine göre katılım durumu (true = geldi).
   final Map<String, bool> _attendanceStatus = {};
 
   @override
@@ -215,24 +217,32 @@ class _TakeAttendanceScreenState extends State<TakeAttendanceScreen> {
     final record = widget.record;
 
     if (widget.groups.isNotEmpty) {
-      _selectedGroupName = widget.groups.first.name;
+      _selectedGroupId = widget.groups.first.id;
     }
 
     if (record != null) {
-      final groupStillExists = widget.groups.any((group) {
-        return group.name == record.groupName;
-      });
-
-      if (groupStillExists) {
-        _selectedGroupName = record.groupName;
+      // Önce grup id ile, eski kayıtlar için ada göre eşleştir.
+      if (record.groupId.isNotEmpty &&
+          widget.groups.any((g) => g.id == record.groupId)) {
+        _selectedGroupId = record.groupId;
+      } else {
+        final matchByName = widget.groups
+            .where((g) => g.name == record.groupName)
+            .toList();
+        if (matchByName.isNotEmpty) {
+          _selectedGroupId = matchByName.first.id;
+        }
       }
 
       _dateController.text = record.dateText;
 
+      final hasIds = record.presentStudentIds.isNotEmpty ||
+          record.absentStudentIds.isNotEmpty;
+
       for (final student in widget.students) {
-        _attendanceStatus[student.name] = record.presentStudentNames.contains(
-          student.name,
-        );
+        _attendanceStatus[student.id] = hasIds
+            ? record.presentStudentIds.contains(student.id)
+            : record.presentStudentNames.contains(student.name);
       }
     } else {
       final now = DateTime.now();
@@ -243,7 +253,7 @@ class _TakeAttendanceScreenState extends State<TakeAttendanceScreen> {
       _dateController.text = '$day.$month.$year';
 
       for (final student in widget.students) {
-        _attendanceStatus[student.name] = true;
+        _attendanceStatus[student.id] = true;
       }
     }
   }
@@ -254,6 +264,26 @@ class _TakeAttendanceScreenState extends State<TakeAttendanceScreen> {
     super.dispose();
   }
 
+  TrainingGroup? get _selectedGroup {
+    for (final group in widget.groups) {
+      if (group.id == _selectedGroupId) {
+        return group;
+      }
+    }
+    return null;
+  }
+
+  /// Seçili grubun kadrosu; kadro tanımlı değilse (eski gruplar) tüm öğrenciler.
+  List<Student> _rosterStudents() {
+    final group = _selectedGroup;
+    if (group == null || group.studentIds.isEmpty) {
+      return widget.students;
+    }
+    return widget.students
+        .where((student) => group.studentIds.contains(student.id))
+        .toList();
+  }
+
   void _saveAttendanceRecord() {
     final isFormValid = _formKey.currentState!.validate();
 
@@ -261,31 +291,40 @@ class _TakeAttendanceScreenState extends State<TakeAttendanceScreen> {
       return;
     }
 
-    if (_selectedGroupName == null) {
+    final group = _selectedGroup;
+    if (group == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Önce bir grup eklemelisin.')),
+        const SnackBar(content: Text('Önce bir grup seçmelisin.')),
       );
       return;
     }
 
     final presentStudentNames = <String>[];
     final absentStudentNames = <String>[];
+    final presentStudentIds = <String>[];
+    final absentStudentIds = <String>[];
 
-    for (final student in widget.students) {
-      final isPresent = _attendanceStatus[student.name] ?? false;
+    for (final student in _rosterStudents()) {
+      final isPresent = _attendanceStatus[student.id] ?? false;
 
       if (isPresent) {
         presentStudentNames.add(student.name);
+        presentStudentIds.add(student.id);
       } else {
         absentStudentNames.add(student.name);
+        absentStudentIds.add(student.id);
       }
     }
 
     final record = AttendanceRecord(
-      groupName: _selectedGroupName!,
+      groupId: group.id,
+      groupName: group.name,
       dateText: _dateController.text.trim(),
       presentStudentNames: presentStudentNames,
       absentStudentNames: absentStudentNames,
+      presentStudentIds: presentStudentIds,
+      absentStudentIds: absentStudentIds,
+      studentIds: [...presentStudentIds, ...absentStudentIds],
     );
 
     Navigator.pop(context, record);
@@ -312,7 +351,7 @@ class _TakeAttendanceScreenState extends State<TakeAttendanceScreen> {
                 padding: const EdgeInsets.all(16),
                 children: [
                   DropdownButtonFormField<String>(
-                    initialValue: _selectedGroupName,
+                    initialValue: _selectedGroupId,
                     decoration: const InputDecoration(
                       labelText: 'Grup',
                       border: OutlineInputBorder(),
@@ -320,13 +359,13 @@ class _TakeAttendanceScreenState extends State<TakeAttendanceScreen> {
                     ),
                     items: widget.groups.map((group) {
                       return DropdownMenuItem<String>(
-                        value: group.name,
+                        value: group.id,
                         child: Text(group.name),
                       );
                     }).toList(),
                     onChanged: (value) {
                       setState(() {
-                        _selectedGroupName = value;
+                        _selectedGroupId = value;
                       });
                     },
                     validator: (value) {
@@ -350,30 +389,56 @@ class _TakeAttendanceScreenState extends State<TakeAttendanceScreen> {
                     validator: validateDateText,
                   ),
                   const SizedBox(height: 20),
-                  const Text(
-                    'Öğrenciler',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 8),
-                  ...widget.students.map((student) {
-                    final isPresent = _attendanceStatus[student.name] ?? false;
+                  Builder(
+                    builder: (context) {
+                      final roster = _rosterStudents();
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Text(
+                            'Öğrenciler (${roster.length})',
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          if (roster.isEmpty)
+                            const Card(
+                              child: ListTile(
+                                leading: Icon(Icons.info_outline),
+                                title: Text('Bu grupta öğrenci yok.'),
+                                subtitle: Text(
+                                  'Grup detayından öğrenci ekleyebilirsin.',
+                                ),
+                              ),
+                            )
+                          else
+                            ...roster.map((student) {
+                              final isPresent =
+                                  _attendanceStatus[student.id] ?? false;
 
-                    return Card(
-                      child: CheckboxListTile(
-                        value: isPresent,
-                        title: Text(student.name),
-                        subtitle: Text(
-                          '${student.branch} • ${student.age} yaş',
-                        ),
-                        secondary: const Icon(Icons.person),
-                        onChanged: (value) {
-                          setState(() {
-                            _attendanceStatus[student.name] = value ?? false;
-                          });
-                        },
-                      ),
-                    );
-                  }),
+                              return Card(
+                                child: CheckboxListTile(
+                                  value: isPresent,
+                                  title: Text(student.name),
+                                  subtitle: Text(
+                                    '${student.branch} • ${student.age} yaş',
+                                  ),
+                                  secondary: const Icon(Icons.person),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _attendanceStatus[student.id] =
+                                          value ?? false;
+                                    });
+                                  },
+                                ),
+                              );
+                            }),
+                        ],
+                      );
+                    },
+                  ),
                   const SizedBox(height: 20),
                   ElevatedButton.icon(
                     onPressed: _saveAttendanceRecord,

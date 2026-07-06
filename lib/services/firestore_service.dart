@@ -115,6 +115,34 @@ class FirestoreService {
     );
   }
 
+  /// Firestore `whereIn` en fazla 10 değer aldığından listeyi parçalara böler.
+  Iterable<List<T>> _chunk<T>(List<T> list, int size) sync* {
+    for (var i = 0; i < list.length; i += size) {
+      final end = (i + size < list.length) ? i + size : list.length;
+      yield list.sublist(i, end);
+    }
+  }
+
+  /// Yalnızca verilen kimliklere sahip öğrencileri yükler (veli kapsamı).
+  Future<List<Student>> loadStudentsByIds(List<String> ids) async {
+    if (ids.isEmpty) {
+      return const [];
+    }
+
+    final results = <Student>[];
+    for (final chunk in _chunk(ids, 10)) {
+      final snapshot = await _students
+          .where(FieldPath.documentId, whereIn: chunk)
+          .get();
+      results.addAll(
+        snapshot.docs.map(
+          (doc) => Student.fromJson({...doc.data(), 'id': doc.id}),
+        ),
+      );
+    }
+    return results;
+  }
+
   Future<Student> addStudent(Student student) {
     return _addDocument<Student>(
       collection: _students,
@@ -196,6 +224,32 @@ class FirestoreService {
     );
   }
 
+  /// Verilen öğrencilerden en az birini içeren yoklama kayıtlarını yükler
+  /// (veli kapsamı). `arrayContainsAny` sınırı için öğrenci listesi bölünür.
+  Future<List<AttendanceRecord>> loadAttendanceForStudents(
+    List<String> studentIds,
+  ) async {
+    if (studentIds.isEmpty) {
+      return const [];
+    }
+
+    final results = <AttendanceRecord>[];
+    final seenIds = <String>{};
+    for (final chunk in _chunk(studentIds, 10)) {
+      final snapshot = await _attendanceRecords
+          .where('studentIds', arrayContainsAny: chunk)
+          .get();
+      for (final doc in snapshot.docs) {
+        if (seenIds.add(doc.id)) {
+          results.add(
+            AttendanceRecord.fromJson({...doc.data(), 'id': doc.id}),
+          );
+        }
+      }
+    }
+    return results;
+  }
+
   Future<AttendanceRecord> addAttendanceRecord(AttendanceRecord record) {
     return _addDocument<AttendanceRecord>(
       collection: _attendanceRecords,
@@ -221,6 +275,28 @@ class FirestoreService {
       collection: _payments,
       fromJson: PaymentRecord.fromJson,
     );
+  }
+
+  /// Yalnızca verilen öğrencilere ait ödemeleri yükler (veli kapsamı).
+  Future<List<PaymentRecord>> loadPaymentsForStudents(
+    List<String> studentIds,
+  ) async {
+    if (studentIds.isEmpty) {
+      return const [];
+    }
+
+    final results = <PaymentRecord>[];
+    for (final chunk in _chunk(studentIds, 10)) {
+      final snapshot = await _payments
+          .where('studentId', whereIn: chunk)
+          .get();
+      results.addAll(
+        snapshot.docs.map(
+          (doc) => PaymentRecord.fromJson({...doc.data(), 'id': doc.id}),
+        ),
+      );
+    }
+    return results;
   }
 
   Future<PaymentRecord> addPayment(PaymentRecord payment) {
@@ -290,6 +366,29 @@ class FirestoreService {
     );
   }
 
+  /// Yalnızca verilen öğrencilere ait performans kayıtlarını yükler (veli
+  /// kapsamı). `whereIn` sınırı nedeniyle öğrenci listesi parçalara bölünür.
+  Future<List<PerformanceRecord>> loadPerformanceRecordsForStudents(
+    List<String> studentIds,
+  ) async {
+    if (studentIds.isEmpty) {
+      return const [];
+    }
+
+    final results = <PerformanceRecord>[];
+    for (final chunk in _chunk(studentIds, 10)) {
+      final snapshot = await _performanceRecords
+          .where('studentId', whereIn: chunk)
+          .get();
+      results.addAll(
+        snapshot.docs.map(
+          (doc) => PerformanceRecord.fromJson({...doc.data(), 'id': doc.id}),
+        ),
+      );
+    }
+    return results;
+  }
+
   Future<PerformanceRecord> addPerformanceRecord(PerformanceRecord record) {
     return _addDocument<PerformanceRecord>(
       collection: _performanceRecords,
@@ -330,6 +429,19 @@ class FirestoreService {
       collection: _eventResponses,
       fromJson: EventResponse.fromJson,
     );
+  }
+
+  /// Yalnızca verilen velinin verdiği katılım cevaplarını yükler (veli kapsamı).
+  Future<List<EventResponse>> loadEventResponsesForParent(
+    String parentUid,
+  ) async {
+    final snapshot = await _eventResponses
+        .where('parentUid', isEqualTo: parentUid)
+        .get();
+
+    return snapshot.docs
+        .map((doc) => EventResponse.fromJson({...doc.data(), 'id': doc.id}))
+        .toList();
   }
 
   /// Bir öğrenci + etkinlik için katılım cevabını ekler ya da günceller.
