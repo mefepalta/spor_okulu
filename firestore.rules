@@ -18,6 +18,10 @@ service cloud.firestore {
       return isSignedIn() && role() == "coach";
     }
 
+    function isParent() {
+      return isSignedIn() && role() == "veli";
+    }
+
     function isAdminOrCoach() {
       return isAdmin() || isCoach();
     }
@@ -58,6 +62,27 @@ service cloud.firestore {
     match /announcements/{document} {
       allow read: if isSignedIn();
       allow write: if isAdminOrCoach();
+    }
+
+    // Antrenör/admin performans girer; herkes (veliler dahil) okuyabilir.
+    match /performanceRecords/{document} {
+      allow read: if isSignedIn();
+      allow write: if isAdminOrCoach();
+    }
+
+    // Antrenör/admin etkinlik planlar; herkes okuyabilir.
+    match /plannedEvents/{document} {
+      allow read: if isSignedIn();
+      allow write: if isAdminOrCoach();
+    }
+
+    // Veliler kendi katılım cevaplarını yazabilir; antrenör/admin hepsini
+    // görüp yönetebilir.
+    match /eventResponses/{document} {
+      allow read: if isSignedIn();
+      allow write: if isAdminOrCoach()
+        || (isParent()
+            && request.resource.data.parentUid == request.auth.uid);
     }
 
     match /{document=**} {

@@ -10,6 +10,7 @@ class ProfileScreen extends StatelessWidget {
 
   bool get isAdmin => userRole == 'admin';
   bool get isCoach => userRole == 'coach';
+  bool get isParent => userRole == 'veli';
 
   String get roleLabel {
     if (isAdmin) {
@@ -18,6 +19,10 @@ class ProfileScreen extends StatelessWidget {
 
     if (isCoach) {
       return 'Antrenör';
+    }
+
+    if (isParent) {
+      return 'Veli';
     }
 
     return 'Görüntüleyici';
@@ -32,6 +37,10 @@ class ProfileScreen extends StatelessWidget {
       return 'Yoklama ve duyuru kayıtlarını yönetebilir. Diğer kayıtları görüntüleyebilir.';
     }
 
+    if (isParent) {
+      return 'Çocuğunun performansını takip edebilir ve etkinliklere katılım cevabı verebilir.';
+    }
+
     return 'Kayıtları görüntüleyebilir, ancak değişiklik yapamaz.';
   }
 
@@ -44,6 +53,10 @@ class ProfileScreen extends StatelessWidget {
       return Icons.sports;
     }
 
+    if (isParent) {
+      return Icons.family_restroom;
+    }
+
     return Icons.person;
   }
 
@@ -54,6 +67,10 @@ class ProfileScreen extends StatelessWidget {
 
     if (isCoach) {
       return Icons.sports;
+    }
+
+    if (isParent) {
+      return Icons.family_restroom;
     }
 
     return Icons.visibility;

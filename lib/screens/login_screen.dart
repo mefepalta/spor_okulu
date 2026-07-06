@@ -50,7 +50,13 @@ class _LoginScreenState extends State<LoginScreen> {
         password: _passwordController.text.trim(),
       );
 
-      await credential.user?.reload();
+      // Oturum bilgisini tazelemeye çalış; ağ yavaş/erişilemezse "Giriş
+      // yapılıyor..." adımında sonsuza kadar takılmamak için zaman aşımı koy.
+      try {
+        await credential.user?.reload().timeout(const Duration(seconds: 8));
+      } catch (_) {
+        // Yenileme başarısız oldu; mevcut kullanıcı bilgisiyle devam et.
+      }
       final refreshedUser = _authService.currentUser;
       final userRole = await _userRoleService.getCurrentUserRole();
 

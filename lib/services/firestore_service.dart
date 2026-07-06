@@ -14,6 +14,9 @@ class FirestoreService {
   static const String _attendanceCollection = 'attendanceRecords';
   static const String _paymentsCollection = 'payments';
   static const String _announcementsCollection = 'announcements';
+  static const String _performanceCollection = 'performanceRecords';
+  static const String _eventsCollection = 'plannedEvents';
+  static const String _eventResponsesCollection = 'eventResponses';
 
   CollectionReference<Map<String, dynamic>> get _students {
     return _firestore.collection(_studentsCollection);
@@ -37,6 +40,18 @@ class FirestoreService {
 
   CollectionReference<Map<String, dynamic>> get _announcements {
     return _firestore.collection(_announcementsCollection);
+  }
+
+  CollectionReference<Map<String, dynamic>> get _performanceRecords {
+    return _firestore.collection(_performanceCollection);
+  }
+
+  CollectionReference<Map<String, dynamic>> get _events {
+    return _firestore.collection(_eventsCollection);
+  }
+
+  CollectionReference<Map<String, dynamic>> get _eventResponses {
+    return _firestore.collection(_eventResponsesCollection);
   }
 
   Future<List<T>> _loadCollection<T>({
@@ -264,5 +279,74 @@ class FirestoreService {
 
   Future<void> deleteAnnouncement(String id) {
     return _deleteDocument(collection: _announcements, id: id);
+  }
+
+  // --- Performans kayıtları ---
+
+  Future<List<PerformanceRecord>> loadPerformanceRecords() {
+    return _loadCollection<PerformanceRecord>(
+      collection: _performanceRecords,
+      fromJson: PerformanceRecord.fromJson,
+    );
+  }
+
+  Future<PerformanceRecord> addPerformanceRecord(PerformanceRecord record) {
+    return _addDocument<PerformanceRecord>(
+      collection: _performanceRecords,
+      withId: (id) => record.copyWith(id: id),
+      toJson: (record) => record.toJson(),
+    );
+  }
+
+  Future<void> deletePerformanceRecord(String id) {
+    return _deleteDocument(collection: _performanceRecords, id: id);
+  }
+
+  // --- Planlanan etkinlikler ---
+
+  Future<List<PlannedEvent>> loadEvents() {
+    return _loadCollection<PlannedEvent>(
+      collection: _events,
+      fromJson: PlannedEvent.fromJson,
+    );
+  }
+
+  Future<PlannedEvent> addEvent(PlannedEvent event) {
+    return _addDocument<PlannedEvent>(
+      collection: _events,
+      withId: (id) => event.copyWith(id: id),
+      toJson: (event) => event.toJson(),
+    );
+  }
+
+  Future<void> deleteEvent(String id) {
+    return _deleteDocument(collection: _events, id: id);
+  }
+
+  // --- Etkinlik katılım cevapları ---
+
+  Future<List<EventResponse>> loadEventResponses() {
+    return _loadCollection<EventResponse>(
+      collection: _eventResponses,
+      fromJson: EventResponse.fromJson,
+    );
+  }
+
+  /// Bir öğrenci + etkinlik için katılım cevabını ekler ya da günceller.
+  /// Belge kimliği [EventResponse.buildId] ile deterministik olduğundan aynı
+  /// öğrenci için tekrar cevap verilince eski cevap üzerine yazılır.
+  Future<EventResponse> setEventResponse(EventResponse response) async {
+    final docId = EventResponse.buildId(
+      response.eventId,
+      response.studentId,
+    );
+    final responseWithId = response.copyWith(id: docId);
+
+    await _eventResponses.doc(docId).set({
+      ...responseWithId.toJson(),
+      'updatedAt': FieldValue.serverTimestamp(),
+    }, SetOptions(merge: true));
+
+    return responseWithId;
   }
 }

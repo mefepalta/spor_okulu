@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'constants/app_constants.dart';
 import 'firebase_options.dart';
 import 'routes/app_routes.dart';
+import 'screens/auth_gate.dart';
 import 'theme/app_theme.dart';
+import 'widgets/app_splash_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final firebaseSetupError = await _initializeFirebase();
-
-  runApp(SporOkuluApp(firebaseSetupError: firebaseSetupError));
+  runApp(const SporOkuluApp());
 }
 
 Future<Object?> _initializeFirebase() async {
@@ -40,22 +40,10 @@ Widget _limitedTextScaleBuilder(BuildContext context, Widget? child) {
 }
 
 class SporOkuluApp extends StatelessWidget {
-  final Object? firebaseSetupError;
-
-  const SporOkuluApp({super.key, this.firebaseSetupError});
+  const SporOkuluApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    if (firebaseSetupError != null) {
-      return MaterialApp(
-        title: AppConstants.appTitle,
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme.lightTheme,
-        home: FirebaseSetupScreen(error: firebaseSetupError!),
-        builder: _limitedTextScaleBuilder,
-      );
-    }
-
     return MaterialApp(
       title: AppConstants.appTitle,
       debugShowCheckedModeBanner: false,
@@ -63,6 +51,48 @@ class SporOkuluApp extends StatelessWidget {
       initialRoute: AppRoutes.login,
       routes: AppRoutes.routes,
       builder: _limitedTextScaleBuilder,
+    );
+  }
+}
+
+/// Uygulama açılışında Firebase'i başlatır. Hazır olana kadar açılış
+/// görselini, hata olursa kurulum ekranını, başarılıysa oturum akışını gösterir.
+///
+/// Firebase yalnızca bir kez başlatılsın diye future statik tutulur; böylece
+/// çıkış yapıp bu route'a geri dönüldüğünde tekrar başlatma denenmez.
+class AppBootstrap extends StatefulWidget {
+  const AppBootstrap({super.key});
+
+  @override
+  State<AppBootstrap> createState() => _AppBootstrapState();
+}
+
+class _AppBootstrapState extends State<AppBootstrap> {
+  static Future<Object?>? _firebaseSetup;
+
+  @override
+  void initState() {
+    super.initState();
+    _firebaseSetup ??= _initializeFirebase();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<Object?>(
+      future: _firebaseSetup,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState != ConnectionState.done) {
+          return const AppSplashScreen();
+        }
+
+        final firebaseSetupError = snapshot.data;
+
+        if (firebaseSetupError != null) {
+          return FirebaseSetupScreen(error: firebaseSetupError);
+        }
+
+        return const AuthGate();
+      },
     );
   }
 }

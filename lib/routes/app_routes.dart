@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../screens/auth_gate.dart';
+import '../main.dart';
 import '../screens/dashboard_screen.dart';
 
 class AppRoutes {
@@ -8,7 +8,7 @@ class AppRoutes {
   static const String dashboard = '/dashboard';
 
   static final Map<String, WidgetBuilder> routes = {
-    login: (context) => const AuthGate(),
+    login: (context) => const AppBootstrap(),
     dashboard: (context) => const DashboardScreen(),
   };
 }

@@ -264,6 +264,196 @@ class PaymentRecord {
   }
 }
 
+/// Bir veli kullanıcı hesabı ve ona atanmış öğrenci kimlikleri.
+class ParentAccount {
+  final String uid;
+  final String email;
+  final List<String> studentIds;
+
+  const ParentAccount({
+    required this.uid,
+    required this.email,
+    this.studentIds = const [],
+  });
+
+  ParentAccount copyWith({
+    String? uid,
+    String? email,
+    List<String>? studentIds,
+  }) {
+    return ParentAccount(
+      uid: uid ?? this.uid,
+      email: email ?? this.email,
+      studentIds: studentIds ?? this.studentIds,
+    );
+  }
+
+  factory ParentAccount.fromJson(String uid, Map<String, dynamic> json) {
+    return ParentAccount(
+      uid: uid,
+      email: json['email'] ?? '',
+      studentIds: List<String>.from(json['studentIds'] ?? const []),
+    );
+  }
+}
+
+/// Antrenörün bir öğrenci için belirli bir tarihte girdiği performans puanları.
+/// [scores] anahtarları [PerformanceMetrics.all] içindeki ölçüt adlarıdır.
+class PerformanceRecord {
+  final String id;
+  final String studentId;
+  final String dateText;
+  final Map<String, num> scores;
+
+  const PerformanceRecord({
+    this.id = '',
+    required this.studentId,
+    required this.dateText,
+    required this.scores,
+  });
+
+  PerformanceRecord copyWith({
+    String? id,
+    String? studentId,
+    String? dateText,
+    Map<String, num>? scores,
+  }) {
+    return PerformanceRecord(
+      id: id ?? this.id,
+      studentId: studentId ?? this.studentId,
+      dateText: dateText ?? this.dateText,
+      scores: scores ?? this.scores,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'studentId': studentId,
+      'dateText': dateText,
+      'scores': scores.map((key, value) => MapEntry(key, value)),
+    };
+  }
+
+  factory PerformanceRecord.fromJson(Map<String, dynamic> json) {
+    final rawScores = (json['scores'] as Map?) ?? const {};
+
+    return PerformanceRecord(
+      id: json['id'] ?? '',
+      studentId: json['studentId'] ?? '',
+      dateText: json['dateText'] ?? '',
+      scores: rawScores.map(
+        (key, value) => MapEntry(key.toString(), (value as num?) ?? 0),
+      ),
+    );
+  }
+}
+
+/// Antrenörün gelecek için planladığı bir etkinlik/antrenman.
+class PlannedEvent {
+  final String id;
+  final String title;
+  final String description;
+  final String dateText;
+
+  const PlannedEvent({
+    this.id = '',
+    required this.title,
+    required this.description,
+    required this.dateText,
+  });
+
+  PlannedEvent copyWith({
+    String? id,
+    String? title,
+    String? description,
+    String? dateText,
+  }) {
+    return PlannedEvent(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      dateText: dateText ?? this.dateText,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'description': description,
+      'dateText': dateText,
+      'date': dateText,
+    };
+  }
+
+  factory PlannedEvent.fromJson(Map<String, dynamic> json) {
+    return PlannedEvent(
+      id: json['id'] ?? '',
+      title: json['title'] ?? '',
+      description: json['description'] ?? '',
+      dateText: json['dateText'] ?? json['date'] ?? '',
+    );
+  }
+}
+
+/// Bir velinin, bir öğrenci adına bir etkinliğe verdiği katılım cevabı.
+class EventResponse {
+  final String id;
+  final String eventId;
+  final String studentId;
+  final String parentUid;
+  final bool willAttend;
+
+  const EventResponse({
+    this.id = '',
+    required this.eventId,
+    required this.studentId,
+    required this.parentUid,
+    required this.willAttend,
+  });
+
+  /// Aynı etkinlik + öğrenci için tek cevap tutulur; belge kimliği bu ikiliden.
+  static String buildId(String eventId, String studentId) =>
+      '${eventId}_$studentId';
+
+  EventResponse copyWith({
+    String? id,
+    String? eventId,
+    String? studentId,
+    String? parentUid,
+    bool? willAttend,
+  }) {
+    return EventResponse(
+      id: id ?? this.id,
+      eventId: eventId ?? this.eventId,
+      studentId: studentId ?? this.studentId,
+      parentUid: parentUid ?? this.parentUid,
+      willAttend: willAttend ?? this.willAttend,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'eventId': eventId,
+      'studentId': studentId,
+      'parentUid': parentUid,
+      'willAttend': willAttend,
+    };
+  }
+
+  factory EventResponse.fromJson(Map<String, dynamic> json) {
+    return EventResponse(
+      id: json['id'] ?? '',
+      eventId: json['eventId'] ?? '',
+      studentId: json['studentId'] ?? '',
+      parentUid: json['parentUid'] ?? '',
+      willAttend: json['willAttend'] == true,
+    );
+  }
+}
+
 class Announcement {
   final String id;
   final String title;
