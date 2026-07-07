@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 
 import '../models/app_models.dart';
 import '../utils/validators.dart';
+import '../widgets/branch_dropdown.dart';
 import '../widgets/empty_state.dart';
 
 class StudentsScreen extends StatefulWidget {
@@ -359,8 +360,9 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
-  final TextEditingController _branchController = TextEditingController();
   final TextEditingController _parentPhoneController = TextEditingController();
+
+  String? _selectedBranch;
 
   @override
   void initState() {
@@ -371,7 +373,7 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
     if (student != null) {
       _nameController.text = student.name;
       _ageController.text = student.age.toString();
-      _branchController.text = student.branch;
+      _selectedBranch = student.branch;
       _parentPhoneController.text = student.parentPhone;
     }
   }
@@ -380,7 +382,6 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
   void dispose() {
     _nameController.dispose();
     _ageController.dispose();
-    _branchController.dispose();
     _parentPhoneController.dispose();
     super.dispose();
   }
@@ -395,7 +396,7 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
     final student = Student(
       name: _nameController.text.trim(),
       age: int.parse(_ageController.text.trim()),
-      branch: _branchController.text.trim(),
+      branch: (_selectedBranch ?? '').trim(),
       parentPhone: _parentPhoneController.text.trim(),
     );
 
@@ -474,20 +475,12 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
                 },
               ),
               const SizedBox(height: 12),
-              TextFormField(
-                controller: _branchController,
-                decoration: const InputDecoration(
-                  labelText: 'Branş',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.sports_soccer),
-                  hintText: 'Futbol',
-                ),
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return 'Branş boş bırakılamaz.';
-                  }
-
-                  return null;
+              BranchDropdownFormField(
+                value: _selectedBranch,
+                onChanged: (value) {
+                  setState(() {
+                    _selectedBranch = value;
+                  });
                 },
               ),
               const SizedBox(height: 12),

@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 
 import '../models/app_models.dart';
 import '../utils/validators.dart';
+import '../widgets/branch_dropdown.dart';
 import '../widgets/empty_state.dart';
 
 class GroupsScreen extends StatefulWidget {
@@ -453,9 +454,10 @@ class _AddGroupScreenState extends State<AddGroupScreen> {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _branchController = TextEditingController();
   final TextEditingController _timeController = TextEditingController();
   final TextEditingController _capacityController = TextEditingController();
+
+  String? _selectedBranch;
 
   final List<String> _days = const [
     'Pazartesi',
@@ -485,7 +487,7 @@ class _AddGroupScreenState extends State<AddGroupScreen> {
 
     if (group != null) {
       _nameController.text = group.name;
-      _branchController.text = group.branch;
+      _selectedBranch = group.branch;
       _capacityController.text = group.capacity.toString();
       _selectedStudentIds.addAll(group.studentIds);
 
@@ -551,7 +553,6 @@ class _AddGroupScreenState extends State<AddGroupScreen> {
   @override
   void dispose() {
     _nameController.dispose();
-    _branchController.dispose();
     _timeController.dispose();
     _capacityController.dispose();
     super.dispose();
@@ -589,7 +590,7 @@ class _AddGroupScreenState extends State<AddGroupScreen> {
 
     final group = TrainingGroup(
       name: _nameController.text.trim(),
-      branch: _branchController.text.trim(),
+      branch: (_selectedBranch ?? '').trim(),
       coachId: coach.id,
       coachName: coach.name,
       schedule: '$_selectedDay $normalizedTime',
@@ -643,20 +644,12 @@ class _AddGroupScreenState extends State<AddGroupScreen> {
                       },
                     ),
                     const SizedBox(height: 12),
-                    TextFormField(
-                      controller: _branchController,
-                      decoration: const InputDecoration(
-                        labelText: 'Branş',
-                        border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.sports),
-                        hintText: 'Futbol',
-                      ),
-                      validator: (value) {
-                        if (value == null || value.trim().isEmpty) {
-                          return 'Branş boş bırakılamaz.';
-                        }
-
-                        return null;
+                    BranchDropdownFormField(
+                      value: _selectedBranch,
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedBranch = value;
+                        });
                       },
                     ),
                     const SizedBox(height: 12),
