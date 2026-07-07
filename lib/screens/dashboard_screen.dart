@@ -20,6 +20,7 @@ import '../widgets/summary_section.dart';
 import 'announcements_screen.dart';
 import 'attendance_screen.dart';
 import 'child_attendance_screen.dart';
+import 'club_finance_screen.dart';
 import 'coaches_screen.dart';
 import 'events_screen.dart';
 import 'groups_screen.dart';
@@ -63,6 +64,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final List<ParentAccount> _parents = [];
   final List<UserAccount> _users = [];
   final List<LeaveRequest> _leaveRequests = [];
+  final List<CashTransaction> _cashTransactions = [];
   List<String> _assignedStudentIds = const [];
 
   String _userRole = AppRoles.viewer;
@@ -162,6 +164,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       var loadedParents = const <ParentAccount>[];
       var loadedUsers = const <UserAccount>[];
       var loadedLeaveRequests = const <LeaveRequest>[];
+      var loadedCashTransactions = const <CashTransaction>[];
 
       if (isParent) {
         assignedStudentIds = await _userRoleService.getCurrentUserStudentIds();
@@ -198,10 +201,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
           loadedPayments = await _firestoreService.loadPayments();
         }
 
-        // Veli ve kullanıcı yönetimi yalnızca admin içindir.
+        // Veli/kullanıcı yönetimi ve kulüp kasası yalnızca admin içindir.
         if (isAdmin) {
           loadedParents = await _parentService.loadParents();
           loadedUsers = await _userManagementService.loadUsers();
+          loadedCashTransactions = await _firestoreService
+              .loadCashTransactions();
         }
       }
 
@@ -260,6 +265,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
         _leaveRequests
           ..clear()
           ..addAll(loadedLeaveRequests);
+
+        _cashTransactions
+          ..clear()
+          ..addAll(loadedCashTransactions);
 
         _knownAnnouncementCount =
             _visibleAnnouncements(loadedAnnouncements).length;
@@ -842,6 +851,34 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
+  // --- Kulüp kasası ---
+
+  Future<CashTransaction> _addCashTransaction(CashTransaction transaction) async {
+    final saved = await _firestoreService.addCashTransaction(transaction);
+    setState(() => _cashTransactions.insert(0, saved));
+    return saved;
+  }
+
+  Future<void> _deleteCashTransaction(String id) async {
+    await _firestoreService.deleteCashTransaction(id);
+    setState(() {
+      _cashTransactions.removeWhere((t) => t.id == id);
+    });
+  }
+
+  void _openClubFinanceScreen(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ClubFinanceScreen(
+          transactions: _cashTransactions,
+          onAdd: _addCashTransaction,
+          onDelete: _deleteCashTransaction,
+        ),
+      ),
+    );
+  }
+
   // --- Veliler ---
 
   Future<void> _reloadParents() async {
@@ -1186,6 +1223,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
       if (_canManageEvents)
         _drawerNav(Icons.event_available, 'Etkinlikler', _openEventsScreen),
       _drawerNav(Icons.campaign, 'Duyurular', _openAnnouncementsScreen),
+      if (_isAdmin) ...[
+        _drawerSection('Kulüp'),
+        _drawerNav(Icons.account_balance, 'Kulüp Kasası', _openClubFinanceScreen),
+      ],
       _drawerSection('Genel'),
       _drawerNav(Icons.analytics, 'Raporlar', _openReportsScreen),
       _drawerNav(Icons.sports_soccer, 'Sporlar', _openSportsScreen),

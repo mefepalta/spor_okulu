@@ -143,6 +143,12 @@ service cloud.firestore {
         || (isParent() && resource.data.parentUid == request.auth.uid);
     }
 
+    // Kulüp kasası (gelir/gider defteri): kulübün nakit hareketleri hassas
+    // olduğundan yalnızca admin okur ve yazar. Antrenör/veli erişemez.
+    match /cashTransactions/{document} {
+      allow read, write: if isAdmin();
+    }
+
     match /{document=**} {
       allow read, write: if false;
     }

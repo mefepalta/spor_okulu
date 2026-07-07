@@ -737,3 +737,115 @@ class LeaveRequest {
     );
   }
 }
+
+/// Kulüp kasası hareketinin türü.
+class CashType {
+  static const String income = 'Gelir';
+  static const String expense = 'Gider';
+
+  static const List<String> all = [income, expense];
+}
+
+/// Kasa hareketleri için önerilen kategoriler (form seçimi kolaylaştırır;
+/// serbest metin de olabilir).
+class CashCategories {
+  static const List<String> income = [
+    'Aidat',
+    'Kayıt Ücreti',
+    'Sponsorluk',
+    'Bağış',
+    'Diğer',
+  ];
+  static const List<String> expense = [
+    'Kira',
+    'Maaş',
+    'Malzeme',
+    'Fatura',
+    'Ulaşım',
+    'Bakım',
+    'Diğer',
+  ];
+
+  /// Türüne göre önerilen kategori listesi.
+  static List<String> forType(String type) =>
+      type == CashType.expense ? expense : income;
+}
+
+/// Kulüp kasasındaki tek bir gelir/gider hareketi (defter kaydı).
+///
+/// Yalnızca admin görür ve yönetir; kulübün nakit defterini oluşturur. Güncel
+/// kasa, gelirlerin toplamından giderlerin toplamı çıkarılarak türetilir
+/// (ayrı bir bakiye alanı tutulmaz).
+class CashTransaction {
+  final String id;
+
+  /// [CashType] değerlerinden biri (Gelir / Gider).
+  final String type;
+  final String title;
+  final String category;
+
+  /// ₺ cinsinden pozitif tutar. Kasa etkisi türe göre [signedAmount] ile alınır.
+  final int amount;
+  final String dateText;
+  final String note;
+
+  const CashTransaction({
+    this.id = '',
+    required this.type,
+    required this.title,
+    this.category = '',
+    required this.amount,
+    required this.dateText,
+    this.note = '',
+  });
+
+  bool get isIncome => type == CashType.income;
+
+  /// Kasaya net etki: gelir pozitif, gider negatif.
+  int get signedAmount => isIncome ? amount : -amount;
+
+  CashTransaction copyWith({
+    String? id,
+    String? type,
+    String? title,
+    String? category,
+    int? amount,
+    String? dateText,
+    String? note,
+  }) {
+    return CashTransaction(
+      id: id ?? this.id,
+      type: type ?? this.type,
+      title: title ?? this.title,
+      category: category ?? this.category,
+      amount: amount ?? this.amount,
+      dateText: dateText ?? this.dateText,
+      note: note ?? this.note,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'type': type,
+      'title': title,
+      'category': category,
+      'amount': amount,
+      'dateText': dateText,
+      'date': dateText,
+      'note': note,
+    };
+  }
+
+  factory CashTransaction.fromJson(Map<String, dynamic> json) {
+    return CashTransaction(
+      id: json['id'] ?? '',
+      type: json['type'] ?? CashType.income,
+      title: json['title'] ?? '',
+      category: json['category'] ?? '',
+      amount: (json['amount'] as num?)?.toInt() ?? 0,
+      dateText: json['dateText'] ?? json['date'] ?? '',
+      note: json['note'] ?? '',
+    );
+  }
+}
