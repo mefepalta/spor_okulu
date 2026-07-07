@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'constants/app_constants.dart';
 import 'firebase_options.dart';
@@ -66,6 +67,15 @@ class _SporOkuluAppState extends State<SporOkuluApp> {
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
           themeMode: themeMode,
+          // Uygulama Türkçe: native menüler, tarih/saat seçiciler ve metin
+          // seçim araç çubuğu Türkçe görünsün.
+          locale: const Locale('tr', 'TR'),
+          supportedLocales: const [Locale('tr', 'TR'), Locale('en', 'US')],
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
           initialRoute: AppRoutes.login,
           routes: AppRoutes.routes,
           builder: _limitedTextScaleBuilder,
