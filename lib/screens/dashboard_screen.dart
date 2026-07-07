@@ -1549,6 +1549,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
       }
     }
 
+    // Kulüp kasası yalnızca admin'e yüklenir ve gösterilir.
+    if (_isAdmin) {
+      sections.add(_buildClubCashSummarySection(context));
+    }
+
     sections.add(_buildRemindersSection(context));
 
     final announcementSection = _buildLatestAnnouncementSection(context);
@@ -1711,6 +1716,47 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 SummaryMetric(
                   value: _formatTl(_sumPaymentsFor('Gecikti')),
                   label: 'Geciken',
+                  color: Colors.red,
+                ),
+              ],
+            ),
+    );
+  }
+
+  /// Kulüp kasası özeti (yalnızca admin): güncel kasa + toplam gelir/gider.
+  /// Değerler yüklü hareketlerden türetilir.
+  Widget _buildClubCashSummarySection(BuildContext context) {
+    final income = _cashTransactions
+        .where((t) => t.isIncome)
+        .fold(0, (sum, t) => sum + t.amount);
+    final expense = _cashTransactions
+        .where((t) => !t.isIncome)
+        .fold(0, (sum, t) => sum + t.amount);
+    final balance = income - expense;
+
+    return SummarySection(
+      icon: Icons.account_balance,
+      title: 'Kulüp Kasası',
+      iconColor: AppColors.primary,
+      actionLabel: 'Defter',
+      onAction: () => _openClubFinanceScreen(context),
+      child: _cashTransactions.isEmpty
+          ? _emptyHint('Henüz kasa hareketi yok.')
+          : SummaryMetricsRow(
+              metrics: [
+                SummaryMetric(
+                  value: _formatTl(balance),
+                  label: 'Kasa',
+                  color: balance >= 0 ? Colors.green : Colors.red,
+                ),
+                SummaryMetric(
+                  value: _formatTl(income),
+                  label: 'Gelir',
+                  color: Colors.green,
+                ),
+                SummaryMetric(
+                  value: _formatTl(expense),
+                  label: 'Gider',
                   color: Colors.red,
                 ),
               ],
