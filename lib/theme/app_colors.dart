@@ -34,6 +34,28 @@ class AppColors {
   /// Karanlık modda kartların/AppBar'ın yüzeyi (bir ton açık lacivert).
   static const Color darkSurface2 = Color(0xFF141B30);
 
+  /// Nötr kart gradyanı (aydınlık) — mavi zeminle çakışmaması için gri tonlar.
+  /// Belirgin bir gri panel hissi için gradyan farkı bilinçli olarak açık.
+  static const List<Color> cardGradientLight = <Color>[
+    Color(0xFFF1F3F8),
+    Color(0xFFCFD6E4),
+  ];
+
+  /// Nötr kart gradyanı (karanlık) — koyu lacivert-gri tonlar.
+  static const List<Color> cardGradientDark = <Color>[
+    Color(0xFF1C2438),
+    Color(0xFF131A2B),
+  ];
+
+  /// Liste/detay kartlarının düz gri yüzeyi (aydınlık) — beyaz değil, net gri.
+  static const Color cardSurfaceLight = Color(0xFFE8ECF3);
+
+  /// Kart üzerindeki ikon rozetinin arka planı (aydınlık).
+  static const Color cardBadgeLight = Color(0xFFE2E9F6);
+
+  /// Kart kenarlığı (aydınlık) — ince ama görünür gri.
+  static const Color cardBorderLight = Color(0xFFC8D0DF);
+
   /// Dalgada kullanılan mavi geçiş tonları (soldan sağa) — aydınlık mod.
   static const List<Color> waveGradient = <Color>[
     Color(0xFF0D47A1),

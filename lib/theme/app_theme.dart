@@ -9,6 +9,18 @@ class AppTheme {
       colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
       useMaterial3: true,
       scaffoldBackgroundColor: AppColors.surface,
+      // Tüm kartlar (liste, detay, profil) nötr beyaz yüzey + yuvarlak köşe +
+      // ince kenarlık + yumuşak gölge; mavi zeminle çakışmaz.
+      cardTheme: CardThemeData(
+        color: AppColors.cardSurfaceLight,
+        surfaceTintColor: Colors.transparent,
+        elevation: 4,
+        shadowColor: const Color(0xFF1A2542).withValues(alpha: 0.22),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: const BorderSide(color: AppColors.cardBorderLight),
+        ),
+      ),
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.indigo,
         foregroundColor: Colors.white,
@@ -45,7 +57,16 @@ class AppTheme {
       useMaterial3: true,
       scaffoldBackgroundColor: AppColors.darkSurface,
       cardColor: AppColors.darkSurface2,
-      cardTheme: const CardThemeData(color: AppColors.darkSurface2),
+      cardTheme: CardThemeData(
+        color: AppColors.darkSurface2,
+        surfaceTintColor: Colors.transparent,
+        elevation: 2,
+        shadowColor: Colors.black.withValues(alpha: 0.4),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: BorderSide(color: Colors.white.withValues(alpha: 0.06)),
+        ),
+      ),
       appBarTheme: const AppBarTheme(
         backgroundColor: AppColors.darkSurface2,
         foregroundColor: Colors.white,
