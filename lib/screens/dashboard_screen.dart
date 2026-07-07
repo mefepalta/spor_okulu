@@ -11,6 +11,7 @@ import '../services/absence_alert_service.dart';
 import '../services/auth_service.dart';
 import '../services/firestore_service.dart';
 import '../services/parent_service.dart';
+import '../services/reminders_service.dart';
 import '../services/user_management_service.dart';
 import '../services/user_role_service.dart';
 import '../theme/app_colors.dart';
@@ -47,6 +48,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final ParentService _parentService = ParentService();
   final UserManagementService _userManagementService = UserManagementService();
   final AbsenceAlertService _absenceAlertService = AbsenceAlertService();
+  final RemindersService _remindersService = RemindersService();
   StreamSubscription<List<Announcement>>? _announcementSubscription;
 
   final List<Student> _students = [];
@@ -69,6 +71,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   /// Velinin bu cihazda henüz görmediği devamsızlık ("Gelmedi") sayısı.
   int _unreadAbsenceCount = 0;
+
+  /// Kullanıcının bu cihazda tuttuğu kişisel hatırlatıcılar.
+  final List<Reminder> _reminders = [];
   bool _hasStartedAnnouncementListener = false;
   bool _hasReceivedInitialAnnouncementSnapshot = false;
   bool _isLoading = true;
@@ -264,6 +269,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
       _startAnnouncementListener();
       _refreshAbsenceAlerts();
+      _loadReminders();
     } catch (error) {
       if (!mounted) {
         return;
@@ -683,6 +689,111 @@ class _DashboardScreenState extends State<DashboardScreen> {
           onRespond: _respondToEvent,
         ),
       ),
+    );
+  }
+
+  // --- Hızlı hatırlatıcılar (cihazda, kişisel) ---
+
+  Future<void> _loadReminders() async {
+    final uid = _authService.currentUser?.uid;
+    if (uid == null) {
+      return;
+    }
+    final loaded = await _remindersService.load(uid);
+    if (!mounted) {
+      return;
+    }
+    setState(() {
+      _reminders
+        ..clear()
+        ..addAll(loaded);
+    });
+  }
+
+  Future<void> _addReminder() async {
+    final uid = _authService.currentUser?.uid;
+    if (uid == null) {
+      return;
+    }
+
+    final text = await showDialog<String>(
+      context: context,
+      builder: (context) => const _ReminderDialog(),
+    );
+    if (text == null || text.trim().isEmpty) {
+      return;
+    }
+
+    final reminder = Reminder(
+      id: DateTime.now().microsecondsSinceEpoch.toString(),
+      text: text.trim(),
+    );
+    final updated = await _remindersService.add(uid, reminder);
+    if (!mounted) {
+      return;
+    }
+    setState(() {
+      _reminders
+        ..clear()
+        ..addAll(updated);
+    });
+  }
+
+  Future<void> _deleteReminder(String id) async {
+    final uid = _authService.currentUser?.uid;
+    if (uid == null) {
+      return;
+    }
+    final updated = await _remindersService.remove(uid, id);
+    if (!mounted) {
+      return;
+    }
+    setState(() {
+      _reminders
+        ..clear()
+        ..addAll(updated);
+    });
+  }
+
+  Widget _buildRemindersSection(BuildContext context) {
+    return SummarySection(
+      icon: Icons.checklist,
+      title: 'Hızlı Hatırlatıcılar',
+      iconColor: AppColors.primary,
+      actionLabel: 'Ekle',
+      onAction: _addReminder,
+      child: _reminders.isEmpty
+          ? _emptyHint('Henüz bir hatırlatıcı eklemediniz.')
+          : Column(
+              children: [
+                for (final reminder in _reminders)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 2),
+                    child: Row(
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.only(top: 2, right: 10),
+                          child: Icon(
+                            Icons.radio_button_unchecked,
+                            size: 18,
+                          ),
+                        ),
+                        Expanded(child: Text(reminder.text)),
+                        IconButton(
+                          visualDensity: VisualDensity.compact,
+                          tooltip: 'Sil',
+                          onPressed: () => _deleteReminder(reminder.id),
+                          icon: const Icon(
+                            Icons.close,
+                            size: 18,
+                            color: Colors.red,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+              ],
+            ),
     );
   }
 
@@ -1397,6 +1508,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
       }
     }
 
+    sections.add(_buildRemindersSection(context));
+
     final announcementSection = _buildLatestAnnouncementSection(context);
     if (announcementSection != null) {
       sections.add(announcementSection);
@@ -1724,5 +1837,49 @@ class _DashboardScreenState extends State<DashboardScreen> {
       buffer.write(digits[i]);
     }
     return '${amount < 0 ? '-' : ''}$buffer ₺';
+  }
+}
+
+/// Yeni hızlı hatırlatıcı metni almak için basit dialog.
+class _ReminderDialog extends StatefulWidget {
+  const _ReminderDialog();
+
+  @override
+  State<_ReminderDialog> createState() => _ReminderDialogState();
+}
+
+class _ReminderDialogState extends State<_ReminderDialog> {
+  final TextEditingController _controller = TextEditingController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _save() => Navigator.pop(context, _controller.text);
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Yeni Hatırlatıcı'),
+      content: TextField(
+        controller: _controller,
+        autofocus: true,
+        maxLines: 2,
+        textCapitalization: TextCapitalization.sentences,
+        decoration: const InputDecoration(
+          hintText: 'Örn: Salı günü malzeme siparişi ver',
+        ),
+        onSubmitted: (_) => _save(),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text('Vazgeç'),
+        ),
+        FilledButton(onPressed: _save, child: const Text('Ekle')),
+      ],
+    );
   }
 }
