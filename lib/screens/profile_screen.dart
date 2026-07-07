@@ -7,6 +7,7 @@ import '../models/app_models.dart';
 import '../routes/app_routes.dart';
 import '../services/profile_service.dart';
 import '../theme/app_colors.dart';
+import '../theme/theme_controller.dart';
 import '../widgets/wave_background.dart';
 import 'edit_account_screen.dart';
 import 'info_text_screen.dart';
@@ -165,6 +166,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   _buildRoleCard(),
                 ],
                 const SizedBox(height: 12),
+                _buildAppearanceCard(),
+                const SizedBox(height: 12),
                 _buildMenuCard(),
               ],
             ),
@@ -264,6 +267,64 @@ class _ProfileScreenState extends State<ProfileScreen> {
         leading: const Icon(Icons.security),
         title: const Text('Yetki'),
         subtitle: Text(roleDescription),
+      ),
+    );
+  }
+
+  /// Aydınlık/karanlık/sistem tema tercihi. AppBar'dan buraya taşındı; tercih
+  /// [ThemeController] ile kalıcıdır ve tüm uygulamaya anında uygulanır.
+  Widget _buildAppearanceCard() {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Row(
+              children: [
+                Icon(Icons.brightness_6),
+                SizedBox(width: 12),
+                Text(
+                  'Görünüm',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            ValueListenableBuilder<ThemeMode>(
+              valueListenable: ThemeController.instance.mode,
+              builder: (context, mode, _) {
+                return SizedBox(
+                  width: double.infinity,
+                  child: SegmentedButton<ThemeMode>(
+                    showSelectedIcon: false,
+                    segments: const [
+                      ButtonSegment(
+                        value: ThemeMode.system,
+                        icon: Icon(Icons.brightness_auto),
+                        label: Text('Sistem'),
+                      ),
+                      ButtonSegment(
+                        value: ThemeMode.light,
+                        icon: Icon(Icons.light_mode),
+                        label: Text('Aydınlık'),
+                      ),
+                      ButtonSegment(
+                        value: ThemeMode.dark,
+                        icon: Icon(Icons.dark_mode),
+                        label: Text('Karanlık'),
+                      ),
+                    ],
+                    selected: {mode},
+                    onSelectionChanged: (selection) {
+                      ThemeController.instance.setMode(selection.first);
+                    },
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
