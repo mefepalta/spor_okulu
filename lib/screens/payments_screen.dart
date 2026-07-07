@@ -4,6 +4,7 @@ import '../widgets/wave_background.dart';
 import 'package:flutter/services.dart';
 
 import '../models/app_models.dart';
+import '../theme/app_colors.dart';
 import '../utils/validators.dart';
 import '../widgets/empty_state.dart';
 
@@ -32,6 +33,9 @@ class PaymentsScreen extends StatefulWidget {
 
 class _PaymentsScreenState extends State<PaymentsScreen> {
   String _searchQuery = '';
+
+  /// Seçili durum filtresi; null ise tüm durumlar gösterilir.
+  String? _statusFilter;
 
   Color _statusColor(String status) {
     if (status == 'Ödendi') {
@@ -133,14 +137,64 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
     ).showSnackBar(const SnackBar(content: Text('Ödeme kaydı silindi.')));
   }
 
+  /// Durum filtresi çipleri: Tümü / Ödendi / Bekliyor / Gecikti.
+  Widget _buildStatusFilters() {
+    const statuses = ['Ödendi', 'Bekliyor', 'Gecikti'];
+
+    Widget chip(String label, String? value) {
+      final selected = _statusFilter == value;
+      final color = value == null ? AppColors.primary : _statusColor(value);
+
+      return Padding(
+        padding: const EdgeInsets.only(right: 8),
+        child: FilterChip(
+          label: Text(label),
+          selected: selected,
+          showCheckmark: false,
+          selectedColor: color.withValues(alpha: 0.18),
+          side: BorderSide(
+            color: selected ? color : Colors.grey.withValues(alpha: 0.35),
+          ),
+          labelStyle: TextStyle(
+            color: selected ? color : null,
+            fontWeight: selected ? FontWeight.bold : FontWeight.normal,
+          ),
+          onSelected: (_) {
+            setState(() {
+              _statusFilter = value;
+            });
+          },
+        ),
+      );
+    }
+
+    return SizedBox(
+      height: 48,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        children: [
+          chip('Tümü', null),
+          for (final status in statuses) chip(status, status),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final filteredPayments = widget.payments.where((payment) {
       final query = _searchQuery.toLowerCase();
 
-      return payment.studentName.toLowerCase().contains(query) ||
+      final matchesQuery =
+          payment.studentName.toLowerCase().contains(query) ||
           payment.period.toLowerCase().contains(query) ||
           payment.status.toLowerCase().contains(query);
+
+      final matchesStatus =
+          _statusFilter == null || payment.status == _statusFilter;
+
+      return matchesQuery && matchesStatus;
     }).toList();
     final canAddPayment = widget.isAdmin && widget.students.isNotEmpty;
 
@@ -165,6 +219,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
               },
             ),
           ),
+          if (widget.payments.isNotEmpty) _buildStatusFilters(),
           Expanded(
             child: widget.payments.isEmpty
                 ? EmptyState(
@@ -177,10 +232,13 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
                         : 'Henüz ödeme kaydı yok. Admin ödeme eklediçinde burada görünecek.',
                   )
                 : filteredPayments.isEmpty
-                ? const EmptyState(
+                ? EmptyState(
                     icon: Icons.search_off,
                     title: 'Sonuç bulunamadı',
-                    message: 'Arama metnini değiştirerek tekrar dene.',
+                    message: _statusFilter != null
+                        ? '"$_statusFilter" durumunda kayıt yok. '
+                              'Farklı bir filtre veya "Tümü" seç.'
+                        : 'Arama metnini değiştirerek tekrar dene.',
                   )
                 : ListView.builder(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
