@@ -22,6 +22,7 @@ import 'attendance_screen.dart';
 import 'child_attendance_screen.dart';
 import 'club_finance_screen.dart';
 import 'coaches_screen.dart';
+import 'equipment_screen.dart';
 import 'events_screen.dart';
 import 'groups_screen.dart';
 import 'leave_requests_screen.dart';
@@ -65,6 +66,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final List<UserAccount> _users = [];
   final List<LeaveRequest> _leaveRequests = [];
   final List<CashTransaction> _cashTransactions = [];
+  final List<EquipmentItem> _equipment = [];
   List<String> _assignedStudentIds = const [];
 
   String _userRole = AppRoles.viewer;
@@ -165,6 +167,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       var loadedUsers = const <UserAccount>[];
       var loadedLeaveRequests = const <LeaveRequest>[];
       var loadedCashTransactions = const <CashTransaction>[];
+      var loadedEquipment = const <EquipmentItem>[];
 
       if (isParent) {
         assignedStudentIds = await _userRoleService.getCurrentUserStudentIds();
@@ -195,6 +198,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         loadedPerformance = await _firestoreService.loadPerformanceRecords();
         loadedResponses = await _firestoreService.loadEventResponses();
         loadedLeaveRequests = await _firestoreService.loadLeaveRequests();
+        loadedEquipment = await _firestoreService.loadEquipment();
 
         // Ödemeleri yalnızca admin ve antrenör okuyabilir.
         if (isAdmin || isCoach) {
@@ -269,6 +273,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
         _cashTransactions
           ..clear()
           ..addAll(loadedCashTransactions);
+
+        _equipment
+          ..clear()
+          ..addAll(loadedEquipment);
 
         _knownAnnouncementCount =
             _visibleAnnouncements(loadedAnnouncements).length;
@@ -879,6 +887,46 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
+  // --- Depo / ekipman ---
+
+  Future<EquipmentItem> _addEquipment(EquipmentItem item) async {
+    final saved = await _firestoreService.addEquipment(item);
+    setState(() => _equipment.insert(0, saved));
+    return saved;
+  }
+
+  Future<void> _updateEquipment(EquipmentItem item) async {
+    await _firestoreService.updateEquipment(item);
+    setState(() {
+      final index = _equipment.indexWhere((i) => i.id == item.id);
+      if (index != -1) {
+        _equipment[index] = item;
+      }
+    });
+  }
+
+  Future<void> _deleteEquipment(String id) async {
+    await _firestoreService.deleteEquipment(id);
+    setState(() {
+      _equipment.removeWhere((i) => i.id == id);
+    });
+  }
+
+  void _openEquipmentScreen(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EquipmentScreen(
+          items: _equipment,
+          canManage: _isAdmin || _isCoach,
+          onAdd: _addEquipment,
+          onUpdate: _updateEquipment,
+          onDelete: _deleteEquipment,
+        ),
+      ),
+    );
+  }
+
   // --- Veliler ---
 
   Future<void> _reloadParents() async {
@@ -1222,6 +1270,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         _drawerNav(Icons.query_stats, 'Performans', _openPerformanceScreen),
       if (_canManageEvents)
         _drawerNav(Icons.event_available, 'Etkinlikler', _openEventsScreen),
+      _drawerNav(Icons.inventory_2, 'Depo', _openEquipmentScreen),
       _drawerNav(Icons.campaign, 'Duyurular', _openAnnouncementsScreen),
       if (_isAdmin) ...[
         _drawerSection('Kulüp'),

@@ -849,3 +849,95 @@ class CashTransaction {
     );
   }
 }
+
+/// Depodaki bir malzemenin fiziksel durumu.
+class EquipmentCondition {
+  static const String good = 'Sağlam';
+  static const String maintenance = 'Bakımda';
+  static const String worn = 'Yıpranmış';
+
+  static const List<String> all = [good, maintenance, worn];
+}
+
+/// Depo malzemeleri için önerilen kategoriler.
+class EquipmentCategories {
+  static const List<String> all = [
+    'Top',
+    'Forma / Kıyafet',
+    'Antrenman Ekipmanı',
+    'Sağlık / İlk Yardım',
+    'Diğer',
+  ];
+}
+
+/// Depodaki (envanterdeki) bir malzeme kalemi.
+///
+/// Personel (admin/antrenör) yönetir; kulübün ekipman envanterini oluşturur.
+/// [assignedTo] isteğe bağlı zimmet bilgisidir (malzeme kimde).
+class EquipmentItem {
+  final String id;
+  final String name;
+  final String category;
+  final int quantity;
+
+  /// [EquipmentCondition] değerlerinden biri.
+  final String condition;
+
+  /// Zimmet: malzemenin kimde/nerede olduğu (isteğe bağlı).
+  final String assignedTo;
+  final String note;
+
+  const EquipmentItem({
+    this.id = '',
+    required this.name,
+    this.category = '',
+    required this.quantity,
+    this.condition = EquipmentCondition.good,
+    this.assignedTo = '',
+    this.note = '',
+  });
+
+  EquipmentItem copyWith({
+    String? id,
+    String? name,
+    String? category,
+    int? quantity,
+    String? condition,
+    String? assignedTo,
+    String? note,
+  }) {
+    return EquipmentItem(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      category: category ?? this.category,
+      quantity: quantity ?? this.quantity,
+      condition: condition ?? this.condition,
+      assignedTo: assignedTo ?? this.assignedTo,
+      note: note ?? this.note,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'category': category,
+      'quantity': quantity,
+      'condition': condition,
+      'assignedTo': assignedTo,
+      'note': note,
+    };
+  }
+
+  factory EquipmentItem.fromJson(Map<String, dynamic> json) {
+    return EquipmentItem(
+      id: json['id'] ?? '',
+      name: json['name'] ?? '',
+      category: json['category'] ?? '',
+      quantity: (json['quantity'] as num?)?.toInt() ?? 0,
+      condition: json['condition'] ?? EquipmentCondition.good,
+      assignedTo: json['assignedTo'] ?? '',
+      note: json['note'] ?? '',
+    );
+  }
+}

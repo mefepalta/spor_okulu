@@ -19,6 +19,7 @@ class FirestoreService {
   static const String _eventResponsesCollection = 'eventResponses';
   static const String _leaveRequestsCollection = 'leaveRequests';
   static const String _cashTransactionsCollection = 'cashTransactions';
+  static const String _equipmentCollection = 'equipment';
 
   CollectionReference<Map<String, dynamic>> get _students {
     return _firestore.collection(_studentsCollection);
@@ -62,6 +63,10 @@ class FirestoreService {
 
   CollectionReference<Map<String, dynamic>> get _cashTransactions {
     return _firestore.collection(_cashTransactionsCollection);
+  }
+
+  CollectionReference<Map<String, dynamic>> get _equipment {
+    return _firestore.collection(_equipmentCollection);
   }
 
   Future<List<T>> _loadCollection<T>({
@@ -540,5 +545,34 @@ class FirestoreService {
 
   Future<void> deleteCashTransaction(String id) {
     return _deleteDocument(collection: _cashTransactions, id: id);
+  }
+
+  // --- Depo / ekipman envanteri ---
+
+  Future<List<EquipmentItem>> loadEquipment() {
+    return _loadCollection<EquipmentItem>(
+      collection: _equipment,
+      fromJson: EquipmentItem.fromJson,
+    );
+  }
+
+  Future<EquipmentItem> addEquipment(EquipmentItem item) {
+    return _addDocument<EquipmentItem>(
+      collection: _equipment,
+      withId: (id) => item.copyWith(id: id),
+      toJson: (item) => item.toJson(),
+    );
+  }
+
+  Future<void> updateEquipment(EquipmentItem item) {
+    return _updateDocument(
+      collection: _equipment,
+      id: item.id,
+      data: item.toJson(),
+    );
+  }
+
+  Future<void> deleteEquipment(String id) {
+    return _deleteDocument(collection: _equipment, id: id);
   }
 }

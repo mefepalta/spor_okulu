@@ -149,6 +149,12 @@ service cloud.firestore {
       allow read, write: if isAdmin();
     }
 
+    // Depo / ekipman envanteri: personel görür; admin/antrenör düzenler.
+    match /equipment/{document} {
+      allow read: if isStaff();
+      allow write: if isAdminOrCoach();
+    }
+
     match /{document=**} {
       allow read, write: if false;
     }
