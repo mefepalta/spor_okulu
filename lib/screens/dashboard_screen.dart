@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../widgets/wave_background.dart';
 
 import '../constants/app_roles.dart';
+import '../data/sports_data.dart';
 import '../models/app_models.dart';
 import '../routes/app_routes.dart';
 import '../services/auth_service.dart';
@@ -25,6 +26,7 @@ import 'payments_screen.dart';
 import 'performance_screen.dart';
 import 'profile_screen.dart';
 import 'reports_screen.dart';
+import 'sports_screen.dart';
 import 'students_screen.dart';
 import 'users_screen.dart';
 
@@ -782,6 +784,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
+  void _openSportsScreen(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const SportsScreen()),
+    );
+  }
+
   void _openProfileScreen(BuildContext context) {
     Navigator.push(
       context,
@@ -963,6 +972,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
             },
           ),
         ),
+        const SizedBox(height: 12),
+        SizedBox(
+          height: 150,
+          child: DashboardCard(
+            icon: Icons.sports_soccer,
+            title: 'Sporlar',
+            subtitle: '${sportsCatalog.length} spor',
+            onTap: () {
+              _openSportsScreen(context);
+            },
+          ),
+        ),
       ],
     );
   }
@@ -1028,6 +1049,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
         subtitle: 'Genel özet',
         onTap: () {
           _openReportsScreen(context);
+        },
+      ),
+      DashboardCard(
+        icon: Icons.sports_soccer,
+        title: 'Sporlar',
+        subtitle: '${sportsCatalog.length} spor',
+        onTap: () {
+          _openSportsScreen(context);
         },
       ),
       // Performans girişi yalnızca antrenör ve admin için.
