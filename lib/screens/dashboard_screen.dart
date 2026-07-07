@@ -9,6 +9,7 @@ import '../models/app_models.dart';
 import '../routes/app_routes.dart';
 import '../services/absence_alert_service.dart';
 import '../services/auth_service.dart';
+import '../services/ai_summary.dart';
 import '../services/firestore_service.dart';
 import '../services/parent_service.dart';
 import '../services/reminders_service.dart';
@@ -33,6 +34,7 @@ import 'performance_screen.dart';
 import 'profile_screen.dart';
 import 'reports_screen.dart';
 import 'sports_screen.dart';
+import 'sportekai_screen.dart';
 import 'students_screen.dart';
 import 'users_screen.dart';
 
@@ -927,6 +929,32 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
+  // --- SporTekAi ---
+
+  void _openSporTekAiScreen(BuildContext context) {
+    final pendingLeaves = _leaveRequests
+        .where((r) => r.status == LeaveStatus.pending)
+        .length;
+    final summary = AiSummary.buildStaffSummary(
+      isAdmin: _isAdmin,
+      studentCount: _students.length,
+      coachCount: _coaches.length,
+      groupCount: _groups.length,
+      attendance: _attendanceRecords,
+      payments: _payments,
+      cash: _cashTransactions,
+      equipment: _equipment,
+      pendingLeaveCount: pendingLeaves,
+    );
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SporTekAiScreen(summary: summary),
+      ),
+    );
+  }
+
   // --- Veliler ---
 
   Future<void> _reloadParents() async {
@@ -1277,6 +1305,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         _drawerNav(Icons.account_balance, 'Kulüp Kasası', _openClubFinanceScreen),
       ],
       _drawerSection('Genel'),
+      _drawerNav(Icons.auto_awesome, 'SporTekAi', _openSporTekAiScreen),
       _drawerNav(Icons.analytics, 'Raporlar', _openReportsScreen),
       _drawerNav(Icons.sports_soccer, 'Sporlar', _openSportsScreen),
       if (_isAdmin)

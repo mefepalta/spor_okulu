@@ -1,0 +1,6 @@
+name = "sportekai"
+main = "sportekai-worker.js"
+compatibility_date = "2024-11-01"
+
+# GROQ_API_KEY bir "secret" olarak ayrica eklenir (bu dosyaya YAZILMAZ):
+#   wrangler secret put GROQ_API_KEY
