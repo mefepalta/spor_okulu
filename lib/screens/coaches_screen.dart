@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import '../widgets/wave_background.dart';
 import 'package:flutter/services.dart';
 
 import '../models/app_models.dart';
@@ -122,7 +124,7 @@ class _CoachesScreenState extends State<CoachesScreen> {
           coach.branch.toLowerCase().contains(query) ||
           coach.phone.toLowerCase().contains(query);
     }).toList();
-    return Scaffold(
+    return WaveScaffold(
       appBar: AppBar(title: const Text('Antrenörler')),
       body: Column(
         children: [
@@ -248,7 +250,7 @@ class _CoachDetailScreenState extends State<CoachDetailScreen> {
   Widget build(BuildContext context) {
     final coach = _coach;
 
-    return Scaffold(
+    return WaveScaffold(
       appBar: AppBar(
         title: const Text('Antrenör Detayı'),
         actions: widget.isAdmin
@@ -385,7 +387,7 @@ class _AddCoachScreenState extends State<AddCoachScreen> {
   Widget build(BuildContext context) {
     final isEditing = widget.coach != null;
 
-    return Scaffold(
+    return WaveScaffold(
       appBar: AppBar(
         title: Text(isEditing ? 'Antrenörü Düzenle' : 'Yeni Antrenör Ekle'),
       ),

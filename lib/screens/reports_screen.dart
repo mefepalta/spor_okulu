@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/wave_background.dart';
+
 import '../models/app_models.dart';
 
 class ReportsScreen extends StatelessWidget {
@@ -36,7 +38,7 @@ class ReportsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WaveScaffold(
       appBar: AppBar(title: const Text('Raporlar')),
       body: ListView(
         padding: const EdgeInsets.all(16),

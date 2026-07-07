@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import '../widgets/wave_background.dart';
 import 'package:flutter/services.dart';
 
 import '../models/app_models.dart';
@@ -142,7 +144,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
     }).toList();
     final canAddPayment = widget.isAdmin && widget.students.isNotEmpty;
 
-    return Scaffold(
+    return WaveScaffold(
       appBar: AppBar(title: const Text('Ödemeler')),
       body: Column(
         children: [
@@ -291,7 +293,7 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
   Widget build(BuildContext context) {
     final payment = _payment;
 
-    return Scaffold(
+    return WaveScaffold(
       appBar: AppBar(
         title: const Text('Ödeme Detayı'),
         actions: widget.isAdmin
@@ -519,7 +521,7 @@ class _AddPaymentScreenState extends State<AddPaymentScreen> {
   Widget build(BuildContext context) {
     final isEditing = widget.payment != null;
 
-    return Scaffold(
+    return WaveScaffold(
       appBar: AppBar(
         title: Text(isEditing ? 'Ödemeyi Düzenle' : 'Yeni Ödeme Ekle'),
       ),

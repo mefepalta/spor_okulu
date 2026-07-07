@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/wave_background.dart';
+
 import '../models/app_models.dart';
 import '../utils/validators.dart';
 import '../widgets/empty_state.dart';
@@ -127,7 +129,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
     final canTakeAttendance =
         widget.groups.isNotEmpty && widget.students.isNotEmpty;
 
-    return Scaffold(
+    return WaveScaffold(
       appBar: AppBar(title: const Text('Yoklama')),
       body: widget.attendanceRecords.isEmpty
           ? EmptyState(
@@ -334,7 +336,7 @@ class _TakeAttendanceScreenState extends State<TakeAttendanceScreen> {
   Widget build(BuildContext context) {
     final isEditing = widget.record != null;
 
-    return Scaffold(
+    return WaveScaffold(
       appBar: AppBar(
         title: Text(isEditing ? 'Yoklamayı Düzenle' : 'Yoklama Al'),
       ),
@@ -509,7 +511,7 @@ class _AttendanceDetailScreenState extends State<AttendanceDetailScreen> {
   Widget build(BuildContext context) {
     final record = _record;
 
-    return Scaffold(
+    return WaveScaffold(
       appBar: AppBar(
         title: const Text('Yoklama Detayı'),
         actions: widget.isAdmin

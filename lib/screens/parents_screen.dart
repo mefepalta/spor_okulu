@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/wave_background.dart';
+
 import '../models/app_models.dart';
 import '../widgets/empty_state.dart';
 
@@ -140,7 +142,7 @@ class _ParentsScreenState extends State<ParentsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WaveScaffold(
       appBar: AppBar(title: const Text('Veliler')),
       body: widget.parents.isEmpty
           ? const EmptyState(
@@ -296,7 +298,7 @@ class _AssignStudentsScreenState extends State<AssignStudentsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WaveScaffold(
       appBar: AppBar(
         title: const Text('Öğrenci Ata'),
         actions: [

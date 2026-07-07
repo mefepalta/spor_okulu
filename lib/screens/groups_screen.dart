@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import '../widgets/wave_background.dart';
 import 'package:flutter/services.dart';
 
 import '../models/app_models.dart';
@@ -140,7 +142,7 @@ class _GroupsScreenState extends State<GroupsScreen> {
     }).toList();
     final canAddGroup = widget.canManage && widget.coaches.isNotEmpty;
 
-    return Scaffold(
+    return WaveScaffold(
       appBar: AppBar(title: const Text('Gruplar')),
       body: Column(
         children: [
@@ -293,7 +295,7 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
   Widget build(BuildContext context) {
     final group = _group;
 
-    return Scaffold(
+    return WaveScaffold(
       appBar: AppBar(
         title: const Text('Grup Detayı'),
         actions: widget.canManage
@@ -602,7 +604,7 @@ class _AddGroupScreenState extends State<AddGroupScreen> {
   Widget build(BuildContext context) {
     final isEditing = widget.group != null;
 
-    return Scaffold(
+    return WaveScaffold(
       appBar: AppBar(
         title: Text(isEditing ? 'Grubu Düzenle' : 'Yeni Grup Ekle'),
       ),
@@ -842,7 +844,7 @@ class _SelectMembersScreenState extends State<_SelectMembersScreen> {
         ? '${_selected.length} seçildi'
         : '${_selected.length}/${widget.capacity} seçildi';
 
-    return Scaffold(
+    return WaveScaffold(
       appBar: AppBar(
         title: const Text('Üye Seç'),
         actions: [

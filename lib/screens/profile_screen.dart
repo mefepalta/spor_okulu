@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../widgets/wave_background.dart';
+
 import '../routes/app_routes.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -97,7 +99,7 @@ class ProfileScreen extends StatelessWidget {
     final email = user?.email ?? 'Bilinmeyen kullanıcı';
     final isEmailVerified = user?.emailVerified ?? false;
 
-    return Scaffold(
+    return WaveScaffold(
       appBar: AppBar(title: const Text('Profil')),
       body: ListView(
         padding: const EdgeInsets.all(16),

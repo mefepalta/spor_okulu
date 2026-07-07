@@ -5,6 +5,8 @@ import '../constants/app_constants.dart';
 import '../routes/app_routes.dart';
 import '../services/auth_service.dart';
 import '../services/user_role_service.dart';
+import '../theme/app_colors.dart';
+import '../widgets/wave_background.dart';
 import 'register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -228,12 +230,14 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.indigo.shade50,
-      body: Center(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24),
-          child: Card(
-            elevation: 4,
+      backgroundColor: AppColors.surface,
+      body: WaveBackground(
+        child: Center(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(24),
+            child: Card(
+              elevation: 8,
+              shadowColor: AppColors.primary.withValues(alpha: 0.25),
             child: Padding(
               padding: const EdgeInsets.all(24),
               child: Form(
@@ -362,6 +366,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       ),
+    ),
     );
   }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/wave_background.dart';
+
 import '../models/app_models.dart';
 import '../widgets/empty_state.dart';
 
@@ -238,7 +240,7 @@ class _EventsScreenState extends State<EventsScreen> {
   Widget build(BuildContext context) {
     final events = _sortedEvents;
 
-    return Scaffold(
+    return WaveScaffold(
       appBar: AppBar(title: const Text('Etkinlikler')),
       body: events.isEmpty
           ? EmptyState(
@@ -518,7 +520,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WaveScaffold(
       appBar: AppBar(title: const Text('Yeni Etkinlik')),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),

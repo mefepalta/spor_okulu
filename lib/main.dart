@@ -6,6 +6,7 @@ import 'firebase_options.dart';
 import 'routes/app_routes.dart';
 import 'screens/auth_gate.dart';
 import 'theme/app_theme.dart';
+import 'theme/theme_controller.dart';
 import 'widgets/app_splash_screen.dart';
 
 Future<void> main() async {
@@ -39,18 +40,37 @@ Widget _limitedTextScaleBuilder(BuildContext context, Widget? child) {
   );
 }
 
-class SporOkuluApp extends StatelessWidget {
+class SporOkuluApp extends StatefulWidget {
   const SporOkuluApp({super.key});
 
   @override
+  State<SporOkuluApp> createState() => _SporOkuluAppState();
+}
+
+class _SporOkuluAppState extends State<SporOkuluApp> {
+  @override
+  void initState() {
+    super.initState();
+    // Kayıtlı aydınlık/karanlık tercihini yükle (yoksa cihaz ayarını kullanır).
+    ThemeController.instance.load();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: AppConstants.appTitle,
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.lightTheme,
-      initialRoute: AppRoutes.login,
-      routes: AppRoutes.routes,
-      builder: _limitedTextScaleBuilder,
+    return ValueListenableBuilder<ThemeMode>(
+      valueListenable: ThemeController.instance.mode,
+      builder: (context, themeMode, _) {
+        return MaterialApp(
+          title: AppConstants.appTitle,
+          debugShowCheckedModeBanner: false,
+          theme: AppTheme.lightTheme,
+          darkTheme: AppTheme.darkTheme,
+          themeMode: themeMode,
+          initialRoute: AppRoutes.login,
+          routes: AppRoutes.routes,
+          builder: _limitedTextScaleBuilder,
+        );
+      },
     );
   }
 }

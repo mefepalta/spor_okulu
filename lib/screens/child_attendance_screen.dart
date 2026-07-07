@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/wave_background.dart';
+
 import '../models/app_models.dart';
 import '../widgets/empty_state.dart';
 
@@ -37,7 +39,7 @@ class ChildAttendanceScreen extends StatelessWidget {
       }
     }
 
-    return Scaffold(
+    return WaveScaffold(
       appBar: AppBar(title: const Text('Yoklama')),
       body: entries.isEmpty
           ? const EmptyState(

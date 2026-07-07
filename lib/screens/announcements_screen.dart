@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/wave_background.dart';
+
 import '../constants/app_roles.dart';
 import '../models/app_models.dart';
 import '../utils/validators.dart';
@@ -114,7 +116,7 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WaveScaffold(
       appBar: AppBar(title: const Text('Duyurular')),
       body: widget.announcements.isEmpty
           ? EmptyState(
@@ -219,7 +221,7 @@ class _AnnouncementDetailScreenState extends State<AnnouncementDetailScreen> {
   Widget build(BuildContext context) {
     final announcement = _announcement;
 
-    return Scaffold(
+    return WaveScaffold(
       appBar: AppBar(
         title: const Text('Duyuru Detayı'),
         actions: widget.isAdmin
@@ -385,7 +387,7 @@ class _AddAnnouncementScreenState extends State<AddAnnouncementScreen> {
   Widget build(BuildContext context) {
     final isEditing = widget.announcement != null;
 
-    return Scaffold(
+    return WaveScaffold(
       appBar: AppBar(
         title: Text(isEditing ? 'Duyuruyu Düzenle' : 'Yeni Duyuru Ekle'),
       ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/wave_background.dart';
+
 import '../constants/app_roles.dart';
 import '../models/app_models.dart';
 import '../widgets/empty_state.dart';
@@ -141,7 +143,7 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WaveScaffold(
       appBar: AppBar(
         title: Text(widget.canManage ? 'Performans' : 'Performans Analizi'),
       ),
@@ -340,7 +342,7 @@ class _AddPerformanceRecordScreenState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WaveScaffold(
       appBar: AppBar(title: const Text('Performans Ekle')),
       body: ListView(
         padding: const EdgeInsets.all(16),

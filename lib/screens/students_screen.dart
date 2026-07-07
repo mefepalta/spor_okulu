@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import '../widgets/wave_background.dart';
 import 'package:flutter/services.dart';
 
 import '../models/app_models.dart';
@@ -123,7 +125,7 @@ class _StudentsScreenState extends State<StudentsScreen> {
           student.branch.toLowerCase().contains(query) ||
           student.parentPhone.toLowerCase().contains(query);
     }).toList();
-    return Scaffold(
+    return WaveScaffold(
       appBar: AppBar(title: const Text('Öğrenciler')),
       body: Column(
         children: [
@@ -256,7 +258,7 @@ class _StudentDetailScreenState extends State<StudentDetailScreen> {
   Widget build(BuildContext context) {
     final student = _student;
 
-    return Scaffold(
+    return WaveScaffold(
       appBar: AppBar(
         title: const Text('Öğrenci Detayı'),
         actions: widget.isAdmin
@@ -404,7 +406,7 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
   Widget build(BuildContext context) {
     final isEditing = widget.student != null;
 
-    return Scaffold(
+    return WaveScaffold(
       appBar: AppBar(
         title: Text(isEditing ? 'Öğrenciyi Düzenle' : 'Yeni Öğrenci Ekle'),
       ),

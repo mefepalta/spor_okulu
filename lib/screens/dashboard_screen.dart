@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../widgets/wave_background.dart';
+
 import '../constants/app_roles.dart';
 import '../models/app_models.dart';
 import '../routes/app_routes.dart';
@@ -10,6 +12,7 @@ import '../services/firestore_service.dart';
 import '../services/parent_service.dart';
 import '../services/user_management_service.dart';
 import '../services/user_role_service.dart';
+import '../theme/theme_controller.dart';
 import '../widgets/dashboard_card.dart';
 import 'announcements_screen.dart';
 import 'attendance_screen.dart';
@@ -804,7 +807,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WaveScaffold(
       appBar: AppBar(
         title: Text(
           _isAdmin
@@ -818,6 +821,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
           overflow: TextOverflow.ellipsis,
         ),
         actions: [
+          IconButton(
+            tooltip: 'Aydınlık / karanlık mod',
+            onPressed: () {
+              ThemeController.instance.toggle(Theme.of(context).brightness);
+            },
+            icon: Icon(
+              Theme.of(context).brightness == Brightness.dark
+                  ? Icons.light_mode
+                  : Icons.dark_mode,
+            ),
+          ),
           IconButton(
             onPressed: () {
               _openProfileScreen(context);

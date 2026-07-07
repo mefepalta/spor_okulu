@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/wave_background.dart';
+
 import '../constants/app_roles.dart';
 import '../models/app_models.dart';
 import '../widgets/empty_state.dart';
@@ -96,7 +98,7 @@ class _UsersScreenState extends State<UsersScreen> {
         return a.email.toLowerCase().compareTo(b.email.toLowerCase());
       });
 
-    return Scaffold(
+    return WaveScaffold(
       appBar: AppBar(title: const Text('Kullanıcılar')),
       body: Column(
         children: [
