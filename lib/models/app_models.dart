@@ -394,6 +394,56 @@ class UserAccount {
   }
 }
 
+/// Giriş yapan kullanıcının kendi düzenleyebildiği profil bilgileri.
+///
+/// [role] ve [studentIds] burada salt-okunur bilgidir; kullanıcı bunları
+/// değiştiremez (güvenlik kuralı da engeller). [photoBase64] küçültülüp
+/// sıkıştırılmış avatarın base64 hâlidir (yoksa boş).
+class UserProfile {
+  final String uid;
+  final String email;
+  final String role;
+  final String displayName;
+  final String phone;
+  final String photoBase64;
+
+  const UserProfile({
+    required this.uid,
+    required this.email,
+    required this.role,
+    this.displayName = '',
+    this.phone = '',
+    this.photoBase64 = '',
+  });
+
+  UserProfile copyWith({
+    String? displayName,
+    String? phone,
+    String? photoBase64,
+  }) {
+    return UserProfile(
+      uid: uid,
+      email: email,
+      role: role,
+      displayName: displayName ?? this.displayName,
+      phone: phone ?? this.phone,
+      photoBase64: photoBase64 ?? this.photoBase64,
+    );
+  }
+
+  factory UserProfile.fromJson(String uid, Map<String, dynamic> json) {
+    final rawRole = json['role'];
+    return UserProfile(
+      uid: uid,
+      email: json['email'] ?? '',
+      role: rawRole is String ? rawRole.trim().toLowerCase() : 'viewer',
+      displayName: json['displayName'] ?? '',
+      phone: json['phone'] ?? '',
+      photoBase64: json['photoBase64'] ?? '',
+    );
+  }
+}
+
 /// Antrenörün bir öğrenci için belirli bir tarihte girdiği performans puanları.
 /// [scores] anahtarları [PerformanceMetrics.all] içindeki ölçüt adlarıdır.
 class PerformanceRecord {

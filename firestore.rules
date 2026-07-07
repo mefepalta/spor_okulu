@@ -49,7 +49,15 @@ service cloud.firestore {
       allow create: if isSignedIn()
         && request.auth.uid == userId
         && request.resource.data.role == "viewer";
-      allow update, delete: if isAdmin();
+      // Admin her alanı güncelleyebilir. Kullanıcı ise yalnızca KENDİ belgesinde
+      // ve yalnızca profil alanlarını (ad/telefon/foto) değiştirebilir; rol veya
+      // studentIds gibi yetki alanlarına dokunamaz (ayrıcalık yükseltmesi engeli).
+      allow update: if isAdmin()
+        || (isSignedIn()
+            && request.auth.uid == userId
+            && request.resource.data.diff(resource.data).affectedKeys()
+                .hasOnly(['displayName', 'phone', 'photoBase64', 'updatedAt']));
+      allow delete: if isAdmin();
     }
 
     // Öğrenciler: personel hepsini; veli yalnızca kendi çocuğunu okuyabilir.

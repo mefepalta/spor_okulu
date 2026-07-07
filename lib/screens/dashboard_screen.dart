@@ -786,7 +786,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ProfileScreen(userRole: _userRole),
+        builder: (context) => ProfileScreen(
+          userRole: _userRole,
+          children: _isParent ? _myChildren : const [],
+        ),
       ),
     );
   }
