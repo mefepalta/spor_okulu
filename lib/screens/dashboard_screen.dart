@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import '../widgets/wave_background.dart';
 
 import '../constants/app_roles.dart';
-import '../data/sports_data.dart';
 import '../models/app_models.dart';
 import '../routes/app_routes.dart';
 import '../services/absence_alert_service.dart';
@@ -14,8 +13,9 @@ import '../services/firestore_service.dart';
 import '../services/parent_service.dart';
 import '../services/user_management_service.dart';
 import '../services/user_role_service.dart';
-import '../theme/theme_controller.dart';
+import '../theme/app_colors.dart';
 import '../widgets/dashboard_card.dart';
+import '../widgets/summary_section.dart';
 import 'announcements_screen.dart';
 import 'attendance_screen.dart';
 import 'child_attendance_screen.dart';
@@ -867,9 +867,204 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
+  // --- Sol menü (Drawer) ---
+
+  /// Sol üstteki ☰ menüsü. Tüm gezinme hedeflerini role göre gruplayarak
+  /// listeler; böylece Ana Panel yalnızca öne çıkan kartları taşır.
+  Widget _buildDrawer(BuildContext context) {
+    return Drawer(
+      child: Column(
+        children: [
+          _buildDrawerHeader(context),
+          Expanded(
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: _isParent
+                  ? _parentDrawerItems(context)
+                  : _staffDrawerItems(context),
+            ),
+          ),
+          const Divider(height: 1),
+          _drawerTile(
+            icon: Icons.account_circle,
+            label: 'Profil',
+            onTap: () {
+              Navigator.pop(context);
+              _openProfileScreen(context);
+            },
+          ),
+          _drawerTile(
+            icon: Icons.logout,
+            label: 'Çıkış Yap',
+            color: Colors.red,
+            onTap: () {
+              Navigator.pop(context);
+              _logout(context);
+            },
+          ),
+          const SizedBox(height: 8),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDrawerHeader(BuildContext context) {
+    final roleLabel = _isAdmin
+        ? 'Yönetici'
+        : _isCoach
+        ? 'Antrenör'
+        : _isParent
+        ? 'Veli'
+        : 'Görüntüleyici';
+    final email = _authService.currentUser?.email ?? '';
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.fromLTRB(20, 56, 20, 20),
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [AppColors.primary, AppColors.mid],
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const CircleAvatar(
+            radius: 26,
+            backgroundColor: Colors.white24,
+            child: Icon(Icons.sports_soccer, color: Colors.white, size: 28),
+          ),
+          const SizedBox(height: 12),
+          const Text(
+            'Spor Okulu',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 2),
+          Text(
+            email.isNotEmpty ? '$roleLabel • $email' : roleLabel,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(color: Colors.white70, fontSize: 13),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Menüde bir bölüm başlığı (ör. "KAYITLAR").
+  Widget _drawerSection(String title) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
+      child: Text(
+        title.toUpperCase(),
+        style: TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 0.6,
+          color: Colors.grey.shade600,
+        ),
+      ),
+    );
+  }
+
+  Widget _drawerTile({
+    required IconData icon,
+    required String label,
+    Color? color,
+    VoidCallback? onTap,
+  }) {
+    return ListTile(
+      dense: true,
+      leading: Icon(icon, color: color),
+      title: Text(
+        label,
+        style: color != null ? TextStyle(color: color) : null,
+      ),
+      onTap: onTap,
+    );
+  }
+
+  /// Bir gezinme hedefini açar: önce menüyü kapatır, sonra ekranı iter.
+  Widget _drawerNav(IconData icon, String label, void Function(BuildContext) open) {
+    return _drawerTile(
+      icon: icon,
+      label: label,
+      onTap: () {
+        Navigator.pop(context);
+        open(context);
+      },
+    );
+  }
+
+  List<Widget> _staffDrawerItems(BuildContext context) {
+    return [
+      _drawerSection('Kayıtlar'),
+      _drawerNav(Icons.people, 'Öğrenciler', _openStudentsScreen),
+      _drawerNav(Icons.sports, 'Antrenörler', _openCoachesScreen),
+      _drawerNav(Icons.groups, 'Gruplar', _openGroupsScreen),
+      if (_isAdmin) _drawerNav(Icons.family_restroom, 'Veliler', _openParentsScreen),
+      _drawerSection('Operasyon'),
+      _drawerNav(Icons.check_circle, 'Yoklama', _openAttendanceScreen),
+      if (_canViewPayments) _drawerNav(Icons.payment, 'Ödemeler', _openPaymentsScreen),
+      if (_canManagePerformance)
+        _drawerNav(Icons.query_stats, 'Performans', _openPerformanceScreen),
+      if (_canManageEvents)
+        _drawerNav(Icons.event_available, 'Etkinlikler', _openEventsScreen),
+      _drawerNav(Icons.campaign, 'Duyurular', _openAnnouncementsScreen),
+      _drawerSection('Genel'),
+      _drawerNav(Icons.analytics, 'Raporlar', _openReportsScreen),
+      _drawerNav(Icons.sports_soccer, 'Sporlar', _openSportsScreen),
+      if (_isAdmin)
+        _drawerNav(Icons.manage_accounts, 'Kullanıcılar', _openUsersScreen),
+    ];
+  }
+
+  List<Widget> _parentDrawerItems(BuildContext context) {
+    return [
+      _drawerSection('Çocuğum'),
+      _drawerNav(Icons.query_stats, 'Performans', _openPerformanceScreen),
+      _drawerNav(Icons.check_circle, 'Yoklama', _openChildAttendanceScreen),
+      _drawerNav(Icons.event_available, 'Etkinlikler', _openEventsScreen),
+      _drawerNav(Icons.payment, 'Ödemeler', _openPaymentsScreen),
+      _drawerSection('Genel'),
+      _drawerNav(Icons.campaign, 'Duyurular', _openAnnouncementsScreen),
+      _drawerNav(Icons.sports_soccer, 'Sporlar', _openSportsScreen),
+    ];
+  }
+
+  /// AppBar'ın sağ üstündeki duyuru çanı: okunmamış duyuru sayısını rozetle
+  /// gösterir, dokununca duyurular ekranını açar ve rozeti sıfırlar.
+  Widget _buildNotificationsAction(BuildContext context) {
+    final hasUnread = _unreadAnnouncementCount > 0;
+
+    return Badge(
+      isLabelVisible: hasUnread,
+      offset: const Offset(-6, 6),
+      label: Text(
+        _unreadAnnouncementCount > 99 ? '99+' : '$_unreadAnnouncementCount',
+      ),
+      child: IconButton(
+        tooltip: 'Duyurular',
+        onPressed: () {
+          _openAnnouncementsScreen(context);
+        },
+        icon: Icon(
+          hasUnread ? Icons.notifications_active : Icons.notifications_outlined,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return WaveScaffold(
+      drawer: _buildDrawer(context),
       appBar: AppBar(
         title: Text(
           _isAdmin
@@ -883,17 +1078,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           overflow: TextOverflow.ellipsis,
         ),
         actions: [
-          IconButton(
-            tooltip: 'Aydınlık / karanlık mod',
-            onPressed: () {
-              ThemeController.instance.toggle(Theme.of(context).brightness);
-            },
-            icon: Icon(
-              Theme.of(context).brightness == Brightness.dark
-                  ? Icons.light_mode
-                  : Icons.dark_mode,
-            ),
-          ),
+          _buildNotificationsAction(context),
           IconButton(
             onPressed: () {
               _openProfileScreen(context);
@@ -930,14 +1115,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       return _buildParentBody(context);
     }
 
-    return GridView.count(
-      padding: const EdgeInsets.all(16),
-      crossAxisCount: 2,
-      crossAxisSpacing: 12,
-      mainAxisSpacing: 12,
-      childAspectRatio: 0.9,
-      children: _buildStaffCards(),
-    );
+    return _buildStaffSummary(context);
   }
 
   /// Veli panosu: Performans/Etkinlikler ve Yoklama/Ödemeler ikişerli satırlar,
@@ -1014,146 +1192,355 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ],
           ),
         ),
-        const SizedBox(height: 12),
-        SizedBox(
-          height: 150,
-          child: DashboardCard(
-            icon: Icons.campaign,
-            title: 'Duyurular',
-            subtitle:
-                '${_visibleAnnouncements(_announcements).length} duyuru',
-            onTap: () {
-              _openAnnouncementsScreen(context);
-            },
-          ),
+      ],
+    );
+  }
+
+  /// Admin / antrenör / görüntüleyici panosu: gezinme kartları yerine mevcut
+  /// veriden türetilen özetler. Ayrıntılara ☰ menüden erişilir.
+  Widget _buildStaffSummary(BuildContext context) {
+    final sections = <Widget>[
+      _buildGreeting(),
+      const SizedBox(height: 16),
+      _buildStatTilesRow(context),
+      const SizedBox(height: 12),
+      _buildAttendanceSummarySection(context),
+    ];
+
+    if (_canViewPayments) {
+      sections.add(_buildFinanceSummarySection(context));
+      final unpaidSection = _buildUnpaidSection(context);
+      if (unpaidSection != null) {
+        sections.add(unpaidSection);
+      }
+    }
+
+    final announcementSection = _buildLatestAnnouncementSection(context);
+    if (announcementSection != null) {
+      sections.add(announcementSection);
+    }
+
+    return ListView(padding: const EdgeInsets.all(16), children: sections);
+  }
+
+  Widget _buildGreeting() {
+    final label = _isAdmin
+        ? 'Yönetici'
+        : _isCoach
+        ? 'Antrenör'
+        : 'Görüntüleyici';
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'İyi günler, $label 👋',
+          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
         ),
-        const SizedBox(height: 12),
-        SizedBox(
-          height: 150,
-          child: DashboardCard(
-            icon: Icons.sports_soccer,
-            title: 'Sporlar',
-            subtitle: '${sportsCatalog.length} spor',
-            onTap: () {
-              _openSportsScreen(context);
-            },
-          ),
+        const SizedBox(height: 4),
+        Text(
+          'Kulübünüzün güncel özeti aşağıda.',
+          style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
         ),
       ],
     );
   }
 
-  /// Admin / antrenör / görüntüleyici panosu.
-  List<Widget> _buildStaffCards() {
-    return [
-      DashboardCard(
-        icon: Icons.people,
-        title: 'Öğrenciler',
-        subtitle: '${_students.length} öğrenci',
-        onTap: () {
-          _openStudentsScreen(context);
-        },
+  Widget _buildStatTilesRow(BuildContext context) {
+    // IntrinsicHeight: dikey ListView içinde Row'a sınırlı yükseklik verir;
+    // böylece stretch tüm kutucukları en uzun olana eşitler (taşma hatası olmaz).
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: StatTile(
+              icon: Icons.people,
+              value: '${_students.length}',
+              label: 'Öğrenci',
+              accent: Colors.green,
+              onTap: () => _openStudentsScreen(context),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: StatTile(
+              icon: Icons.sports,
+              value: '${_coaches.length}',
+              label: 'Antrenör',
+              accent: Colors.orange,
+              onTap: () => _openCoachesScreen(context),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: StatTile(
+              icon: Icons.groups,
+              value: '${_groups.length}',
+              label: 'Grup',
+              accent: AppColors.primary,
+              onTap: () => _openGroupsScreen(context),
+            ),
+          ),
+        ],
       ),
-      DashboardCard(
-        icon: Icons.sports,
-        title: 'Antrenörler',
-        subtitle: '${_coaches.length} antrenör',
-        onTap: () {
-          _openCoachesScreen(context);
-        },
+    );
+  }
+
+  int _presentCountOf(AttendanceRecord record) =>
+      record.presentStudentIds.isNotEmpty
+      ? record.presentStudentIds.length
+      : record.presentStudentNames.length;
+
+  int _absentCountOf(AttendanceRecord record) =>
+      record.absentStudentIds.isNotEmpty
+      ? record.absentStudentIds.length
+      : record.absentStudentNames.length;
+
+  Widget _buildAttendanceSummarySection(BuildContext context) {
+    final recordCount = _attendanceRecords.length;
+    var present = 0;
+    var absent = 0;
+    for (final record in _attendanceRecords) {
+      present += _presentCountOf(record);
+      absent += _absentCountOf(record);
+    }
+    final total = present + absent;
+    final rate = total == 0 ? 0 : (present / total * 100).round();
+    final rateColor = rate >= 80
+        ? Colors.green
+        : rate >= 50
+        ? Colors.orange
+        : Colors.red;
+
+    return SummarySection(
+      icon: Icons.check_circle,
+      title: 'Yoklama Özeti',
+      iconColor: Colors.green,
+      actionLabel: 'Tümü',
+      onAction: () => _openAttendanceScreen(context),
+      child: recordCount == 0
+          ? _emptyHint('Henüz yoklama kaydı yok.')
+          : SummaryMetricsRow(
+              metrics: [
+                SummaryMetric(
+                  value: '$recordCount',
+                  label: 'Kayıt',
+                  color: AppColors.primary,
+                ),
+                SummaryMetric(
+                  value: '$present',
+                  label: 'Geldi',
+                  color: Colors.green,
+                ),
+                SummaryMetric(
+                  value: '$absent',
+                  label: 'Gelmedi',
+                  color: Colors.red,
+                ),
+                SummaryMetric(
+                  value: '%$rate',
+                  label: 'Katılım',
+                  color: rateColor,
+                ),
+              ],
+            ),
+    );
+  }
+
+  int _sumPaymentsFor(String status) => _payments
+      .where((payment) => payment.status == status)
+      .fold(0, (sum, payment) => sum + payment.amount);
+
+  Widget _buildFinanceSummarySection(BuildContext context) {
+    return SummarySection(
+      icon: Icons.account_balance_wallet,
+      title: 'Finansal Özet',
+      iconColor: AppColors.primary,
+      actionLabel: 'Ödemeler',
+      onAction: () => _openPaymentsScreen(context),
+      child: _payments.isEmpty
+          ? _emptyHint('Henüz ödeme kaydı yok.')
+          : SummaryMetricsRow(
+              metrics: [
+                SummaryMetric(
+                  value: _formatTl(_sumPaymentsFor('Ödendi')),
+                  label: 'Tahsil',
+                  color: Colors.green,
+                ),
+                SummaryMetric(
+                  value: _formatTl(_sumPaymentsFor('Bekliyor')),
+                  label: 'Bekleyen',
+                  color: Colors.orange,
+                ),
+                SummaryMetric(
+                  value: _formatTl(_sumPaymentsFor('Gecikti')),
+                  label: 'Geciken',
+                  color: Colors.red,
+                ),
+              ],
+            ),
+    );
+  }
+
+  /// Ödenmemiş (Bekliyor/Gecikti) aidatların kısa listesi. Hiç yoksa `null`
+  /// döner (bölüm gösterilmez).
+  Widget? _buildUnpaidSection(BuildContext context) {
+    final unpaid = _payments
+        .where((payment) => payment.status != 'Ödendi')
+        .toList();
+    if (unpaid.isEmpty) {
+      return null;
+    }
+
+    const maxRows = 4;
+    final shown = unpaid.take(maxRows).toList();
+    final remaining = unpaid.length - shown.length;
+
+    return SummarySection(
+      icon: Icons.warning_amber_rounded,
+      title: 'Ödenmemiş Aidatlar (${unpaid.length})',
+      iconColor: Colors.red,
+      actionLabel: 'Tümü',
+      onAction: () => _openPaymentsScreen(context),
+      child: Column(
+        children: [
+          for (final payment in shown) _unpaidRow(payment),
+          if (remaining > 0)
+            Padding(
+              padding: const EdgeInsets.only(top: 6),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  '+$remaining öğrenci daha',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Theme.of(context).textTheme.bodySmall?.color,
+                  ),
+                ),
+              ),
+            ),
+        ],
       ),
-      DashboardCard(
-        icon: Icons.groups,
-        title: 'Gruplar',
-        subtitle: '${_groups.length} grup',
-        onTap: () {
-          _openGroupsScreen(context);
-        },
+    );
+  }
+
+  Widget _unpaidRow(PaymentRecord payment) {
+    final isOverdue = payment.status == 'Gecikti';
+    final statusColor = isOverdue ? Colors.red : Colors.orange;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  payment.studentName,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontWeight: FontWeight.w600),
+                ),
+                if (payment.period.isNotEmpty)
+                  Text(
+                    payment.period,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Theme.of(context).textTheme.bodySmall?.color,
+                    ),
+                  ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 8),
+          if (payment.amount > 0) ...[
+            Text(
+              _formatTl(payment.amount),
+              style: const TextStyle(fontWeight: FontWeight.w600),
+            ),
+            const SizedBox(width: 10),
+          ],
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+            decoration: BoxDecoration(
+              color: statusColor.withValues(alpha: 0.14),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Text(
+              payment.status,
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+                color: statusColor,
+              ),
+            ),
+          ),
+        ],
       ),
-      DashboardCard(
-        icon: Icons.check_circle,
-        title: 'Yoklama',
-        subtitle: '${_attendanceRecords.length} yoklama kaydı',
-        onTap: () {
-          _openAttendanceScreen(context);
-        },
+    );
+  }
+
+  /// En son duyurunun kısa önizlemesi. Görünür duyuru yoksa `null` döner.
+  Widget? _buildLatestAnnouncementSection(BuildContext context) {
+    final visible = _visibleAnnouncements(_announcements);
+    if (visible.isEmpty) {
+      return null;
+    }
+    final latest = visible.first;
+
+    return SummarySection(
+      icon: Icons.campaign,
+      title: 'Son Duyuru',
+      iconColor: AppColors.primary,
+      actionLabel: 'Tümü',
+      onAction: () => _openAnnouncementsScreen(context),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            latest.title,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            latest.content,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontSize: 13,
+              color: Theme.of(context).textTheme.bodySmall?.color,
+            ),
+          ),
+        ],
       ),
-      // Ödemeler yalnızca admin ve antrenöre görünür (finansal veri).
-      if (_canViewPayments)
-        DashboardCard(
-          icon: Icons.payment,
-          title: 'Ödemeler',
-          subtitle: '${_payments.length} ödeme kaydı',
-          onTap: () {
-            _openPaymentsScreen(context);
-          },
-        ),
-      DashboardCard(
-        icon: Icons.campaign,
-        title: 'Duyurular',
-        subtitle: _unreadAnnouncementCount > 0
-            ? '${_announcements.length} duyuru - $_unreadAnnouncementCount yeni'
-            : '${_announcements.length} duyuru',
-        onTap: () {
-          _openAnnouncementsScreen(context);
-        },
+    );
+  }
+
+  Widget _emptyHint(String text) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Text(
+        text,
+        style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
       ),
-      DashboardCard(
-        icon: Icons.analytics,
-        title: 'Raporlar',
-        subtitle: 'Genel özet',
-        onTap: () {
-          _openReportsScreen(context);
-        },
-      ),
-      DashboardCard(
-        icon: Icons.sports_soccer,
-        title: 'Sporlar',
-        subtitle: '${sportsCatalog.length} spor',
-        onTap: () {
-          _openSportsScreen(context);
-        },
-      ),
-      // Performans girişi yalnızca antrenör ve admin için.
-      if (_canManagePerformance)
-        DashboardCard(
-          icon: Icons.query_stats,
-          title: 'Performans',
-          subtitle: '${_performanceRecords.length} kayıt',
-          onTap: () {
-            _openPerformanceScreen(context);
-          },
-        ),
-      // Etkinlik yönetimi yalnızca antrenör ve admin için.
-      if (_canManageEvents)
-        DashboardCard(
-          icon: Icons.event_available,
-          title: 'Etkinlikler',
-          subtitle: '${_events.length} etkinlik',
-          onTap: () {
-            _openEventsScreen(context);
-          },
-        ),
-      // Veli yönetim kartı yalnızca admin için görünür (viewer göremez).
-      if (_isAdmin)
-        DashboardCard(
-          icon: Icons.family_restroom,
-          title: 'Veliler',
-          subtitle: '${_parents.length} veli',
-          onTap: () {
-            _openParentsScreen(context);
-          },
-        ),
-      // Kullanıcı/rol yönetimi yalnızca admin için.
-      if (_isAdmin)
-        DashboardCard(
-          icon: Icons.manage_accounts,
-          title: 'Kullanıcılar',
-          subtitle: '${_users.length} kullanıcı',
-          onTap: () {
-            _openUsersScreen(context);
-          },
-        ),
-    ];
+    );
+  }
+
+  /// Tam sayı kuruşsuz TL tutarını binlik ayraçla biçimler (ör. 12.500 ₺).
+  String _formatTl(int amount) {
+    final digits = amount.abs().toString();
+    final buffer = StringBuffer();
+    for (var i = 0; i < digits.length; i++) {
+      if (i > 0 && (digits.length - i) % 3 == 0) {
+        buffer.write('.');
+      }
+      buffer.write(digits[i]);
+    }
+    return '${amount < 0 ? '-' : ''}$buffer ₺';
   }
 }
