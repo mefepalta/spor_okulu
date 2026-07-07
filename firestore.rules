@@ -127,6 +127,22 @@ service cloud.firestore {
             && request.resource.data.studentId in ownStudentIds());
     }
 
+    // Mazeret/izin talepleri: personel hepsini okur ve durumunu (Onaylandı/
+    // Reddedildi) günceller. Veli yalnızca kendi çocuğu için "Beklemede" bir
+    // talep oluşturur, kendi taleplerini okur ve iptal için silebilir; başka
+    // kimsenin talebine erişemez ve durumu kendisi değiştiremez.
+    match /leaveRequests/{document} {
+      allow read: if isStaff()
+        || (isParent() && resource.data.parentUid == request.auth.uid);
+      allow create: if isParent()
+        && request.resource.data.parentUid == request.auth.uid
+        && request.resource.data.studentId in ownStudentIds()
+        && request.resource.data.status == "Beklemede";
+      allow update: if isAdminOrCoach();
+      allow delete: if isAdmin()
+        || (isParent() && resource.data.parentUid == request.auth.uid);
+    }
+
     match /{document=**} {
       allow read, write: if false;
     }

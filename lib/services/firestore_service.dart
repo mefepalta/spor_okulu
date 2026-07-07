@@ -17,6 +17,7 @@ class FirestoreService {
   static const String _performanceCollection = 'performanceRecords';
   static const String _eventsCollection = 'plannedEvents';
   static const String _eventResponsesCollection = 'eventResponses';
+  static const String _leaveRequestsCollection = 'leaveRequests';
 
   CollectionReference<Map<String, dynamic>> get _students {
     return _firestore.collection(_studentsCollection);
@@ -52,6 +53,10 @@ class FirestoreService {
 
   CollectionReference<Map<String, dynamic>> get _eventResponses {
     return _firestore.collection(_eventResponsesCollection);
+  }
+
+  CollectionReference<Map<String, dynamic>> get _leaveRequests {
+    return _firestore.collection(_leaveRequestsCollection);
   }
 
   Future<List<T>> _loadCollection<T>({
@@ -460,5 +465,46 @@ class FirestoreService {
     }, SetOptions(merge: true));
 
     return responseWithId;
+  }
+
+  // --- Mazeret / izin talepleri ---
+
+  Future<List<LeaveRequest>> loadLeaveRequests() {
+    return _loadCollection<LeaveRequest>(
+      collection: _leaveRequests,
+      fromJson: LeaveRequest.fromJson,
+    );
+  }
+
+  /// Yalnızca verilen velinin gönderdiği mazeret taleplerini yükler.
+  Future<List<LeaveRequest>> loadLeaveRequestsForParent(String parentUid) async {
+    final snapshot = await _leaveRequests
+        .where('parentUid', isEqualTo: parentUid)
+        .get();
+
+    return snapshot.docs
+        .map((doc) => LeaveRequest.fromJson({...doc.data(), 'id': doc.id}))
+        .toList();
+  }
+
+  Future<LeaveRequest> addLeaveRequest(LeaveRequest request) {
+    return _addDocument<LeaveRequest>(
+      collection: _leaveRequests,
+      withId: (id) => request.copyWith(id: id),
+      toJson: (request) => request.toJson(),
+    );
+  }
+
+  /// Personelin bir mazeret talebinin durumunu güncellemesi (Onaylandı/Reddedildi).
+  Future<void> updateLeaveRequestStatus(String id, String status) {
+    return _updateDocument(
+      collection: _leaveRequests,
+      id: id,
+      data: {'status': status},
+    );
+  }
+
+  Future<void> deleteLeaveRequest(String id) {
+    return _deleteDocument(collection: _leaveRequests, id: id);
   }
 }

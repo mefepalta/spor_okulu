@@ -22,6 +22,7 @@ import 'child_attendance_screen.dart';
 import 'coaches_screen.dart';
 import 'events_screen.dart';
 import 'groups_screen.dart';
+import 'leave_requests_screen.dart';
 import 'notifications_screen.dart';
 import 'parents_screen.dart';
 import 'payments_screen.dart';
@@ -59,6 +60,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final List<EventResponse> _eventResponses = [];
   final List<ParentAccount> _parents = [];
   final List<UserAccount> _users = [];
+  final List<LeaveRequest> _leaveRequests = [];
   List<String> _assignedStudentIds = const [];
 
   String _userRole = AppRoles.viewer;
@@ -154,6 +156,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       var assignedStudentIds = const <String>[];
       var loadedParents = const <ParentAccount>[];
       var loadedUsers = const <UserAccount>[];
+      var loadedLeaveRequests = const <LeaveRequest>[];
 
       if (isParent) {
         assignedStudentIds = await _userRoleService.getCurrentUserStudentIds();
@@ -172,6 +175,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
         loadedResponses = uid == null
             ? const []
             : await _firestoreService.loadEventResponsesForParent(uid);
+        loadedLeaveRequests = uid == null
+            ? const []
+            : await _firestoreService.loadLeaveRequestsForParent(uid);
       } else if (isStaff) {
         loadedStudents = await _firestoreService.loadStudents();
         loadedCoaches = await _firestoreService.loadCoaches();
@@ -180,6 +186,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             .loadAttendanceRecords();
         loadedPerformance = await _firestoreService.loadPerformanceRecords();
         loadedResponses = await _firestoreService.loadEventResponses();
+        loadedLeaveRequests = await _firestoreService.loadLeaveRequests();
 
         // Ödemeleri yalnızca admin ve antrenör okuyabilir.
         if (isAdmin || isCoach) {
@@ -244,6 +251,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
         _users
           ..clear()
           ..addAll(loadedUsers);
+
+        _leaveRequests
+          ..clear()
+          ..addAll(loadedLeaveRequests);
 
         _knownAnnouncementCount =
             _visibleAnnouncements(loadedAnnouncements).length;
@@ -675,6 +686,51 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
+  // --- Mazeret / izin ---
+
+  Future<LeaveRequest> _addLeaveRequest(LeaveRequest request) async {
+    final saved = await _firestoreService.addLeaveRequest(request);
+    setState(() {
+      _leaveRequests.insert(0, saved);
+    });
+    return saved;
+  }
+
+  Future<void> _updateLeaveStatus(String id, String status) async {
+    await _firestoreService.updateLeaveRequestStatus(id, status);
+    final index = _leaveRequests.indexWhere((r) => r.id == id);
+    if (index != -1) {
+      setState(() {
+        _leaveRequests[index] = _leaveRequests[index].copyWith(status: status);
+      });
+    }
+  }
+
+  Future<void> _deleteLeaveRequest(String id) async {
+    await _firestoreService.deleteLeaveRequest(id);
+    setState(() {
+      _leaveRequests.removeWhere((r) => r.id == id);
+    });
+  }
+
+  void _openLeaveRequestsScreen(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LeaveRequestsScreen(
+          requests: _leaveRequests,
+          children: _isParent ? _myChildren : const [],
+          isParent: _isParent,
+          canManage: _canManageAttendance,
+          currentUserUid: _authService.currentUser?.uid ?? '',
+          onAdd: _addLeaveRequest,
+          onUpdateStatus: _updateLeaveStatus,
+          onDelete: _deleteLeaveRequest,
+        ),
+      ),
+    );
+  }
+
   // --- Veliler ---
 
   Future<void> _reloadParents() async {
@@ -1012,6 +1068,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       if (_isAdmin) _drawerNav(Icons.family_restroom, 'Veliler', _openParentsScreen),
       _drawerSection('Operasyon'),
       _drawerNav(Icons.check_circle, 'Yoklama', _openAttendanceScreen),
+      _drawerNav(Icons.event_busy, 'Mazeretler', _openLeaveRequestsScreen),
       if (_canViewPayments) _drawerNav(Icons.payment, 'Ödemeler', _openPaymentsScreen),
       if (_canManagePerformance)
         _drawerNav(Icons.query_stats, 'Performans', _openPerformanceScreen),
@@ -1031,6 +1088,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       _drawerSection('Çocuğum'),
       _drawerNav(Icons.query_stats, 'Performans', _openPerformanceScreen),
       _drawerNav(Icons.check_circle, 'Yoklama', _openChildAttendanceScreen),
+      _drawerNav(Icons.event_busy, 'Mazeret Bildir', _openLeaveRequestsScreen),
       _drawerNav(Icons.event_available, 'Etkinlikler', _openEventsScreen),
       _drawerNav(Icons.payment, 'Ödemeler', _openPaymentsScreen),
       _drawerSection('Genel'),
@@ -1116,6 +1174,46 @@ class _DashboardScreenState extends State<DashboardScreen> {
             subtitle: parts.join(' • '),
             dateText: payment.dateText,
             onTap: () => _openPaymentsScreen(context),
+          ),
+        );
+      }
+    }
+
+    // Mazeret bildirimleri: personel bekleyen talepleri, veli ise sonuçlanan
+    // (Onaylandı/Reddedildi) taleplerini görür.
+    if (_canManageAttendance) {
+      for (final request in _leaveRequests.where(
+        (request) => request.status == LeaveStatus.pending,
+      )) {
+        items.add(
+          AppNotification(
+            category: 'Mazeret',
+            icon: Icons.event_busy,
+            color: Colors.orange,
+            title: '${request.studentName} • mazeret',
+            subtitle: request.reason.isNotEmpty
+                ? request.reason
+                : 'Onay bekliyor',
+            dateText: request.dateText,
+            onTap: () => _openLeaveRequestsScreen(context),
+          ),
+        );
+      }
+    } else if (_isParent) {
+      for (final request in _leaveRequests.where(
+        (request) => request.status != LeaveStatus.pending,
+      )) {
+        items.add(
+          AppNotification(
+            category: 'Mazeret',
+            icon: Icons.event_busy,
+            color: request.status == LeaveStatus.approved
+                ? Colors.green
+                : Colors.red,
+            title: '${request.studentName} • ${request.status}',
+            subtitle: request.reason,
+            dateText: request.dateText,
+            onTap: () => _openLeaveRequestsScreen(context),
           ),
         );
       }

@@ -653,3 +653,87 @@ class Announcement {
     );
   }
 }
+
+/// Mazeret / izin talebinin durum değerleri.
+class LeaveStatus {
+  static const String pending = 'Beklemede';
+  static const String approved = 'Onaylandı';
+  static const String rejected = 'Reddedildi';
+
+  static const List<String> all = [pending, approved, rejected];
+}
+
+/// Velinin çocuğu için gönderdiği mazeret/izin talebi.
+///
+/// Veli oluşturur (kendi UID'si + kendi çocuğu), personel görüntüler ve
+/// durumunu (Beklemede/Onaylandı/Reddedildi) günceller. Etkinlik cevaplarıyla
+/// aynı güvenlik desenini izler.
+class LeaveRequest {
+  final String id;
+
+  /// Öğrenci referansı: [studentId] kalıcı bağ, [studentName] görüntü içindir.
+  final String studentId;
+  final String studentName;
+  final String parentUid;
+
+  /// İzin/mazeret tarihi (görüntü metni) ve gerekçe.
+  final String dateText;
+  final String reason;
+
+  /// [LeaveStatus] değerlerinden biri.
+  final String status;
+
+  const LeaveRequest({
+    this.id = '',
+    required this.studentId,
+    required this.studentName,
+    required this.parentUid,
+    required this.dateText,
+    required this.reason,
+    this.status = LeaveStatus.pending,
+  });
+
+  LeaveRequest copyWith({
+    String? id,
+    String? studentId,
+    String? studentName,
+    String? parentUid,
+    String? dateText,
+    String? reason,
+    String? status,
+  }) {
+    return LeaveRequest(
+      id: id ?? this.id,
+      studentId: studentId ?? this.studentId,
+      studentName: studentName ?? this.studentName,
+      parentUid: parentUid ?? this.parentUid,
+      dateText: dateText ?? this.dateText,
+      reason: reason ?? this.reason,
+      status: status ?? this.status,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'studentId': studentId,
+      'studentName': studentName,
+      'parentUid': parentUid,
+      'dateText': dateText,
+      'reason': reason,
+      'status': status,
+    };
+  }
+
+  factory LeaveRequest.fromJson(Map<String, dynamic> json) {
+    return LeaveRequest(
+      id: json['id'] ?? '',
+      studentId: json['studentId'] ?? '',
+      studentName: json['studentName'] ?? '',
+      parentUid: json['parentUid'] ?? '',
+      dateText: json['dateText'] ?? '',
+      reason: json['reason'] ?? '',
+      status: json['status'] ?? LeaveStatus.pending,
+    );
+  }
+}
