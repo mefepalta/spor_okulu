@@ -148,6 +148,8 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
       appBar: AppBar(title: const Text('Ödemeler')),
       body: Column(
         children: [
+          if (widget.payments.isNotEmpty)
+            _PaymentSummaryBar(payments: widget.payments),
           Padding(
             padding: const EdgeInsets.all(16),
             child: TextField(
@@ -227,6 +229,125 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
               child: const Icon(Icons.add),
             )
           : null,
+    );
+  }
+}
+
+/// Tutarı Türk usulü binlik ayraçla biçimler: 1500 -> "1.500".
+String _formatTl(int amount) {
+  final digits = amount.abs().toString();
+  final buffer = StringBuffer();
+  for (var i = 0; i < digits.length; i++) {
+    if (i > 0 && (digits.length - i) % 3 == 0) {
+      buffer.write('.');
+    }
+    buffer.write(digits[i]);
+  }
+  final sign = amount < 0 ? '-' : '';
+  return '$sign$buffer';
+}
+
+/// Ödeme listesinin üstündeki özet şeridi: duruma göre toplam tutar ve sayı.
+///
+/// Düz listede kaybolan "ne kadar tahsil edildi, ne kadar bekliyor" bilgisini
+/// tek bakışta verir. Hem admin/antrenör hem veli aynı özeti görür.
+class _PaymentSummaryBar extends StatelessWidget {
+  final List<PaymentRecord> payments;
+
+  const _PaymentSummaryBar({required this.payments});
+
+  int _sumFor(String status) => payments
+      .where((p) => p.status == status)
+      .fold(0, (total, p) => total + p.amount);
+
+  int _countFor(String status) =>
+      payments.where((p) => p.status == status).length;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 4),
+        child: Row(
+          children: [
+            _stat(
+              context,
+              label: 'Tahsil edilen',
+              amount: _sumFor('Ödendi'),
+              count: _countFor('Ödendi'),
+              color: Colors.green,
+            ),
+            _divider(),
+            _stat(
+              context,
+              label: 'Bekleyen',
+              amount: _sumFor('Bekliyor'),
+              count: _countFor('Bekliyor'),
+              color: Colors.orange,
+            ),
+            _divider(),
+            _stat(
+              context,
+              label: 'Geciken',
+              amount: _sumFor('Gecikti'),
+              count: _countFor('Gecikti'),
+              color: Colors.red,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _divider() => Container(
+    width: 1,
+    height: 40,
+    color: Colors.grey.withValues(alpha: 0.25),
+  );
+
+  Widget _stat(
+    BuildContext context, {
+    required String label,
+    required int amount,
+    required int count,
+    required Color color,
+  }) {
+    return Expanded(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            label,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 12,
+              color: Theme.of(context).textTheme.bodySmall?.color,
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            '${_formatTl(amount)} TL',
+            textAlign: TextAlign.center,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+              color: color,
+            ),
+          ),
+          const SizedBox(height: 2),
+          Text(
+            count == 1 ? '1 kayıt' : '$count kayıt',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 11,
+              color: Theme.of(context).textTheme.bodySmall?.color,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
