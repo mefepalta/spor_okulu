@@ -3,11 +3,13 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../constants/app_info.dart';
 import '../models/app_models.dart';
 import '../routes/app_routes.dart';
 import '../services/profile_service.dart';
 import '../theme/app_colors.dart';
 import '../theme/theme_controller.dart';
+import '../utils/launchers.dart';
 import '../widgets/wave_background.dart';
 import 'edit_account_screen.dart';
 import 'info_text_screen.dart';
@@ -144,6 +146,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
         builder: (context) =>
             InfoTextScreen(title: title, paragraphs: paragraphs),
       ),
+    );
+  }
+
+  Future<void> _openWhatsAppSupport() async {
+    await launchWhatsApp(
+      context,
+      phone: AppInfo.supportPhone,
+      message: 'Merhaba, spor okulu uygulaması hakkında destek almak istiyorum.',
     );
   }
 
@@ -348,6 +358,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           const Divider(height: 1),
           ListTile(
+            leading: const Icon(Icons.chat, color: Color(0xFF25D366)),
+            title: const Text('WhatsApp Destek'),
+            trailing: const Icon(Icons.open_in_new, size: 18),
+            onTap: _openWhatsAppSupport,
+          ),
+          const Divider(height: 1),
+          ListTile(
+            leading: const Icon(Icons.gavel_outlined),
+            title: const Text('KVKK Aydınlatma Metni'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => _openInfo(InfoPages.kvkkTitle, InfoPages.kvkk),
+          ),
+          const Divider(height: 1),
+          ListTile(
             leading: const Icon(Icons.description_outlined),
             title: const Text('Kullanım Koşulları'),
             trailing: const Icon(Icons.chevron_right),
@@ -359,6 +383,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
             title: const Text('Gizlilik Politikası'),
             trailing: const Icon(Icons.chevron_right),
             onTap: () => _openInfo(InfoPages.privacyTitle, InfoPages.privacy),
+          ),
+          const Divider(height: 1),
+          ListTile(
+            leading: const Icon(Icons.info_outline),
+            title: const Text('Uygulama Sürümü'),
+            trailing: Text(
+              'v${AppInfo.version}',
+              style: TextStyle(
+                color: Theme.of(context).textTheme.bodySmall?.color,
+              ),
+            ),
           ),
           const Divider(height: 1),
           ListTile(

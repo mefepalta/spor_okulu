@@ -73,6 +73,23 @@ class InfoPages {
         'tarafından güncellenecektir.',
   ];
 
+  static const String kvkkTitle = 'KVKK Aydınlatma Metni';
+  static const List<String> kvkk = <String>[
+    '6698 sayılı Kişisel Verilerin Korunması Kanunu ("KVKK") kapsamında, spor '
+        'okulu olarak veri sorumlusu sıfatıyla kişisel verilerinizi aşağıda '
+        'açıklanan çerçevede işliyoruz.',
+    'İşlenen veriler: ad-soyad, e-posta, telefon ve profil fotoğrafı ile '
+        'öğrenciye ait yoklama, performans ve ödeme kayıtları. Bu veriler '
+        'yalnızca eğitim ve idari süreçlerin yürütülmesi amacıyla işlenir.',
+    'Kişisel verileriniz, hizmetin gerektirdiği ölçüde güvenli altyapıda '
+        'saklanır; yasal zorunluluklar dışında üçüncü kişilerle paylaşılmaz.',
+    'KVKK’nın 11. maddesi uyarınca; verilerinize erişme, düzeltilmesini veya '
+        'silinmesini isteme ve işlenmesine itiraz etme haklarına sahipsiniz. '
+        'Taleplerinizi okul yönetimine iletebilirsiniz.',
+    'Bu metin örnek/taslak içeriktir; nihai KVKK aydınlatma metni okul '
+        'yönetimi tarafından güncellenecektir.',
+  ];
+
   static const String privacyTitle = 'Gizlilik Politikası';
   static const List<String> privacy = <String>[
     'Kişisel verileriniz yalnızca spor okulu hizmetlerinin sunulması amacıyla '

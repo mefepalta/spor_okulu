@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../widgets/wave_background.dart';
 import 'package:flutter/services.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../models/app_models.dart';
 import '../theme/app_colors.dart';
+import '../utils/launchers.dart';
 import '../utils/validators.dart';
 import '../widgets/empty_state.dart';
 
@@ -435,23 +435,6 @@ Student? findStudentForPayment(PaymentRecord payment, List<Student> students) {
   return null;
 }
 
-/// Türk telefon numarasını WhatsApp (wa.me) için uluslararası biçime getirir:
-/// rakam dışı karakterleri atar, baştaki 0'ı kaldırır, 90 ülke kodunu ekler.
-/// Numara ayrıştırılamazsa boş döner.
-String _sanitizeTrPhone(String raw) {
-  var digits = raw.replaceAll(RegExp(r'[^0-9]'), '');
-  if (digits.isEmpty) {
-    return '';
-  }
-  if (digits.startsWith('90')) {
-    return digits;
-  }
-  if (digits.startsWith('0')) {
-    digits = digits.substring(1);
-  }
-  return digits.isEmpty ? '' : '90$digits';
-}
-
 /// Veliye ödeme hatırlatması gönderir: öğrencinin veli telefonuna, hazır bir
 /// mesajla WhatsApp'ı dışarıda açar. Sunucu/SMS gerektirmez (ücretsiz).
 ///
@@ -461,8 +444,8 @@ Future<void> sendPaymentReminder(
   PaymentRecord payment,
   Student? student,
 ) async {
-  final phone = _sanitizeTrPhone(student?.parentPhone ?? '');
-  if (phone.isEmpty) {
+  final phone = student?.parentPhone ?? '';
+  if (sanitizeTrPhone(phone).isEmpty) {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Öğrencinin veli telefonu kayıtlı değil.'),
@@ -478,27 +461,8 @@ Future<void> sendPaymentReminder(
       'Sayın velimiz, ${payment.studentName} için ${payment.period} dönemi '
       'aidatı (${_formatTl(payment.amount)} TL) $durum. '
       'Bilginize, teşekkür ederiz.';
-  final uri = Uri.parse(
-    'https://wa.me/$phone?text=${Uri.encodeComponent(message)}',
-  );
 
-  try {
-    final launched = await launchUrl(
-      uri,
-      mode: LaunchMode.externalApplication,
-    );
-    if (!launched && context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('WhatsApp açılamadı.')),
-      );
-    }
-  } catch (_) {
-    if (context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('WhatsApp açılamadı.')),
-      );
-    }
-  }
+  await launchWhatsApp(context, phone: phone, message: message);
 }
 
 /// Ödeme listesinin üstündeki özet şeridi: duruma göre toplam tutar ve sayı.
