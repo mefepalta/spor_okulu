@@ -8,6 +8,7 @@ import '../constants/app_roles.dart';
 import '../data/sports_data.dart';
 import '../models/app_models.dart';
 import '../routes/app_routes.dart';
+import '../services/absence_alert_service.dart';
 import '../services/auth_service.dart';
 import '../services/firestore_service.dart';
 import '../services/parent_service.dart';
@@ -43,6 +44,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final UserRoleService _userRoleService = UserRoleService();
   final ParentService _parentService = ParentService();
   final UserManagementService _userManagementService = UserManagementService();
+  final AbsenceAlertService _absenceAlertService = AbsenceAlertService();
   StreamSubscription<List<Announcement>>? _announcementSubscription;
 
   final List<Student> _students = [];
@@ -61,6 +63,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
   String _userRole = AppRoles.viewer;
   int _knownAnnouncementCount = 0;
   int _unreadAnnouncementCount = 0;
+
+  /// Velinin bu cihazda henüz görmediği devamsızlık ("Gelmedi") sayısı.
+  int _unreadAbsenceCount = 0;
   bool _hasStartedAnnouncementListener = false;
   bool _hasReceivedInitialAnnouncementSnapshot = false;
   bool _isLoading = true;
@@ -246,6 +251,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       });
 
       _startAnnouncementListener();
+      _refreshAbsenceAlerts();
     } catch (error) {
       if (!mounted) {
         return;
@@ -771,8 +777,52 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
+  /// Velinin çocuğuna ait okunmamış devamsızlık sayısını yeniden hesaplar.
+  ///
+  /// Uyarılar yüklü yoklama kayıtlarından türetilir; "görüldü" durumu cihazda
+  /// tutulur (bkz. [AbsenceAlertService]).
+  Future<void> _refreshAbsenceAlerts() async {
+    if (!_isParent) {
+      return;
+    }
+    final uid = _authService.currentUser?.uid;
+    if (uid == null) {
+      return;
+    }
+    final count = await _absenceAlertService.unreadCount(
+      userId: uid,
+      records: _attendanceRecords,
+      children: _myChildren,
+    );
+    if (!mounted) {
+      return;
+    }
+    setState(() {
+      _unreadAbsenceCount = count;
+    });
+  }
+
   /// Velinin çocuğunun yoklama geçmişi (salt-okunur, çocuğa özel).
-  void _openChildAttendanceScreen(BuildContext context) {
+  Future<void> _openChildAttendanceScreen(BuildContext context) async {
+    // Ekran açılınca mevcut devamsızlıklar "görüldü" sayılır ve rozet sıfırlanır.
+    final uid = _authService.currentUser?.uid;
+    if (uid != null) {
+      await _absenceAlertService.markAllSeen(
+        userId: uid,
+        records: _attendanceRecords,
+        children: _myChildren,
+      );
+      if (mounted) {
+        setState(() {
+          _unreadAbsenceCount = 0;
+        });
+      }
+    }
+
+    if (!context.mounted) {
+      return;
+    }
+
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -939,7 +989,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 child: DashboardCard(
                   icon: Icons.check_circle,
                   title: 'Yoklama',
-                  subtitle: '${_attendanceRecords.length} kayıt',
+                  subtitle: _unreadAbsenceCount > 0
+                      ? _unreadAbsenceCount == 1
+                            ? '${_attendanceRecords.length} kayıt • 1 yeni devamsızlık'
+                            : '${_attendanceRecords.length} kayıt • $_unreadAbsenceCount yeni devamsızlık'
+                      : '${_attendanceRecords.length} kayıt',
+                  badgeCount: _unreadAbsenceCount,
                   onTap: () {
                     _openChildAttendanceScreen(context);
                   },
