@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../widgets/wave_background.dart';
 import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../models/app_models.dart';
 import '../theme/app_colors.dart';
@@ -36,6 +37,9 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
 
   /// Seçili durum filtresi; null ise tüm durumlar gösterilir.
   String? _statusFilter;
+
+  /// Seçili dönem (ör. "Haziran 2026"); null ise tüm dönemler gösterilir.
+  String? _periodFilter;
 
   Color _statusColor(String status) {
     if (status == 'Ödendi') {
@@ -181,21 +185,115 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
     );
   }
 
+  /// Kayıtlardaki dönemleri (ör. "Haziran 2026") en yeniden eskiye sıralı,
+  /// tekrarsız döner. Türkçe ay adı + yıl ayrıştırılabiliyorsa kronolojik,
+  /// aksi halde alfabetik sıralanır.
+  List<String> _distinctPeriods() {
+    final periods = <String>{
+      for (final payment in widget.payments)
+        if (payment.period.trim().isNotEmpty) payment.period.trim(),
+    }.toList();
+    periods.sort((a, b) {
+      final keyCompare = _periodSortKey(b).compareTo(_periodSortKey(a));
+      return keyCompare != 0 ? keyCompare : a.compareTo(b);
+    });
+    return periods;
+  }
+
+  /// Dönem metninden kronolojik sıralama anahtarı (yıl*100 + ay). Ayrıştırma
+  /// başarısızsa 0 döner (bu kayıtlar alfabetik sıralamaya düşer).
+  int _periodSortKey(String period) {
+    const months = [
+      'ocak', 'şubat', 'mart', 'nisan', 'mayıs', 'haziran',
+      'temmuz', 'ağustos', 'eylül', 'ekim', 'kasım', 'aralık',
+    ];
+    final lower = period.toLowerCase();
+    var monthIndex = 0;
+    for (var i = 0; i < months.length; i++) {
+      if (lower.contains(months[i])) {
+        monthIndex = i + 1;
+        break;
+      }
+    }
+    final yearMatch = RegExp(r'(\d{4})').firstMatch(period);
+    final year = yearMatch != null ? int.parse(yearMatch.group(1)!) : 0;
+    return year * 100 + monthIndex;
+  }
+
+  /// Dönem seçim satırı: tüm dönemler + kayıtlardaki her dönem için bir seçenek.
+  Widget _buildPeriodFilter() {
+    final periods = _distinctPeriods();
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+      child: Row(
+        children: [
+          Icon(
+            Icons.calendar_month,
+            size: 20,
+            color: Theme.of(context).textTheme.bodySmall?.color,
+          ),
+          const SizedBox(width: 8),
+          const Text('Dönem:'),
+          const SizedBox(width: 12),
+          Expanded(
+            child: DropdownButton<String?>(
+              isExpanded: true,
+              value: _periodFilter,
+              hint: const Text('Tüm dönemler'),
+              underline: const SizedBox.shrink(),
+              items: [
+                const DropdownMenuItem<String?>(
+                  value: null,
+                  child: Text('Tüm dönemler'),
+                ),
+                for (final period in periods)
+                  DropdownMenuItem<String?>(
+                    value: period,
+                    child: Text(period),
+                  ),
+              ],
+              onChanged: (value) {
+                setState(() => _periodFilter = value);
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _remindPayment(PaymentRecord payment) async {
+    await sendPaymentReminder(
+      context,
+      payment,
+      findStudentForPayment(payment, widget.students),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final filteredPayments = widget.payments.where((payment) {
-      final query = _searchQuery.toLowerCase();
+    final query = _searchQuery.toLowerCase();
 
+    // Arama + dönem filtresi: özet şeridi bu kümeyi yansıtır (durum çipleri
+    // yalnızca alttaki listeyi daraltır, özeti değil).
+    final searchAndPeriodFiltered = widget.payments.where((payment) {
       final matchesQuery =
           payment.studentName.toLowerCase().contains(query) ||
           payment.period.toLowerCase().contains(query) ||
           payment.status.toLowerCase().contains(query);
 
-      final matchesStatus =
-          _statusFilter == null || payment.status == _statusFilter;
+      final matchesPeriod =
+          _periodFilter == null || payment.period == _periodFilter;
 
-      return matchesQuery && matchesStatus;
+      return matchesQuery && matchesPeriod;
     }).toList();
+
+    final filteredPayments = searchAndPeriodFiltered
+        .where(
+          (payment) => _statusFilter == null || payment.status == _statusFilter,
+        )
+        .toList();
     final canAddPayment = widget.isAdmin && widget.students.isNotEmpty;
 
     return WaveScaffold(
@@ -203,7 +301,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
       body: Column(
         children: [
           if (widget.payments.isNotEmpty)
-            _PaymentSummaryBar(payments: widget.payments),
+            _PaymentSummaryBar(payments: searchAndPeriodFiltered),
           Padding(
             padding: const EdgeInsets.all(16),
             child: TextField(
@@ -219,6 +317,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
               },
             ),
           ),
+          if (widget.payments.isNotEmpty) _buildPeriodFilter(),
           if (widget.payments.isNotEmpty) _buildStatusFilters(),
           Expanded(
             child: widget.payments.isEmpty
@@ -264,14 +363,28 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
                           ),
                           isThreeLine: true,
                           trailing: widget.isAdmin
-                              ? IconButton(
-                                  icon: const Icon(
-                                    Icons.delete,
-                                    color: Colors.red,
-                                  ),
-                                  onPressed: () {
-                                    _confirmDeletePayment(originalIndex);
-                                  },
+                              ? Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    if (payment.status != 'Ödendi')
+                                      IconButton(
+                                        icon: const Icon(
+                                          Icons.notifications_active,
+                                          color: Colors.teal,
+                                        ),
+                                        tooltip: 'Hatırlatma gönder',
+                                        onPressed: () => _remindPayment(payment),
+                                      ),
+                                    IconButton(
+                                      icon: const Icon(
+                                        Icons.delete,
+                                        color: Colors.red,
+                                      ),
+                                      onPressed: () {
+                                        _confirmDeletePayment(originalIndex);
+                                      },
+                                    ),
+                                  ],
                                 )
                               : null,
                         ),
@@ -303,6 +416,89 @@ String _formatTl(int amount) {
   }
   final sign = amount < 0 ? '-' : '';
   return '$sign$buffer';
+}
+
+/// Bir ödemenin ait olduğu öğrenciyi bulur (önce id, sonra ada göre eşleşir).
+Student? findStudentForPayment(PaymentRecord payment, List<Student> students) {
+  if (payment.studentId.isNotEmpty) {
+    for (final student in students) {
+      if (student.id == payment.studentId) {
+        return student;
+      }
+    }
+  }
+  for (final student in students) {
+    if (student.name == payment.studentName) {
+      return student;
+    }
+  }
+  return null;
+}
+
+/// Türk telefon numarasını WhatsApp (wa.me) için uluslararası biçime getirir:
+/// rakam dışı karakterleri atar, baştaki 0'ı kaldırır, 90 ülke kodunu ekler.
+/// Numara ayrıştırılamazsa boş döner.
+String _sanitizeTrPhone(String raw) {
+  var digits = raw.replaceAll(RegExp(r'[^0-9]'), '');
+  if (digits.isEmpty) {
+    return '';
+  }
+  if (digits.startsWith('90')) {
+    return digits;
+  }
+  if (digits.startsWith('0')) {
+    digits = digits.substring(1);
+  }
+  return digits.isEmpty ? '' : '90$digits';
+}
+
+/// Veliye ödeme hatırlatması gönderir: öğrencinin veli telefonuna, hazır bir
+/// mesajla WhatsApp'ı dışarıda açar. Sunucu/SMS gerektirmez (ücretsiz).
+///
+/// Telefon yoksa ya da WhatsApp açılamazsa kullanıcıya bilgi verilir.
+Future<void> sendPaymentReminder(
+  BuildContext context,
+  PaymentRecord payment,
+  Student? student,
+) async {
+  final phone = _sanitizeTrPhone(student?.parentPhone ?? '');
+  if (phone.isEmpty) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Öğrencinin veli telefonu kayıtlı değil.'),
+      ),
+    );
+    return;
+  }
+
+  final durum = payment.status == 'Gecikti'
+      ? 'gecikmiş durumdadır'
+      : 'ödemesi beklenmektedir';
+  final message =
+      'Sayın velimiz, ${payment.studentName} için ${payment.period} dönemi '
+      'aidatı (${_formatTl(payment.amount)} TL) $durum. '
+      'Bilginize, teşekkür ederiz.';
+  final uri = Uri.parse(
+    'https://wa.me/$phone?text=${Uri.encodeComponent(message)}',
+  );
+
+  try {
+    final launched = await launchUrl(
+      uri,
+      mode: LaunchMode.externalApplication,
+    );
+    if (!launched && context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('WhatsApp açılamadı.')),
+      );
+    }
+  } catch (_) {
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('WhatsApp açılamadı.')),
+      );
+    }
+  }
 }
 
 /// Ödeme listesinin üstündeki özet şeridi: duruma göre toplam tutar ve sayı.
@@ -566,6 +762,22 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
             ),
           ),
           const SizedBox(height: 20),
+          if (widget.isAdmin && payment.status != 'Ödendi') ...[
+            ElevatedButton.icon(
+              onPressed: () => sendPaymentReminder(
+                context,
+                payment,
+                findStudentForPayment(payment, widget.students),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.teal,
+                foregroundColor: Colors.white,
+              ),
+              icon: const Icon(Icons.notifications_active),
+              label: const Text('WhatsApp ile Hatırlat'),
+            ),
+            const SizedBox(height: 8),
+          ],
           if (widget.isAdmin)
             ElevatedButton.icon(
               onPressed: _openEditPaymentScreen,
