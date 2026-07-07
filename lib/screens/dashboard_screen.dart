@@ -937,6 +937,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     final String summary;
     final List<String> suggestions;
+    final String introSubtitle;
     if (_isParent) {
       summary = AiSummary.buildParentSummary(
         childCount: _myChildren.length,
@@ -947,6 +948,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
         pendingLeaveCount: pendingLeaves,
       );
       suggestions = kParentAiSuggestions;
+      introSubtitle =
+          'Çocuğunuzun güncel özetini biliyorum. Aşağıdakilerden birini '
+          'seçebilir ya da kendi sorunuzu yazabilirsiniz.';
     } else {
       summary = AiSummary.buildStaffSummary(
         isAdmin: _isAdmin,
@@ -960,13 +964,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
         pendingLeaveCount: pendingLeaves,
       );
       suggestions = kStaffAiSuggestions;
+      introSubtitle =
+          'Kulübünüzün güncel özetini biliyorum. Aşağıdakilerden birini '
+          'seçebilir ya da kendi sorunu yazabilirsin.';
     }
 
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) =>
-            SporTekAiScreen(summary: summary, suggestions: suggestions),
+        builder: (context) => SporTekAiScreen(
+          summary: summary,
+          suggestions: suggestions,
+          introSubtitle: introSubtitle,
+        ),
       ),
     );
   }

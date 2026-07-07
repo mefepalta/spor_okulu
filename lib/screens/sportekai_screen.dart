@@ -33,10 +33,16 @@ class SporTekAiScreen extends StatefulWidget {
   /// Boş ekranda gösterilen hazır komutlar (role göre).
   final List<String> suggestions;
 
+  /// Giriş ekranındaki açıklama metni (role göre).
+  final String introSubtitle;
+
   const SporTekAiScreen({
     super.key,
     required this.summary,
     this.suggestions = kStaffAiSuggestions,
+    this.introSubtitle =
+        'Kulübünüzün güncel özetini biliyorum. Aşağıdakilerden birini '
+        'seçebilir ya da kendi sorunu yazabilirsin.',
   });
 
   @override
@@ -54,8 +60,10 @@ class _SporTekAiScreenState extends State<SporTekAiScreen> {
   String get _systemPrompt =>
       'Sen SporTekAi\'sın; bir spor okulu yönetim asistanısın. Aşağıda kulübün '
       'güncel ANONİM özeti var. Sorulara Türkçe, kısa ve uygulanabilir yanıt '
-      'ver; uygun olduğunda maddeler halinde yaz. Sana verilen verinin ötesine '
-      'geçme, sayı uydurma. Veri yoksa bunu açıkça belirt.\n\n'
+      'ver; uygun olduğunda maddeler halinde yaz. Sana verilen özet toplu ya da '
+      'genel olabilir; yine de eldeki bilgilerle en yararlı özeti/yanıtı sun. '
+      'Sayı uydurma; bir bilgi gerçekten yoksa kısaca belirt ama olabildiğince '
+      'yardımcı ol.\n\n'
       '${widget.summary}';
 
   @override
@@ -181,8 +189,7 @@ class _SporTekAiScreenState extends State<SporTekAiScreen> {
         ),
         const SizedBox(height: 6),
         Text(
-          'Kulübünüzün güncel özetini biliyorum. Aşağıdakilerden birini '
-          'seçebilir ya da kendi sorunu yazabilirsin.',
+          widget.introSubtitle,
           textAlign: TextAlign.center,
           style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
         ),
