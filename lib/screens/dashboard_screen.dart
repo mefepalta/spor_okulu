@@ -22,6 +22,7 @@ import 'child_attendance_screen.dart';
 import 'coaches_screen.dart';
 import 'events_screen.dart';
 import 'groups_screen.dart';
+import 'notifications_screen.dart';
 import 'parents_screen.dart';
 import 'payments_screen.dart';
 import 'performance_screen.dart';
@@ -938,7 +939,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
           const SizedBox(height: 12),
           const Text(
-            'Spor Okulu',
+            'Ana Panel',
             style: TextStyle(
               color: Colors.white,
               fontSize: 20,
@@ -1038,8 +1039,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
     ];
   }
 
-  /// AppBar'ın sağ üstündeki duyuru çanı: okunmamış duyuru sayısını rozetle
-  /// gösterir, dokununca duyurular ekranını açar ve rozeti sıfırlar.
+  /// AppBar'ın sağ üstündeki bildirim çanı: okunmamış duyuru sayısını rozetle
+  /// gösterir, dokununca bildirim merkezini açar ve rozeti sıfırlar.
   Widget _buildNotificationsAction(BuildContext context) {
     final hasUnread = _unreadAnnouncementCount > 0;
 
@@ -1050,15 +1051,98 @@ class _DashboardScreenState extends State<DashboardScreen> {
         _unreadAnnouncementCount > 99 ? '99+' : '$_unreadAnnouncementCount',
       ),
       child: IconButton(
-        tooltip: 'Duyurular',
+        tooltip: 'Bildirimler',
         onPressed: () {
-          _openAnnouncementsScreen(context);
+          _openNotificationsScreen(context);
         },
         icon: Icon(
           hasUnread ? Icons.notifications_active : Icons.notifications_outlined,
         ),
       ),
     );
+  }
+
+  /// Çan ikonunun açtığı bildirim merkezi. Bildirimler mevcut veriden
+  /// (duyurular, ödenmemiş ödemeler, veli için devamsızlıklar) türetilir;
+  /// açılışta duyuru rozeti sıfırlanır.
+  void _openNotificationsScreen(BuildContext context) {
+    setState(() {
+      _unreadAnnouncementCount = 0;
+    });
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) =>
+            NotificationsScreen(notifications: _buildNotifications()),
+      ),
+    );
+  }
+
+  /// Mevcut veriden bildirim listesi türetir (yeni koleksiyon gerektirmez).
+  List<AppNotification> _buildNotifications() {
+    final items = <AppNotification>[];
+
+    for (final announcement in _visibleAnnouncements(_announcements)) {
+      items.add(
+        AppNotification(
+          category: 'Duyuru',
+          icon: Icons.campaign,
+          color: AppColors.primary,
+          title: announcement.title,
+          subtitle: announcement.content,
+          dateText: announcement.dateText,
+          onTap: () => _openAnnouncementsScreen(context),
+        ),
+      );
+    }
+
+    // Ödeme bildirimleri: personel tümünü, veli kendi çocuklarınınkini görür
+    // (veli ödemeleri zaten yalnızca kendi çocukları için yüklenir).
+    if (_canViewPayments || _isParent) {
+      for (final payment in _payments.where(
+        (payment) => payment.status != 'Ödendi',
+      )) {
+        final parts = <String>[
+          if (payment.period.isNotEmpty) payment.period,
+          if (payment.amount > 0) _formatTl(payment.amount),
+        ];
+        items.add(
+          AppNotification(
+            category: 'Ödeme',
+            icon: Icons.payment,
+            color: payment.status == 'Gecikti' ? Colors.red : Colors.orange,
+            title: '${payment.studentName} • ${payment.status}',
+            subtitle: parts.join(' • '),
+            dateText: payment.dateText,
+            onTap: () => _openPaymentsScreen(context),
+          ),
+        );
+      }
+    }
+
+    // Devamsızlık bildirimleri (veli): çocuğunun "Gelmedi" olduğu kayıtlar.
+    if (_isParent) {
+      for (final record in _attendanceRecords) {
+        for (final child in _myChildren) {
+          if (record.absentStudentIds.contains(child.id)) {
+            items.add(
+              AppNotification(
+                category: 'Devamsızlık',
+                icon: Icons.report_gmailerrorred,
+                color: Colors.red,
+                title: '${child.name} gelmedi',
+                subtitle: '${record.groupName} • ${record.dateText}',
+                dateText: record.dateText,
+                onTap: () => _openChildAttendanceScreen(context),
+              ),
+            );
+          }
+        }
+      }
+    }
+
+    return items;
   }
 
   @override
