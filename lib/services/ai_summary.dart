@@ -106,6 +106,66 @@ class AiSummary {
     return lines.join('\n');
   }
 
+  /// Veli için **anonim** çocuk-odaklı özet. Yalnızca velinin kendi
+  /// çocuk(lar)ına dair toplu bilgiler; ad/telefon içermez.
+  static String buildParentSummary({
+    required int childCount,
+    required List<AttendanceRecord> attendance,
+    required List<PaymentRecord> payments,
+    required List<PerformanceRecord> performance,
+    required int eventCount,
+    required int pendingLeaveCount,
+  }) {
+    final lines = <String>[];
+    lines.add('Velinin çocuk(lar)ına dair güncel durum (anonim):');
+    lines.add('- Takip edilen çocuk sayısı: $childCount.');
+
+    var present = 0;
+    var absent = 0;
+    for (final record in attendance) {
+      present += record.presentStudentIds.isNotEmpty
+          ? record.presentStudentIds.length
+          : record.presentStudentNames.length;
+      absent += record.absentStudentIds.isNotEmpty
+          ? record.absentStudentIds.length
+          : record.absentStudentNames.length;
+    }
+    final totalMarks = present + absent;
+    if (totalMarks > 0) {
+      final rate = (present / totalMarks * 100).round();
+      lines.add(
+        '- Yoklama: ${attendance.length} kayıt, katılım %$rate '
+        '($present geldi, $absent gelmedi).',
+      );
+    } else {
+      lines.add('- Yoklama: henüz kayıt yok.');
+    }
+
+    if (payments.isNotEmpty) {
+      final paid = _sum(payments, 'Ödendi');
+      final waiting = _sum(payments, 'Bekliyor');
+      final overdue = _sum(payments, 'Gecikti');
+      lines.add(
+        '- Ödemeler: ödenen $paid TL, bekleyen $waiting TL, '
+        'geciken $overdue TL.',
+      );
+    } else {
+      lines.add('- Ödemeler: henüz kayıt yok.');
+    }
+
+    if (performance.isNotEmpty) {
+      lines.add('- Performans: ${performance.length} değerlendirme kaydı var.');
+    }
+    if (eventCount > 0) {
+      lines.add('- Planlı etkinlik sayısı: $eventCount.');
+    }
+    if (pendingLeaveCount > 0) {
+      lines.add('- Bekleyen mazeret talebi: $pendingLeaveCount.');
+    }
+
+    return lines.join('\n');
+  }
+
   static int _sum(List<PaymentRecord> payments, String status) => payments
       .where((p) => p.status == status)
       .fold(0, (total, p) => total + p.amount);

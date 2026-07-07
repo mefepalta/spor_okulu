@@ -16,7 +16,6 @@ import '../services/reminders_service.dart';
 import '../services/user_management_service.dart';
 import '../services/user_role_service.dart';
 import '../theme/app_colors.dart';
-import '../widgets/dashboard_card.dart';
 import '../widgets/summary_section.dart';
 import 'announcements_screen.dart';
 import 'attendance_screen.dart';
@@ -935,22 +934,39 @@ class _DashboardScreenState extends State<DashboardScreen> {
     final pendingLeaves = _leaveRequests
         .where((r) => r.status == LeaveStatus.pending)
         .length;
-    final summary = AiSummary.buildStaffSummary(
-      isAdmin: _isAdmin,
-      studentCount: _students.length,
-      coachCount: _coaches.length,
-      groupCount: _groups.length,
-      attendance: _attendanceRecords,
-      payments: _payments,
-      cash: _cashTransactions,
-      equipment: _equipment,
-      pendingLeaveCount: pendingLeaves,
-    );
+
+    final String summary;
+    final List<String> suggestions;
+    if (_isParent) {
+      summary = AiSummary.buildParentSummary(
+        childCount: _myChildren.length,
+        attendance: _attendanceRecords,
+        payments: _payments,
+        performance: _performanceRecords,
+        eventCount: _events.length,
+        pendingLeaveCount: pendingLeaves,
+      );
+      suggestions = kParentAiSuggestions;
+    } else {
+      summary = AiSummary.buildStaffSummary(
+        isAdmin: _isAdmin,
+        studentCount: _students.length,
+        coachCount: _coaches.length,
+        groupCount: _groups.length,
+        attendance: _attendanceRecords,
+        payments: _payments,
+        cash: _cashTransactions,
+        equipment: _equipment,
+        pendingLeaveCount: pendingLeaves,
+      );
+      suggestions = kStaffAiSuggestions;
+    }
 
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => SporTekAiScreen(summary: summary),
+        builder: (context) =>
+            SporTekAiScreen(summary: summary, suggestions: suggestions),
       ),
     );
   }
@@ -1322,6 +1338,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       _drawerNav(Icons.event_available, 'Etkinlikler', _openEventsScreen),
       _drawerNav(Icons.payment, 'Ödemeler', _openPaymentsScreen),
       _drawerSection('Genel'),
+      _drawerNav(Icons.auto_awesome, 'SporTekAi', _openSporTekAiScreen),
       _drawerNav(Icons.campaign, 'Duyurular', _openAnnouncementsScreen),
       _drawerNav(Icons.sports_soccer, 'Sporlar', _openSportsScreen),
     ];
@@ -1530,81 +1547,89 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return _buildStaffSummary(context);
   }
 
-  /// Veli panosu: Performans/Etkinlikler ve Yoklama/Ödemeler ikişerli satırlar,
-  /// altta tam genişlikte Duyurular kartı.
+  /// Veli panosu: gezinme kartları yerine çocuğa dair türetilen özetler.
+  /// Ayrıntılara ☰ menüden erişilir (personel panosuyla aynı düzen).
   Widget _buildParentBody(BuildContext context) {
-    final childCount = _myChildren.length;
+    final sections = <Widget>[
+      _buildParentGreeting(),
+      const SizedBox(height: 16),
+      _buildParentStatTilesRow(context),
+      const SizedBox(height: 12),
+      _buildAttendanceSummarySection(context),
+      _buildFinanceSummarySection(context),
+    ];
 
-    return ListView(
-      padding: const EdgeInsets.all(16),
+    final unpaidSection = _buildUnpaidSection(context);
+    if (unpaidSection != null) {
+      sections.add(unpaidSection);
+    }
+
+    sections.add(_buildRemindersSection(context));
+
+    final announcementSection = _buildLatestAnnouncementSection(context);
+    if (announcementSection != null) {
+      sections.add(announcementSection);
+    }
+
+    return ListView(padding: const EdgeInsets.all(16), children: sections);
+  }
+
+  Widget _buildParentGreeting() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          height: 170,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: DashboardCard(
-                  icon: Icons.query_stats,
-                  title: 'Performans',
-                  subtitle: childCount == 1
-                      ? '1 öğrenci'
-                      : '$childCount öğrenci',
-                  onTap: () {
-                    _openPerformanceScreen(context);
-                  },
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: DashboardCard(
-                  icon: Icons.event_available,
-                  title: 'Etkinlikler',
-                  subtitle: '${_events.length} etkinlik',
-                  onTap: () {
-                    _openEventsScreen(context);
-                  },
-                ),
-              ),
-            ],
-          ),
+        const Text(
+          'Merhaba 👋',
+          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
         ),
-        const SizedBox(height: 12),
-        SizedBox(
-          height: 170,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: DashboardCard(
-                  icon: Icons.check_circle,
-                  title: 'Yoklama',
-                  subtitle: _unreadAbsenceCount > 0
-                      ? _unreadAbsenceCount == 1
-                            ? '${_attendanceRecords.length} kayıt • 1 yeni devamsızlık'
-                            : '${_attendanceRecords.length} kayıt • $_unreadAbsenceCount yeni devamsızlık'
-                      : '${_attendanceRecords.length} kayıt',
-                  badgeCount: _unreadAbsenceCount,
-                  onTap: () {
-                    _openChildAttendanceScreen(context);
-                  },
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: DashboardCard(
-                  icon: Icons.payment,
-                  title: 'Ödemeler',
-                  subtitle: '${_payments.length} kayıt',
-                  onTap: () {
-                    _openPaymentsScreen(context);
-                  },
-                ),
-              ),
-            ],
-          ),
+        const SizedBox(height: 4),
+        Text(
+          'Çocuğunuzun güncel özeti aşağıda.',
+          style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
         ),
       ],
+    );
+  }
+
+  Widget _buildParentStatTilesRow(BuildContext context) {
+    final childCount = _myChildren.length;
+    final visibleAnnouncements = _visibleAnnouncements(_announcements).length;
+
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: StatTile(
+              icon: Icons.query_stats,
+              value: '$childCount',
+              label: 'Çocuğum',
+              accent: Colors.green,
+              onTap: () => _openPerformanceScreen(context),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: StatTile(
+              icon: Icons.event_available,
+              value: '${_events.length}',
+              label: 'Etkinlik',
+              accent: Colors.orange,
+              onTap: () => _openEventsScreen(context),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: StatTile(
+              icon: Icons.campaign,
+              value: '$visibleAnnouncements',
+              label: 'Duyuru',
+              accent: AppColors.primary,
+              onTap: () => _openAnnouncementsScreen(context),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -1736,33 +1761,73 @@ class _DashboardScreenState extends State<DashboardScreen> {
       title: 'Yoklama Özeti',
       iconColor: Colors.green,
       actionLabel: 'Tümü',
-      onAction: () => _openAttendanceScreen(context),
+      onAction: () => _isParent
+          ? _openChildAttendanceScreen(context)
+          : _openAttendanceScreen(context),
       child: recordCount == 0
           ? _emptyHint('Henüz yoklama kaydı yok.')
-          : SummaryMetricsRow(
-              metrics: [
-                SummaryMetric(
-                  value: '$recordCount',
-                  label: 'Kayıt',
-                  color: AppColors.primary,
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SummaryMetricsRow(
+                  metrics: [
+                    SummaryMetric(
+                      value: '$recordCount',
+                      label: 'Kayıt',
+                      color: AppColors.primary,
+                    ),
+                    SummaryMetric(
+                      value: '$present',
+                      label: 'Geldi',
+                      color: Colors.green,
+                    ),
+                    SummaryMetric(
+                      value: '$absent',
+                      label: 'Gelmedi',
+                      color: Colors.red,
+                    ),
+                    SummaryMetric(
+                      value: '%$rate',
+                      label: 'Katılım',
+                      color: rateColor,
+                    ),
+                  ],
                 ),
-                SummaryMetric(
-                  value: '$present',
-                  label: 'Geldi',
-                  color: Colors.green,
-                ),
-                SummaryMetric(
-                  value: '$absent',
-                  label: 'Gelmedi',
-                  color: Colors.red,
-                ),
-                SummaryMetric(
-                  value: '%$rate',
-                  label: 'Katılım',
-                  color: rateColor,
-                ),
+                if (_isParent && _unreadAbsenceCount > 0) ...[
+                  const SizedBox(height: 12),
+                  _absenceAlertNote(context),
+                ],
               ],
             ),
+    );
+  }
+
+  /// Velinin bu cihazda henüz görmediği devamsızlıkları vurgulayan rozet.
+  Widget _absenceAlertNote(BuildContext context) {
+    final count = _unreadAbsenceCount;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+        color: Colors.red.withValues(alpha: 0.12),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Row(
+        children: [
+          const Icon(Icons.notification_important, color: Colors.red, size: 18),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              count == 1
+                  ? '1 yeni devamsızlık kaydı'
+                  : '$count yeni devamsızlık kaydı',
+              style: const TextStyle(
+                color: Colors.red,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 

@@ -6,15 +6,38 @@ import '../theme/app_colors.dart';
 import '../widgets/empty_state.dart';
 import '../widgets/wave_background.dart';
 
-/// SporTekAi ✨ — kulübün anonim özetini bağlam alan sohbet asistanı.
+/// Personel için varsayılan hazır komutlar.
+const List<String> kStaffAiSuggestions = [
+  'Bu ayı özetle',
+  'Nelere dikkat etmeliyim?',
+  'Devamsızlık için veliye kısa bir mesaj taslağı yaz',
+  'Tahsilatı artırmak için 3 öneri ver',
+];
+
+/// Veli için varsayılan hazır komutlar.
+const List<String> kParentAiSuggestions = [
+  'Çocuğumun durumunu özetle',
+  'Devamsızlık durumu nasıl?',
+  'Ödeme durumumu açıkla',
+  'Gelişimi için ne önerirsin?',
+];
+
+/// SporTekAi ✨ — anonim özeti bağlam alan sohbet asistanı.
 ///
 /// Cloudflare Worker proxy üzerinden Groq'a bağlanır (bkz. cloudflare/README).
 /// Modele yalnızca [summary] (anonim) + kullanıcının sorusu gider.
 class SporTekAiScreen extends StatefulWidget {
-  /// Anonim kulüp özeti (AiSummary ile üretilir).
+  /// Anonim özet (AiSummary ile üretilir).
   final String summary;
 
-  const SporTekAiScreen({super.key, required this.summary});
+  /// Boş ekranda gösterilen hazır komutlar (role göre).
+  final List<String> suggestions;
+
+  const SporTekAiScreen({
+    super.key,
+    required this.summary,
+    this.suggestions = kStaffAiSuggestions,
+  });
 
   @override
   State<SporTekAiScreen> createState() => _SporTekAiScreenState();
@@ -27,13 +50,6 @@ class _SporTekAiScreenState extends State<SporTekAiScreen> {
 
   final List<AiMessage> _messages = [];
   bool _isSending = false;
-
-  static const List<String> _suggestions = [
-    'Bu ayı özetle',
-    'Nelere dikkat etmeliyim?',
-    'Devamsızlık için veliye kısa bir mesaj taslağı yaz',
-    'Tahsilatı artırmak için 3 öneri ver',
-  ];
 
   String get _systemPrompt =>
       'Sen SporTekAi\'sın; bir spor okulu yönetim asistanısın. Aşağıda kulübün '
@@ -171,7 +187,7 @@ class _SporTekAiScreenState extends State<SporTekAiScreen> {
           style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
         ),
         const SizedBox(height: 20),
-        for (final suggestion in _suggestions)
+        for (final suggestion in widget.suggestions)
           Padding(
             padding: const EdgeInsets.only(bottom: 10),
             child: OutlinedButton(
