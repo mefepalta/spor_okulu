@@ -76,6 +76,61 @@ class SummaryMetric {
   });
 }
 
+/// Bir oran çubuğu segmenti: ağırlık (değer) + renk.
+class SummaryBarSegment {
+  final num value;
+  final Color color;
+
+  const SummaryBarSegment({required this.value, required this.color});
+}
+
+/// Metriklerin oranını gösteren ince, yuvarlatılmış yığılı çubuk. Örn. yoklama
+/// için gelen/gelmeyen, finans için tahsil/bekleyen/geciken payı. Değeri 0 olan
+/// segment gizlenir; toplam 0 ise nötr bir zemin gösterir.
+class SummaryBar extends StatelessWidget {
+  final List<SummaryBarSegment> segments;
+  final double height;
+
+  const SummaryBar({super.key, required this.segments, this.height = 8});
+
+  @override
+  Widget build(BuildContext context) {
+    final total = segments.fold<double>(0, (sum, s) => sum + s.value);
+    final radius = BorderRadius.circular(height / 2);
+
+    if (total <= 0) {
+      return Container(
+        height: height,
+        decoration: BoxDecoration(
+          color: Theme.of(context).dividerColor,
+          borderRadius: radius,
+        ),
+      );
+    }
+
+    final parts = <Widget>[];
+    for (final segment in segments) {
+      if (segment.value <= 0) {
+        continue;
+      }
+      // Alt piksel yuvarlamada segmentlerin kaybolmaması için 1000'lik ölçek.
+      final flex = (segment.value / total * 1000).round().clamp(1, 1000);
+      parts.add(Expanded(flex: flex, child: ColoredBox(color: segment.color)));
+    }
+
+    return ClipRRect(
+      borderRadius: radius,
+      child: SizedBox(
+        height: height,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: parts,
+        ),
+      ),
+    );
+  }
+}
+
 /// [SummaryMetric] listesini dikey ayraçlarla yatay dizen satır. Değerler
 /// taşmayı önlemek için ölçeklenir.
 class SummaryMetricsRow extends StatelessWidget {

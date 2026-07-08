@@ -515,6 +515,13 @@ extension _DashboardBodies on _DashboardScreenState {
                     ),
                   ],
                 ),
+                const SizedBox(height: 12),
+                SummaryBar(
+                  segments: [
+                    SummaryBarSegment(value: present, color: Colors.green),
+                    SummaryBarSegment(value: absent, color: Colors.red),
+                  ],
+                ),
                 if (_isChildScoped && _unreadAbsenceCount > 0) ...[
                   const SizedBox(height: 12),
                   _absenceAlertNote(context),
@@ -566,25 +573,46 @@ extension _DashboardBodies on _DashboardScreenState {
       onAction: () => _openPaymentsScreen(context),
       child: _payments.isEmpty
           ? _emptyHint('Henüz ödeme kaydı yok.')
-          : SummaryMetricsRow(
-              metrics: [
-                SummaryMetric(
-                  value: formatTl(_sumPaymentsFor('Ödendi')),
-                  label: 'Tahsil',
-                  color: Colors.green,
-                ),
-                SummaryMetric(
-                  value: formatTl(_sumPaymentsFor('Bekliyor')),
-                  label: 'Bekleyen',
-                  color: Colors.orange,
-                ),
-                SummaryMetric(
-                  value: formatTl(_sumPaymentsFor('Gecikti')),
-                  label: 'Geciken',
-                  color: Colors.red,
-                ),
-              ],
+          : _financeContent(context),
+    );
+  }
+
+  Widget _financeContent(BuildContext context) {
+    final collected = _sumPaymentsFor('Ödendi');
+    final pending = _sumPaymentsFor('Bekliyor');
+    final overdue = _sumPaymentsFor('Gecikti');
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        SummaryMetricsRow(
+          metrics: [
+            SummaryMetric(
+              value: formatTl(collected),
+              label: 'Tahsil',
+              color: Colors.green,
             ),
+            SummaryMetric(
+              value: formatTl(pending),
+              label: 'Bekleyen',
+              color: Colors.orange,
+            ),
+            SummaryMetric(
+              value: formatTl(overdue),
+              label: 'Geciken',
+              color: Colors.red,
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+        SummaryBar(
+          segments: [
+            SummaryBarSegment(value: collected, color: Colors.green),
+            SummaryBarSegment(value: pending, color: Colors.orange),
+            SummaryBarSegment(value: overdue, color: Colors.red),
+          ],
+        ),
+      ],
     );
   }
 
@@ -607,22 +635,34 @@ extension _DashboardBodies on _DashboardScreenState {
       onAction: () => _openClubFinanceScreen(context),
       child: _cashTransactions.isEmpty
           ? _emptyHint('Henüz kasa hareketi yok.')
-          : SummaryMetricsRow(
-              metrics: [
-                SummaryMetric(
-                  value: formatTl(balance),
-                  label: 'Kasa',
-                  color: balance >= 0 ? Colors.green : Colors.red,
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SummaryMetricsRow(
+                  metrics: [
+                    SummaryMetric(
+                      value: formatTl(balance),
+                      label: 'Kasa',
+                      color: balance >= 0 ? Colors.green : Colors.red,
+                    ),
+                    SummaryMetric(
+                      value: formatTl(income),
+                      label: 'Gelir',
+                      color: Colors.green,
+                    ),
+                    SummaryMetric(
+                      value: formatTl(expense),
+                      label: 'Gider',
+                      color: Colors.red,
+                    ),
+                  ],
                 ),
-                SummaryMetric(
-                  value: formatTl(income),
-                  label: 'Gelir',
-                  color: Colors.green,
-                ),
-                SummaryMetric(
-                  value: formatTl(expense),
-                  label: 'Gider',
-                  color: Colors.red,
+                const SizedBox(height: 12),
+                SummaryBar(
+                  segments: [
+                    SummaryBarSegment(value: income, color: Colors.green),
+                    SummaryBarSegment(value: expense, color: Colors.red),
+                  ],
                 ),
               ],
             ),
