@@ -8,6 +8,7 @@ import 'firebase_options.dart';
 import 'routes/app_routes.dart';
 import 'screens/auth_gate.dart';
 import 'theme/app_theme.dart';
+import 'theme/background_controller.dart';
 import 'theme/theme_controller.dart';
 import 'widgets/app_splash_screen.dart';
 
@@ -55,6 +56,8 @@ class _SporOkuluAppState extends State<SporOkuluApp> {
     super.initState();
     // Kayıtlı aydınlık/karanlık tercihini yükle (yoksa cihaz ayarını kullanır).
     ThemeController.instance.load();
+    // Kayıtlı arka plan efekti seviyesini yükle (yoksa yüksek ile başlar).
+    BackgroundController.instance.load();
   }
 
   @override

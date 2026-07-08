@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
+import '../theme/background_controller.dart';
 
 /// Beyaz zemin üzerine akışkan mavi dalga şeritleri çizen dekoratif arka plan.
 ///
@@ -37,13 +38,30 @@ class _WaveBackgroundState extends State<WaveBackground>
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 22),
-    )..repeat();
+    );
+    // Partikül animasyonu yalnızca "yüksek" seviyede çalışır; seviye değişince
+    // buna göre başlar/durur (düşük/orta seviyede boş yere kare üretmez).
+    _syncAnimation();
+    BackgroundController.instance.level.addListener(_syncAnimation);
   }
 
   @override
   void dispose() {
+    BackgroundController.instance.level.removeListener(_syncAnimation);
     _controller.dispose();
     super.dispose();
+  }
+
+  /// Animasyonu geçerli seviyeyle eşler: yalnızca [BackgroundLevel.full]
+  /// partikül gerektirdiğinden diğer seviyelerde denetleyici durdurulur.
+  void _syncAnimation() {
+    final needsParticles =
+        BackgroundController.instance.level.value == BackgroundLevel.full;
+    if (needsParticles && !_controller.isAnimating) {
+      _controller.repeat();
+    } else if (!needsParticles && _controller.isAnimating) {
+      _controller.stop();
+    }
   }
 
   /// Determinist (sabit tohumlu) partikül kümesi: doğal görünür ama her
@@ -69,43 +87,52 @@ class _WaveBackgroundState extends State<WaveBackground>
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: isDark ? AppColors.darkSurface : AppColors.surface,
-      ),
-      child: Stack(
-        children: [
-          // Statik dalga — bir kez rasterlenir, her karede yeniden çizilmez.
-          Positioned.fill(
-            child: RepaintBoundary(
-              child: CustomPaint(
-                painter: _WavePainter(
-                  intensity: widget.intensity,
-                  isDark: isDark,
-                ),
-                isComplex: true,
-                willChange: false,
-              ),
-            ),
+    // Seviye tercihi değişince arka plan katmanları anında yeniden kurulur.
+    return ValueListenableBuilder<BackgroundLevel>(
+      valueListenable: BackgroundController.instance.level,
+      builder: (context, level, _) {
+        return DecoratedBox(
+          decoration: BoxDecoration(
+            color: isDark ? AppColors.darkSurface : AppColors.surface,
           ),
-          // Hareketli partikül katmanı — yalnızca bu katman her karede çizilir.
-          Positioned.fill(
-            child: IgnorePointer(
-              child: RepaintBoundary(
-                child: CustomPaint(
-                  painter: _ParticlePainter(
-                    progress: _controller,
-                    particles: _particles,
-                    intensity: widget.intensity,
-                    isDark: isDark,
+          child: Stack(
+            children: [
+              // Statik dalga (orta + yüksek seviyede) — bir kez rasterlenir.
+              if (level != BackgroundLevel.none)
+                Positioned.fill(
+                  child: RepaintBoundary(
+                    child: CustomPaint(
+                      painter: _WavePainter(
+                        intensity: widget.intensity,
+                        isDark: isDark,
+                      ),
+                      isComplex: true,
+                      willChange: false,
+                    ),
                   ),
                 ),
-              ),
-            ),
+              // Hareketli partikül katmanı (yalnızca yüksek seviye) — her
+              // karede çizilen tek katman budur.
+              if (level == BackgroundLevel.full)
+                Positioned.fill(
+                  child: IgnorePointer(
+                    child: RepaintBoundary(
+                      child: CustomPaint(
+                        painter: _ParticlePainter(
+                          progress: _controller,
+                          particles: _particles,
+                          intensity: widget.intensity,
+                          isDark: isDark,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              widget.child,
+            ],
           ),
-          widget.child,
-        ],
-      ),
+        );
+      },
     );
   }
 }

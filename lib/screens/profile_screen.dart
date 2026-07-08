@@ -8,6 +8,7 @@ import '../models/app_models.dart';
 import '../routes/app_routes.dart';
 import '../services/profile_service.dart';
 import '../theme/app_colors.dart';
+import '../theme/background_controller.dart';
 import '../theme/theme_controller.dart';
 import '../utils/launchers.dart';
 import '../widgets/wave_background.dart';
@@ -335,6 +336,55 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     selected: {mode},
                     onSelectionChanged: (selection) {
                       ThemeController.instance.setMode(selection.first);
+                    },
+                  ),
+                );
+              },
+            ),
+            const SizedBox(height: 20),
+            const Row(
+              children: [
+                Icon(Icons.auto_awesome),
+                SizedBox(width: 12),
+                Text(
+                  'Arka plan efekti',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                ),
+              ],
+            ),
+            const SizedBox(height: 4),
+            const Text(
+              'Yüksek: dalga + partikül · Orta: yalnızca dalga · Düşük: sade zemin.',
+              style: TextStyle(color: Colors.grey, fontSize: 12),
+            ),
+            const SizedBox(height: 16),
+            ValueListenableBuilder<BackgroundLevel>(
+              valueListenable: BackgroundController.instance.level,
+              builder: (context, level, _) {
+                return SizedBox(
+                  width: double.infinity,
+                  child: SegmentedButton<BackgroundLevel>(
+                    showSelectedIcon: false,
+                    segments: const [
+                      ButtonSegment(
+                        value: BackgroundLevel.full,
+                        icon: Icon(Icons.auto_awesome),
+                        label: Text('Yüksek'),
+                      ),
+                      ButtonSegment(
+                        value: BackgroundLevel.waves,
+                        icon: Icon(Icons.waves),
+                        label: Text('Orta'),
+                      ),
+                      ButtonSegment(
+                        value: BackgroundLevel.none,
+                        icon: Icon(Icons.block),
+                        label: Text('Düşük'),
+                      ),
+                    ],
+                    selected: {level},
+                    onSelectionChanged: (selection) {
+                      BackgroundController.instance.setLevel(selection.first);
                     },
                   ),
                 );
