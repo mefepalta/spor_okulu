@@ -274,13 +274,32 @@ extension _DashboardBodies on _DashboardScreenState {
       : record.absentStudentNames.length;
 
   Widget _buildAttendanceSummarySection(BuildContext context) {
-    final recordCount = _attendanceRecords.length;
+    int recordCount;
     var present = 0;
     var absent = 0;
-    for (final record in _attendanceRecords) {
-      present += _presentCountOf(record);
-      absent += _absentCountOf(record);
+
+    if (_isChildScoped) {
+      // Çocuğa özel sayım: yalnızca velinin/öğrencinin kendi çocuk(lar)ının o
+      // kayıttaki Geldi/Gelmedi durumu sayılır; grubun diğer öğrencileri değil.
+      // ChildAttendanceScreen ile aynı semantik (kimlik eşleşmesi üzerinden).
+      for (final record in _attendanceRecords) {
+        for (final child in _myChildren) {
+          if (record.presentStudentIds.contains(child.id)) {
+            present++;
+          } else if (record.absentStudentIds.contains(child.id)) {
+            absent++;
+          }
+        }
+      }
+      recordCount = present + absent;
+    } else {
+      recordCount = _attendanceRecords.length;
+      for (final record in _attendanceRecords) {
+        present += _presentCountOf(record);
+        absent += _absentCountOf(record);
+      }
     }
+
     final total = present + absent;
     final rate = total == 0 ? 0 : (present / total * 100).round();
     final rateColor = rate >= 80
@@ -306,7 +325,7 @@ extension _DashboardBodies on _DashboardScreenState {
                   metrics: [
                     SummaryMetric(
                       value: '$recordCount',
-                      label: 'Kayıt',
+                      label: _isChildScoped ? 'Ders' : 'Kayıt',
                       color: AppColors.primary,
                     ),
                     SummaryMetric(
