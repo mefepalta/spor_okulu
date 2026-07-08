@@ -39,6 +39,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool get isAdmin => widget.userRole == 'admin';
   bool get isCoach => widget.userRole == 'coach';
   bool get isParent => widget.userRole == 'veli';
+  bool get isStudent => widget.userRole == 'ogrenci';
 
   @override
   void initState() {
@@ -77,6 +78,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if (isAdmin) return 'Admin';
     if (isCoach) return 'Antrenör';
     if (isParent) return 'Veli';
+    if (isStudent) return 'Öğrenci';
     return 'Görüntüleyici';
   }
 
@@ -90,6 +92,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if (isParent) {
       return 'Çocuğunun performansını takip edebilir ve etkinliklere katılım cevabı verebilir.';
     }
+    if (isStudent) {
+      return 'Kendi yoklama ve performans bilgisini görüntüleyebilir.';
+    }
     return 'Kayıtları görüntüleyebilir, ancak değişiklik yapamaz.';
   }
 
@@ -97,6 +102,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if (isAdmin) return Icons.admin_panel_settings;
     if (isCoach) return Icons.sports;
     if (isParent) return Icons.family_restroom;
+    if (isStudent) return Icons.school;
     return Icons.person;
   }
 
@@ -104,6 +110,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if (isAdmin) return Icons.verified_user;
     if (isCoach) return Icons.sports;
     if (isParent) return Icons.family_restroom;
+    if (isStudent) return Icons.school;
     return Icons.visibility;
   }
 
@@ -250,11 +257,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: EdgeInsets.fromLTRB(16, 16, 16, 4),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
             child: Text(
-              'Öğrencilerim',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+              isStudent ? 'Öğrenci Bilgim' : 'Öğrencilerim',
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
             ),
           ),
           for (final child in widget.children)
