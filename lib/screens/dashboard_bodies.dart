@@ -51,45 +51,60 @@ extension _DashboardBodies on _DashboardScreenState {
     required IconData icon,
     ({String text, IconData icon, Color color})? highlight,
   }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            CircleAvatar(
-              radius: 24,
-              backgroundColor: AppColors.primary.withValues(alpha: 0.12),
-              child: Icon(icon, color: AppColors.primary, size: 26),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    subtitle,
-                    style: TextStyle(
-                      color: Theme.of(context).textTheme.bodySmall?.color,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            AppColors.primary.withValues(alpha: 0.24),
+            AppColors.primary.withValues(alpha: 0.06),
           ],
         ),
-        if (highlight != null) ...[
-          const SizedBox(height: 12),
-          _highlightPill(highlight),
+        border: Border.all(color: AppColors.primary.withValues(alpha: 0.18)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              CircleAvatar(
+                radius: 24,
+                backgroundColor: AppColors.primary,
+                child: Icon(icon, color: Colors.white, size: 26),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      subtitle,
+                      style: TextStyle(
+                        color: Theme.of(context).textTheme.bodySmall?.color,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          if (highlight != null) ...[
+            const SizedBox(height: 14),
+            _highlightPill(highlight),
+          ],
         ],
-      ],
+      ),
     );
   }
 
@@ -97,8 +112,9 @@ extension _DashboardBodies on _DashboardScreenState {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
-        color: data.color.withValues(alpha: 0.12),
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: data.color.withValues(alpha: 0.35)),
       ),
       child: Row(
         children: [
