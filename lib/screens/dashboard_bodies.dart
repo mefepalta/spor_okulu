@@ -21,20 +21,198 @@ extension _DashboardBodies on _DashboardScreenState {
     return ListView(padding: const EdgeInsets.all(16), children: sections);
   }
 
-  Widget _buildStudentGreeting() {
+  // --- Kişiselleştirilmiş selamlama başlığı ---
+
+  /// Saate göre selamlama: Günaydın / İyi günler / İyi akşamlar.
+  String get _timeGreeting {
+    final hour = DateTime.now().hour;
+    if (hour >= 5 && hour < 12) {
+      return 'Günaydın';
+    }
+    if (hour >= 12 && hour < 18) {
+      return 'İyi günler';
+    }
+    return 'İyi akşamlar';
+  }
+
+  String _firstName(String fullName) {
+    final trimmed = fullName.trim();
+    if (trimmed.isEmpty) {
+      return trimmed;
+    }
+    return trimmed.split(RegExp(r'\s+')).first;
+  }
+
+  /// Avatar + saat/isim selamlaması + bağlamsal içgörü rozetinden oluşan
+  /// kişiselleştirilmiş pano başlığı (tüm roller paylaşır).
+  Widget _buildGreetingHeader({
+    required String title,
+    required String subtitle,
+    required IconData icon,
+    ({String text, IconData icon, Color color})? highlight,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Merhaba 👋',
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+        Row(
+          children: [
+            CircleAvatar(
+              radius: 24,
+              backgroundColor: AppColors.primary.withValues(alpha: 0.12),
+              child: Icon(icon, color: AppColors.primary, size: 26),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    subtitle,
+                    style: TextStyle(
+                      color: Theme.of(context).textTheme.bodySmall?.color,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
-        const SizedBox(height: 4),
-        Text(
-          'Güncel durumun aşağıda.',
-          style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
-        ),
+        if (highlight != null) ...[
+          const SizedBox(height: 12),
+          _highlightPill(highlight),
+        ],
       ],
+    );
+  }
+
+  Widget _highlightPill(({String text, IconData icon, Color color}) data) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      decoration: BoxDecoration(
+        color: data.color.withValues(alpha: 0.12),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Row(
+        children: [
+          Icon(data.icon, color: data.color, size: 18),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              data.text,
+              style: TextStyle(color: data.color, fontWeight: FontWeight.w600),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Velinin/öğrencinin çocuk-özel katılım yüzdesi (kayıt yoksa null).
+  int? _childAttendanceRatePercent() {
+    var present = 0;
+    var absent = 0;
+    for (final record in _attendanceRecords) {
+      for (final child in _myChildren) {
+        if (record.presentStudentIds.contains(child.id)) {
+          present++;
+        } else if (record.absentStudentIds.contains(child.id)) {
+          absent++;
+        }
+      }
+    }
+    final total = present + absent;
+    return total == 0 ? null : (present / total * 100).round();
+  }
+
+  /// Veli/öğrenci başlığındaki bağlamsal içgörü (öncelik sırasıyla).
+  ({String text, IconData icon, Color color})? _childHighlight() {
+    final overdue = _sumPaymentsFor('Gecikti');
+    if (overdue > 0) {
+      return (
+        text: 'Geciken aidat: ${formatTl(overdue)}',
+        icon: Icons.error_outline,
+        color: Colors.red,
+      );
+    }
+    final rate = _childAttendanceRatePercent();
+    if (rate != null && rate >= 80) {
+      return (
+        text: 'Katılımın çok iyi, böyle devam! 🎯',
+        icon: Icons.emoji_events,
+        color: Colors.green,
+      );
+    }
+    if (rate != null && rate < 50) {
+      return (
+        text: 'Katılıma biraz dikkat edelim',
+        icon: Icons.trending_down,
+        color: Colors.orange,
+      );
+    }
+    if (_events.isNotEmpty) {
+      return (
+        text: 'Planlı etkinlik var, kaçırma',
+        icon: Icons.event_available,
+        color: AppColors.primary,
+      );
+    }
+    return (
+      text: 'Her şey yolunda görünüyor 👍',
+      icon: Icons.check_circle,
+      color: Colors.green,
+    );
+  }
+
+  /// Personel başlığındaki bağlamsal içgörü.
+  ({String text, IconData icon, Color color})? _staffHighlight() {
+    if (_canViewPayments) {
+      final unpaid = _payments.where((p) => p.status != 'Ödendi').length;
+      if (unpaid > 0) {
+        return (
+          text: '$unpaid ödeme takip bekliyor',
+          icon: Icons.payments,
+          color: Colors.orange,
+        );
+      }
+    }
+    if (_canManageAttendance) {
+      final pending = _leaveRequests
+          .where((r) => r.status == LeaveStatus.pending)
+          .length;
+      if (pending > 0) {
+        return (
+          text: '$pending mazeret onay bekliyor',
+          icon: Icons.event_busy,
+          color: Colors.orange,
+        );
+      }
+    }
+    return (
+      text: 'Bekleyen bir işin yok, harika 👍',
+      icon: Icons.check_circle,
+      color: Colors.green,
+    );
+  }
+
+  Widget _buildStudentGreeting() {
+    final firstName = _myChildren.isEmpty
+        ? null
+        : _firstName(_myChildren.first.name);
+    return _buildGreetingHeader(
+      title: firstName == null
+          ? '$_timeGreeting 👋'
+          : '$_timeGreeting, $firstName 👋',
+      subtitle: 'Güncel durumun aşağıda.',
+      icon: Icons.school,
+      highlight: _childHighlight(),
     );
   }
 
@@ -108,19 +286,14 @@ extension _DashboardBodies on _DashboardScreenState {
   }
 
   Widget _buildParentGreeting() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          'Merhaba 👋',
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          'Çocuğunuzun güncel özeti aşağıda.',
-          style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
-        ),
-      ],
+    final subtitle = _myChildren.length == 1
+        ? '${_myChildren.first.name} • güncel özet'
+        : 'Çocuklarınızın güncel özeti aşağıda.';
+    return _buildGreetingHeader(
+      title: '$_timeGreeting 👋',
+      subtitle: subtitle,
+      icon: Icons.family_restroom,
+      highlight: _childHighlight(),
     );
   }
 
@@ -206,19 +379,16 @@ extension _DashboardBodies on _DashboardScreenState {
         : _isCoach
         ? 'Antrenör'
         : 'Görüntüleyici';
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'İyi günler, $label 👋',
-          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          'Kulübünüzün güncel özeti aşağıda.',
-          style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
-        ),
-      ],
+    final icon = _isAdmin
+        ? Icons.admin_panel_settings
+        : _isCoach
+        ? Icons.sports
+        : Icons.visibility;
+    return _buildGreetingHeader(
+      title: '$_timeGreeting, $label 👋',
+      subtitle: 'Kulübünüzün güncel özeti aşağıda.',
+      icon: icon,
+      highlight: _staffHighlight(),
     );
   }
 
