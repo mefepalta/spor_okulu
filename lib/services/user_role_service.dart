@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../constants/app_roles.dart';
+import '../models/app_models.dart';
 
 class UserRoleService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -63,5 +64,20 @@ class UserRoleService {
   Future<bool> isCurrentUserAdmin() async {
     final role = await getCurrentUserRole();
     return role == AppRoles.admin;
+  }
+
+  /// Giriş yapan kullanıcının tüm hesap bilgisi (rol, ad, başvuru durumu).
+  /// Belge yoksa null döner. Viewer karşılama panosu ve giriş sonrası
+  /// reddedilen-hesap kontrolü için kullanılır.
+  Future<UserAccount?> getCurrentUserAccount() async {
+    final user = _auth.currentUser;
+    if (user == null) {
+      return null;
+    }
+    final data = await _currentUserData();
+    if (data == null) {
+      return null;
+    }
+    return UserAccount.fromJson(user.uid, data);
   }
 }

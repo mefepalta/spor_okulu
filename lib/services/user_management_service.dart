@@ -47,4 +47,27 @@ class UserManagementService {
 
     await _users.doc(uid).set(data, SetOptions(merge: true));
   }
+
+  /// Rol başvurusunu onaylar: kullanıcıyı istediği role (veli/öğrenci) yükseltir
+  /// ve başvuru durumunu 'approved' yapar. İstenen rol geçersizse hata verir.
+  Future<void> approveRequest(String uid, String requestedRole) async {
+    if (requestedRole != AppRoles.parent && requestedRole != AppRoles.student) {
+      throw StateError('Geçersiz başvuru rolü: $requestedRole');
+    }
+    await setRole(uid, requestedRole);
+    await _users.doc(uid).set({
+      'roleRequestStatus': 'approved',
+      'updatedAt': FieldValue.serverTimestamp(),
+    }, SetOptions(merge: true));
+  }
+
+  /// Rol başvurusunu reddeder: belgeye 'rejected' işaretini koyar (rol 'viewer'
+  /// kalır). Kullanıcının Auth hesabı, ücretsiz katman gereği bir sonraki
+  /// girişinde kendi istemcisinden silinir (bkz. login_screen).
+  Future<void> rejectRequest(String uid) async {
+    await _users.doc(uid).set({
+      'roleRequestStatus': 'rejected',
+      'updatedAt': FieldValue.serverTimestamp(),
+    }, SetOptions(merge: true));
+  }
 }

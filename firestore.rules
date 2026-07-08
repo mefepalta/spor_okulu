@@ -41,8 +41,10 @@ service cloud.firestore {
     }
 
     // Personel = uygulamanın kadro/operasyon verisini okuyabilenler.
+    // Viewer (rolü bekleyen/belirsiz) BURAYA DAHİL DEĞİL: özel kulüp verisini
+    // göremez, yalnızca genel içerik (duyuru/etkinlik) okuyabilir.
     function isStaff() {
-      return isAdmin() || isCoach() || isViewer();
+      return isAdmin() || isCoach();
     }
 
     // Giriş yapan veliye atanmış öğrenci kimlikleri (yoksa boş liste).
@@ -56,9 +58,13 @@ service cloud.firestore {
 
     match /users/{userId} {
       allow read: if isSignedIn() && (request.auth.uid == userId || isAdmin());
+      // Kayıt: kullanıcı KENDİ belgesini 'viewer' rolüyle ve geçerli bir rol
+      // başvurusuyla ('veli'/'ogrenci', durum 'pending') oluşturur.
       allow create: if isSignedIn()
         && request.auth.uid == userId
-        && request.resource.data.role == "viewer";
+        && request.resource.data.role == "viewer"
+        && request.resource.data.requestedRole in ["veli", "ogrenci"]
+        && request.resource.data.roleRequestStatus == "pending";
       // Admin her alanı güncelleyebilir. Kullanıcı ise yalnızca KENDİ belgesinde
       // ve yalnızca profil alanlarını (ad/telefon/foto) değiştirebilir; rol veya
       // studentIds gibi yetki alanlarına dokunamaz (ayrıcalık yükseltmesi engeli).
@@ -67,7 +73,9 @@ service cloud.firestore {
             && request.auth.uid == userId
             && request.resource.data.diff(resource.data).affectedKeys()
                 .hasOnly(['displayName', 'phone', 'photoBase64', 'updatedAt']));
-      allow delete: if isAdmin();
+      // Silme: admin ya da kullanıcının kendisi (reddedilen hesabın giriş
+      // sırasında kendini temizlemesi için).
+      allow delete: if isAdmin() || request.auth.uid == userId;
     }
 
     // Öğrenciler: personel hepsini; veli/öğrenci yalnızca eşlendiği kaydı okur.

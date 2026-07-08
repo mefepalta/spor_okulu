@@ -362,24 +362,45 @@ class UserAccount {
   final String role;
   final List<String> studentIds;
 
+  /// Kayıt sırasında girilen ad soyad (varsa). Gösterim amaçlı.
+  final String displayName;
+
+  /// Kullanıcının kayıtta talep ettiği rol ('veli' | 'ogrenci' | '').
+  final String requestedRole;
+
+  /// Rol başvurusunun durumu: 'pending' | 'approved' | 'rejected' | ''.
+  final String requestStatus;
+
   const UserAccount({
     required this.uid,
     required this.email,
     required this.role,
     this.studentIds = const [],
+    this.displayName = '',
+    this.requestedRole = '',
+    this.requestStatus = '',
   });
+
+  /// Yönetici onayı bekleyen bir rol başvurusu mu?
+  bool get isPendingRequest => requestStatus == 'pending';
 
   UserAccount copyWith({
     String? uid,
     String? email,
     String? role,
     List<String>? studentIds,
+    String? displayName,
+    String? requestedRole,
+    String? requestStatus,
   }) {
     return UserAccount(
       uid: uid ?? this.uid,
       email: email ?? this.email,
       role: role ?? this.role,
       studentIds: studentIds ?? this.studentIds,
+      displayName: displayName ?? this.displayName,
+      requestedRole: requestedRole ?? this.requestedRole,
+      requestStatus: requestStatus ?? this.requestStatus,
     );
   }
 
@@ -390,6 +411,11 @@ class UserAccount {
       email: json['email'] ?? '',
       role: rawRole is String ? rawRole.trim().toLowerCase() : 'viewer',
       studentIds: List<String>.from(json['studentIds'] ?? const []),
+      displayName: json['displayName'] as String? ?? '',
+      requestedRole: (json['requestedRole'] as String? ?? '')
+          .trim()
+          .toLowerCase(),
+      requestStatus: (json['roleRequestStatus'] as String? ?? '').trim(),
     );
   }
 }
