@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../constants/ai_config.dart';
 import '../services/ai_service.dart';
 import '../theme/app_colors.dart';
+import '../widgets/ai_rich_text.dart';
 import '../widgets/empty_state.dart';
 import '../widgets/wave_background.dart';
 
@@ -251,10 +252,15 @@ class _SporTekAiScreenState extends State<SporTekAiScreen> {
             bottomRight: Radius.circular(isUser ? 2 : 14),
           ),
         ),
-        child: Text(
-          message.content,
-          style: TextStyle(color: fg, height: 1.4),
-        ),
+        child: isUser
+            ? Text(
+                message.content,
+                style: TextStyle(color: fg, height: 1.4),
+              )
+            : AiRichText(
+                message.content,
+                style: const TextStyle(height: 1.4),
+              ),
       ),
     );
   }
