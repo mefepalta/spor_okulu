@@ -21,6 +21,8 @@ extension _DashboardChrome on _DashboardScreenState {
                   ? _parentDrawerItems(context)
                   : _isStudent
                   ? _studentDrawerItems(context)
+                  : _isViewer
+                  ? _viewerDrawerItems(context)
                   : _staffDrawerItems(context),
             ),
           ),
@@ -145,6 +147,31 @@ extension _DashboardChrome on _DashboardScreenState {
     );
   }
 
+  /// [_drawerNav] gibi ama sağda bir sayı rozeti taşır (0 ise gizli).
+  Widget _drawerNavBadge(
+    IconData icon,
+    String label,
+    void Function(BuildContext) open,
+    int badge,
+  ) {
+    return ListTile(
+      dense: true,
+      leading: Icon(icon),
+      title: Text(label),
+      trailing: badge > 0
+          ? Badge(label: Text('$badge'))
+          : null,
+      onTap: () {
+        Navigator.pop(context);
+        open(context);
+      },
+    );
+  }
+
+  /// Yönetici onayı bekleyen rol başvurusu sayısı (yüklü kullanıcılardan).
+  int get _pendingRoleRequestCount =>
+      _users.where((user) => user.isPendingRequest).length;
+
   List<Widget> _staffDrawerItems(BuildContext context) {
     return [
       _drawerSection('Kayıtlar'),
@@ -183,6 +210,13 @@ extension _DashboardChrome on _DashboardScreenState {
       _drawerNav(Icons.analytics, 'Raporlar', _openReportsScreen),
       _drawerNav(Icons.sports_soccer, 'Sporlar', _openSportsScreen),
       if (_isAdmin)
+        _drawerNavBadge(
+          Icons.how_to_reg,
+          'Rol Başvuruları',
+          _openRoleRequestsScreen,
+          _pendingRoleRequestCount,
+        ),
+      if (_isAdmin)
         _drawerNav(Icons.manage_accounts, 'Kullanıcılar', _openUsersScreen),
     ];
   }
@@ -198,6 +232,17 @@ extension _DashboardChrome on _DashboardScreenState {
       _drawerSection('Genel'),
       _drawerNav(Icons.auto_awesome, 'SporTekAi', _openSporTekAiScreen),
       _drawerNav(Icons.campaign, 'Duyurular', _openAnnouncementsScreen),
+      _drawerNav(Icons.sports_soccer, 'Sporlar', _openSportsScreen),
+    ];
+  }
+
+  /// Viewer menüsü: rol henüz atanmadığından yalnızca genel içerik. Özel
+  /// koleksiyon ekranları (öğrenci/antrenör/yoklama vb.) yer almaz.
+  List<Widget> _viewerDrawerItems(BuildContext context) {
+    return [
+      _drawerSection('Genel'),
+      _drawerNav(Icons.campaign, 'Duyurular', _openAnnouncementsScreen),
+      _drawerNav(Icons.event_available, 'Etkinlikler', _openEventsScreen),
       _drawerNav(Icons.sports_soccer, 'Sporlar', _openSportsScreen),
     ];
   }

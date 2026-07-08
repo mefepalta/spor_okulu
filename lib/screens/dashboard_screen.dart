@@ -33,6 +33,7 @@ import 'payments_screen.dart';
 import 'performance_screen.dart';
 import 'profile_screen.dart';
 import 'reports_screen.dart';
+import 'role_requests_screen.dart';
 import 'sports_screen.dart';
 import 'sportekai_screen.dart';
 import 'student_accounts_screen.dart';
@@ -78,6 +79,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
   List<String> _assignedStudentIds = const [];
 
   String _userRole = AppRoles.viewer;
+
+  /// Viewer (rolü bekleyen/belirsiz) kullanıcının karşılama panosu için: ad,
+  /// talep edilen rol ve başvuru durumu. Yalnızca viewer dalında doldurulur.
+  String _viewerName = '';
+  String _requestedRole = '';
+  String _requestStatus = '';
+
   int _knownAnnouncementCount = 0;
   int _unreadAnnouncementCount = 0;
 
@@ -95,6 +103,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   bool get _isCoach => _userRole == AppRoles.coach;
   bool get _isParent => _userRole == AppRoles.parent;
   bool get _isStudent => _userRole == AppRoles.student;
+  bool get _isViewer => _userRole == AppRoles.viewer;
 
   /// Verisi kendi çocuğuna/kendisine scope'lu roller (veli + öğrenci). Bu
   /// roller "tüm öğrenciler" yerine yalnızca [_myChildren]'ı görür.
@@ -147,6 +156,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
           )
           .toList();
     }
+    // Viewer (rolü bekleyen) yalnızca "Herkes" hedefli genel duyuruları görür.
+    if (_isViewer) {
+      return all
+          .where(
+            (announcement) =>
+                announcement.targetAudience == AnnouncementAudience.everyone,
+          )
+          .toList();
+    }
     return all;
   }
 
@@ -170,7 +188,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
       final isParent = userRole == AppRoles.parent;
       final isStudent = userRole == AppRoles.student;
       final isViewer = userRole == AppRoles.viewer;
-      final isStaff = isAdmin || isCoach || isViewer;
+      // Viewer artık personel değil: yalnızca genel içerik (duyuru/etkinlik)
+      // görür, özel kulüp verisini yüklemez.
+      final isStaff = isAdmin || isCoach;
 
       // Herkesin (veliler dahil) okuyabildiği koleksiyonlar.
       final loadedAnnouncements = await _firestoreService.loadAnnouncements();
@@ -193,6 +213,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       var loadedLeaveRequests = const <LeaveRequest>[];
       var loadedCashTransactions = const <CashTransaction>[];
       var loadedEquipment = const <EquipmentItem>[];
+      UserAccount? viewerAccount;
 
       if (isParent) {
         assignedStudentIds = await _userRoleService.getCurrentUserStudentIds();
@@ -249,6 +270,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
           loadedCashTransactions = await _firestoreService
               .loadCashTransactions();
         }
+      } else if (isViewer) {
+        // Viewer: yalnızca karşılama panosu için kendi hesabını okur
+        // (ad + başvuru durumu). Özel koleksiyon yüklenmez.
+        viewerAccount = await _userRoleService.getCurrentUserAccount();
       }
 
       if (!mounted) {
@@ -258,6 +283,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
       setState(() {
         _userRole = userRole;
         _assignedStudentIds = assignedStudentIds;
+        _viewerName = viewerAccount?.displayName ?? '';
+        _requestedRole = viewerAccount?.requestedRole ?? '';
+        _requestStatus = viewerAccount?.requestStatus ?? '';
 
         _students
           ..clear()
@@ -467,6 +495,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     if (_isStudent) {
       return _buildStudentBody(context);
+    }
+
+    if (_isViewer) {
+      return _buildViewerBody(context);
     }
 
     return _buildStaffSummary(context);

@@ -84,7 +84,11 @@ class _UsersScreenState extends State<UsersScreen> {
     final filteredUsers = query.isEmpty
         ? widget.users
         : widget.users
-              .where((user) => user.email.toLowerCase().contains(query))
+              .where(
+                (user) =>
+                    user.email.toLowerCase().contains(query) ||
+                    user.displayName.toLowerCase().contains(query),
+              )
               .toList();
 
     // Admin > antrenör > veli > görüntüleyici sırasıyla, sonra e-postaya göre.
@@ -146,12 +150,20 @@ class _UsersScreenState extends State<UsersScreen> {
                             child: Icon(AppRoleLabels.icon(user.role)),
                           ),
                           title: Text(
-                            user.email.isEmpty ? '(e-posta yok)' : user.email,
+                            user.displayName.isNotEmpty
+                                ? user.displayName
+                                : (user.email.isEmpty
+                                      ? '(e-posta yok)'
+                                      : user.email),
                           ),
                           subtitle: Text(
-                            isSelf
-                                ? '${AppRoleLabels.of(user.role)} • (sen)'
-                                : AppRoleLabels.of(user.role),
+                            [
+                              if (user.displayName.isNotEmpty &&
+                                  user.email.isNotEmpty)
+                                user.email,
+                              AppRoleLabels.of(user.role),
+                              if (isSelf) '(sen)',
+                            ].join(' • '),
                           ),
                           trailing: isSelf
                               ? null

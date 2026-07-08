@@ -764,6 +764,29 @@ extension _DashboardHandlers on _DashboardScreenState {
     );
   }
 
+  Future<void> _approveRoleRequest(String uid, String requestedRole) async {
+    await _userManagementService.approveRequest(uid, requestedRole);
+    await _reloadUsersAndParents();
+  }
+
+  Future<void> _rejectRoleRequest(String uid) async {
+    await _userManagementService.rejectRequest(uid);
+    await _reloadUsersAndParents();
+  }
+
+  void _openRoleRequestsScreen(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => RoleRequestsScreen(
+          users: _users,
+          onApprove: _approveRoleRequest,
+          onReject: _rejectRoleRequest,
+        ),
+      ),
+    );
+  }
+
   void _openReportsScreen(BuildContext context) {
     Navigator.push(
       context,

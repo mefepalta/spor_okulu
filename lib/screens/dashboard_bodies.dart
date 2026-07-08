@@ -21,6 +21,117 @@ extension _DashboardBodies on _DashboardScreenState {
     return ListView(padding: const EdgeInsets.all(16), children: sections);
   }
 
+  /// Viewer (rolü henüz belli olmayan/bekleyen) panosu: özel veri **yok**;
+  /// yalnızca karşılama, başvuru durumu ve genel içerik (etkinlik + duyuru).
+  Widget _buildViewerBody(BuildContext context) {
+    final firstName = _firstName(_viewerName);
+    final sections = <Widget>[
+      _buildGreetingHeader(
+        title: firstName.isEmpty
+            ? '$_timeGreeting 👋'
+            : '$_timeGreeting, $firstName 👋',
+        subtitle: 'Spor okuluna hoş geldin.',
+        icon: Icons.waving_hand,
+      ),
+      const SizedBox(height: 16),
+      _buildRoleRequestStatusCard(context),
+    ];
+
+    final eventsSection = _buildViewerEventsSection(context);
+    if (eventsSection != null) {
+      sections.add(eventsSection);
+    }
+
+    final announcementSection = _buildLatestAnnouncementSection(context);
+    if (announcementSection != null) {
+      sections.add(announcementSection);
+    }
+
+    return ListView(padding: const EdgeInsets.all(16), children: sections);
+  }
+
+  /// Rol başvurusunun durumunu açıklayan bilgi kartı.
+  Widget _buildRoleRequestStatusCard(BuildContext context) {
+    final IconData icon;
+    final Color color;
+    final String title;
+    final String message;
+
+    if (_requestStatus == 'pending') {
+      icon = Icons.hourglass_top;
+      color = Colors.orange;
+      title = 'Başvurun inceleniyor';
+      message =
+          '${AppRoleLabels.of(_requestedRole)} olma başvurun yönetici onayında. '
+          'Onaylandığında ilgili panoya erişebileceksin.';
+    } else if (_requestStatus == 'approved') {
+      icon = Icons.check_circle;
+      color = Colors.green;
+      title = 'Başvurun onaylandı';
+      message =
+          'Yeni rolünü görmek için çıkış yapıp tekrar giriş yapman yeterli.';
+    } else {
+      icon = Icons.info_outline;
+      color = AppColors.primary;
+      title = 'Rolün henüz atanmadı';
+      message = 'Yönetici sana bir rol atadığında ilgili panoya erişeceksin.';
+    }
+
+    return SummarySection(
+      icon: icon,
+      title: title,
+      iconColor: color,
+      child: _emptyHint(message),
+    );
+  }
+
+  /// Genel etkinlik listesi (viewer için, salt gösterim). Etkinlik yoksa null.
+  Widget? _buildViewerEventsSection(BuildContext context) {
+    if (_events.isEmpty) {
+      return null;
+    }
+    final shown = _events.take(4).toList();
+
+    return SummarySection(
+      icon: Icons.event_available,
+      title: 'Etkinlikler',
+      iconColor: Colors.orange,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          for (final event in shown)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4),
+              child: Row(
+                children: [
+                  const Icon(Icons.circle, size: 8, color: Colors.orange),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      event.title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                  if (event.dateText.isNotEmpty) ...[
+                    const SizedBox(width: 8),
+                    Text(
+                      event.dateText,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Theme.of(context).textTheme.bodySmall?.color,
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
   // --- Kişiselleştirilmiş selamlama başlığı ---
 
   /// Saate göre selamlama: Günaydın / İyi günler / İyi akşamlar.
