@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme/app_colors.dart';
 
 import '../widgets/wave_background.dart';
 
@@ -60,7 +61,7 @@ class ReportsScreen extends StatelessWidget {
                 icon: Icons.people,
                 title: 'Öğrenciler',
                 value: students.length.toString(),
-                color: Colors.indigo,
+                color: AppColors.primary,
               ),
               _ReportCard(
                 icon: Icons.sports,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme/app_colors.dart';
 
 import '../widgets/wave_background.dart';
 import 'package:flutter/services.dart';
@@ -174,7 +175,7 @@ class _StudentsScreenState extends State<StudentsScreen> {
                             _openStudentDetailScreen(originalIndex);
                           },
                           leading: const CircleAvatar(
-                            backgroundColor: Colors.indigo,
+                            backgroundColor: AppColors.primary,
                             foregroundColor: Colors.white,
                             child: Icon(Icons.person),
                           ),
@@ -280,7 +281,7 @@ class _StudentDetailScreenState extends State<StudentDetailScreen> {
               padding: const EdgeInsets.all(24),
               child: Column(
                 children: [
-                  const Icon(Icons.person, size: 64, color: Colors.indigo),
+                  const Icon(Icons.person, size: 64, color: AppColors.primary),
                   const SizedBox(height: 16),
                   Text(
                     student.name,

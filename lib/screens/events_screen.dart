@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme/app_colors.dart';
 
 import '../widgets/wave_background.dart';
 
@@ -97,9 +98,9 @@ class _EventsScreenState extends State<EventsScreen> {
       if (!mounted) {
         return;
       }
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Etkinlik eklenemedi: $error')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Etkinlik eklenemedi: $error')));
       return;
     }
 
@@ -141,9 +142,9 @@ class _EventsScreenState extends State<EventsScreen> {
       if (!mounted) {
         return;
       }
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Etkinlik silinemedi: $error')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Etkinlik silinemedi: $error')));
       return;
     }
 
@@ -173,9 +174,9 @@ class _EventsScreenState extends State<EventsScreen> {
 
     // Kaydedilenden farklı bir şey yoksa tekrar göndermeye gerek yok.
     if (!_hasUnsentChanges(event)) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Cevabın zaten kayıtlı.')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Cevabın zaten kayıtlı.')));
       return;
     }
 
@@ -213,9 +214,9 @@ class _EventsScreenState extends State<EventsScreen> {
       setState(() {
         _submitting.remove(event.id);
       });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Cevap gönderilemedi: $error')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Cevap gönderilemedi: $error')));
       return;
     }
 
@@ -284,7 +285,7 @@ class _EventsScreenState extends State<EventsScreen> {
           children: [
             Row(
               children: [
-                const Icon(Icons.event, color: Colors.indigo),
+                const Icon(Icons.event, color: AppColors.primary),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
@@ -344,17 +345,16 @@ class _EventsScreenState extends State<EventsScreen> {
             const SizedBox(height: 4),
             Text(
               event.title,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             if (event.description.trim().isNotEmpty) ...[
               const SizedBox(height: 6),
               Text(event.description),
             ],
             const Divider(height: 24),
-            ...widget.children.map((child) => _buildChildResponse(event, child)),
+            ...widget.children.map(
+              (child) => _buildChildResponse(event, child),
+            ),
             const SizedBox(height: 8),
             Align(
               alignment: Alignment.centerRight,
@@ -400,10 +400,7 @@ class _EventsScreenState extends State<EventsScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            child.name,
-            style: const TextStyle(fontWeight: FontWeight.w600),
-          ),
+          Text(child.name, style: const TextStyle(fontWeight: FontWeight.w600)),
           const SizedBox(height: 6),
           Row(
             children: [

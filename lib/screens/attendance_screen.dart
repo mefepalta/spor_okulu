@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme/app_colors.dart';
 
 import '../widgets/wave_background.dart';
 
@@ -154,7 +155,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                       _openAttendanceDetailScreen(index);
                     },
                     leading: const CircleAvatar(
-                      backgroundColor: Colors.indigo,
+                      backgroundColor: AppColors.primary,
                       foregroundColor: Colors.white,
                       child: Icon(Icons.check_circle),
                     ),
@@ -238,7 +239,8 @@ class _TakeAttendanceScreenState extends State<TakeAttendanceScreen> {
 
       _dateController.text = record.dateText;
 
-      final hasIds = record.presentStudentIds.isNotEmpty ||
+      final hasIds =
+          record.presentStudentIds.isNotEmpty ||
           record.absentStudentIds.isNotEmpty;
 
       for (final student in widget.students) {
@@ -535,7 +537,7 @@ class _AttendanceDetailScreenState extends State<AttendanceDetailScreen> {
                   const Icon(
                     Icons.check_circle,
                     size: 64,
-                    color: Colors.indigo,
+                    color: AppColors.primary,
                   ),
                   const SizedBox(height: 16),
                   Text(

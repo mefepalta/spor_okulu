@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme/app_colors.dart';
 
 import '../widgets/wave_background.dart';
 
@@ -50,10 +51,9 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
       return const [];
     }
 
-    final records = widget.records
-        .where((record) => record.studentId == id)
-        .toList()
-      ..sort((a, b) => a.dateText.compareTo(b.dateText));
+    final records =
+        widget.records.where((record) => record.studentId == id).toList()
+          ..sort((a, b) => a.dateText.compareTo(b.dateText));
 
     return records;
   }
@@ -79,9 +79,9 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
       if (!mounted) {
         return;
       }
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Kayıt eklenemedi: $error')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Kayıt eklenemedi: $error')));
       return;
     }
 
@@ -128,9 +128,9 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
       if (!mounted) {
         return;
       }
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Kayıt silinemedi: $error')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Kayıt silinemedi: $error')));
       return;
     }
 
@@ -199,11 +199,7 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
               padding: const EdgeInsets.all(24),
               child: Column(
                 children: [
-                  Icon(
-                    Icons.insights,
-                    size: 56,
-                    color: Colors.indigo.shade200,
-                  ),
+                  Icon(Icons.insights, size: 56, color: AppColors.primary),
                   const SizedBox(height: 12),
                   const Text(
                     'Bu öğrenci için henüz performans kaydı yok.',
@@ -222,10 +218,7 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
                 children: [
                   const Text(
                     'Tarihlere Göre Karşılaştırma',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 16),
                   PerformanceComparisonChart(records: records),
@@ -254,7 +247,7 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
       margin: const EdgeInsets.only(bottom: 12),
       child: ListTile(
         leading: const CircleAvatar(
-          backgroundColor: Colors.indigo,
+          backgroundColor: AppColors.primary,
           foregroundColor: Colors.white,
           child: Icon(Icons.event_note),
         ),
@@ -416,7 +409,7 @@ class _AddPerformanceRecordScreenState
                   value.round().toString(),
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: Colors.indigo,
+                    color: AppColors.primary,
                   ),
                 ),
               ],

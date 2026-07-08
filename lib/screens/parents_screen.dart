@@ -59,9 +59,9 @@ class _ParentsScreenState extends State<ParentsScreen> {
       }
 
       setState(() {});
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Veli eklendi.')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Veli eklendi.')));
     } catch (error) {
       if (!mounted) {
         return;
@@ -81,10 +81,8 @@ class _ParentsScreenState extends State<ParentsScreen> {
     final selected = await Navigator.push<List<String>>(
       context,
       MaterialPageRoute(
-        builder: (context) => AssignStudentsScreen(
-          parent: parent,
-          students: widget.students,
-        ),
+        builder: (context) =>
+            AssignStudentsScreen(parent: parent, students: widget.students),
       ),
     );
 
@@ -118,10 +116,7 @@ class _ParentsScreenState extends State<ParentsScreen> {
             ),
             TextButton(
               onPressed: () => Navigator.pop(context, true),
-              child: const Text(
-                'Kaldır',
-                style: TextStyle(color: Colors.red),
-              ),
+              child: const Text('Kaldır', style: TextStyle(color: Colors.red)),
             ),
           ],
         );
@@ -149,7 +144,8 @@ class _ParentsScreenState extends State<ParentsScreen> {
           ? const EmptyState(
               icon: Icons.family_restroom,
               title: 'Henüz veli yok',
-              message: 'Veli eklemek için sağ alttaki + butonunu kullan. '
+              message:
+                  'Veli eklemek için sağ alttaki + butonunu kullan. '
                   'Velinin önce uygulamaya kayıt olması gerekir.',
             )
           : ListView.builder(
@@ -166,7 +162,7 @@ class _ParentsScreenState extends State<ParentsScreen> {
                   child: ListTile(
                     onTap: () => _openAssignStudents(parent),
                     leading: const CircleAvatar(
-                      backgroundColor: Colors.indigo,
+                      backgroundColor: AppColors.primary,
                       foregroundColor: Colors.white,
                       child: Icon(Icons.family_restroom),
                     ),
@@ -264,10 +260,7 @@ class _AddParentDialogState extends State<_AddParentDialog> {
           onPressed: () => Navigator.pop(context),
           child: const Text('Vazgeç'),
         ),
-        TextButton(
-          onPressed: _submit,
-          child: const Text('Ekle'),
-        ),
+        TextButton(onPressed: _submit, child: const Text('Ekle')),
       ],
     );
   }
@@ -333,10 +326,7 @@ class _AssignStudentsScreenState extends State<AssignStudentsScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, _selected.toList()),
-            child: const Text(
-              'Kaydet',
-              style: TextStyle(color: Colors.white),
-            ),
+            child: const Text('Kaydet', style: TextStyle(color: Colors.white)),
           ),
         ],
       ),
@@ -357,7 +347,9 @@ class _AssignStudentsScreenState extends State<AssignStudentsScreen> {
                 ),
                 ...widget.students.map((student) {
                   final selected = _selected.contains(student.id);
-                  final subtitle = Text('${student.branch} • ${student.age} yaş');
+                  final subtitle = Text(
+                    '${student.branch} • ${student.age} yaş',
+                  );
                   if (widget.singleSelect) {
                     // Tek seçim: radyo görünümlü ListTile (deprecation'sız).
                     return ListTile(
@@ -376,7 +368,8 @@ class _AssignStudentsScreenState extends State<AssignStudentsScreen> {
                     value: selected,
                     title: Text(student.name),
                     subtitle: subtitle,
-                    onChanged: (checked) => _toggle(student.id, checked == true),
+                    onChanged: (checked) =>
+                        _toggle(student.id, checked == true),
                   );
                 }),
               ],

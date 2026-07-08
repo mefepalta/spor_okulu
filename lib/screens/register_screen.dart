@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../theme/app_colors.dart';
 
 import '../widgets/wave_background.dart';
 
@@ -133,7 +134,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     const Icon(
                       Icons.person_add,
                       size: 64,
-                      color: Colors.indigo,
+                      color: AppColors.primary,
                     ),
                     const SizedBox(height: 16),
                     const Text(

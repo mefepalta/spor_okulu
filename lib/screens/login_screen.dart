@@ -238,135 +238,137 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Card(
               elevation: 8,
               shadowColor: AppColors.primary.withValues(alpha: 0.25),
-            child: Padding(
-              padding: const EdgeInsets.all(24),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const Icon(
-                      Icons.sports_soccer,
-                      size: 72,
-                      color: Colors.indigo,
-                    ),
-                    const SizedBox(height: 16),
-                    const Text(
-                      AppConstants.appTitle,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 26,
-                        fontWeight: FontWeight.bold,
+              child: Padding(
+                padding: const EdgeInsets.all(24),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const Icon(
+                        Icons.sports_soccer,
+                        size: 72,
+                        color: AppColors.primary,
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    const Text(
-                      'Admin Girişi',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                    const SizedBox(height: 24),
-                    TextFormField(
-                      controller: _emailController,
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: const InputDecoration(
-                        labelText: 'E-posta',
-                        border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.email),
-                        hintText: 'example@sporokulu.com',
-                      ),
-                      validator: (value) {
-                        if (value == null || value.trim().isEmpty) {
-                          return 'E-posta boş bırakılamaz.';
-                        }
-
-                        if (!value.contains('@')) {
-                          return 'Geçerli bir e-posta gir.';
-                        }
-
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 12),
-                    TextFormField(
-                      controller: _passwordController,
-                      obscureText: !_isPasswordVisible,
-                      decoration: InputDecoration(
-                        labelText: 'Şifre',
-                        border: const OutlineInputBorder(),
-                        prefixIcon: const Icon(Icons.lock),
-                        hintText: '******',
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            _isPasswordVisible
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              _isPasswordVisible = !_isPasswordVisible;
-                            });
-                          },
+                      const SizedBox(height: 16),
+                      const Text(
+                        AppConstants.appTitle,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 26,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                      validator: (value) {
-                        if (value == null || value.trim().isEmpty) {
-                          return 'Şifre boş bırakılamaz.';
-                        }
-
-                        if (value.trim().length < 6) {
-                          return 'Şifre en az 6 karakter olmalıdır.';
-                        }
-
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 20),
-                    ElevatedButton.icon(
-                      onPressed: _isLoading ? null : _login,
-                      icon: _isLoading
-                          ? const SizedBox(
-                              width: 18,
-                              height: 18,
-                              child: CircularProgressIndicator(strokeWidth: 2),
-                            )
-                          : const Icon(Icons.login),
-                      label: Text(
-                        _isLoading ? 'Giriş yapılıyor...' : 'Giriş Yap',
+                      const SizedBox(height: 8),
+                      const Text(
+                        'Admin Girişi',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.grey),
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    TextButton(
-                      onPressed: _resetPassword,
-                      child: const Text('Şifremi unuttum'),
-                    ),
-                    const SizedBox(height: 8),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const RegisterScreen(),
+                      const SizedBox(height: 24),
+                      TextFormField(
+                        controller: _emailController,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: const InputDecoration(
+                          labelText: 'E-posta',
+                          border: OutlineInputBorder(),
+                          prefixIcon: Icon(Icons.email),
+                          hintText: 'example@sporokulu.com',
+                        ),
+                        validator: (value) {
+                          if (value == null || value.trim().isEmpty) {
+                            return 'E-posta boş bırakılamaz.';
+                          }
+
+                          if (!value.contains('@')) {
+                            return 'Geçerli bir e-posta gir.';
+                          }
+
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 12),
+                      TextFormField(
+                        controller: _passwordController,
+                        obscureText: !_isPasswordVisible,
+                        decoration: InputDecoration(
+                          labelText: 'Şifre',
+                          border: const OutlineInputBorder(),
+                          prefixIcon: const Icon(Icons.lock),
+                          hintText: '******',
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _isPasswordVisible
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _isPasswordVisible = !_isPasswordVisible;
+                              });
+                            },
                           ),
-                        );
-                      },
-                      child: const Text('Hesabın yok mu? Kayıt ol'),
-                    ),
-                    const SizedBox(height: 16),
-                    const Text(
-                      'Firebase hesabınla giriş yap.',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.grey, fontSize: 13),
-                    ),
-                  ],
+                        ),
+                        validator: (value) {
+                          if (value == null || value.trim().isEmpty) {
+                            return 'Şifre boş bırakılamaz.';
+                          }
+
+                          if (value.trim().length < 6) {
+                            return 'Şifre en az 6 karakter olmalıdır.';
+                          }
+
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                      ElevatedButton.icon(
+                        onPressed: _isLoading ? null : _login,
+                        icon: _isLoading
+                            ? const SizedBox(
+                                width: 18,
+                                height: 18,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                ),
+                              )
+                            : const Icon(Icons.login),
+                        label: Text(
+                          _isLoading ? 'Giriş yapılıyor...' : 'Giriş Yap',
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      TextButton(
+                        onPressed: _resetPassword,
+                        child: const Text('Şifremi unuttum'),
+                      ),
+                      const SizedBox(height: 8),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const RegisterScreen(),
+                            ),
+                          );
+                        },
+                        child: const Text('Hesabın yok mu? Kayıt ol'),
+                      ),
+                      const SizedBox(height: 16),
+                      const Text(
+                        'Firebase hesabınla giriş yap.',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.grey, fontSize: 13),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
         ),
       ),
-    ),
     );
   }
 }

@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'app_colors.dart';
 
 class AppTheme {
-  /// Aydınlık tema. Marka kimliği (AppBar/buton) şimdilik indigo kalır.
+  /// Aydınlık tema. Marka kimliği tek bir mavide (AppColors.primary) birleşir:
+  /// AppBar, buton, FAB ve içerik aksanları aynı tonu kullanır.
   static ThemeData get lightTheme {
     return ThemeData(
-      colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
+      colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
       useMaterial3: true,
       scaffoldBackgroundColor: AppColors.surface,
       // Tüm kartlar (liste, detay, profil) nötr beyaz yüzey + yuvarlak köşe +
@@ -22,17 +23,17 @@ class AppTheme {
         ),
       ),
       appBarTheme: const AppBarTheme(
-        backgroundColor: Colors.indigo,
+        backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
         centerTitle: false,
       ),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
-        backgroundColor: Colors.indigo,
+        backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.indigo,
+          backgroundColor: AppColors.primary,
           foregroundColor: Colors.white,
         ),
       ),
@@ -42,15 +43,16 @@ class AppTheme {
   /// Karanlık tema. Derin lacivert zemin + parlak mavi vurgular; dalga arka
   /// planı bu modda ilk referanstaki gibi koyu zeminde parlar.
   static ThemeData get darkTheme {
-    final scheme = ColorScheme.fromSeed(
-      seedColor: AppColors.primary,
-      brightness: Brightness.dark,
-    ).copyWith(
-      surface: AppColors.darkSurface,
-      surfaceContainerLowest: AppColors.darkSurface,
-      surfaceContainer: AppColors.darkSurface2,
-      surfaceContainerHigh: AppColors.darkSurface2,
-    );
+    final scheme =
+        ColorScheme.fromSeed(
+          seedColor: AppColors.primary,
+          brightness: Brightness.dark,
+        ).copyWith(
+          surface: AppColors.darkSurface,
+          surfaceContainerLowest: AppColors.darkSurface,
+          surfaceContainer: AppColors.darkSurface2,
+          surfaceContainerHigh: AppColors.darkSurface2,
+        );
 
     return ThemeData(
       colorScheme: scheme,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme/app_colors.dart';
 
 import '../widgets/wave_background.dart';
 import 'package:flutter/services.dart';
@@ -172,7 +173,7 @@ class _CoachesScreenState extends State<CoachesScreen> {
                             _openCoachDetailScreen(originalIndex);
                           },
                           leading: const CircleAvatar(
-                            backgroundColor: Colors.indigo,
+                            backgroundColor: AppColors.primary,
                             foregroundColor: Colors.white,
                             child: Icon(Icons.sports),
                           ),
@@ -271,7 +272,7 @@ class _CoachDetailScreenState extends State<CoachDetailScreen> {
               padding: const EdgeInsets.all(24),
               child: Column(
                 children: [
-                  const Icon(Icons.sports, size: 64, color: Colors.indigo),
+                  const Icon(Icons.sports, size: 64, color: AppColors.primary),
                   const SizedBox(height: 16),
                   Text(
                     coach.name,

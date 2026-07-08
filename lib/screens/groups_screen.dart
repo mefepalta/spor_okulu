@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme/app_colors.dart';
 
 import '../widgets/wave_background.dart';
 import 'package:flutter/services.dart';
@@ -46,10 +47,8 @@ class _GroupsScreenState extends State<GroupsScreen> {
     final newGroup = await Navigator.push<TrainingGroup>(
       context,
       MaterialPageRoute(
-        builder: (context) => AddGroupScreen(
-          coaches: widget.coaches,
-          students: widget.students,
-        ),
+        builder: (context) =>
+            AddGroupScreen(coaches: widget.coaches, students: widget.students),
       ),
     );
 
@@ -193,7 +192,7 @@ class _GroupsScreenState extends State<GroupsScreen> {
                             _openGroupDetailScreen(originalIndex);
                           },
                           leading: const CircleAvatar(
-                            backgroundColor: Colors.indigo,
+                            backgroundColor: AppColors.primary,
                             foregroundColor: Colors.white,
                             child: Icon(Icons.groups),
                           ),
@@ -317,7 +316,7 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
               padding: const EdgeInsets.all(24),
               child: Column(
                 children: [
-                  const Icon(Icons.groups, size: 64, color: Colors.indigo),
+                  const Icon(Icons.groups, size: 64, color: AppColors.primary),
                   const SizedBox(height: 16),
                   Text(
                     group.name,
@@ -382,7 +381,7 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
                 children: [
                   Row(
                     children: [
-                      const Icon(Icons.groups_2, color: Colors.indigo),
+                      const Icon(Icons.groups_2, color: AppColors.primary),
                       const SizedBox(width: 12),
                       Text(
                         'Üyeler (${group.studentIds.length})',
@@ -502,7 +501,9 @@ class _AddGroupScreenState extends State<AddGroupScreen> {
       }
 
       // Önce id ile, eski kayıtlar için ada göre eşleştir.
-      final coachById = widget.coaches.any((coach) => coach.id == group.coachId);
+      final coachById = widget.coaches.any(
+        (coach) => coach.id == group.coachId,
+      );
       if (group.coachId.isNotEmpty && coachById) {
         _selectedCoachId = group.coachId;
       } else {
@@ -877,7 +878,7 @@ class _SelectMembersScreenState extends State<_SelectMembersScreen> {
               children: [
                 Icon(
                   _overCapacity ? Icons.error_outline : Icons.people,
-                  color: _overCapacity ? Colors.red : Colors.indigo,
+                  color: _overCapacity ? Colors.red : AppColors.primary,
                   size: 20,
                 ),
                 const SizedBox(width: 8),
@@ -913,7 +914,9 @@ class _SelectMembersScreenState extends State<_SelectMembersScreen> {
                       return CheckboxListTile(
                         value: _selected.contains(student.id),
                         title: Text(student.name),
-                        subtitle: Text('${student.branch} • ${student.age} yaş'),
+                        subtitle: Text(
+                          '${student.branch} • ${student.age} yaş',
+                        ),
                         onChanged: (checked) {
                           setState(() {
                             if (checked == true) {

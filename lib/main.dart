@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'theme/app_colors.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'constants/app_constants.dart';
@@ -142,7 +143,7 @@ class FirebaseSetupScreen extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.cloud_off, size: 72, color: Colors.indigo),
+              const Icon(Icons.cloud_off, size: 72, color: AppColors.primary),
               const SizedBox(height: 16),
               const Text(
                 'Firebase ayarları bekleniyor',

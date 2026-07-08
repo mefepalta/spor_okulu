@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme/app_colors.dart';
 
 import '../widgets/wave_background.dart';
 
@@ -33,9 +34,7 @@ class _UsersScreenState extends State<UsersScreen> {
   Future<void> _openChangeRoleDialog(UserAccount user) async {
     if (user.uid == widget.currentUserUid) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Kendi rolünü buradan değiştiremezsin.'),
-        ),
+        const SnackBar(content: Text('Kendi rolünü buradan değiştiremezsin.')),
       );
       return;
     }
@@ -234,8 +233,10 @@ class _ChangeRoleDialogState extends State<_ChangeRoleDialog> {
               title: Text(AppRoleLabels.of(role)),
               trailing: isSelected
                   ? const Icon(Icons.check_circle, color: Colors.green)
-                  : const Icon(Icons.radio_button_unchecked,
-                      color: Colors.grey),
+                  : const Icon(
+                      Icons.radio_button_unchecked,
+                      color: Colors.grey,
+                    ),
               contentPadding: EdgeInsets.zero,
             );
           }),
@@ -314,7 +315,7 @@ class AppRoleLabels {
       case AppRoles.coach:
         return Colors.teal;
       case AppRoles.parent:
-        return Colors.indigo;
+        return AppColors.primary;
       case AppRoles.student:
         return Colors.orange;
       default:
