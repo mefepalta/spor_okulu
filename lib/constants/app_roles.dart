@@ -3,10 +3,11 @@ class AppRoles {
   static const String admin = 'admin';
   static const String coach = 'coach';
   static const String parent = 'veli';
+  static const String student = 'ogrenci';
   static const String viewer = 'viewer';
 
   /// Firestore'da geçerli sayılan roller.
-  static const List<String> all = [admin, coach, parent, viewer];
+  static const List<String> all = [admin, coach, parent, student, viewer];
 
   static bool isValid(String role) => all.contains(role);
 }
@@ -23,6 +24,10 @@ class AnnouncementAudience {
   /// Bir velinin görmesi gereken duyuru mu? (Herkes veya Veliler hedefli.)
   static bool isVisibleToParent(String audience) =>
       audience == everyone || audience == parents;
+
+  /// Bir öğrencinin görmesi gereken duyuru mu? (Herkes veya Öğrenciler hedefli.)
+  static bool isVisibleToStudent(String audience) =>
+      audience == everyone || audience == students;
 }
 
 /// Antrenörlerin girdiği, velilerin karşılaştırma grafiğinde gördüğü

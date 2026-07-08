@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../widgets/wave_background.dart';
 
 import '../models/app_models.dart';
+import '../theme/app_colors.dart';
 import '../widgets/empty_state.dart';
 
 /// Admin'in velileri yönettiği ekran.
@@ -272,15 +273,26 @@ class _AddParentDialogState extends State<_AddParentDialog> {
   }
 }
 
-/// Bir veliye öğrenci atama ekranı (çoklu seçim).
+/// Bir veliye/öğrenciye öğrenci atama ekranı.
+///
+/// Veli için çoklu seçim (birden fazla çocuk), öğrenci hesabı için tek seçim
+/// ([singleSelect] = true; hesap yalnızca kendi öğrenci kaydına eşlenir).
 class AssignStudentsScreen extends StatefulWidget {
   final ParentAccount parent;
   final List<Student> students;
+
+  /// true ise yalnızca tek öğrenci seçilebilir (öğrenci hesabı eşleştirmesi).
+  final bool singleSelect;
+
+  /// Başlıkta gösterilen hesap etiketi ("Veli" / "Öğrenci").
+  final String accountLabel;
 
   const AssignStudentsScreen({
     super.key,
     required this.parent,
     required this.students,
+    this.singleSelect = false,
+    this.accountLabel = 'Veli',
   });
 
   @override
@@ -294,6 +306,23 @@ class _AssignStudentsScreenState extends State<AssignStudentsScreen> {
   void initState() {
     super.initState();
     _selected = {...widget.parent.studentIds};
+  }
+
+  void _toggle(String studentId, bool checked) {
+    setState(() {
+      if (widget.singleSelect) {
+        // Tek seçim: yeni seçim öncekini değiştirir.
+        _selected
+          ..clear()
+          ..add(studentId);
+        return;
+      }
+      if (checked) {
+        _selected.add(studentId);
+      } else {
+        _selected.remove(studentId);
+      }
+    });
   }
 
   @override
@@ -322,24 +351,32 @@ class _AssignStudentsScreenState extends State<AssignStudentsScreen> {
                 Padding(
                   padding: const EdgeInsets.all(16),
                   child: Text(
-                    'Veli: ${widget.parent.email}',
+                    '${widget.accountLabel}: ${widget.parent.email}',
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
                 ...widget.students.map((student) {
+                  final selected = _selected.contains(student.id);
+                  final subtitle = Text('${student.branch} • ${student.age} yaş');
+                  if (widget.singleSelect) {
+                    // Tek seçim: radyo görünümlü ListTile (deprecation'sız).
+                    return ListTile(
+                      onTap: () => _toggle(student.id, true),
+                      title: Text(student.name),
+                      subtitle: subtitle,
+                      trailing: Icon(
+                        selected
+                            ? Icons.radio_button_checked
+                            : Icons.radio_button_unchecked,
+                        color: selected ? AppColors.primary : Colors.grey,
+                      ),
+                    );
+                  }
                   return CheckboxListTile(
-                    value: _selected.contains(student.id),
+                    value: selected,
                     title: Text(student.name),
-                    subtitle: Text('${student.branch} • ${student.age} yaş'),
-                    onChanged: (checked) {
-                      setState(() {
-                        if (checked == true) {
-                          _selected.add(student.id);
-                        } else {
-                          _selected.remove(student.id);
-                        }
-                      });
-                    },
+                    subtitle: subtitle,
+                    onChanged: (checked) => _toggle(student.id, checked == true),
                   );
                 }),
               ],

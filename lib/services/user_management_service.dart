@@ -39,7 +39,9 @@ class UserManagementService {
       'updatedAt': FieldValue.serverTimestamp(),
     };
 
-    if (role != AppRoles.parent) {
+    // Öğrenci eşleştirmesi hem veli hem öğrenci rolünde 'studentIds' ile tutulur;
+    // rol bunların dışına çıkıyorsa eşleşmeler temizlenir.
+    if (role != AppRoles.parent && role != AppRoles.student) {
       data['studentIds'] = <String>[];
     }
 

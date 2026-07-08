@@ -26,6 +26,16 @@ service cloud.firestore {
       return isSignedIn() && role() == "veli";
     }
 
+    function isStudent() {
+      return isSignedIn() && role() == "ogrenci";
+    }
+
+    // Kendi (eşlenmiş) öğrenci kaydına scope'lu roller: veli + öğrenci. İkisi de
+    // 'studentIds' ile eşlenir; bu yüzden aynı okuma yolları paylaşılır.
+    function isLinkedToStudents() {
+      return isParent() || isStudent();
+    }
+
     function isAdminOrCoach() {
       return isAdmin() || isCoach();
     }
@@ -60,9 +70,10 @@ service cloud.firestore {
       allow delete: if isAdmin();
     }
 
-    // Öğrenciler: personel hepsini; veli yalnızca kendi çocuğunu okuyabilir.
+    // Öğrenciler: personel hepsini; veli/öğrenci yalnızca eşlendiği kaydı okur.
     match /students/{studentId} {
-      allow read: if isStaff() || (isParent() && studentId in ownStudentIds());
+      allow read: if isStaff()
+        || (isLinkedToStudents() && studentId in ownStudentIds());
       allow write: if isAdmin();
     }
 
@@ -87,10 +98,10 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
-    // Yoklama: personel hepsini; veli yalnızca çocuğunu içeren kayıtları.
+    // Yoklama: personel hepsini; veli/öğrenci yalnızca kendini içeren kayıtları.
     match /attendanceRecords/{document} {
       allow read: if isStaff()
-        || (isParent()
+        || (isLinkedToStudents()
             && resource.data.keys().hasAny(['studentIds'])
             && resource.data.studentIds.hasAny(ownStudentIds()));
       allow write: if isAdminOrCoach();
@@ -102,10 +113,10 @@ service cloud.firestore {
       allow write: if isAdminOrCoach();
     }
 
-    // Performans: personel hepsini; veli yalnızca kendi çocuğununkini okur.
+    // Performans: personel hepsini; veli/öğrenci yalnızca kendi kaydını okur.
     match /performanceRecords/{document} {
       allow read: if isStaff()
-        || (isParent() && resource.data.studentId in ownStudentIds());
+        || (isLinkedToStudents() && resource.data.studentId in ownStudentIds());
       allow write: if isAdminOrCoach();
     }
 

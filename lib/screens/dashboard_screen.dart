@@ -34,6 +34,7 @@ import 'profile_screen.dart';
 import 'reports_screen.dart';
 import 'sports_screen.dart';
 import 'sportekai_screen.dart';
+import 'student_accounts_screen.dart';
 import 'students_screen.dart';
 import 'users_screen.dart';
 
@@ -68,6 +69,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final List<LeaveRequest> _leaveRequests = [];
   final List<CashTransaction> _cashTransactions = [];
   final List<EquipmentItem> _equipment = [];
+  final List<ParentAccount> _studentAccounts = [];
   List<String> _assignedStudentIds = const [];
 
   String _userRole = AppRoles.viewer;
@@ -87,6 +89,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
   bool get _isAdmin => _userRole == AppRoles.admin;
   bool get _isCoach => _userRole == AppRoles.coach;
   bool get _isParent => _userRole == AppRoles.parent;
+  bool get _isStudent => _userRole == AppRoles.student;
+
+  /// Verisi kendi çocuğuna/kendisine scope'lu roller (veli + öğrenci). Bu
+  /// roller "tüm öğrenciler" yerine yalnızca [_myChildren]'ı görür.
+  bool get _isChildScoped => _isParent || _isStudent;
 
   bool get _canManageCore => _isAdmin;
   bool get _canManageGroups => _isAdmin || _isCoach;
@@ -114,18 +121,28 @@ class _DashboardScreenState extends State<DashboardScreen> {
         .toList();
   }
 
-  /// Velinin göreceği duyurular (Herkes veya Veliler hedefli). Diğer roller
-  /// yönetici olduğundan tüm duyuruları görür.
+  /// Velinin/öğrencinin göreceği duyurular (hedef kitlesine göre süzülür).
+  /// Personel yönetici olduğundan tüm duyuruları görür.
   List<Announcement> _visibleAnnouncements(List<Announcement> all) {
-    if (!_isParent) {
-      return all;
+    if (_isParent) {
+      return all
+          .where(
+            (announcement) => AnnouncementAudience.isVisibleToParent(
+              announcement.targetAudience,
+            ),
+          )
+          .toList();
     }
-    return all
-        .where(
-          (announcement) =>
-              AnnouncementAudience.isVisibleToParent(announcement.targetAudience),
-        )
-        .toList();
+    if (_isStudent) {
+      return all
+          .where(
+            (announcement) => AnnouncementAudience.isVisibleToStudent(
+              announcement.targetAudience,
+            ),
+          )
+          .toList();
+    }
+    return all;
   }
 
   @override
@@ -146,6 +163,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       final isAdmin = userRole == AppRoles.admin;
       final isCoach = userRole == AppRoles.coach;
       final isParent = userRole == AppRoles.parent;
+      final isStudent = userRole == AppRoles.student;
       final isViewer = userRole == AppRoles.viewer;
       final isStaff = isAdmin || isCoach || isViewer;
 
@@ -165,6 +183,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       var loadedResponses = const <EventResponse>[];
       var assignedStudentIds = const <String>[];
       var loadedParents = const <ParentAccount>[];
+      var loadedStudentAccounts = const <ParentAccount>[];
       var loadedUsers = const <UserAccount>[];
       var loadedLeaveRequests = const <LeaveRequest>[];
       var loadedCashTransactions = const <CashTransaction>[];
@@ -190,6 +209,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
         loadedLeaveRequests = uid == null
             ? const []
             : await _firestoreService.loadLeaveRequestsForParent(uid);
+      } else if (isStudent) {
+        // Öğrenci: yalnızca kendi (eşlenmiş) öğrenci kaydına scope'lu, salt
+        // görüntüleme. Ödeme/mazeret/etkinlik cevabı yüklenmez (veli alanı).
+        assignedStudentIds = await _userRoleService.getCurrentUserStudentIds();
+        loadedStudents = await _firestoreService.loadStudentsByIds(
+          assignedStudentIds,
+        );
+        loadedPerformance = await _firestoreService
+            .loadPerformanceRecordsForStudents(assignedStudentIds);
+        loadedAttendanceRecords = await _firestoreService
+            .loadAttendanceForStudents(assignedStudentIds);
       } else if (isStaff) {
         loadedStudents = await _firestoreService.loadStudents();
         loadedCoaches = await _firestoreService.loadCoaches();
@@ -209,6 +239,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         // Veli/kullanıcı yönetimi ve kulüp kasası yalnızca admin içindir.
         if (isAdmin) {
           loadedParents = await _parentService.loadParents();
+          loadedStudentAccounts = await _parentService.loadStudentAccounts();
           loadedUsers = await _userManagementService.loadUsers();
           loadedCashTransactions = await _firestoreService
               .loadCashTransactions();
@@ -262,6 +293,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
         _parents
           ..clear()
           ..addAll(loadedParents);
+
+        _studentAccounts
+          ..clear()
+          ..addAll(loadedStudentAccounts);
 
         _users
           ..clear()
@@ -655,7 +690,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       context,
       MaterialPageRoute(
         builder: (context) => PerformanceScreen(
-          students: _isParent ? _myChildren : _students,
+          students: _isChildScoped ? _myChildren : _students,
           records: _performanceRecords,
           canManage: _canManagePerformance,
           onAddRecord: _addPerformanceRecord,
@@ -951,6 +986,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
       introSubtitle =
           'Çocuğunuzun güncel özetini biliyorum. Aşağıdakilerden birini '
           'seçebilir ya da kendi sorunuzu yazabilirsiniz.';
+    } else if (_isStudent) {
+      summary = AiSummary.buildStudentSummary(
+        attendance: _attendanceRecords,
+        performance: _performanceRecords,
+        eventCount: _events.length,
+      );
+      suggestions = kStudentAiSuggestions;
+      introSubtitle =
+          'Güncel durumunu biliyorum. Aşağıdakilerden birini seçebilir '
+          'ya da kendi sorunu yazabilirsin.';
     } else {
       summary = AiSummary.buildStaffSummary(
         isAdmin: _isAdmin,
@@ -1030,6 +1075,56 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
+  // --- Öğrenci hesapları ---
+
+  Future<void> _reloadStudentAccounts() async {
+    final accounts = await _parentService.loadStudentAccounts();
+
+    if (!mounted) {
+      return;
+    }
+
+    setState(() {
+      _studentAccounts
+        ..clear()
+        ..addAll(accounts);
+    });
+  }
+
+  Future<void> _addStudentAccount(String email) async {
+    await _parentService.promoteToStudentByEmail(email);
+    await _reloadStudentAccounts();
+  }
+
+  Future<void> _assignStudentToAccount(
+    String uid,
+    List<String> studentIds,
+  ) async {
+    await _parentService.setAssignedStudents(uid, studentIds);
+    await _reloadStudentAccounts();
+  }
+
+  Future<void> _removeStudentAccount(String uid) async {
+    // Veliyle aynı sadeleştirme: rolü görüntüleyiciye indirir, eşleşmeyi siler.
+    await _parentService.removeParent(uid);
+    await _reloadStudentAccounts();
+  }
+
+  void _openStudentAccountsScreen(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => StudentAccountsScreen(
+          accounts: _studentAccounts,
+          students: _students,
+          onAddAccount: _addStudentAccount,
+          onAssignStudent: _assignStudentToAccount,
+          onRemoveAccount: _removeStudentAccount,
+        ),
+      ),
+    );
+  }
+
   // --- Kullanıcılar / Roller ---
 
   Future<void> _reloadUsersAndParents() async {
@@ -1089,7 +1184,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   /// Uyarılar yüklü yoklama kayıtlarından türetilir; "görüldü" durumu cihazda
   /// tutulur (bkz. [AbsenceAlertService]).
   Future<void> _refreshAbsenceAlerts() async {
-    if (!_isParent) {
+    if (!_isChildScoped) {
       return;
     }
     final uid = _authService.currentUser?.uid;
@@ -1154,7 +1249,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       MaterialPageRoute(
         builder: (context) => ProfileScreen(
           userRole: _userRole,
-          children: _isParent ? _myChildren : const [],
+          children: _isChildScoped ? _myChildren : const [],
         ),
       ),
     );
@@ -1188,6 +1283,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
               padding: EdgeInsets.zero,
               children: _isParent
                   ? _parentDrawerItems(context)
+                  : _isStudent
+                  ? _studentDrawerItems(context)
                   : _staffDrawerItems(context),
             ),
           ),
@@ -1222,6 +1319,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ? 'Antrenör'
         : _isParent
         ? 'Veli'
+        : _isStudent
+        ? 'Öğrenci'
         : 'Görüntüleyici';
     final email = _authService.currentUser?.email ?? '';
 
@@ -1316,6 +1415,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
       _drawerNav(Icons.sports, 'Antrenörler', _openCoachesScreen),
       _drawerNav(Icons.groups, 'Gruplar', _openGroupsScreen),
       if (_isAdmin) _drawerNav(Icons.family_restroom, 'Veliler', _openParentsScreen),
+      if (_isAdmin)
+        _drawerNav(Icons.school, 'Öğrenci Hesapları', _openStudentAccountsScreen),
       _drawerSection('Operasyon'),
       _drawerNav(Icons.check_circle, 'Yoklama', _openAttendanceScreen),
       _drawerNav(Icons.event_busy, 'Mazeretler', _openLeaveRequestsScreen),
@@ -1347,6 +1448,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
       _drawerNav(Icons.event_busy, 'Mazeret Bildir', _openLeaveRequestsScreen),
       _drawerNav(Icons.event_available, 'Etkinlikler', _openEventsScreen),
       _drawerNav(Icons.payment, 'Ödemeler', _openPaymentsScreen),
+      _drawerSection('Genel'),
+      _drawerNav(Icons.auto_awesome, 'SporTekAi', _openSporTekAiScreen),
+      _drawerNav(Icons.campaign, 'Duyurular', _openAnnouncementsScreen),
+      _drawerNav(Icons.sports_soccer, 'Sporlar', _openSportsScreen),
+    ];
+  }
+
+  /// Öğrenci menüsü: yalnızca kendi verisi ve salt-görüntüleme. Ödeme/mazeret
+  /// gibi veli işlemleri yer almaz.
+  List<Widget> _studentDrawerItems(BuildContext context) {
+    return [
+      _drawerSection('Ben'),
+      _drawerNav(Icons.query_stats, 'Performansım', _openPerformanceScreen),
+      _drawerNav(Icons.check_circle, 'Yoklamam', _openChildAttendanceScreen),
+      _drawerNav(Icons.event_available, 'Etkinlikler', _openEventsScreen),
       _drawerSection('Genel'),
       _drawerNav(Icons.auto_awesome, 'SporTekAi', _openSporTekAiScreen),
       _drawerNav(Icons.campaign, 'Duyurular', _openAnnouncementsScreen),
@@ -1476,8 +1592,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
       }
     }
 
-    // Devamsızlık bildirimleri (veli): çocuğunun "Gelmedi" olduğu kayıtlar.
-    if (_isParent) {
+    // Devamsızlık bildirimleri (veli/öğrenci): "Gelmedi" olunan kayıtlar.
+    if (_isChildScoped) {
       for (final record in _attendanceRecords) {
         for (final child in _myChildren) {
           if (record.absentStudentIds.contains(child.id)) {
@@ -1512,6 +1628,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ? 'Spor Okulu - Antrenör'
               : _isParent
               ? 'Spor Okulu - Veli'
+              : _isStudent
+              ? 'Spor Okulu - Öğrenci'
               : 'Spor Okulu - Görüntüleme',
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
@@ -1554,7 +1672,90 @@ class _DashboardScreenState extends State<DashboardScreen> {
       return _buildParentBody(context);
     }
 
+    if (_isStudent) {
+      return _buildStudentBody(context);
+    }
+
     return _buildStaffSummary(context);
+  }
+
+  /// Öğrenci panosu: veli düzeninin salt-görüntüleme, ödeme içermeyen sürümü.
+  /// Ayrıntılara ☰ menüden erişilir.
+  Widget _buildStudentBody(BuildContext context) {
+    final sections = <Widget>[
+      _buildStudentGreeting(),
+      const SizedBox(height: 16),
+      _buildStudentStatTilesRow(context),
+      const SizedBox(height: 12),
+      _buildAttendanceSummarySection(context),
+      _buildRemindersSection(context),
+    ];
+
+    final announcementSection = _buildLatestAnnouncementSection(context);
+    if (announcementSection != null) {
+      sections.add(announcementSection);
+    }
+
+    return ListView(padding: const EdgeInsets.all(16), children: sections);
+  }
+
+  Widget _buildStudentGreeting() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Merhaba 👋',
+          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          'Güncel durumun aşağıda.',
+          style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildStudentStatTilesRow(BuildContext context) {
+    final performanceCount = _performanceRecords.length;
+    final visibleAnnouncements = _visibleAnnouncements(_announcements).length;
+
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: StatTile(
+              icon: Icons.query_stats,
+              value: '$performanceCount',
+              label: 'Performans',
+              accent: Colors.green,
+              onTap: () => _openPerformanceScreen(context),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: StatTile(
+              icon: Icons.event_available,
+              value: '${_events.length}',
+              label: 'Etkinlik',
+              accent: Colors.orange,
+              onTap: () => _openEventsScreen(context),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: StatTile(
+              icon: Icons.campaign,
+              value: '$visibleAnnouncements',
+              label: 'Duyuru',
+              accent: AppColors.primary,
+              onTap: () => _openAnnouncementsScreen(context),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   /// Veli panosu: gezinme kartları yerine çocuğa dair türetilen özetler.
@@ -1771,7 +1972,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       title: 'Yoklama Özeti',
       iconColor: Colors.green,
       actionLabel: 'Tümü',
-      onAction: () => _isParent
+      onAction: () => _isChildScoped
           ? _openChildAttendanceScreen(context)
           : _openAttendanceScreen(context),
       child: recordCount == 0
@@ -1803,7 +2004,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ),
                   ],
                 ),
-                if (_isParent && _unreadAbsenceCount > 0) ...[
+                if (_isChildScoped && _unreadAbsenceCount > 0) ...[
                   const SizedBox(height: 12),
                   _absenceAlertNote(context),
                 ],

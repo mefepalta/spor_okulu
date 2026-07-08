@@ -175,8 +175,12 @@ class _UsersScreenState extends State<UsersScreen> {
         return 1;
       case AppRoles.parent:
         return 2;
-      default:
+      case AppRoles.student:
         return 3;
+      case AppRoles.viewer:
+        return 4;
+      default:
+        return 5;
     }
   }
 }
@@ -243,6 +247,14 @@ class _ChangeRoleDialogState extends State<_ChangeRoleDialog> {
                 style: TextStyle(fontSize: 12, color: Colors.grey),
               ),
             ),
+          if (_selectedRole == AppRoles.student)
+            const Padding(
+              padding: EdgeInsets.only(top: 8),
+              child: Text(
+                'Öğrenci eşleştirmesi "Öğrenci Hesapları" ekranından yapılır.',
+                style: TextStyle(fontSize: 12, color: Colors.grey),
+              ),
+            ),
         ],
       ),
       actions: [
@@ -271,6 +283,8 @@ class AppRoleLabels {
         return 'Antrenör';
       case AppRoles.parent:
         return 'Veli';
+      case AppRoles.student:
+        return 'Öğrenci';
       case AppRoles.viewer:
         return 'Görüntüleyici';
       default:
@@ -286,6 +300,8 @@ class AppRoleLabels {
         return Icons.sports;
       case AppRoles.parent:
         return Icons.family_restroom;
+      case AppRoles.student:
+        return Icons.school;
       default:
         return Icons.visibility;
     }
@@ -299,6 +315,8 @@ class AppRoleLabels {
         return Colors.teal;
       case AppRoles.parent:
         return Colors.indigo;
+      case AppRoles.student:
+        return Colors.orange;
       default:
         return Colors.blueGrey;
     }

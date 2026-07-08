@@ -22,6 +22,14 @@ const List<String> kParentAiSuggestions = [
   'Gelişimi için ne önerirsin?',
 ];
 
+/// Öğrenci için varsayılan hazır komutlar.
+const List<String> kStudentAiSuggestions = [
+  'Durumumu özetle',
+  'Devamsızlığım nasıl?',
+  'Performansımı yorumla',
+  'Gelişmek için ne önerirsin?',
+];
+
 /// SporTekAi ✨ — anonim özeti bağlam alan sohbet asistanı.
 ///
 /// Cloudflare Worker proxy üzerinden Groq'a bağlanır (bkz. cloudflare/README).

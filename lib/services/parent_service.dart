@@ -59,7 +59,53 @@ class ParentService {
     });
   }
 
-  /// Bir veliye atanmış öğrenci kimliklerini günceller.
+  /// Rolü 'ogrenci' olan tüm hesapları döndürür.
+  ///
+  /// Öğrenci hesapları da veliyle aynı `studentIds` alanını kullanır; fark, tek
+  /// bir öğrenciye (kendisine) eşlenmeleridir. Böylece veli-scope'lu Firestore
+  /// kuralları ve yükleme kodu yeniden kullanılır. Veri modeli aynı olduğundan
+  /// [ParentAccount] burada genel "eşlenmiş hesap" olarak kullanılır.
+  Future<List<ParentAccount>> loadStudentAccounts() async {
+    final snapshot = await _users
+        .where('role', isEqualTo: AppRoles.student)
+        .get();
+
+    return snapshot.docs
+        .map((doc) => ParentAccount.fromJson(doc.id, doc.data()))
+        .toList();
+  }
+
+  /// Verilen e-postaya sahip kullanıcıyı 'ogrenci' rolüne yükseltir ve döndürür.
+  /// Kullanıcı bulunamazsa [StateError] fırlatır (önce kayıt olması gerekir).
+  Future<ParentAccount> promoteToStudentByEmail(String email) async {
+    final normalizedEmail = email.trim().toLowerCase();
+
+    final snapshot = await _users
+        .where('email', isEqualTo: normalizedEmail)
+        .limit(1)
+        .get();
+
+    if (snapshot.docs.isEmpty) {
+      throw StateError(
+        'Bu e-posta ile kayıtlı kullanıcı bulunamadı. '
+        'Öğrencinin önce uygulamaya kayıt olması gerekir.',
+      );
+    }
+
+    final doc = snapshot.docs.first;
+
+    await doc.reference.set({
+      'role': AppRoles.student,
+      'updatedAt': FieldValue.serverTimestamp(),
+    }, SetOptions(merge: true));
+
+    return ParentAccount.fromJson(doc.id, {
+      ...doc.data(),
+      'role': AppRoles.student,
+    });
+  }
+
+  /// Bir veliye/öğrenciye atanmış öğrenci kimliklerini günceller.
   Future<void> setAssignedStudents(String uid, List<String> studentIds) async {
     await _users.doc(uid).set({
       'studentIds': studentIds,

@@ -166,6 +166,51 @@ class AiSummary {
     return lines.join('\n');
   }
 
+  /// Öğrenci için **anonim** kendi durum özeti. Yalnızca öğrencinin kendi
+  /// yoklama/performans/etkinlik bilgileri; ad/telefon veya ödeme **içermez**
+  /// (ödeme veli alanıdır).
+  static String buildStudentSummary({
+    required List<AttendanceRecord> attendance,
+    required List<PerformanceRecord> performance,
+    required int eventCount,
+  }) {
+    final lines = <String>[];
+    lines.add('Öğrencinin kendi güncel durumu (anonim):');
+
+    var present = 0;
+    var absent = 0;
+    for (final record in attendance) {
+      present += record.presentStudentIds.isNotEmpty
+          ? record.presentStudentIds.length
+          : record.presentStudentNames.length;
+      absent += record.absentStudentIds.isNotEmpty
+          ? record.absentStudentIds.length
+          : record.absentStudentNames.length;
+    }
+    final totalMarks = present + absent;
+    if (totalMarks > 0) {
+      final rate = (present / totalMarks * 100).round();
+      lines.add(
+        '- Yoklama: ${attendance.length} kayıt, katılım %$rate '
+        '($present geldi, $absent gelmedi).',
+      );
+    } else {
+      lines.add('- Yoklama: henüz kayıt yok.');
+    }
+
+    if (performance.isNotEmpty) {
+      lines.add('- Performans: ${performance.length} değerlendirme kaydı var.');
+    } else {
+      lines.add('- Performans: henüz değerlendirme yok.');
+    }
+
+    if (eventCount > 0) {
+      lines.add('- Planlı etkinlik sayısı: $eventCount.');
+    }
+
+    return lines.join('\n');
+  }
+
   static int _sum(List<PaymentRecord> payments, String status) => payments
       .where((p) => p.status == status)
       .fold(0, (total, p) => total + p.amount);
