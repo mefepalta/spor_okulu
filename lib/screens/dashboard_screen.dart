@@ -16,6 +16,7 @@ import '../services/reminders_service.dart';
 import '../services/user_management_service.dart';
 import '../services/user_role_service.dart';
 import '../theme/app_colors.dart';
+import '../utils/formatters.dart';
 import '../widgets/summary_section.dart';
 import 'announcements_screen.dart';
 import 'attendance_screen.dart';
@@ -1536,7 +1537,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       )) {
         final parts = <String>[
           if (payment.period.isNotEmpty) payment.period,
-          if (payment.amount > 0) _formatTl(payment.amount),
+          if (payment.amount > 0) formatTl(payment.amount),
         ];
         items.add(
           AppNotification(
@@ -2058,17 +2059,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
           : SummaryMetricsRow(
               metrics: [
                 SummaryMetric(
-                  value: _formatTl(_sumPaymentsFor('Ödendi')),
+                  value: formatTl(_sumPaymentsFor('Ödendi')),
                   label: 'Tahsil',
                   color: Colors.green,
                 ),
                 SummaryMetric(
-                  value: _formatTl(_sumPaymentsFor('Bekliyor')),
+                  value: formatTl(_sumPaymentsFor('Bekliyor')),
                   label: 'Bekleyen',
                   color: Colors.orange,
                 ),
                 SummaryMetric(
-                  value: _formatTl(_sumPaymentsFor('Gecikti')),
+                  value: formatTl(_sumPaymentsFor('Gecikti')),
                   label: 'Geciken',
                   color: Colors.red,
                 ),
@@ -2099,17 +2100,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
           : SummaryMetricsRow(
               metrics: [
                 SummaryMetric(
-                  value: _formatTl(balance),
+                  value: formatTl(balance),
                   label: 'Kasa',
                   color: balance >= 0 ? Colors.green : Colors.red,
                 ),
                 SummaryMetric(
-                  value: _formatTl(income),
+                  value: formatTl(income),
                   label: 'Gelir',
                   color: Colors.green,
                 ),
                 SummaryMetric(
-                  value: _formatTl(expense),
+                  value: formatTl(expense),
                   label: 'Gider',
                   color: Colors.red,
                 ),
@@ -2194,7 +2195,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           const SizedBox(width: 8),
           if (payment.amount > 0) ...[
             Text(
-              _formatTl(payment.amount),
+              formatTl(payment.amount),
               style: const TextStyle(fontWeight: FontWeight.w600),
             ),
             const SizedBox(width: 10),
@@ -2267,18 +2268,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  /// Tam sayı kuruşsuz TL tutarını binlik ayraçla biçimler (ör. 12.500 ₺).
-  String _formatTl(int amount) {
-    final digits = amount.abs().toString();
-    final buffer = StringBuffer();
-    for (var i = 0; i < digits.length; i++) {
-      if (i > 0 && (digits.length - i) % 3 == 0) {
-        buffer.write('.');
-      }
-      buffer.write(digits[i]);
-    }
-    return '${amount < 0 ? '-' : ''}$buffer ₺';
-  }
 }
 
 /// Yeni hızlı hatırlatıcı metni almak için basit dialog.

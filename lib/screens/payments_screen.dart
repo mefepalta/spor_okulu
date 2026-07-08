@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 
 import '../models/app_models.dart';
 import '../theme/app_colors.dart';
+import '../utils/formatters.dart';
 import '../utils/launchers.dart';
 import '../utils/validators.dart';
 import '../widgets/empty_state.dart';
@@ -404,20 +405,6 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
   }
 }
 
-/// Tutarı Türk usulü binlik ayraçla biçimler: 1500 -> "1.500".
-String _formatTl(int amount) {
-  final digits = amount.abs().toString();
-  final buffer = StringBuffer();
-  for (var i = 0; i < digits.length; i++) {
-    if (i > 0 && (digits.length - i) % 3 == 0) {
-      buffer.write('.');
-    }
-    buffer.write(digits[i]);
-  }
-  final sign = amount < 0 ? '-' : '';
-  return '$sign$buffer';
-}
-
 /// Bir ödemenin ait olduğu öğrenciyi bulur (önce id, sonra ada göre eşleşir).
 Student? findStudentForPayment(PaymentRecord payment, List<Student> students) {
   if (payment.studentId.isNotEmpty) {
@@ -459,7 +446,7 @@ Future<void> sendPaymentReminder(
       : 'ödemesi beklenmektedir';
   final message =
       'Sayın velimiz, ${payment.studentName} için ${payment.period} dönemi '
-      'aidatı (${_formatTl(payment.amount)} TL) $durum. '
+      'aidatı (${formatThousands(payment.amount)} TL) $durum. '
       'Bilginize, teşekkür ederiz.';
 
   await launchWhatsApp(context, phone: phone, message: message);
@@ -545,7 +532,7 @@ class _PaymentSummaryBar extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           Text(
-            '${_formatTl(amount)} TL',
+            '${formatThousands(amount)} TL',
             textAlign: TextAlign.center,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,

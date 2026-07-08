@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/app_models.dart';
 import '../theme/app_colors.dart';
+import '../utils/formatters.dart';
 import '../widgets/empty_state.dart';
 import '../widgets/summary_section.dart';
 import '../widgets/wave_background.dart';
@@ -38,18 +39,6 @@ class _ClubFinanceScreenState extends State<ClubFinanceScreen> {
       .fold(0, (sum, t) => sum + t.amount);
 
   int get _balance => _totalIncome - _totalExpense;
-
-  String _formatTl(int amount) {
-    final digits = amount.abs().toString();
-    final buffer = StringBuffer();
-    for (var i = 0; i < digits.length; i++) {
-      if (i > 0 && (digits.length - i) % 3 == 0) {
-        buffer.write('.');
-      }
-      buffer.write(digits[i]);
-    }
-    return '${amount < 0 ? '-' : ''}$buffer ₺';
-  }
 
   Future<void> _add() async {
     final result = await showModalBottomSheet<CashTransaction>(
@@ -139,7 +128,7 @@ class _ClubFinanceScreenState extends State<ClubFinanceScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            _formatTl(_balance),
+            formatTl(_balance),
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 30,
@@ -151,12 +140,12 @@ class _ClubFinanceScreenState extends State<ClubFinanceScreen> {
           SummaryMetricsRow(
             metrics: [
               SummaryMetric(
-                value: _formatTl(_totalIncome),
+                value: formatTl(_totalIncome),
                 label: 'Toplam Gelir',
                 color: Colors.green,
               ),
               SummaryMetric(
-                value: _formatTl(_totalExpense),
+                value: formatTl(_totalExpense),
                 label: 'Toplam Gider',
                 color: Colors.red,
               ),
@@ -204,7 +193,7 @@ class _ClubFinanceScreenState extends State<ClubFinanceScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              '$sign${_formatTl(transaction.amount)}',
+              '$sign${formatTl(transaction.amount)}',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 15,
