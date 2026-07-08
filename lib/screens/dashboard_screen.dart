@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../widgets/wave_background.dart';
 
 import '../constants/app_roles.dart';
+import '../l10n/app_localizations.dart';
 import '../models/app_models.dart';
 import '../routes/app_routes.dart';
 import '../services/absence_alert_service.dart';
@@ -17,6 +18,8 @@ import '../services/user_management_service.dart';
 import '../services/user_role_service.dart';
 import '../theme/app_colors.dart';
 import '../utils/formatters.dart';
+import '../utils/role_l10n.dart';
+import '../utils/status_l10n.dart';
 import '../widgets/summary_section.dart';
 import 'announcements_screen.dart';
 import 'attendance_screen.dart';
@@ -97,7 +100,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   bool _hasStartedAnnouncementListener = false;
   bool _hasReceivedInitialAnnouncementSnapshot = false;
   bool _isLoading = true;
-  String? _errorMessage;
+  Object? _errorMessage;
 
   bool get _isAdmin => _userRole == AppRoles.admin;
   bool get _isCoach => _userRole == AppRoles.coach;
@@ -364,7 +367,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
       setState(() {
         _isLoading = false;
-        _errorMessage = 'Veriler yüklenirken bir hata oluştu: $error';
+        _errorMessage = error;
       });
     }
   }
@@ -409,15 +412,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ..addAll(announcements);
         });
 
+        final l10n = AppLocalizations.of(context);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
               newCount == 1
-                  ? 'Yeni bir duyuru yayınlandı.'
-                  : '$newCount yeni duyuru yayınlandı.',
+                  ? l10n.newAnnouncementPublished
+                  : l10n.newAnnouncementsPublished(newCount),
             ),
             action: SnackBarAction(
-              label: 'Görüntüle',
+              label: l10n.viewAction,
               onPressed: () {
                 _openAnnouncementsScreen(context);
               },
@@ -439,19 +443,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    const brand = 'Spor Okulu';
+    final title = _isAdmin
+        ? brand
+        : '$brand - ${localizedRole(l10n, _userRole)}';
     return WaveScaffold(
       drawer: _buildDrawer(context),
       appBar: AppBar(
         title: Text(
-          _isAdmin
-              ? 'Spor Okulu'
-              : _isCoach
-              ? 'Spor Okulu - Antrenör'
-              : _isParent
-              ? 'Spor Okulu - Veli'
-              : _isStudent
-              ? 'Spor Okulu - Öğrenci'
-              : 'Spor Okulu - Görüntüleme',
+          title,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
@@ -481,10 +482,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
     }
 
     if (_errorMessage != null) {
+      final l10n = AppLocalizations.of(context);
       return Center(
         child: Padding(
           padding: const EdgeInsets.all(24),
-          child: Text(_errorMessage!, textAlign: TextAlign.center),
+          child: Text(
+            l10n.errorLoadingData(_errorMessage!),
+            textAlign: TextAlign.center,
+          ),
         ),
       );
     }
@@ -526,24 +531,25 @@ class _ReminderDialogState extends State<_ReminderDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return AlertDialog(
-      title: const Text('Yeni Hatırlatıcı'),
+      title: Text(l10n.reminderDialogTitle),
       content: TextField(
         controller: _controller,
         autofocus: true,
         maxLines: 2,
         textCapitalization: TextCapitalization.sentences,
-        decoration: const InputDecoration(
-          hintText: 'Örn: Salı günü malzeme siparişi ver',
+        decoration: InputDecoration(
+          hintText: l10n.reminderDialogHint,
         ),
         onSubmitted: (_) => _save(),
       ),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Vazgeç'),
+          child: Text(l10n.commonCancel),
         ),
-        FilledButton(onPressed: _save, child: const Text('Ekle')),
+        FilledButton(onPressed: _save, child: Text(l10n.commonAdd)),
       ],
     );
   }

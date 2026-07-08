@@ -361,4 +361,365 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get logout => 'Выйти';
+
+  @override
+  String get commonAll => 'Все';
+
+  @override
+  String get commonAdd => 'Добавить';
+
+  @override
+  String get commonDelete => 'Удалить';
+
+  @override
+  String get viewAction => 'Открыть';
+
+  @override
+  String get statusPaid => 'Оплачено';
+
+  @override
+  String get statusPending => 'Ожидает';
+
+  @override
+  String get statusOverdue => 'Просрочено';
+
+  @override
+  String get leaveStatusPending => 'На рассмотрении';
+
+  @override
+  String get leaveStatusApproved => 'Одобрено';
+
+  @override
+  String get leaveStatusRejected => 'Отклонено';
+
+  @override
+  String get drawerMainPanel => 'Главная панель';
+
+  @override
+  String get sectionRecords => 'Записи';
+
+  @override
+  String get sectionOperations => 'Операции';
+
+  @override
+  String get sectionClub => 'Клуб';
+
+  @override
+  String get sectionGeneral => 'Общее';
+
+  @override
+  String get sectionMyChild => 'Мой ребёнок';
+
+  @override
+  String get sectionMe => 'Я';
+
+  @override
+  String get navStudents => 'Ученики';
+
+  @override
+  String get navCoaches => 'Тренеры';
+
+  @override
+  String get navGroups => 'Группы';
+
+  @override
+  String get navParents => 'Родители';
+
+  @override
+  String get navStudentAccounts => 'Аккаунты учеников';
+
+  @override
+  String get navAttendance => 'Посещаемость';
+
+  @override
+  String get navLeaveRequests => 'Заявки на отсутствие';
+
+  @override
+  String get navPayments => 'Платежи';
+
+  @override
+  String get navPerformance => 'Успеваемость';
+
+  @override
+  String get navEvents => 'Мероприятия';
+
+  @override
+  String get navEquipment => 'Инвентарь';
+
+  @override
+  String get navAnnouncements => 'Объявления';
+
+  @override
+  String get navClubCash => 'Касса клуба';
+
+  @override
+  String get navReports => 'Отчёты';
+
+  @override
+  String get navSports => 'Виды спорта';
+
+  @override
+  String get navUsers => 'Пользователи';
+
+  @override
+  String get navReportAbsence => 'Сообщить об отсутствии';
+
+  @override
+  String get navMyPerformance => 'Моя успеваемость';
+
+  @override
+  String get navMyAttendance => 'Моя посещаемость';
+
+  @override
+  String get notificationsTooltip => 'Уведомления';
+
+  @override
+  String get notifCategoryAnnouncement => 'Объявление';
+
+  @override
+  String get notifCategoryPayment => 'Платёж';
+
+  @override
+  String get notifCategoryLeave => 'Отсутствие';
+
+  @override
+  String get notifCategoryAbsence => 'Пропуск';
+
+  @override
+  String get leaveWaitingApproval => 'Ожидает одобрения';
+
+  @override
+  String notifLeaveTitle(String name) {
+    return '$name • отсутствие';
+  }
+
+  @override
+  String notifAbsenceTitle(String name) {
+    return '$name отсутствовал(а)';
+  }
+
+  @override
+  String errorLoadingData(Object error) {
+    return 'Произошла ошибка при загрузке данных: $error';
+  }
+
+  @override
+  String get reminderDialogTitle => 'Новое напоминание';
+
+  @override
+  String get reminderDialogHint => 'Напр.: Заказать инвентарь во вторник';
+
+  @override
+  String get newAnnouncementPublished => 'Опубликовано новое объявление.';
+
+  @override
+  String newAnnouncementsPublished(int count) {
+    return 'Опубликовано новых объявлений: $count.';
+  }
+
+  @override
+  String get remindersTitle => 'Быстрые напоминания';
+
+  @override
+  String get remindersEmpty => 'Вы ещё не добавили ни одного напоминания.';
+
+  @override
+  String get aiIntroParent =>
+      'Я знаю текущую сводку по вашему ребёнку. Выберите один из вариантов ниже или задайте свой вопрос.';
+
+  @override
+  String get aiIntroStudent =>
+      'Я знаю твою текущую ситуацию. Выбери один из вариантов ниже или задай свой вопрос.';
+
+  @override
+  String get aiIntroStaff =>
+      'Я знаю текущую сводку по вашему клубу. Выберите один из вариантов ниже или задайте свой вопрос.';
+
+  @override
+  String get viewerWelcomeSubtitle => 'Добро пожаловать в спортивную школу.';
+
+  @override
+  String get requestPendingTitle => 'Ваша заявка рассматривается';
+
+  @override
+  String requestPendingMessage(String role) {
+    return 'Ваша заявка на роль «$role» ожидает одобрения администратора. После одобрения вы получите доступ к соответствующей панели.';
+  }
+
+  @override
+  String get requestApprovedTitle => 'Ваша заявка одобрена';
+
+  @override
+  String get requestApprovedMessage =>
+      'Просто выйдите и войдите снова, чтобы увидеть свою новую роль.';
+
+  @override
+  String get roleNotAssignedTitle => 'Вам ещё не назначена роль';
+
+  @override
+  String get roleNotAssignedMessage =>
+      'Когда администратор назначит вам роль, вы получите доступ к соответствующей панели.';
+
+  @override
+  String get greetingMorning => 'Доброе утро';
+
+  @override
+  String get greetingAfternoon => 'Добрый день';
+
+  @override
+  String get greetingEvening => 'Добрый вечер';
+
+  @override
+  String get studentGreetingSubtitle => 'Твоё текущее состояние ниже.';
+
+  @override
+  String parentGreetingSubtitleOne(String name) {
+    return '$name • текущая сводка';
+  }
+
+  @override
+  String get parentGreetingSubtitleMany =>
+      'Текущая сводка по вашим детям ниже.';
+
+  @override
+  String get staffGreetingSubtitle => 'Текущая сводка по вашему клубу ниже.';
+
+  @override
+  String highlightOverdueDues(String amount) {
+    return 'Просроченные взносы: $amount';
+  }
+
+  @override
+  String get highlightGreatAttendance =>
+      'Твоя посещаемость отличная, так держать! 🎯';
+
+  @override
+  String get highlightWatchAttendance =>
+      'Давай немного последим за посещаемостью';
+
+  @override
+  String get highlightPlannedEvent =>
+      'Есть запланированное мероприятие, не пропусти';
+
+  @override
+  String get highlightAllGood => 'Всё выглядит хорошо 👍';
+
+  @override
+  String highlightPaymentsPending(int count) {
+    return 'Платежей, требующих внимания: $count';
+  }
+
+  @override
+  String highlightLeavePending(int count) {
+    return 'Заявок на отсутствие, ожидающих одобрения: $count';
+  }
+
+  @override
+  String get highlightNoPending => 'У вас нет незавершённых задач, отлично 👍';
+
+  @override
+  String get statPerformance => 'Успеваемость';
+
+  @override
+  String get statEvent => 'Мероприятие';
+
+  @override
+  String get statAnnouncement => 'Объявление';
+
+  @override
+  String get statMyChild => 'Мой ребёнок';
+
+  @override
+  String get statStudent => 'Ученик';
+
+  @override
+  String get statCoach => 'Тренер';
+
+  @override
+  String get statGroup => 'Группа';
+
+  @override
+  String noteNew(int count) {
+    return '$count новых';
+  }
+
+  @override
+  String noteWaiting(int count) {
+    return '$count в ожидании';
+  }
+
+  @override
+  String get attendanceSummaryTitle => 'Сводка посещаемости';
+
+  @override
+  String get attendanceEmpty => 'Записей о посещаемости пока нет.';
+
+  @override
+  String get metricLessons => 'Занятия';
+
+  @override
+  String get metricRecords => 'Записи';
+
+  @override
+  String get metricPresent => 'Присутствовал';
+
+  @override
+  String get metricAbsent => 'Отсутствовал';
+
+  @override
+  String get metricAttendanceRate => 'Посещаемость';
+
+  @override
+  String get absenceNoteOne => '1 новая запись об отсутствии';
+
+  @override
+  String absenceNoteMany(int count) {
+    return 'Новых записей об отсутствии: $count';
+  }
+
+  @override
+  String get financeSummaryTitle => 'Финансовая сводка';
+
+  @override
+  String get financeEmpty => 'Записей о платежах пока нет.';
+
+  @override
+  String get metricCollected => 'Собрано';
+
+  @override
+  String get metricPending => 'Ожидается';
+
+  @override
+  String get metricOverdue => 'Просрочено';
+
+  @override
+  String get clubCashTitle => 'Касса клуба';
+
+  @override
+  String get ledgerAction => 'Журнал';
+
+  @override
+  String get clubCashEmpty => 'Движений по кассе пока нет.';
+
+  @override
+  String get metricBalance => 'Касса';
+
+  @override
+  String get metricIncome => 'Доход';
+
+  @override
+  String get metricExpense => 'Расход';
+
+  @override
+  String unpaidDuesTitle(int count) {
+    return 'Неоплаченные взносы ($count)';
+  }
+
+  @override
+  String moreStudents(int count) {
+    return '+$count учеников ещё';
+  }
+
+  @override
+  String get latestAnnouncementTitle => 'Последнее объявление';
 }

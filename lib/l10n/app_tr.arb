@@ -136,5 +136,169 @@
   "termsTitle": "Kullanım Koşulları",
   "privacyTitle": "Gizlilik Politikası",
   "appVersionLabel": "Uygulama Sürümü",
-  "logout": "Çıkış Yap"
+  "logout": "Çıkış Yap",
+
+  "commonAll": "Tümü",
+  "commonAdd": "Ekle",
+  "commonDelete": "Sil",
+  "viewAction": "Görüntüle",
+
+  "statusPaid": "Ödendi",
+  "statusPending": "Bekliyor",
+  "statusOverdue": "Gecikti",
+  "leaveStatusPending": "Beklemede",
+  "leaveStatusApproved": "Onaylandı",
+  "leaveStatusRejected": "Reddedildi",
+
+  "drawerMainPanel": "Ana Panel",
+  "sectionRecords": "Kayıtlar",
+  "sectionOperations": "Operasyon",
+  "sectionClub": "Kulüp",
+  "sectionGeneral": "Genel",
+  "sectionMyChild": "Çocuğum",
+  "sectionMe": "Ben",
+  "navStudents": "Öğrenciler",
+  "navCoaches": "Antrenörler",
+  "navGroups": "Gruplar",
+  "navParents": "Veliler",
+  "navStudentAccounts": "Öğrenci Hesapları",
+  "navAttendance": "Yoklama",
+  "navLeaveRequests": "Mazeretler",
+  "navPayments": "Ödemeler",
+  "navPerformance": "Performans",
+  "navEvents": "Etkinlikler",
+  "navEquipment": "Depo",
+  "navAnnouncements": "Duyurular",
+  "navClubCash": "Kulüp Kasası",
+  "navReports": "Raporlar",
+  "navSports": "Sporlar",
+  "navUsers": "Kullanıcılar",
+  "navReportAbsence": "Mazeret Bildir",
+  "navMyPerformance": "Performansım",
+  "navMyAttendance": "Yoklamam",
+
+  "notificationsTooltip": "Bildirimler",
+  "notifCategoryAnnouncement": "Duyuru",
+  "notifCategoryPayment": "Ödeme",
+  "notifCategoryLeave": "Mazeret",
+  "notifCategoryAbsence": "Devamsızlık",
+  "leaveWaitingApproval": "Onay bekliyor",
+  "notifLeaveTitle": "{name} • mazeret",
+  "@notifLeaveTitle": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "notifAbsenceTitle": "{name} gelmedi",
+  "@notifAbsenceTitle": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+
+  "errorLoadingData": "Veriler yüklenirken bir hata oluştu: {error}",
+  "@errorLoadingData": {
+    "placeholders": { "error": { "type": "Object" } }
+  },
+  "reminderDialogTitle": "Yeni Hatırlatıcı",
+  "reminderDialogHint": "Örn: Salı günü malzeme siparişi ver",
+  "newAnnouncementPublished": "Yeni bir duyuru yayınlandı.",
+  "newAnnouncementsPublished": "{count} yeni duyuru yayınlandı.",
+  "@newAnnouncementsPublished": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+
+  "remindersTitle": "Hızlı Hatırlatıcılar",
+  "remindersEmpty": "Henüz bir hatırlatıcı eklemediniz.",
+  "aiIntroParent": "Çocuğunuzun güncel özetini biliyorum. Aşağıdakilerden birini seçebilir ya da kendi sorunuzu yazabilirsiniz.",
+  "aiIntroStudent": "Güncel durumunu biliyorum. Aşağıdakilerden birini seçebilir ya da kendi sorunu yazabilirsin.",
+  "aiIntroStaff": "Kulübünüzün güncel özetini biliyorum. Aşağıdakilerden birini seçebilir ya da kendi sorunu yazabilirsin.",
+
+  "viewerWelcomeSubtitle": "Spor okuluna hoş geldin.",
+  "requestPendingTitle": "Başvurun inceleniyor",
+  "requestPendingMessage": "{role} olma başvurun yönetici onayında. Onaylandığında ilgili panoya erişebileceksin.",
+  "@requestPendingMessage": {
+    "placeholders": { "role": { "type": "String" } }
+  },
+  "requestApprovedTitle": "Başvurun onaylandı",
+  "requestApprovedMessage": "Yeni rolünü görmek için çıkış yapıp tekrar giriş yapman yeterli.",
+  "roleNotAssignedTitle": "Rolün henüz atanmadı",
+  "roleNotAssignedMessage": "Yönetici sana bir rol atadığında ilgili panoya erişeceksin.",
+
+  "greetingMorning": "Günaydın",
+  "greetingAfternoon": "İyi günler",
+  "greetingEvening": "İyi akşamlar",
+  "studentGreetingSubtitle": "Güncel durumun aşağıda.",
+  "parentGreetingSubtitleOne": "{name} • güncel özet",
+  "@parentGreetingSubtitleOne": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "parentGreetingSubtitleMany": "Çocuklarınızın güncel özeti aşağıda.",
+  "staffGreetingSubtitle": "Kulübünüzün güncel özeti aşağıda.",
+
+  "highlightOverdueDues": "Geciken aidat: {amount}",
+  "@highlightOverdueDues": {
+    "placeholders": { "amount": { "type": "String" } }
+  },
+  "highlightGreatAttendance": "Katılımın çok iyi, böyle devam! 🎯",
+  "highlightWatchAttendance": "Katılıma biraz dikkat edelim",
+  "highlightPlannedEvent": "Planlı etkinlik var, kaçırma",
+  "highlightAllGood": "Her şey yolunda görünüyor 👍",
+  "highlightPaymentsPending": "{count} ödeme takip bekliyor",
+  "@highlightPaymentsPending": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "highlightLeavePending": "{count} mazeret onay bekliyor",
+  "@highlightLeavePending": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "highlightNoPending": "Bekleyen bir işin yok, harika 👍",
+
+  "statPerformance": "Performans",
+  "statEvent": "Etkinlik",
+  "statAnnouncement": "Duyuru",
+  "statMyChild": "Çocuğum",
+  "statStudent": "Öğrenci",
+  "statCoach": "Antrenör",
+  "statGroup": "Grup",
+  "noteNew": "{count} yeni",
+  "@noteNew": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "noteWaiting": "{count} bekliyor",
+  "@noteWaiting": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+
+  "attendanceSummaryTitle": "Yoklama Özeti",
+  "attendanceEmpty": "Henüz yoklama kaydı yok.",
+  "metricLessons": "Ders",
+  "metricRecords": "Kayıt",
+  "metricPresent": "Geldi",
+  "metricAbsent": "Gelmedi",
+  "metricAttendanceRate": "Katılım",
+  "absenceNoteOne": "1 yeni devamsızlık kaydı",
+  "absenceNoteMany": "{count} yeni devamsızlık kaydı",
+  "@absenceNoteMany": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+
+  "financeSummaryTitle": "Finansal Özet",
+  "financeEmpty": "Henüz ödeme kaydı yok.",
+  "metricCollected": "Tahsil",
+  "metricPending": "Bekleyen",
+  "metricOverdue": "Geciken",
+
+  "clubCashTitle": "Kulüp Kasası",
+  "ledgerAction": "Defter",
+  "clubCashEmpty": "Henüz kasa hareketi yok.",
+  "metricBalance": "Kasa",
+  "metricIncome": "Gelir",
+  "metricExpense": "Gider",
+
+  "unpaidDuesTitle": "Ödenmemiş Aidatlar ({count})",
+  "@unpaidDuesTitle": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "moreStudents": "+{count} öğrenci daha",
+  "@moreStudents": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "latestAnnouncementTitle": "Son Duyuru"
 }

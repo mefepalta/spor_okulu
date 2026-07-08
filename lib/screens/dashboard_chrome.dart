@@ -10,6 +10,7 @@ extension _DashboardChrome on _DashboardScreenState {
   /// Sol üstteki ☰ menüsü. Tüm gezinme hedeflerini role göre gruplayarak
   /// listeler; böylece Ana Panel yalnızca öne çıkan kartları taşır.
   Widget _buildDrawer(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Drawer(
       child: Column(
         children: [
@@ -29,7 +30,7 @@ extension _DashboardChrome on _DashboardScreenState {
           const Divider(height: 1),
           _drawerTile(
             icon: Icons.account_circle,
-            label: 'Profil',
+            label: l10n.profileTitle,
             onTap: () {
               Navigator.pop(context);
               _openProfileScreen(context);
@@ -37,7 +38,7 @@ extension _DashboardChrome on _DashboardScreenState {
           ),
           _drawerTile(
             icon: Icons.logout,
-            label: 'Çıkış Yap',
+            label: l10n.logout,
             color: Colors.red,
             onTap: () {
               Navigator.pop(context);
@@ -51,15 +52,8 @@ extension _DashboardChrome on _DashboardScreenState {
   }
 
   Widget _buildDrawerHeader(BuildContext context) {
-    final roleLabel = _isAdmin
-        ? 'Yönetici'
-        : _isCoach
-        ? 'Antrenör'
-        : _isParent
-        ? 'Veli'
-        : _isStudent
-        ? 'Öğrenci'
-        : 'Görüntüleyici';
+    final l10n = AppLocalizations.of(context);
+    final roleLabel = localizedRole(l10n, _userRole);
     final email = _authService.currentUser?.email ?? '';
 
     return Container(
@@ -81,9 +75,9 @@ extension _DashboardChrome on _DashboardScreenState {
             child: Icon(Icons.sports_soccer, color: Colors.white, size: 28),
           ),
           const SizedBox(height: 12),
-          const Text(
-            'Ana Panel',
-            style: TextStyle(
+          Text(
+            l10n.drawerMainPanel,
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -173,98 +167,103 @@ extension _DashboardChrome on _DashboardScreenState {
       _users.where((user) => user.isPendingRequest).length;
 
   List<Widget> _staffDrawerItems(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return [
-      _drawerSection('Kayıtlar'),
-      _drawerNav(Icons.people, 'Öğrenciler', _openStudentsScreen),
-      _drawerNav(Icons.sports, 'Antrenörler', _openCoachesScreen),
-      _drawerNav(Icons.groups, 'Gruplar', _openGroupsScreen),
+      _drawerSection(l10n.sectionRecords),
+      _drawerNav(Icons.people, l10n.navStudents, _openStudentsScreen),
+      _drawerNav(Icons.sports, l10n.navCoaches, _openCoachesScreen),
+      _drawerNav(Icons.groups, l10n.navGroups, _openGroupsScreen),
       if (_isAdmin)
-        _drawerNav(Icons.family_restroom, 'Veliler', _openParentsScreen),
+        _drawerNav(Icons.family_restroom, l10n.navParents, _openParentsScreen),
       if (_isAdmin)
         _drawerNav(
           Icons.school,
-          'Öğrenci Hesapları',
+          l10n.navStudentAccounts,
           _openStudentAccountsScreen,
         ),
-      _drawerSection('Operasyon'),
-      _drawerNav(Icons.check_circle, 'Yoklama', _openAttendanceScreen),
-      _drawerNav(Icons.event_busy, 'Mazeretler', _openLeaveRequestsScreen),
+      _drawerSection(l10n.sectionOperations),
+      _drawerNav(Icons.check_circle, l10n.navAttendance, _openAttendanceScreen),
+      _drawerNav(Icons.event_busy, l10n.navLeaveRequests, _openLeaveRequestsScreen),
       if (_canViewPayments)
-        _drawerNav(Icons.payment, 'Ödemeler', _openPaymentsScreen),
+        _drawerNav(Icons.payment, l10n.navPayments, _openPaymentsScreen),
       if (_canManagePerformance)
-        _drawerNav(Icons.query_stats, 'Performans', _openPerformanceScreen),
+        _drawerNav(Icons.query_stats, l10n.navPerformance, _openPerformanceScreen),
       if (_canManageEvents)
-        _drawerNav(Icons.event_available, 'Etkinlikler', _openEventsScreen),
-      _drawerNav(Icons.inventory_2, 'Depo', _openEquipmentScreen),
-      _drawerNav(Icons.campaign, 'Duyurular', _openAnnouncementsScreen),
+        _drawerNav(Icons.event_available, l10n.navEvents, _openEventsScreen),
+      _drawerNav(Icons.inventory_2, l10n.navEquipment, _openEquipmentScreen),
+      _drawerNav(Icons.campaign, l10n.navAnnouncements, _openAnnouncementsScreen),
       if (_isAdmin) ...[
-        _drawerSection('Kulüp'),
+        _drawerSection(l10n.sectionClub),
         _drawerNav(
           Icons.account_balance,
-          'Kulüp Kasası',
+          l10n.navClubCash,
           _openClubFinanceScreen,
         ),
       ],
-      _drawerSection('Genel'),
+      _drawerSection(l10n.sectionGeneral),
       _drawerNav(Icons.auto_awesome, 'SporTekAi', _openSporTekAiScreen),
-      _drawerNav(Icons.analytics, 'Raporlar', _openReportsScreen),
-      _drawerNav(Icons.sports_soccer, 'Sporlar', _openSportsScreen),
+      _drawerNav(Icons.analytics, l10n.navReports, _openReportsScreen),
+      _drawerNav(Icons.sports_soccer, l10n.navSports, _openSportsScreen),
       if (_isAdmin)
         _drawerNavBadge(
           Icons.how_to_reg,
-          'Rol Başvuruları',
+          l10n.roleRequestsTitle,
           _openRoleRequestsScreen,
           _pendingRoleRequestCount,
         ),
       if (_isAdmin)
-        _drawerNav(Icons.manage_accounts, 'Kullanıcılar', _openUsersScreen),
+        _drawerNav(Icons.manage_accounts, l10n.navUsers, _openUsersScreen),
     ];
   }
 
   List<Widget> _parentDrawerItems(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return [
-      _drawerSection('Çocuğum'),
-      _drawerNav(Icons.query_stats, 'Performans', _openPerformanceScreen),
-      _drawerNav(Icons.check_circle, 'Yoklama', _openChildAttendanceScreen),
-      _drawerNav(Icons.event_busy, 'Mazeret Bildir', _openLeaveRequestsScreen),
-      _drawerNav(Icons.event_available, 'Etkinlikler', _openEventsScreen),
-      _drawerNav(Icons.payment, 'Ödemeler', _openPaymentsScreen),
-      _drawerSection('Genel'),
+      _drawerSection(l10n.sectionMyChild),
+      _drawerNav(Icons.query_stats, l10n.navPerformance, _openPerformanceScreen),
+      _drawerNav(Icons.check_circle, l10n.navAttendance, _openChildAttendanceScreen),
+      _drawerNav(Icons.event_busy, l10n.navReportAbsence, _openLeaveRequestsScreen),
+      _drawerNav(Icons.event_available, l10n.navEvents, _openEventsScreen),
+      _drawerNav(Icons.payment, l10n.navPayments, _openPaymentsScreen),
+      _drawerSection(l10n.sectionGeneral),
       _drawerNav(Icons.auto_awesome, 'SporTekAi', _openSporTekAiScreen),
-      _drawerNav(Icons.campaign, 'Duyurular', _openAnnouncementsScreen),
-      _drawerNav(Icons.sports_soccer, 'Sporlar', _openSportsScreen),
+      _drawerNav(Icons.campaign, l10n.navAnnouncements, _openAnnouncementsScreen),
+      _drawerNav(Icons.sports_soccer, l10n.navSports, _openSportsScreen),
     ];
   }
 
   /// Viewer menüsü: rol henüz atanmadığından yalnızca genel içerik. Özel
   /// koleksiyon ekranları (öğrenci/antrenör/yoklama vb.) yer almaz.
   List<Widget> _viewerDrawerItems(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return [
-      _drawerSection('Genel'),
-      _drawerNav(Icons.campaign, 'Duyurular', _openAnnouncementsScreen),
-      _drawerNav(Icons.event_available, 'Etkinlikler', _openEventsScreen),
-      _drawerNav(Icons.sports_soccer, 'Sporlar', _openSportsScreen),
+      _drawerSection(l10n.sectionGeneral),
+      _drawerNav(Icons.campaign, l10n.navAnnouncements, _openAnnouncementsScreen),
+      _drawerNav(Icons.event_available, l10n.navEvents, _openEventsScreen),
+      _drawerNav(Icons.sports_soccer, l10n.navSports, _openSportsScreen),
     ];
   }
 
   /// Öğrenci menüsü: yalnızca kendi verisi ve salt-görüntüleme. Ödeme/mazeret
   /// gibi veli işlemleri yer almaz.
   List<Widget> _studentDrawerItems(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return [
-      _drawerSection('Ben'),
-      _drawerNav(Icons.query_stats, 'Performansım', _openPerformanceScreen),
-      _drawerNav(Icons.check_circle, 'Yoklamam', _openChildAttendanceScreen),
-      _drawerNav(Icons.event_available, 'Etkinlikler', _openEventsScreen),
-      _drawerSection('Genel'),
+      _drawerSection(l10n.sectionMe),
+      _drawerNav(Icons.query_stats, l10n.navMyPerformance, _openPerformanceScreen),
+      _drawerNav(Icons.check_circle, l10n.navMyAttendance, _openChildAttendanceScreen),
+      _drawerNav(Icons.event_available, l10n.navEvents, _openEventsScreen),
+      _drawerSection(l10n.sectionGeneral),
       _drawerNav(Icons.auto_awesome, 'SporTekAi', _openSporTekAiScreen),
-      _drawerNav(Icons.campaign, 'Duyurular', _openAnnouncementsScreen),
-      _drawerNav(Icons.sports_soccer, 'Sporlar', _openSportsScreen),
+      _drawerNav(Icons.campaign, l10n.navAnnouncements, _openAnnouncementsScreen),
+      _drawerNav(Icons.sports_soccer, l10n.navSports, _openSportsScreen),
     ];
   }
 
   /// AppBar'ın sağ üstündeki bildirim çanı: okunmamış duyuru sayısını rozetle
   /// gösterir, dokununca bildirim merkezini açar ve rozeti sıfırlar.
   Widget _buildNotificationsAction(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final hasUnread = _unreadAnnouncementCount > 0;
 
     return Badge(
@@ -274,7 +273,7 @@ extension _DashboardChrome on _DashboardScreenState {
         _unreadAnnouncementCount > 99 ? '99+' : '$_unreadAnnouncementCount',
       ),
       child: IconButton(
-        tooltip: 'Bildirimler',
+        tooltip: l10n.notificationsTooltip,
         onPressed: () {
           _openNotificationsScreen(context);
         },
@@ -304,12 +303,13 @@ extension _DashboardChrome on _DashboardScreenState {
 
   /// Mevcut veriden bildirim listesi türetir (yeni koleksiyon gerektirmez).
   List<AppNotification> _buildNotifications() {
+    final l10n = AppLocalizations.of(context);
     final items = <AppNotification>[];
 
     for (final announcement in _visibleAnnouncements(_announcements)) {
       items.add(
         AppNotification(
-          category: 'Duyuru',
+          category: l10n.notifCategoryAnnouncement,
           icon: Icons.campaign,
           color: AppColors.primary,
           title: announcement.title,
@@ -332,10 +332,11 @@ extension _DashboardChrome on _DashboardScreenState {
         ];
         items.add(
           AppNotification(
-            category: 'Ödeme',
+            category: l10n.notifCategoryPayment,
             icon: Icons.payment,
             color: payment.status == 'Gecikti' ? Colors.red : Colors.orange,
-            title: '${payment.studentName} • ${payment.status}',
+            title:
+                '${payment.studentName} • ${localizedPaymentStatus(l10n, payment.status)}',
             subtitle: parts.join(' • '),
             dateText: payment.dateText,
             onTap: () => _openPaymentsScreen(context),
@@ -352,13 +353,13 @@ extension _DashboardChrome on _DashboardScreenState {
       )) {
         items.add(
           AppNotification(
-            category: 'Mazeret',
+            category: l10n.notifCategoryLeave,
             icon: Icons.event_busy,
             color: Colors.orange,
-            title: '${request.studentName} • mazeret',
+            title: l10n.notifLeaveTitle(request.studentName),
             subtitle: request.reason.isNotEmpty
                 ? request.reason
-                : 'Onay bekliyor',
+                : l10n.leaveWaitingApproval,
             dateText: request.dateText,
             onTap: () => _openLeaveRequestsScreen(context),
           ),
@@ -370,12 +371,13 @@ extension _DashboardChrome on _DashboardScreenState {
       )) {
         items.add(
           AppNotification(
-            category: 'Mazeret',
+            category: l10n.notifCategoryLeave,
             icon: Icons.event_busy,
             color: request.status == LeaveStatus.approved
                 ? Colors.green
                 : Colors.red,
-            title: '${request.studentName} • ${request.status}',
+            title:
+                '${request.studentName} • ${localizedLeaveStatus(l10n, request.status)}',
             subtitle: request.reason,
             dateText: request.dateText,
             onTap: () => _openLeaveRequestsScreen(context),
@@ -391,10 +393,10 @@ extension _DashboardChrome on _DashboardScreenState {
           if (record.absentStudentIds.contains(child.id)) {
             items.add(
               AppNotification(
-                category: 'Devamsızlık',
+                category: l10n.notifCategoryAbsence,
                 icon: Icons.report_gmailerrorred,
                 color: Colors.red,
-                title: '${child.name} gelmedi',
+                title: l10n.notifAbsenceTitle(child.name),
                 subtitle: '${record.groupName} • ${record.dateText}',
                 dateText: record.dateText,
                 onTap: () => _openChildAttendanceScreen(context),

@@ -727,6 +727,654 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Çıkış Yap'**
   String get logout;
+
+  /// No description provided for @commonAll.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tümü'**
+  String get commonAll;
+
+  /// No description provided for @commonAdd.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ekle'**
+  String get commonAdd;
+
+  /// No description provided for @commonDelete.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sil'**
+  String get commonDelete;
+
+  /// No description provided for @viewAction.
+  ///
+  /// In tr, this message translates to:
+  /// **'Görüntüle'**
+  String get viewAction;
+
+  /// No description provided for @statusPaid.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ödendi'**
+  String get statusPaid;
+
+  /// No description provided for @statusPending.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bekliyor'**
+  String get statusPending;
+
+  /// No description provided for @statusOverdue.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gecikti'**
+  String get statusOverdue;
+
+  /// No description provided for @leaveStatusPending.
+  ///
+  /// In tr, this message translates to:
+  /// **'Beklemede'**
+  String get leaveStatusPending;
+
+  /// No description provided for @leaveStatusApproved.
+  ///
+  /// In tr, this message translates to:
+  /// **'Onaylandı'**
+  String get leaveStatusApproved;
+
+  /// No description provided for @leaveStatusRejected.
+  ///
+  /// In tr, this message translates to:
+  /// **'Reddedildi'**
+  String get leaveStatusRejected;
+
+  /// No description provided for @drawerMainPanel.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ana Panel'**
+  String get drawerMainPanel;
+
+  /// No description provided for @sectionRecords.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kayıtlar'**
+  String get sectionRecords;
+
+  /// No description provided for @sectionOperations.
+  ///
+  /// In tr, this message translates to:
+  /// **'Operasyon'**
+  String get sectionOperations;
+
+  /// No description provided for @sectionClub.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kulüp'**
+  String get sectionClub;
+
+  /// No description provided for @sectionGeneral.
+  ///
+  /// In tr, this message translates to:
+  /// **'Genel'**
+  String get sectionGeneral;
+
+  /// No description provided for @sectionMyChild.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çocuğum'**
+  String get sectionMyChild;
+
+  /// No description provided for @sectionMe.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ben'**
+  String get sectionMe;
+
+  /// No description provided for @navStudents.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğrenciler'**
+  String get navStudents;
+
+  /// No description provided for @navCoaches.
+  ///
+  /// In tr, this message translates to:
+  /// **'Antrenörler'**
+  String get navCoaches;
+
+  /// No description provided for @navGroups.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gruplar'**
+  String get navGroups;
+
+  /// No description provided for @navParents.
+  ///
+  /// In tr, this message translates to:
+  /// **'Veliler'**
+  String get navParents;
+
+  /// No description provided for @navStudentAccounts.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğrenci Hesapları'**
+  String get navStudentAccounts;
+
+  /// No description provided for @navAttendance.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yoklama'**
+  String get navAttendance;
+
+  /// No description provided for @navLeaveRequests.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mazeretler'**
+  String get navLeaveRequests;
+
+  /// No description provided for @navPayments.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ödemeler'**
+  String get navPayments;
+
+  /// No description provided for @navPerformance.
+  ///
+  /// In tr, this message translates to:
+  /// **'Performans'**
+  String get navPerformance;
+
+  /// No description provided for @navEvents.
+  ///
+  /// In tr, this message translates to:
+  /// **'Etkinlikler'**
+  String get navEvents;
+
+  /// No description provided for @navEquipment.
+  ///
+  /// In tr, this message translates to:
+  /// **'Depo'**
+  String get navEquipment;
+
+  /// No description provided for @navAnnouncements.
+  ///
+  /// In tr, this message translates to:
+  /// **'Duyurular'**
+  String get navAnnouncements;
+
+  /// No description provided for @navClubCash.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kulüp Kasası'**
+  String get navClubCash;
+
+  /// No description provided for @navReports.
+  ///
+  /// In tr, this message translates to:
+  /// **'Raporlar'**
+  String get navReports;
+
+  /// No description provided for @navSports.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sporlar'**
+  String get navSports;
+
+  /// No description provided for @navUsers.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kullanıcılar'**
+  String get navUsers;
+
+  /// No description provided for @navReportAbsence.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mazeret Bildir'**
+  String get navReportAbsence;
+
+  /// No description provided for @navMyPerformance.
+  ///
+  /// In tr, this message translates to:
+  /// **'Performansım'**
+  String get navMyPerformance;
+
+  /// No description provided for @navMyAttendance.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yoklamam'**
+  String get navMyAttendance;
+
+  /// No description provided for @notificationsTooltip.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bildirimler'**
+  String get notificationsTooltip;
+
+  /// No description provided for @notifCategoryAnnouncement.
+  ///
+  /// In tr, this message translates to:
+  /// **'Duyuru'**
+  String get notifCategoryAnnouncement;
+
+  /// No description provided for @notifCategoryPayment.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ödeme'**
+  String get notifCategoryPayment;
+
+  /// No description provided for @notifCategoryLeave.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mazeret'**
+  String get notifCategoryLeave;
+
+  /// No description provided for @notifCategoryAbsence.
+  ///
+  /// In tr, this message translates to:
+  /// **'Devamsızlık'**
+  String get notifCategoryAbsence;
+
+  /// No description provided for @leaveWaitingApproval.
+  ///
+  /// In tr, this message translates to:
+  /// **'Onay bekliyor'**
+  String get leaveWaitingApproval;
+
+  /// No description provided for @notifLeaveTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'{name} • mazeret'**
+  String notifLeaveTitle(String name);
+
+  /// No description provided for @notifAbsenceTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'{name} gelmedi'**
+  String notifAbsenceTitle(String name);
+
+  /// No description provided for @errorLoadingData.
+  ///
+  /// In tr, this message translates to:
+  /// **'Veriler yüklenirken bir hata oluştu: {error}'**
+  String errorLoadingData(Object error);
+
+  /// No description provided for @reminderDialogTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni Hatırlatıcı'**
+  String get reminderDialogTitle;
+
+  /// No description provided for @reminderDialogHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Örn: Salı günü malzeme siparişi ver'**
+  String get reminderDialogHint;
+
+  /// No description provided for @newAnnouncementPublished.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni bir duyuru yayınlandı.'**
+  String get newAnnouncementPublished;
+
+  /// No description provided for @newAnnouncementsPublished.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count} yeni duyuru yayınlandı.'**
+  String newAnnouncementsPublished(int count);
+
+  /// No description provided for @remindersTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hızlı Hatırlatıcılar'**
+  String get remindersTitle;
+
+  /// No description provided for @remindersEmpty.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz bir hatırlatıcı eklemediniz.'**
+  String get remindersEmpty;
+
+  /// No description provided for @aiIntroParent.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çocuğunuzun güncel özetini biliyorum. Aşağıdakilerden birini seçebilir ya da kendi sorunuzu yazabilirsiniz.'**
+  String get aiIntroParent;
+
+  /// No description provided for @aiIntroStudent.
+  ///
+  /// In tr, this message translates to:
+  /// **'Güncel durumunu biliyorum. Aşağıdakilerden birini seçebilir ya da kendi sorunu yazabilirsin.'**
+  String get aiIntroStudent;
+
+  /// No description provided for @aiIntroStaff.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kulübünüzün güncel özetini biliyorum. Aşağıdakilerden birini seçebilir ya da kendi sorunu yazabilirsin.'**
+  String get aiIntroStaff;
+
+  /// No description provided for @viewerWelcomeSubtitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Spor okuluna hoş geldin.'**
+  String get viewerWelcomeSubtitle;
+
+  /// No description provided for @requestPendingTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Başvurun inceleniyor'**
+  String get requestPendingTitle;
+
+  /// No description provided for @requestPendingMessage.
+  ///
+  /// In tr, this message translates to:
+  /// **'{role} olma başvurun yönetici onayında. Onaylandığında ilgili panoya erişebileceksin.'**
+  String requestPendingMessage(String role);
+
+  /// No description provided for @requestApprovedTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Başvurun onaylandı'**
+  String get requestApprovedTitle;
+
+  /// No description provided for @requestApprovedMessage.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni rolünü görmek için çıkış yapıp tekrar giriş yapman yeterli.'**
+  String get requestApprovedMessage;
+
+  /// No description provided for @roleNotAssignedTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Rolün henüz atanmadı'**
+  String get roleNotAssignedTitle;
+
+  /// No description provided for @roleNotAssignedMessage.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yönetici sana bir rol atadığında ilgili panoya erişeceksin.'**
+  String get roleNotAssignedMessage;
+
+  /// No description provided for @greetingMorning.
+  ///
+  /// In tr, this message translates to:
+  /// **'Günaydın'**
+  String get greetingMorning;
+
+  /// No description provided for @greetingAfternoon.
+  ///
+  /// In tr, this message translates to:
+  /// **'İyi günler'**
+  String get greetingAfternoon;
+
+  /// No description provided for @greetingEvening.
+  ///
+  /// In tr, this message translates to:
+  /// **'İyi akşamlar'**
+  String get greetingEvening;
+
+  /// No description provided for @studentGreetingSubtitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Güncel durumun aşağıda.'**
+  String get studentGreetingSubtitle;
+
+  /// No description provided for @parentGreetingSubtitleOne.
+  ///
+  /// In tr, this message translates to:
+  /// **'{name} • güncel özet'**
+  String parentGreetingSubtitleOne(String name);
+
+  /// No description provided for @parentGreetingSubtitleMany.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çocuklarınızın güncel özeti aşağıda.'**
+  String get parentGreetingSubtitleMany;
+
+  /// No description provided for @staffGreetingSubtitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kulübünüzün güncel özeti aşağıda.'**
+  String get staffGreetingSubtitle;
+
+  /// No description provided for @highlightOverdueDues.
+  ///
+  /// In tr, this message translates to:
+  /// **'Geciken aidat: {amount}'**
+  String highlightOverdueDues(String amount);
+
+  /// No description provided for @highlightGreatAttendance.
+  ///
+  /// In tr, this message translates to:
+  /// **'Katılımın çok iyi, böyle devam! 🎯'**
+  String get highlightGreatAttendance;
+
+  /// No description provided for @highlightWatchAttendance.
+  ///
+  /// In tr, this message translates to:
+  /// **'Katılıma biraz dikkat edelim'**
+  String get highlightWatchAttendance;
+
+  /// No description provided for @highlightPlannedEvent.
+  ///
+  /// In tr, this message translates to:
+  /// **'Planlı etkinlik var, kaçırma'**
+  String get highlightPlannedEvent;
+
+  /// No description provided for @highlightAllGood.
+  ///
+  /// In tr, this message translates to:
+  /// **'Her şey yolunda görünüyor 👍'**
+  String get highlightAllGood;
+
+  /// No description provided for @highlightPaymentsPending.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count} ödeme takip bekliyor'**
+  String highlightPaymentsPending(int count);
+
+  /// No description provided for @highlightLeavePending.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count} mazeret onay bekliyor'**
+  String highlightLeavePending(int count);
+
+  /// No description provided for @highlightNoPending.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bekleyen bir işin yok, harika 👍'**
+  String get highlightNoPending;
+
+  /// No description provided for @statPerformance.
+  ///
+  /// In tr, this message translates to:
+  /// **'Performans'**
+  String get statPerformance;
+
+  /// No description provided for @statEvent.
+  ///
+  /// In tr, this message translates to:
+  /// **'Etkinlik'**
+  String get statEvent;
+
+  /// No description provided for @statAnnouncement.
+  ///
+  /// In tr, this message translates to:
+  /// **'Duyuru'**
+  String get statAnnouncement;
+
+  /// No description provided for @statMyChild.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çocuğum'**
+  String get statMyChild;
+
+  /// No description provided for @statStudent.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğrenci'**
+  String get statStudent;
+
+  /// No description provided for @statCoach.
+  ///
+  /// In tr, this message translates to:
+  /// **'Antrenör'**
+  String get statCoach;
+
+  /// No description provided for @statGroup.
+  ///
+  /// In tr, this message translates to:
+  /// **'Grup'**
+  String get statGroup;
+
+  /// No description provided for @noteNew.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count} yeni'**
+  String noteNew(int count);
+
+  /// No description provided for @noteWaiting.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count} bekliyor'**
+  String noteWaiting(int count);
+
+  /// No description provided for @attendanceSummaryTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yoklama Özeti'**
+  String get attendanceSummaryTitle;
+
+  /// No description provided for @attendanceEmpty.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz yoklama kaydı yok.'**
+  String get attendanceEmpty;
+
+  /// No description provided for @metricLessons.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ders'**
+  String get metricLessons;
+
+  /// No description provided for @metricRecords.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kayıt'**
+  String get metricRecords;
+
+  /// No description provided for @metricPresent.
+  ///
+  /// In tr, this message translates to:
+  /// **'Geldi'**
+  String get metricPresent;
+
+  /// No description provided for @metricAbsent.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gelmedi'**
+  String get metricAbsent;
+
+  /// No description provided for @metricAttendanceRate.
+  ///
+  /// In tr, this message translates to:
+  /// **'Katılım'**
+  String get metricAttendanceRate;
+
+  /// No description provided for @absenceNoteOne.
+  ///
+  /// In tr, this message translates to:
+  /// **'1 yeni devamsızlık kaydı'**
+  String get absenceNoteOne;
+
+  /// No description provided for @absenceNoteMany.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count} yeni devamsızlık kaydı'**
+  String absenceNoteMany(int count);
+
+  /// No description provided for @financeSummaryTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Finansal Özet'**
+  String get financeSummaryTitle;
+
+  /// No description provided for @financeEmpty.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz ödeme kaydı yok.'**
+  String get financeEmpty;
+
+  /// No description provided for @metricCollected.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tahsil'**
+  String get metricCollected;
+
+  /// No description provided for @metricPending.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bekleyen'**
+  String get metricPending;
+
+  /// No description provided for @metricOverdue.
+  ///
+  /// In tr, this message translates to:
+  /// **'Geciken'**
+  String get metricOverdue;
+
+  /// No description provided for @clubCashTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kulüp Kasası'**
+  String get clubCashTitle;
+
+  /// No description provided for @ledgerAction.
+  ///
+  /// In tr, this message translates to:
+  /// **'Defter'**
+  String get ledgerAction;
+
+  /// No description provided for @clubCashEmpty.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz kasa hareketi yok.'**
+  String get clubCashEmpty;
+
+  /// No description provided for @metricBalance.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kasa'**
+  String get metricBalance;
+
+  /// No description provided for @metricIncome.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gelir'**
+  String get metricIncome;
+
+  /// No description provided for @metricExpense.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gider'**
+  String get metricExpense;
+
+  /// No description provided for @unpaidDuesTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ödenmemiş Aidatlar ({count})'**
+  String unpaidDuesTitle(int count);
+
+  /// No description provided for @moreStudents.
+  ///
+  /// In tr, this message translates to:
+  /// **'+{count} öğrenci daha'**
+  String moreStudents(int count);
+
+  /// No description provided for @latestAnnouncementTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Son Duyuru'**
+  String get latestAnnouncementTitle;
 }
 
 class _AppLocalizationsDelegate

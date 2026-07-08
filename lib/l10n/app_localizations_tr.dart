@@ -356,4 +356,362 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get logout => 'Çıkış Yap';
+
+  @override
+  String get commonAll => 'Tümü';
+
+  @override
+  String get commonAdd => 'Ekle';
+
+  @override
+  String get commonDelete => 'Sil';
+
+  @override
+  String get viewAction => 'Görüntüle';
+
+  @override
+  String get statusPaid => 'Ödendi';
+
+  @override
+  String get statusPending => 'Bekliyor';
+
+  @override
+  String get statusOverdue => 'Gecikti';
+
+  @override
+  String get leaveStatusPending => 'Beklemede';
+
+  @override
+  String get leaveStatusApproved => 'Onaylandı';
+
+  @override
+  String get leaveStatusRejected => 'Reddedildi';
+
+  @override
+  String get drawerMainPanel => 'Ana Panel';
+
+  @override
+  String get sectionRecords => 'Kayıtlar';
+
+  @override
+  String get sectionOperations => 'Operasyon';
+
+  @override
+  String get sectionClub => 'Kulüp';
+
+  @override
+  String get sectionGeneral => 'Genel';
+
+  @override
+  String get sectionMyChild => 'Çocuğum';
+
+  @override
+  String get sectionMe => 'Ben';
+
+  @override
+  String get navStudents => 'Öğrenciler';
+
+  @override
+  String get navCoaches => 'Antrenörler';
+
+  @override
+  String get navGroups => 'Gruplar';
+
+  @override
+  String get navParents => 'Veliler';
+
+  @override
+  String get navStudentAccounts => 'Öğrenci Hesapları';
+
+  @override
+  String get navAttendance => 'Yoklama';
+
+  @override
+  String get navLeaveRequests => 'Mazeretler';
+
+  @override
+  String get navPayments => 'Ödemeler';
+
+  @override
+  String get navPerformance => 'Performans';
+
+  @override
+  String get navEvents => 'Etkinlikler';
+
+  @override
+  String get navEquipment => 'Depo';
+
+  @override
+  String get navAnnouncements => 'Duyurular';
+
+  @override
+  String get navClubCash => 'Kulüp Kasası';
+
+  @override
+  String get navReports => 'Raporlar';
+
+  @override
+  String get navSports => 'Sporlar';
+
+  @override
+  String get navUsers => 'Kullanıcılar';
+
+  @override
+  String get navReportAbsence => 'Mazeret Bildir';
+
+  @override
+  String get navMyPerformance => 'Performansım';
+
+  @override
+  String get navMyAttendance => 'Yoklamam';
+
+  @override
+  String get notificationsTooltip => 'Bildirimler';
+
+  @override
+  String get notifCategoryAnnouncement => 'Duyuru';
+
+  @override
+  String get notifCategoryPayment => 'Ödeme';
+
+  @override
+  String get notifCategoryLeave => 'Mazeret';
+
+  @override
+  String get notifCategoryAbsence => 'Devamsızlık';
+
+  @override
+  String get leaveWaitingApproval => 'Onay bekliyor';
+
+  @override
+  String notifLeaveTitle(String name) {
+    return '$name • mazeret';
+  }
+
+  @override
+  String notifAbsenceTitle(String name) {
+    return '$name gelmedi';
+  }
+
+  @override
+  String errorLoadingData(Object error) {
+    return 'Veriler yüklenirken bir hata oluştu: $error';
+  }
+
+  @override
+  String get reminderDialogTitle => 'Yeni Hatırlatıcı';
+
+  @override
+  String get reminderDialogHint => 'Örn: Salı günü malzeme siparişi ver';
+
+  @override
+  String get newAnnouncementPublished => 'Yeni bir duyuru yayınlandı.';
+
+  @override
+  String newAnnouncementsPublished(int count) {
+    return '$count yeni duyuru yayınlandı.';
+  }
+
+  @override
+  String get remindersTitle => 'Hızlı Hatırlatıcılar';
+
+  @override
+  String get remindersEmpty => 'Henüz bir hatırlatıcı eklemediniz.';
+
+  @override
+  String get aiIntroParent =>
+      'Çocuğunuzun güncel özetini biliyorum. Aşağıdakilerden birini seçebilir ya da kendi sorunuzu yazabilirsiniz.';
+
+  @override
+  String get aiIntroStudent =>
+      'Güncel durumunu biliyorum. Aşağıdakilerden birini seçebilir ya da kendi sorunu yazabilirsin.';
+
+  @override
+  String get aiIntroStaff =>
+      'Kulübünüzün güncel özetini biliyorum. Aşağıdakilerden birini seçebilir ya da kendi sorunu yazabilirsin.';
+
+  @override
+  String get viewerWelcomeSubtitle => 'Spor okuluna hoş geldin.';
+
+  @override
+  String get requestPendingTitle => 'Başvurun inceleniyor';
+
+  @override
+  String requestPendingMessage(String role) {
+    return '$role olma başvurun yönetici onayında. Onaylandığında ilgili panoya erişebileceksin.';
+  }
+
+  @override
+  String get requestApprovedTitle => 'Başvurun onaylandı';
+
+  @override
+  String get requestApprovedMessage =>
+      'Yeni rolünü görmek için çıkış yapıp tekrar giriş yapman yeterli.';
+
+  @override
+  String get roleNotAssignedTitle => 'Rolün henüz atanmadı';
+
+  @override
+  String get roleNotAssignedMessage =>
+      'Yönetici sana bir rol atadığında ilgili panoya erişeceksin.';
+
+  @override
+  String get greetingMorning => 'Günaydın';
+
+  @override
+  String get greetingAfternoon => 'İyi günler';
+
+  @override
+  String get greetingEvening => 'İyi akşamlar';
+
+  @override
+  String get studentGreetingSubtitle => 'Güncel durumun aşağıda.';
+
+  @override
+  String parentGreetingSubtitleOne(String name) {
+    return '$name • güncel özet';
+  }
+
+  @override
+  String get parentGreetingSubtitleMany =>
+      'Çocuklarınızın güncel özeti aşağıda.';
+
+  @override
+  String get staffGreetingSubtitle => 'Kulübünüzün güncel özeti aşağıda.';
+
+  @override
+  String highlightOverdueDues(String amount) {
+    return 'Geciken aidat: $amount';
+  }
+
+  @override
+  String get highlightGreatAttendance => 'Katılımın çok iyi, böyle devam! 🎯';
+
+  @override
+  String get highlightWatchAttendance => 'Katılıma biraz dikkat edelim';
+
+  @override
+  String get highlightPlannedEvent => 'Planlı etkinlik var, kaçırma';
+
+  @override
+  String get highlightAllGood => 'Her şey yolunda görünüyor 👍';
+
+  @override
+  String highlightPaymentsPending(int count) {
+    return '$count ödeme takip bekliyor';
+  }
+
+  @override
+  String highlightLeavePending(int count) {
+    return '$count mazeret onay bekliyor';
+  }
+
+  @override
+  String get highlightNoPending => 'Bekleyen bir işin yok, harika 👍';
+
+  @override
+  String get statPerformance => 'Performans';
+
+  @override
+  String get statEvent => 'Etkinlik';
+
+  @override
+  String get statAnnouncement => 'Duyuru';
+
+  @override
+  String get statMyChild => 'Çocuğum';
+
+  @override
+  String get statStudent => 'Öğrenci';
+
+  @override
+  String get statCoach => 'Antrenör';
+
+  @override
+  String get statGroup => 'Grup';
+
+  @override
+  String noteNew(int count) {
+    return '$count yeni';
+  }
+
+  @override
+  String noteWaiting(int count) {
+    return '$count bekliyor';
+  }
+
+  @override
+  String get attendanceSummaryTitle => 'Yoklama Özeti';
+
+  @override
+  String get attendanceEmpty => 'Henüz yoklama kaydı yok.';
+
+  @override
+  String get metricLessons => 'Ders';
+
+  @override
+  String get metricRecords => 'Kayıt';
+
+  @override
+  String get metricPresent => 'Geldi';
+
+  @override
+  String get metricAbsent => 'Gelmedi';
+
+  @override
+  String get metricAttendanceRate => 'Katılım';
+
+  @override
+  String get absenceNoteOne => '1 yeni devamsızlık kaydı';
+
+  @override
+  String absenceNoteMany(int count) {
+    return '$count yeni devamsızlık kaydı';
+  }
+
+  @override
+  String get financeSummaryTitle => 'Finansal Özet';
+
+  @override
+  String get financeEmpty => 'Henüz ödeme kaydı yok.';
+
+  @override
+  String get metricCollected => 'Tahsil';
+
+  @override
+  String get metricPending => 'Bekleyen';
+
+  @override
+  String get metricOverdue => 'Geciken';
+
+  @override
+  String get clubCashTitle => 'Kulüp Kasası';
+
+  @override
+  String get ledgerAction => 'Defter';
+
+  @override
+  String get clubCashEmpty => 'Henüz kasa hareketi yok.';
+
+  @override
+  String get metricBalance => 'Kasa';
+
+  @override
+  String get metricIncome => 'Gelir';
+
+  @override
+  String get metricExpense => 'Gider';
+
+  @override
+  String unpaidDuesTitle(int count) {
+    return 'Ödenmemiş Aidatlar ($count)';
+  }
+
+  @override
+  String moreStudents(int count) {
+    return '+$count öğrenci daha';
+  }
+
+  @override
+  String get latestAnnouncementTitle => 'Son Duyuru';
 }

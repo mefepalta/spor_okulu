@@ -365,4 +365,365 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get logout => 'Cerrar sesión';
+
+  @override
+  String get commonAll => 'Todos';
+
+  @override
+  String get commonAdd => 'Añadir';
+
+  @override
+  String get commonDelete => 'Eliminar';
+
+  @override
+  String get viewAction => 'Ver';
+
+  @override
+  String get statusPaid => 'Pagado';
+
+  @override
+  String get statusPending => 'Pendiente';
+
+  @override
+  String get statusOverdue => 'Vencido';
+
+  @override
+  String get leaveStatusPending => 'Pendiente';
+
+  @override
+  String get leaveStatusApproved => 'Aprobado';
+
+  @override
+  String get leaveStatusRejected => 'Rechazado';
+
+  @override
+  String get drawerMainPanel => 'Panel principal';
+
+  @override
+  String get sectionRecords => 'Registros';
+
+  @override
+  String get sectionOperations => 'Operaciones';
+
+  @override
+  String get sectionClub => 'Club';
+
+  @override
+  String get sectionGeneral => 'General';
+
+  @override
+  String get sectionMyChild => 'Mi hijo/a';
+
+  @override
+  String get sectionMe => 'Yo';
+
+  @override
+  String get navStudents => 'Estudiantes';
+
+  @override
+  String get navCoaches => 'Entrenadores';
+
+  @override
+  String get navGroups => 'Grupos';
+
+  @override
+  String get navParents => 'Padres';
+
+  @override
+  String get navStudentAccounts => 'Cuentas de estudiantes';
+
+  @override
+  String get navAttendance => 'Asistencia';
+
+  @override
+  String get navLeaveRequests => 'Justificantes';
+
+  @override
+  String get navPayments => 'Pagos';
+
+  @override
+  String get navPerformance => 'Rendimiento';
+
+  @override
+  String get navEvents => 'Eventos';
+
+  @override
+  String get navEquipment => 'Inventario';
+
+  @override
+  String get navAnnouncements => 'Anuncios';
+
+  @override
+  String get navClubCash => 'Caja del club';
+
+  @override
+  String get navReports => 'Informes';
+
+  @override
+  String get navSports => 'Deportes';
+
+  @override
+  String get navUsers => 'Usuarios';
+
+  @override
+  String get navReportAbsence => 'Notificar ausencia';
+
+  @override
+  String get navMyPerformance => 'Mi rendimiento';
+
+  @override
+  String get navMyAttendance => 'Mi asistencia';
+
+  @override
+  String get notificationsTooltip => 'Notificaciones';
+
+  @override
+  String get notifCategoryAnnouncement => 'Anuncio';
+
+  @override
+  String get notifCategoryPayment => 'Pago';
+
+  @override
+  String get notifCategoryLeave => 'Justificante';
+
+  @override
+  String get notifCategoryAbsence => 'Ausencia';
+
+  @override
+  String get leaveWaitingApproval => 'En espera de aprobación';
+
+  @override
+  String notifLeaveTitle(String name) {
+    return '$name • justificante';
+  }
+
+  @override
+  String notifAbsenceTitle(String name) {
+    return '$name estuvo ausente';
+  }
+
+  @override
+  String errorLoadingData(Object error) {
+    return 'Se produjo un error al cargar los datos: $error';
+  }
+
+  @override
+  String get reminderDialogTitle => 'Nuevo recordatorio';
+
+  @override
+  String get reminderDialogHint => 'Ej.: Pedir material el martes';
+
+  @override
+  String get newAnnouncementPublished => 'Se publicó un nuevo anuncio.';
+
+  @override
+  String newAnnouncementsPublished(int count) {
+    return 'Se publicaron $count nuevos anuncios.';
+  }
+
+  @override
+  String get remindersTitle => 'Recordatorios rápidos';
+
+  @override
+  String get remindersEmpty => 'Aún no has añadido ningún recordatorio.';
+
+  @override
+  String get aiIntroParent =>
+      'Conozco el resumen actual de tu hijo/a. Puedes elegir una de las opciones de abajo o escribir tu propia pregunta.';
+
+  @override
+  String get aiIntroStudent =>
+      'Conozco tu estado actual. Puedes elegir una de las opciones de abajo o escribir tu propia pregunta.';
+
+  @override
+  String get aiIntroStaff =>
+      'Conozco el resumen actual de tu club. Puedes elegir una de las opciones de abajo o escribir tu propia pregunta.';
+
+  @override
+  String get viewerWelcomeSubtitle => 'Bienvenido/a a la escuela deportiva.';
+
+  @override
+  String get requestPendingTitle => 'Tu solicitud está en revisión';
+
+  @override
+  String requestPendingMessage(String role) {
+    return 'Tu solicitud para ser $role está pendiente de la aprobación del administrador. Una vez aprobada, podrás acceder al panel correspondiente.';
+  }
+
+  @override
+  String get requestApprovedTitle => 'Tu solicitud fue aprobada';
+
+  @override
+  String get requestApprovedMessage =>
+      'Solo tienes que cerrar sesión y volver a iniciarla para ver tu nuevo rol.';
+
+  @override
+  String get roleNotAssignedTitle => 'Tu rol aún no ha sido asignado';
+
+  @override
+  String get roleNotAssignedMessage =>
+      'Cuando un administrador te asigne un rol, accederás al panel correspondiente.';
+
+  @override
+  String get greetingMorning => 'Buenos días';
+
+  @override
+  String get greetingAfternoon => 'Buenas tardes';
+
+  @override
+  String get greetingEvening => 'Buenas noches';
+
+  @override
+  String get studentGreetingSubtitle => 'Tu estado actual está abajo.';
+
+  @override
+  String parentGreetingSubtitleOne(String name) {
+    return '$name • resumen actual';
+  }
+
+  @override
+  String get parentGreetingSubtitleMany =>
+      'El resumen actual de tus hijos está abajo.';
+
+  @override
+  String get staffGreetingSubtitle =>
+      'El resumen actual de tu club está abajo.';
+
+  @override
+  String highlightOverdueDues(String amount) {
+    return 'Cuotas vencidas: $amount';
+  }
+
+  @override
+  String get highlightGreatAttendance =>
+      '¡Tu asistencia es excelente, sigue así! 🎯';
+
+  @override
+  String get highlightWatchAttendance => 'Vigilemos un poco la asistencia';
+
+  @override
+  String get highlightPlannedEvent =>
+      'Hay un evento planificado, no te lo pierdas';
+
+  @override
+  String get highlightAllGood => 'Todo parece estar bien 👍';
+
+  @override
+  String highlightPaymentsPending(int count) {
+    return '$count pagos en espera de seguimiento';
+  }
+
+  @override
+  String highlightLeavePending(int count) {
+    return '$count justificantes en espera de aprobación';
+  }
+
+  @override
+  String get highlightNoPending => 'No tienes tareas pendientes, ¡genial! 👍';
+
+  @override
+  String get statPerformance => 'Rendimiento';
+
+  @override
+  String get statEvent => 'Evento';
+
+  @override
+  String get statAnnouncement => 'Anuncio';
+
+  @override
+  String get statMyChild => 'Mi hijo/a';
+
+  @override
+  String get statStudent => 'Estudiante';
+
+  @override
+  String get statCoach => 'Entrenador';
+
+  @override
+  String get statGroup => 'Grupo';
+
+  @override
+  String noteNew(int count) {
+    return '$count nuevos';
+  }
+
+  @override
+  String noteWaiting(int count) {
+    return '$count pendientes';
+  }
+
+  @override
+  String get attendanceSummaryTitle => 'Resumen de asistencia';
+
+  @override
+  String get attendanceEmpty => 'Aún no hay registros de asistencia.';
+
+  @override
+  String get metricLessons => 'Clases';
+
+  @override
+  String get metricRecords => 'Registros';
+
+  @override
+  String get metricPresent => 'Presente';
+
+  @override
+  String get metricAbsent => 'Ausente';
+
+  @override
+  String get metricAttendanceRate => 'Asistencia';
+
+  @override
+  String get absenceNoteOne => '1 nuevo registro de ausencia';
+
+  @override
+  String absenceNoteMany(int count) {
+    return '$count nuevos registros de ausencia';
+  }
+
+  @override
+  String get financeSummaryTitle => 'Resumen financiero';
+
+  @override
+  String get financeEmpty => 'Aún no hay registros de pago.';
+
+  @override
+  String get metricCollected => 'Cobrado';
+
+  @override
+  String get metricPending => 'Pendiente';
+
+  @override
+  String get metricOverdue => 'Vencido';
+
+  @override
+  String get clubCashTitle => 'Caja del club';
+
+  @override
+  String get ledgerAction => 'Libro';
+
+  @override
+  String get clubCashEmpty => 'Aún no hay movimientos de caja.';
+
+  @override
+  String get metricBalance => 'Caja';
+
+  @override
+  String get metricIncome => 'Ingresos';
+
+  @override
+  String get metricExpense => 'Gastos';
+
+  @override
+  String unpaidDuesTitle(int count) {
+    return 'Cuotas impagadas ($count)';
+  }
+
+  @override
+  String moreStudents(int count) {
+    return '+$count estudiantes más';
+  }
+
+  @override
+  String get latestAnnouncementTitle => 'Último anuncio';
 }

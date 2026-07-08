@@ -24,13 +24,13 @@ extension _DashboardBodies on _DashboardScreenState {
   /// Viewer (rolü henüz belli olmayan/bekleyen) panosu: özel veri **yok**;
   /// yalnızca karşılama, başvuru durumu ve genel içerik (etkinlik + duyuru).
   Widget _buildViewerBody(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final greeting = _timeGreeting(l10n);
     final firstName = _firstName(_viewerName);
     final sections = <Widget>[
       _buildGreetingHeader(
-        title: firstName.isEmpty
-            ? '$_timeGreeting 👋'
-            : '$_timeGreeting, $firstName 👋',
-        subtitle: 'Spor okuluna hoş geldin.',
+        title: firstName.isEmpty ? '$greeting 👋' : '$greeting, $firstName 👋',
+        subtitle: l10n.viewerWelcomeSubtitle,
         icon: Icons.waving_hand,
       ),
       const SizedBox(height: 16),
@@ -52,6 +52,7 @@ extension _DashboardBodies on _DashboardScreenState {
 
   /// Rol başvurusunun durumunu açıklayan bilgi kartı.
   Widget _buildRoleRequestStatusCard(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final IconData icon;
     final Color color;
     final String title;
@@ -60,21 +61,18 @@ extension _DashboardBodies on _DashboardScreenState {
     if (_requestStatus == 'pending') {
       icon = Icons.hourglass_top;
       color = Colors.orange;
-      title = 'Başvurun inceleniyor';
-      message =
-          '${AppRoleLabels.of(_requestedRole)} olma başvurun yönetici onayında. '
-          'Onaylandığında ilgili panoya erişebileceksin.';
+      title = l10n.requestPendingTitle;
+      message = l10n.requestPendingMessage(localizedRole(l10n, _requestedRole));
     } else if (_requestStatus == 'approved') {
       icon = Icons.check_circle;
       color = Colors.green;
-      title = 'Başvurun onaylandı';
-      message =
-          'Yeni rolünü görmek için çıkış yapıp tekrar giriş yapman yeterli.';
+      title = l10n.requestApprovedTitle;
+      message = l10n.requestApprovedMessage;
     } else {
       icon = Icons.info_outline;
       color = AppColors.primary;
-      title = 'Rolün henüz atanmadı';
-      message = 'Yönetici sana bir rol atadığında ilgili panoya erişeceksin.';
+      title = l10n.roleNotAssignedTitle;
+      message = l10n.roleNotAssignedMessage;
     }
 
     return SummarySection(
@@ -91,10 +89,11 @@ extension _DashboardBodies on _DashboardScreenState {
       return null;
     }
     final shown = _events.take(4).toList();
+    final l10n = AppLocalizations.of(context);
 
     return SummarySection(
       icon: Icons.event_available,
-      title: 'Etkinlikler',
+      title: l10n.navEvents,
       iconColor: Colors.orange,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -135,15 +134,15 @@ extension _DashboardBodies on _DashboardScreenState {
   // --- Kişiselleştirilmiş selamlama başlığı ---
 
   /// Saate göre selamlama: Günaydın / İyi günler / İyi akşamlar.
-  String get _timeGreeting {
+  String _timeGreeting(AppLocalizations l10n) {
     final hour = DateTime.now().hour;
     if (hour >= 5 && hour < 12) {
-      return 'Günaydın';
+      return l10n.greetingMorning;
     }
     if (hour >= 12 && hour < 18) {
-      return 'İyi günler';
+      return l10n.greetingAfternoon;
     }
-    return 'İyi akşamlar';
+    return l10n.greetingEvening;
   }
 
   String _firstName(String fullName) {
@@ -260,11 +259,13 @@ extension _DashboardBodies on _DashboardScreenState {
   }
 
   /// Veli/öğrenci başlığındaki bağlamsal içgörü (öncelik sırasıyla).
-  ({String text, IconData icon, Color color})? _childHighlight() {
+  ({String text, IconData icon, Color color})? _childHighlight(
+    AppLocalizations l10n,
+  ) {
     final overdue = _sumPaymentsFor('Gecikti');
     if (overdue > 0) {
       return (
-        text: 'Geciken aidat: ${formatTl(overdue)}',
+        text: l10n.highlightOverdueDues(formatTl(overdue)),
         icon: Icons.error_outline,
         color: Colors.red,
       );
@@ -272,39 +273,41 @@ extension _DashboardBodies on _DashboardScreenState {
     final rate = _childAttendanceRatePercent();
     if (rate != null && rate >= 80) {
       return (
-        text: 'Katılımın çok iyi, böyle devam! 🎯',
+        text: l10n.highlightGreatAttendance,
         icon: Icons.emoji_events,
         color: Colors.green,
       );
     }
     if (rate != null && rate < 50) {
       return (
-        text: 'Katılıma biraz dikkat edelim',
+        text: l10n.highlightWatchAttendance,
         icon: Icons.trending_down,
         color: Colors.orange,
       );
     }
     if (_events.isNotEmpty) {
       return (
-        text: 'Planlı etkinlik var, kaçırma',
+        text: l10n.highlightPlannedEvent,
         icon: Icons.event_available,
         color: AppColors.primary,
       );
     }
     return (
-      text: 'Her şey yolunda görünüyor 👍',
+      text: l10n.highlightAllGood,
       icon: Icons.check_circle,
       color: Colors.green,
     );
   }
 
   /// Personel başlığındaki bağlamsal içgörü.
-  ({String text, IconData icon, Color color})? _staffHighlight() {
+  ({String text, IconData icon, Color color})? _staffHighlight(
+    AppLocalizations l10n,
+  ) {
     if (_canViewPayments) {
       final unpaid = _payments.where((p) => p.status != 'Ödendi').length;
       if (unpaid > 0) {
         return (
-          text: '$unpaid ödeme takip bekliyor',
+          text: l10n.highlightPaymentsPending(unpaid),
           icon: Icons.payments,
           color: Colors.orange,
         );
@@ -316,36 +319,36 @@ extension _DashboardBodies on _DashboardScreenState {
           .length;
       if (pending > 0) {
         return (
-          text: '$pending mazeret onay bekliyor',
+          text: l10n.highlightLeavePending(pending),
           icon: Icons.event_busy,
           color: Colors.orange,
         );
       }
     }
     return (
-      text: 'Bekleyen bir işin yok, harika 👍',
+      text: l10n.highlightNoPending,
       icon: Icons.check_circle,
       color: Colors.green,
     );
   }
 
   Widget _buildStudentGreeting() {
+    final l10n = AppLocalizations.of(context);
+    final greeting = _timeGreeting(l10n);
     final firstName = _myChildren.isEmpty
         ? null
         : _firstName(_myChildren.first.name);
     return _buildGreetingHeader(
-      title: firstName == null
-          ? '$_timeGreeting 👋'
-          : '$_timeGreeting, $firstName 👋',
-      subtitle: 'Güncel durumun aşağıda.',
+      title: firstName == null ? '$greeting 👋' : '$greeting, $firstName 👋',
+      subtitle: l10n.studentGreetingSubtitle,
       icon: Icons.school,
-      highlight: _childHighlight(),
+      highlight: _childHighlight(l10n),
     );
   }
 
   /// Okunmamış duyuru rozeti metni (çan ile aynı kaynak); yoksa null.
-  String? _newAnnouncementNote() =>
-      _unreadAnnouncementCount > 0 ? '$_unreadAnnouncementCount yeni' : null;
+  String? _newAnnouncementNote(AppLocalizations l10n) =>
+      _unreadAnnouncementCount > 0 ? l10n.noteNew(_unreadAnnouncementCount) : null;
 
   /// Velinin henüz katılım cevabı vermediği etkinlik sayısı (çocuk bazında).
   int _pendingEventRsvpCount() {
@@ -369,6 +372,7 @@ extension _DashboardBodies on _DashboardScreenState {
   }
 
   Widget _buildStudentStatTilesRow(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final performanceCount = _performanceRecords.length;
     final visibleAnnouncements = _visibleAnnouncements(_announcements).length;
 
@@ -380,7 +384,7 @@ extension _DashboardBodies on _DashboardScreenState {
             child: StatTile(
               icon: Icons.query_stats,
               value: '$performanceCount',
-              label: 'Performans',
+              label: l10n.statPerformance,
               accent: Colors.green,
               onTap: () => _openPerformanceScreen(context),
             ),
@@ -390,7 +394,7 @@ extension _DashboardBodies on _DashboardScreenState {
             child: StatTile(
               icon: Icons.event_available,
               value: '${_events.length}',
-              label: 'Etkinlik',
+              label: l10n.statEvent,
               accent: Colors.orange,
               onTap: () => _openEventsScreen(context),
             ),
@@ -400,9 +404,9 @@ extension _DashboardBodies on _DashboardScreenState {
             child: StatTile(
               icon: Icons.campaign,
               value: '$visibleAnnouncements',
-              label: 'Duyuru',
+              label: l10n.statAnnouncement,
               accent: AppColors.primary,
-              note: _newAnnouncementNote(),
+              note: _newAnnouncementNote(l10n),
               onTap: () => _openAnnouncementsScreen(context),
             ),
           ),
@@ -439,18 +443,20 @@ extension _DashboardBodies on _DashboardScreenState {
   }
 
   Widget _buildParentGreeting() {
+    final l10n = AppLocalizations.of(context);
     final subtitle = _myChildren.length == 1
-        ? '${_myChildren.first.name} • güncel özet'
-        : 'Çocuklarınızın güncel özeti aşağıda.';
+        ? l10n.parentGreetingSubtitleOne(_myChildren.first.name)
+        : l10n.parentGreetingSubtitleMany;
     return _buildGreetingHeader(
-      title: '$_timeGreeting 👋',
+      title: '${_timeGreeting(l10n)} 👋',
       subtitle: subtitle,
       icon: Icons.family_restroom,
-      highlight: _childHighlight(),
+      highlight: _childHighlight(l10n),
     );
   }
 
   Widget _buildParentStatTilesRow(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final childCount = _myChildren.length;
     final visibleAnnouncements = _visibleAnnouncements(_announcements).length;
     final pendingRsvp = _pendingEventRsvpCount();
@@ -463,7 +469,7 @@ extension _DashboardBodies on _DashboardScreenState {
             child: StatTile(
               icon: Icons.query_stats,
               value: '$childCount',
-              label: 'Çocuğum',
+              label: l10n.statMyChild,
               accent: Colors.green,
               onTap: () => _openPerformanceScreen(context),
             ),
@@ -473,9 +479,9 @@ extension _DashboardBodies on _DashboardScreenState {
             child: StatTile(
               icon: Icons.event_available,
               value: '${_events.length}',
-              label: 'Etkinlik',
+              label: l10n.statEvent,
               accent: Colors.orange,
-              note: pendingRsvp > 0 ? '$pendingRsvp bekliyor' : null,
+              note: pendingRsvp > 0 ? l10n.noteWaiting(pendingRsvp) : null,
               onTap: () => _openEventsScreen(context),
             ),
           ),
@@ -484,9 +490,9 @@ extension _DashboardBodies on _DashboardScreenState {
             child: StatTile(
               icon: Icons.campaign,
               value: '$visibleAnnouncements',
-              label: 'Duyuru',
+              label: l10n.statAnnouncement,
               accent: AppColors.primary,
-              note: _newAnnouncementNote(),
+              note: _newAnnouncementNote(l10n),
               onTap: () => _openAnnouncementsScreen(context),
             ),
           ),
@@ -530,25 +536,23 @@ extension _DashboardBodies on _DashboardScreenState {
   }
 
   Widget _buildGreeting() {
-    final label = _isAdmin
-        ? 'Yönetici'
-        : _isCoach
-        ? 'Antrenör'
-        : 'Görüntüleyici';
+    final l10n = AppLocalizations.of(context);
+    final label = localizedRole(l10n, _userRole);
     final icon = _isAdmin
         ? Icons.admin_panel_settings
         : _isCoach
         ? Icons.sports
         : Icons.visibility;
     return _buildGreetingHeader(
-      title: '$_timeGreeting, $label 👋',
-      subtitle: 'Kulübünüzün güncel özeti aşağıda.',
+      title: '${_timeGreeting(l10n)}, $label 👋',
+      subtitle: l10n.staffGreetingSubtitle,
       icon: icon,
-      highlight: _staffHighlight(),
+      highlight: _staffHighlight(l10n),
     );
   }
 
   Widget _buildStatTilesRow(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     // IntrinsicHeight: dikey ListView içinde Row'a sınırlı yükseklik verir;
     // böylece stretch tüm kutucukları en uzun olana eşitler (taşma hatası olmaz).
     return IntrinsicHeight(
@@ -559,7 +563,7 @@ extension _DashboardBodies on _DashboardScreenState {
             child: StatTile(
               icon: Icons.people,
               value: '${_students.length}',
-              label: 'Öğrenci',
+              label: l10n.statStudent,
               accent: Colors.green,
               onTap: () => _openStudentsScreen(context),
             ),
@@ -569,7 +573,7 @@ extension _DashboardBodies on _DashboardScreenState {
             child: StatTile(
               icon: Icons.sports,
               value: '${_coaches.length}',
-              label: 'Antrenör',
+              label: l10n.statCoach,
               accent: Colors.orange,
               onTap: () => _openCoachesScreen(context),
             ),
@@ -579,7 +583,7 @@ extension _DashboardBodies on _DashboardScreenState {
             child: StatTile(
               icon: Icons.groups,
               value: '${_groups.length}',
-              label: 'Grup',
+              label: l10n.statGroup,
               accent: AppColors.primary,
               onTap: () => _openGroupsScreen(context),
             ),
@@ -633,17 +637,18 @@ extension _DashboardBodies on _DashboardScreenState {
         : rate >= 50
         ? Colors.orange
         : Colors.red;
+    final l10n = AppLocalizations.of(context);
 
     return SummarySection(
       icon: Icons.check_circle,
-      title: 'Yoklama Özeti',
+      title: l10n.attendanceSummaryTitle,
       iconColor: Colors.green,
-      actionLabel: 'Tümü',
+      actionLabel: l10n.commonAll,
       onAction: () => _isChildScoped
           ? _openChildAttendanceScreen(context)
           : _openAttendanceScreen(context),
       child: recordCount == 0
-          ? _emptyHint('Henüz yoklama kaydı yok.')
+          ? _emptyHint(l10n.attendanceEmpty)
           : Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -651,22 +656,24 @@ extension _DashboardBodies on _DashboardScreenState {
                   metrics: [
                     SummaryMetric(
                       value: '$recordCount',
-                      label: _isChildScoped ? 'Ders' : 'Kayıt',
+                      label: _isChildScoped
+                          ? l10n.metricLessons
+                          : l10n.metricRecords,
                       color: AppColors.primary,
                     ),
                     SummaryMetric(
                       value: '$present',
-                      label: 'Geldi',
+                      label: l10n.metricPresent,
                       color: Colors.green,
                     ),
                     SummaryMetric(
                       value: '$absent',
-                      label: 'Gelmedi',
+                      label: l10n.metricAbsent,
                       color: Colors.red,
                     ),
                     SummaryMetric(
                       value: '%$rate',
-                      label: 'Katılım',
+                      label: l10n.metricAttendanceRate,
                       color: rateColor,
                     ),
                   ],
@@ -689,6 +696,7 @@ extension _DashboardBodies on _DashboardScreenState {
 
   /// Velinin bu cihazda henüz görmediği devamsızlıkları vurgulayan rozet.
   Widget _absenceAlertNote(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final count = _unreadAbsenceCount;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -702,9 +710,7 @@ extension _DashboardBodies on _DashboardScreenState {
           const SizedBox(width: 8),
           Expanded(
             child: Text(
-              count == 1
-                  ? '1 yeni devamsızlık kaydı'
-                  : '$count yeni devamsızlık kaydı',
+              count == 1 ? l10n.absenceNoteOne : l10n.absenceNoteMany(count),
               style: const TextStyle(
                 color: Colors.red,
                 fontWeight: FontWeight.w600,
@@ -721,19 +727,21 @@ extension _DashboardBodies on _DashboardScreenState {
       .fold(0, (sum, payment) => sum + payment.amount);
 
   Widget _buildFinanceSummarySection(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return SummarySection(
       icon: Icons.account_balance_wallet,
-      title: 'Finansal Özet',
+      title: l10n.financeSummaryTitle,
       iconColor: AppColors.primary,
-      actionLabel: 'Ödemeler',
+      actionLabel: l10n.navPayments,
       onAction: () => _openPaymentsScreen(context),
       child: _payments.isEmpty
-          ? _emptyHint('Henüz ödeme kaydı yok.')
+          ? _emptyHint(l10n.financeEmpty)
           : _financeContent(context),
     );
   }
 
   Widget _financeContent(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final collected = _sumPaymentsFor('Ödendi');
     final pending = _sumPaymentsFor('Bekliyor');
     final overdue = _sumPaymentsFor('Gecikti');
@@ -745,17 +753,17 @@ extension _DashboardBodies on _DashboardScreenState {
           metrics: [
             SummaryMetric(
               value: formatTl(collected),
-              label: 'Tahsil',
+              label: l10n.metricCollected,
               color: Colors.green,
             ),
             SummaryMetric(
               value: formatTl(pending),
-              label: 'Bekleyen',
+              label: l10n.metricPending,
               color: Colors.orange,
             ),
             SummaryMetric(
               value: formatTl(overdue),
-              label: 'Geciken',
+              label: l10n.metricOverdue,
               color: Colors.red,
             ),
           ],
@@ -782,15 +790,16 @@ extension _DashboardBodies on _DashboardScreenState {
         .where((t) => !t.isIncome)
         .fold(0, (sum, t) => sum + t.amount);
     final balance = income - expense;
+    final l10n = AppLocalizations.of(context);
 
     return SummarySection(
       icon: Icons.account_balance,
-      title: 'Kulüp Kasası',
+      title: l10n.clubCashTitle,
       iconColor: AppColors.primary,
-      actionLabel: 'Defter',
+      actionLabel: l10n.ledgerAction,
       onAction: () => _openClubFinanceScreen(context),
       child: _cashTransactions.isEmpty
-          ? _emptyHint('Henüz kasa hareketi yok.')
+          ? _emptyHint(l10n.clubCashEmpty)
           : Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -798,17 +807,17 @@ extension _DashboardBodies on _DashboardScreenState {
                   metrics: [
                     SummaryMetric(
                       value: formatTl(balance),
-                      label: 'Kasa',
+                      label: l10n.metricBalance,
                       color: balance >= 0 ? Colors.green : Colors.red,
                     ),
                     SummaryMetric(
                       value: formatTl(income),
-                      label: 'Gelir',
+                      label: l10n.metricIncome,
                       color: Colors.green,
                     ),
                     SummaryMetric(
                       value: formatTl(expense),
-                      label: 'Gider',
+                      label: l10n.metricExpense,
                       color: Colors.red,
                     ),
                   ],
@@ -838,23 +847,24 @@ extension _DashboardBodies on _DashboardScreenState {
     const maxRows = 4;
     final shown = unpaid.take(maxRows).toList();
     final remaining = unpaid.length - shown.length;
+    final l10n = AppLocalizations.of(context);
 
     return SummarySection(
       icon: Icons.warning_amber_rounded,
-      title: 'Ödenmemiş Aidatlar (${unpaid.length})',
+      title: l10n.unpaidDuesTitle(unpaid.length),
       iconColor: Colors.red,
-      actionLabel: 'Tümü',
+      actionLabel: l10n.commonAll,
       onAction: () => _openPaymentsScreen(context),
       child: Column(
         children: [
-          for (final payment in shown) _unpaidRow(payment),
+          for (final payment in shown) _unpaidRow(l10n, payment),
           if (remaining > 0)
             Padding(
               padding: const EdgeInsets.only(top: 6),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  '+$remaining öğrenci daha',
+                  l10n.moreStudents(remaining),
                   style: TextStyle(
                     fontSize: 13,
                     color: Theme.of(context).textTheme.bodySmall?.color,
@@ -867,7 +877,7 @@ extension _DashboardBodies on _DashboardScreenState {
     );
   }
 
-  Widget _unpaidRow(PaymentRecord payment) {
+  Widget _unpaidRow(AppLocalizations l10n, PaymentRecord payment) {
     final isOverdue = payment.status == 'Gecikti';
     final statusColor = isOverdue ? Colors.red : Colors.orange;
 
@@ -913,7 +923,7 @@ extension _DashboardBodies on _DashboardScreenState {
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(
-              payment.status,
+              localizedPaymentStatus(l10n, payment.status),
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
@@ -933,12 +943,13 @@ extension _DashboardBodies on _DashboardScreenState {
       return null;
     }
     final latest = visible.first;
+    final l10n = AppLocalizations.of(context);
 
     return SummarySection(
       icon: Icons.campaign,
-      title: 'Son Duyuru',
+      title: l10n.latestAnnouncementTitle,
       iconColor: AppColors.primary,
-      actionLabel: 'Tümü',
+      actionLabel: l10n.commonAll,
       onAction: () => _openAnnouncementsScreen(context),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

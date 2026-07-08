@@ -411,14 +411,15 @@ extension _DashboardHandlers on _DashboardScreenState {
   }
 
   Widget _buildRemindersSection(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return SummarySection(
       icon: Icons.checklist,
-      title: 'Hızlı Hatırlatıcılar',
+      title: l10n.remindersTitle,
       iconColor: AppColors.primary,
-      actionLabel: 'Ekle',
+      actionLabel: l10n.commonAdd,
       onAction: _addReminder,
       child: _reminders.isEmpty
-          ? _emptyHint('Henüz bir hatırlatıcı eklemediniz.')
+          ? _emptyHint(l10n.remindersEmpty)
           : Column(
               children: [
                 for (final reminder in _reminders)
@@ -433,7 +434,7 @@ extension _DashboardHandlers on _DashboardScreenState {
                         Expanded(child: Text(reminder.text)),
                         IconButton(
                           visualDensity: VisualDensity.compact,
-                          tooltip: 'Sil',
+                          tooltip: l10n.commonDelete,
                           onPressed: () => _deleteReminder(reminder.id),
                           icon: const Icon(
                             Icons.close,
@@ -567,6 +568,7 @@ extension _DashboardHandlers on _DashboardScreenState {
   // --- SporTekAi ---
 
   void _openSporTekAiScreen(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final pendingLeaves = _leaveRequests
         .where((r) => r.status == LeaveStatus.pending)
         .length;
@@ -584,9 +586,7 @@ extension _DashboardHandlers on _DashboardScreenState {
         pendingLeaveCount: pendingLeaves,
       );
       suggestions = kParentAiSuggestions;
-      introSubtitle =
-          'Çocuğunuzun güncel özetini biliyorum. Aşağıdakilerden birini '
-          'seçebilir ya da kendi sorunuzu yazabilirsiniz.';
+      introSubtitle = l10n.aiIntroParent;
     } else if (_isStudent) {
       summary = AiSummary.buildStudentSummary(
         attendance: _attendanceRecords,
@@ -594,9 +594,7 @@ extension _DashboardHandlers on _DashboardScreenState {
         eventCount: _events.length,
       );
       suggestions = kStudentAiSuggestions;
-      introSubtitle =
-          'Güncel durumunu biliyorum. Aşağıdakilerden birini seçebilir '
-          'ya da kendi sorunu yazabilirsin.';
+      introSubtitle = l10n.aiIntroStudent;
     } else {
       summary = AiSummary.buildStaffSummary(
         isAdmin: _isAdmin,
@@ -610,9 +608,7 @@ extension _DashboardHandlers on _DashboardScreenState {
         pendingLeaveCount: pendingLeaves,
       );
       suggestions = kStaffAiSuggestions;
-      introSubtitle =
-          'Kulübünüzün güncel özetini biliyorum. Aşağıdakilerden birini '
-          'seçebilir ya da kendi sorunu yazabilirsin.';
+      introSubtitle = l10n.aiIntroStaff;
     }
 
     Navigator.push(
