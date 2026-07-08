@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/app_localizations.dart';
 import '../models/app_models.dart';
+import '../utils/role_l10n.dart';
 import '../widgets/empty_state.dart';
 import '../widgets/wave_background.dart';
 import 'users_screen.dart';
@@ -35,12 +37,14 @@ class _RoleRequestsScreenState extends State<RoleRequestsScreen> {
       widget.users.where((user) => user.isPendingRequest).toList();
 
   Future<void> _approve(UserAccount user) async {
+    final l10n = AppLocalizations.of(context);
     final confirmed = await _confirm(
-      title: 'Başvuruyu onayla',
-      message:
-          '${_nameOf(user)} → ${AppRoleLabels.of(user.requestedRole)} '
-          'olarak yükseltilecek. Onaylıyor musun?',
-      actionLabel: 'Onayla',
+      title: l10n.approveTitle,
+      message: l10n.approveConfirm(
+        _nameOf(user),
+        localizedRole(l10n, user.requestedRole),
+      ),
+      actionLabel: l10n.approveAction,
     );
     if (confirmed != true) {
       return;
@@ -53,11 +57,14 @@ class _RoleRequestsScreenState extends State<RoleRequestsScreen> {
         return;
       }
       _showSnack(
-        '${_nameOf(user)} ${AppRoleLabels.of(user.requestedRole)} oldu.',
+        l10n.approvedSnack(
+          _nameOf(user),
+          localizedRole(l10n, user.requestedRole),
+        ),
       );
     } catch (error) {
       if (mounted) {
-        _showSnack(_errorText(error));
+        _showSnack(_errorText(l10n, error));
       }
     } finally {
       if (mounted) {
@@ -67,12 +74,11 @@ class _RoleRequestsScreenState extends State<RoleRequestsScreen> {
   }
 
   Future<void> _reject(UserAccount user) async {
+    final l10n = AppLocalizations.of(context);
     final confirmed = await _confirm(
-      title: 'Başvuruyu reddet',
-      message:
-          '${_nameOf(user)} başvurusu reddedilecek ve hesabı silinecek. '
-          'Bu işlem geri alınamaz. Devam edilsin mi?',
-      actionLabel: 'Reddet',
+      title: l10n.rejectTitle,
+      message: l10n.rejectConfirm(_nameOf(user)),
+      actionLabel: l10n.rejectAction,
       destructive: true,
     );
     if (confirmed != true) {
@@ -85,10 +91,10 @@ class _RoleRequestsScreenState extends State<RoleRequestsScreen> {
       if (!mounted) {
         return;
       }
-      _showSnack('${_nameOf(user)} başvurusu reddedildi.');
+      _showSnack(l10n.rejectedSnack(_nameOf(user)));
     } catch (error) {
       if (mounted) {
-        _showSnack(_errorText(error));
+        _showSnack(_errorText(l10n, error));
       }
     } finally {
       if (mounted) {
@@ -105,23 +111,26 @@ class _RoleRequestsScreenState extends State<RoleRequestsScreen> {
   }) {
     return showDialog<bool>(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(title),
-        content: Text(message),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: const Text('Vazgeç'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(context, true),
-            style: destructive
-                ? TextButton.styleFrom(foregroundColor: Colors.red)
-                : null,
-            child: Text(actionLabel),
-          ),
-        ],
-      ),
+      builder: (context) {
+        final l10n = AppLocalizations.of(context);
+        return AlertDialog(
+          title: Text(title),
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: Text(l10n.commonCancel),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(context, true),
+              style: destructive
+                  ? TextButton.styleFrom(foregroundColor: Colors.red)
+                  : null,
+              child: Text(actionLabel),
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -131,23 +140,24 @@ class _RoleRequestsScreenState extends State<RoleRequestsScreen> {
     ).showSnackBar(SnackBar(content: Text(message)));
   }
 
-  String _errorText(Object error) =>
-      error is StateError ? error.message : 'İşlem sırasında bir hata oluştu.';
+  String _errorText(AppLocalizations l10n, Object error) =>
+      error is StateError ? error.message : l10n.genericOperationError;
 
   String _nameOf(UserAccount user) =>
       user.displayName.isNotEmpty ? user.displayName : user.email;
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final pending = _pending;
 
     return WaveScaffold(
-      appBar: AppBar(title: const Text('Rol Başvuruları')),
+      appBar: AppBar(title: Text(l10n.roleRequestsTitle)),
       body: pending.isEmpty
-          ? const EmptyState(
+          ? EmptyState(
               icon: Icons.how_to_reg,
-              title: 'Bekleyen başvuru yok',
-              message: 'Yeni kayıtların rol başvuruları burada görünür.',
+              title: l10n.noPendingRequests,
+              message: l10n.noPendingRequestsBody,
             )
           : ListView.builder(
               padding: const EdgeInsets.all(16),
@@ -198,7 +208,9 @@ class _RoleRequestsScreenState extends State<RoleRequestsScreen> {
                                     ),
                                   const SizedBox(height: 2),
                                   Text(
-                                    'Talep: ${AppRoleLabels.of(user.requestedRole)}',
+                                    l10n.requestLabel(
+                                      localizedRole(l10n, user.requestedRole),
+                                    ),
                                     style: TextStyle(
                                       fontSize: 13,
                                       color: AppRoleLabels.color(
@@ -237,13 +249,13 @@ class _RoleRequestsScreenState extends State<RoleRequestsScreen> {
                                   foregroundColor: Colors.red,
                                 ),
                                 icon: const Icon(Icons.close),
-                                label: const Text('Reddet'),
+                                label: Text(l10n.rejectAction),
                               ),
                               const SizedBox(width: 4),
                               FilledButton.icon(
                                 onPressed: () => _approve(user),
                                 icon: const Icon(Icons.check),
-                                label: const Text('Onayla'),
+                                label: Text(l10n.approveAction),
                               ),
                             ],
                           ),

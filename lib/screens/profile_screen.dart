@@ -4,13 +4,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/app_info.dart';
+import '../l10n/app_localizations.dart';
 import '../models/app_models.dart';
 import '../routes/app_routes.dart';
 import '../services/profile_service.dart';
 import '../theme/app_colors.dart';
 import '../theme/background_controller.dart';
+import '../theme/locale_controller.dart';
 import '../theme/theme_controller.dart';
 import '../utils/launchers.dart';
+import '../utils/role_l10n.dart';
 import '../widgets/wave_background.dart';
 import 'edit_account_screen.dart';
 import 'info_text_screen.dart';
@@ -75,28 +78,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
-  String get roleLabel {
-    if (isAdmin) return 'Admin';
-    if (isCoach) return 'Antrenör';
-    if (isParent) return 'Veli';
-    if (isStudent) return 'Öğrenci';
-    return 'Görüntüleyici';
-  }
-
-  String get roleDescription {
-    if (isAdmin) {
-      return 'Tüm kayıtları ekleyebilir, düzenleyebilir ve silebilir.';
-    }
-    if (isCoach) {
-      return 'Yoklama ve duyuru kayıtlarını yönetebilir. Diğer kayıtları görüntüleyebilir.';
-    }
-    if (isParent) {
-      return 'Çocuğunun performansını takip edebilir ve etkinliklere katılım cevabı verebilir.';
-    }
-    if (isStudent) {
-      return 'Kendi yoklama ve performans bilgisini görüntüleyebilir.';
-    }
-    return 'Kayıtları görüntüleyebilir, ancak değişiklik yapamaz.';
+  String _roleDescription(AppLocalizations l10n) {
+    if (isAdmin) return l10n.roleDescAdmin;
+    if (isCoach) return l10n.roleDescCoach;
+    if (isParent) return l10n.roleDescParent;
+    if (isStudent) return l10n.roleDescStudent;
+    return l10n.roleDescViewer;
   }
 
   IconData get roleIcon {
@@ -167,32 +154,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return WaveScaffold(
-      appBar: AppBar(title: const Text('Profil')),
+      appBar: AppBar(title: Text(l10n.profileTitle)),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : ListView(
               padding: const EdgeInsets.all(16),
               children: [
-                _buildHeaderCard(),
+                _buildHeaderCard(l10n),
                 if (widget.children.isNotEmpty) ...[
                   const SizedBox(height: 12),
-                  _buildChildrenCard(),
+                  _buildChildrenCard(l10n),
                 ],
                 if (isAdmin) ...[
                   const SizedBox(height: 12),
-                  _buildRoleCard(),
+                  _buildRoleCard(l10n),
                 ],
                 const SizedBox(height: 12),
-                _buildAppearanceCard(),
+                _buildAppearanceCard(l10n),
                 const SizedBox(height: 12),
-                _buildMenuCard(),
+                _buildMenuCard(l10n),
               ],
             ),
     );
   }
 
-  Widget _buildHeaderCard() {
+  Widget _buildHeaderCard(AppLocalizations l10n) {
     final profile = _profile;
     final email = profile?.email ?? '';
     final displayName = profile?.displayName ?? '';
@@ -205,7 +193,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     final title = displayName.isNotEmpty
         ? displayName
-        : (email.isNotEmpty ? email : 'Kullanıcı');
+        : (email.isNotEmpty ? email : l10n.profileUserFallback);
 
     return Card(
       child: Padding(
@@ -245,7 +233,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             const SizedBox(height: 12),
             Chip(
               avatar: Icon(roleChipIcon, size: 18),
-              label: Text(roleLabel),
+              label: Text(localizedRole(l10n, widget.userRole)),
             ),
           ],
         ),
@@ -253,7 +241,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildChildrenCard() {
+  Widget _buildChildrenCard(AppLocalizations l10n) {
     return Card(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -261,7 +249,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
             child: Text(
-              isStudent ? 'Öğrenci Bilgim' : 'Öğrencilerim',
+              isStudent
+                  ? l10n.childrenSectionStudent
+                  : l10n.childrenSectionParent,
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
             ),
           ),
@@ -279,32 +269,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildRoleCard() {
+  Widget _buildRoleCard(AppLocalizations l10n) {
     return Card(
       child: ListTile(
         leading: const Icon(Icons.security),
-        title: const Text('Yetki'),
-        subtitle: Text(roleDescription),
+        title: Text(l10n.authorityTitle),
+        subtitle: Text(_roleDescription(l10n)),
       ),
     );
   }
 
-  /// Aydınlık/karanlık/sistem tema tercihi. AppBar'dan buraya taşındı; tercih
-  /// [ThemeController] ile kalıcıdır ve tüm uygulamaya anında uygulanır.
-  Widget _buildAppearanceCard() {
+  /// Tema, arka plan efekti ve dil tercihleri. Üçü de ilgili kontrolcüler
+  /// aracılığıyla kalıcıdır ve tüm uygulamaya anında uygulanır.
+  Widget _buildAppearanceCard(AppLocalizations l10n) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Row(
+            Row(
               children: [
-                Icon(Icons.brightness_6),
-                SizedBox(width: 12),
+                const Icon(Icons.brightness_6),
+                const SizedBox(width: 12),
                 Text(
-                  'Görünüm',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                  l10n.appearanceTitle,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
                 ),
               ],
             ),
@@ -316,21 +309,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   width: double.infinity,
                   child: SegmentedButton<ThemeMode>(
                     showSelectedIcon: false,
-                    segments: const [
+                    segments: [
                       ButtonSegment(
                         value: ThemeMode.system,
-                        icon: Icon(Icons.brightness_auto),
-                        label: Text('Sistem'),
+                        icon: const Icon(Icons.brightness_auto),
+                        label: Text(l10n.themeSystem),
                       ),
                       ButtonSegment(
                         value: ThemeMode.light,
-                        icon: Icon(Icons.light_mode),
-                        label: Text('Aydınlık'),
+                        icon: const Icon(Icons.light_mode),
+                        label: Text(l10n.themeLight),
                       ),
                       ButtonSegment(
                         value: ThemeMode.dark,
-                        icon: Icon(Icons.dark_mode),
-                        label: Text('Karanlık'),
+                        icon: const Icon(Icons.dark_mode),
+                        label: Text(l10n.themeDark),
                       ),
                     ],
                     selected: {mode},
@@ -342,20 +335,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
               },
             ),
             const SizedBox(height: 20),
-            const Row(
+            Row(
               children: [
-                Icon(Icons.auto_awesome),
-                SizedBox(width: 12),
+                const Icon(Icons.auto_awesome),
+                const SizedBox(width: 12),
                 Text(
-                  'Arka plan efekti',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                  l10n.backgroundEffectTitle,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
                 ),
               ],
             ),
             const SizedBox(height: 4),
-            const Text(
-              'Yüksek: dalga + partikül · Orta: yalnızca dalga · Düşük: sade zemin.',
-              style: TextStyle(color: Colors.grey, fontSize: 12),
+            Text(
+              l10n.backgroundEffectDesc,
+              style: const TextStyle(color: Colors.grey, fontSize: 12),
             ),
             const SizedBox(height: 16),
             ValueListenableBuilder<BackgroundLevel>(
@@ -365,21 +361,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   width: double.infinity,
                   child: SegmentedButton<BackgroundLevel>(
                     showSelectedIcon: false,
-                    segments: const [
+                    segments: [
                       ButtonSegment(
                         value: BackgroundLevel.full,
-                        icon: Icon(Icons.auto_awesome),
-                        label: Text('Yüksek'),
+                        icon: const Icon(Icons.auto_awesome),
+                        label: Text(l10n.backgroundHigh),
                       ),
                       ButtonSegment(
                         value: BackgroundLevel.waves,
-                        icon: Icon(Icons.waves),
-                        label: Text('Orta'),
+                        icon: const Icon(Icons.waves),
+                        label: Text(l10n.backgroundMedium),
                       ),
                       ButtonSegment(
                         value: BackgroundLevel.none,
-                        icon: Icon(Icons.block),
-                        label: Text('Düşük'),
+                        icon: const Icon(Icons.block),
+                        label: Text(l10n.backgroundLow),
                       ),
                     ],
                     selected: {level},
@@ -390,61 +386,100 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 );
               },
             ),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                const Icon(Icons.language),
+                const SizedBox(width: 12),
+                Text(
+                  l10n.languageTitle,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            ValueListenableBuilder<Locale?>(
+              valueListenable: LocaleController.instance.locale,
+              builder: (context, current, _) {
+                return Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: LocaleController.options.map((option) {
+                    final isSystem = option.locale == null;
+                    final isSelected = isSystem
+                        ? current == null
+                        : current != null &&
+                              current.languageCode == option.locale!.languageCode;
+                    final label =
+                        isSystem ? l10n.languageSystem : option.label;
+                    return ChoiceChip(
+                      label: Text(label),
+                      selected: isSelected,
+                      onSelected: (_) =>
+                          LocaleController.instance.setLocale(option.locale),
+                    );
+                  }).toList(),
+                );
+              },
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildMenuCard() {
+  Widget _buildMenuCard(AppLocalizations l10n) {
     return Card(
       child: Column(
         children: [
           ListTile(
             leading: const Icon(Icons.manage_accounts),
-            title: const Text('Hesabı Düzenle'),
+            title: Text(l10n.editAccount),
             trailing: const Icon(Icons.chevron_right),
             onTap: _openEditAccount,
           ),
           const Divider(height: 1),
           ListTile(
             leading: const Icon(Icons.mail_outline),
-            title: const Text('Bize Ulaşın'),
+            title: Text(l10n.contactUs),
             trailing: const Icon(Icons.chevron_right),
-            onTap: () => _openInfo(InfoPages.contactTitle, InfoPages.contact),
+            onTap: () => _openInfo(l10n.contactUs, InfoPages.contact),
           ),
           const Divider(height: 1),
           ListTile(
             leading: const Icon(Icons.chat, color: Color(0xFF25D366)),
-            title: const Text('WhatsApp Destek'),
+            title: Text(l10n.whatsappSupport),
             trailing: const Icon(Icons.open_in_new, size: 18),
             onTap: _openWhatsAppSupport,
           ),
           const Divider(height: 1),
           ListTile(
             leading: const Icon(Icons.gavel_outlined),
-            title: const Text('KVKK Aydınlatma Metni'),
+            title: Text(l10n.kvkkTitle),
             trailing: const Icon(Icons.chevron_right),
-            onTap: () => _openInfo(InfoPages.kvkkTitle, InfoPages.kvkk),
+            onTap: () => _openInfo(l10n.kvkkTitle, InfoPages.kvkk),
           ),
           const Divider(height: 1),
           ListTile(
             leading: const Icon(Icons.description_outlined),
-            title: const Text('Kullanım Koşulları'),
+            title: Text(l10n.termsTitle),
             trailing: const Icon(Icons.chevron_right),
-            onTap: () => _openInfo(InfoPages.termsTitle, InfoPages.terms),
+            onTap: () => _openInfo(l10n.termsTitle, InfoPages.terms),
           ),
           const Divider(height: 1),
           ListTile(
             leading: const Icon(Icons.privacy_tip_outlined),
-            title: const Text('Gizlilik Politikası'),
+            title: Text(l10n.privacyTitle),
             trailing: const Icon(Icons.chevron_right),
-            onTap: () => _openInfo(InfoPages.privacyTitle, InfoPages.privacy),
+            onTap: () => _openInfo(l10n.privacyTitle, InfoPages.privacy),
           ),
           const Divider(height: 1),
           ListTile(
             leading: const Icon(Icons.info_outline),
-            title: const Text('Uygulama Sürümü'),
+            title: Text(l10n.appVersionLabel),
             trailing: Text(
               'v${AppInfo.version}',
               style: TextStyle(
@@ -455,9 +490,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           const Divider(height: 1),
           ListTile(
             leading: const Icon(Icons.logout, color: Colors.red),
-            title: const Text(
-              'Çıkış Yap',
-              style: TextStyle(color: Colors.red),
+            title: Text(
+              l10n.logout,
+              style: const TextStyle(color: Colors.red),
             ),
             onTap: _logout,
           ),

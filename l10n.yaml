@@ -1,0 +1,8 @@
+# gen-l10n yapılandırması. Kaynak dil Türkçe olduğundan şablon app_tr.arb'dir.
+# AppLocalizations sınıfı lib/l10n/app_localizations.dart içine üretilir.
+arb-dir: lib/l10n
+template-arb-file: app_tr.arb
+output-localization-file: app_localizations.dart
+output-class: AppLocalizations
+# AppLocalizations.of(context) null döndürmesin (kod temizliği için).
+nullable-getter: false

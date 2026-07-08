@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../constants/app_constants.dart';
+import '../l10n/app_localizations.dart';
 import '../routes/app_routes.dart';
 import '../services/auth_service.dart';
 import '../services/user_role_service.dart';
@@ -37,6 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _login() async {
+    final l10n = AppLocalizations.of(context);
     final isFormValid = _formKey.currentState!.validate();
 
     if (!isFormValid) {
@@ -65,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (refreshedUser == null) {
         throw FirebaseAuthException(
           code: 'user-not-found',
-          message: 'Kullanıcı bulunamadı.',
+          message: l10n.userNotFound,
         );
       }
 
@@ -107,17 +108,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text(_authErrorMessage(error))));
+      ).showSnackBar(SnackBar(content: Text(_authErrorMessage(l10n, error))));
     } catch (error) {
       if (!mounted) {
         return;
       }
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Giriş kontrolü sırasında bir hata oluştu: $error'),
-        ),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(l10n.loginCheckError(error))));
     } finally {
       if (mounted) {
         setState(() {
@@ -131,17 +130,16 @@ class _LoginScreenState extends State<LoginScreen> {
     await showDialog<void>(
       context: context,
       builder: (context) {
+        final l10n = AppLocalizations.of(context);
         return AlertDialog(
-          title: const Text('E-posta doğrulanmamış'),
-          content: const Text(
-            'Hesabını aktifleştirmek için e-postana gelen doğrulama linkine tıklamalısın. Link gelmediyse tekrar gönderebiliriz.',
-          ),
+          title: Text(l10n.emailNotVerifiedTitle),
+          content: Text(l10n.emailNotVerifiedBody),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: const Text('Kapat'),
+              child: Text(l10n.commonClose),
             ),
             TextButton(
               onPressed: () async {
@@ -154,14 +152,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 Navigator.pop(context);
 
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text(
-                      'Doğrulama e-postası tekrar gönderildi. Spam klasörünü de kontrol et.',
-                    ),
-                  ),
+                  SnackBar(content: Text(l10n.verificationResent)),
                 );
               },
-              child: const Text('Tekrar Gönder'),
+              child: Text(l10n.commonResend),
             ),
           ],
         );
@@ -173,15 +167,14 @@ class _LoginScreenState extends State<LoginScreen> {
     await showDialog<void>(
       context: context,
       builder: (context) {
+        final l10n = AppLocalizations.of(context);
         return AlertDialog(
-          title: const Text('Başvurun reddedildi'),
-          content: const Text(
-            'Rol başvurun yönetici tarafından reddedildi. Hesabın kapatılıyor.',
-          ),
+          title: Text(l10n.rejectedTitle),
+          content: Text(l10n.rejectedBody),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Tamam'),
+              child: Text(l10n.commonOk),
             ),
           ],
         );
@@ -210,13 +203,12 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _resetPassword() async {
+    final l10n = AppLocalizations.of(context);
     final email = _emailController.text.trim();
 
     if (email.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Şifre sıfırlamak için önce e-posta adresini yaz.'),
-        ),
+        SnackBar(content: Text(l10n.resetPasswordNeedEmail)),
       );
       return;
     }
@@ -229,19 +221,15 @@ class _LoginScreenState extends State<LoginScreen> {
       }
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            'Şifre sıfırlama bağlantısı e-posta adresine gönderildi.',
-          ),
-        ),
+        SnackBar(content: Text(l10n.resetPasswordSent)),
       );
     } on FirebaseAuthException catch (error) {
-      String message = 'Şifre sıfırlama sırasında bir hata oluştu.';
+      String message = l10n.resetPasswordError;
 
       if (error.code == 'invalid-email') {
-        message = 'Geçerli bir e-posta adresi gir.';
+        message = l10n.resetInvalidEmail;
       } else if (error.code == 'user-not-found') {
-        message = 'Bu e-posta adresiyle kayıtlı kullanıcı bulunamadı.';
+        message = l10n.resetUserNotFound;
       }
 
       if (!mounted) {
@@ -254,35 +242,36 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  String _authErrorMessage(FirebaseAuthException error) {
+  String _authErrorMessage(AppLocalizations l10n, FirebaseAuthException error) {
     switch (error.code) {
       case 'invalid-email':
-        return 'E-posta adresi geçersiz.';
+        return l10n.authInvalidEmail;
       case 'user-disabled':
-        return 'Bu kullanıcı hesabı pasif durumda.';
+        return l10n.authUserDisabled;
       case 'user-not-found':
       case 'wrong-password':
       case 'invalid-credential':
-        return 'E-posta veya Şifre hatalı.';
+        return l10n.authWrongCredentials;
       case 'network-request-failed':
-        return 'İnternet bağlantısı kurulamadı. Bağlantıyı kontrol edip tekrar dene.';
+        return l10n.authNetwork;
       case 'operation-not-allowed':
-        return 'Firebase Console içinde Email/Password giriş yöntemi aktif değil.';
+        return l10n.authOperationNotAllowed;
       case 'configuration-not-found':
-        return 'Firebase Authentication yapılandırması bulunamadı. Firebase Console ayarlarını kontrol et.';
+        return l10n.authConfigNotFound;
       case 'app-not-authorized':
-        return 'Bu Android uygulaması Firebase projesi için yetkili görünmüyor.';
+        return l10n.authAppNotAuthorized;
       case 'invalid-api-key':
-        return 'Firebase API anahtarı geçersiz görünüyor.';
+        return l10n.authInvalidApiKey;
       case 'too-many-requests':
-        return 'Çok fazla giriş denemesi yapıldı. Bir süre sonra tekrar dene.';
+        return l10n.authTooManyRequests;
       default:
-        return 'Giriş yapılamadı. Hata kodu: ${error.code}';
+        return l10n.authGenericWithCode(error.code);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
       backgroundColor: AppColors.surface,
       body: WaveBackground(
@@ -306,10 +295,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         color: AppColors.primary,
                       ),
                       const SizedBox(height: 16),
-                      const Text(
-                        AppConstants.appTitle,
+                      Text(
+                        l10n.loginHeading,
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 26,
                           fontWeight: FontWeight.bold,
                         ),
@@ -318,19 +307,19 @@ class _LoginScreenState extends State<LoginScreen> {
                       TextFormField(
                         controller: _emailController,
                         keyboardType: TextInputType.emailAddress,
-                        decoration: const InputDecoration(
-                          labelText: 'E-posta',
-                          border: OutlineInputBorder(),
-                          prefixIcon: Icon(Icons.email),
-                          hintText: 'example@sporokulu.com',
+                        decoration: InputDecoration(
+                          labelText: l10n.emailLabel,
+                          border: const OutlineInputBorder(),
+                          prefixIcon: const Icon(Icons.email),
+                          hintText: l10n.emailHint,
                         ),
                         validator: (value) {
                           if (value == null || value.trim().isEmpty) {
-                            return 'E-posta boş bırakılamaz.';
+                            return l10n.emailEmpty;
                           }
 
                           if (!value.contains('@')) {
-                            return 'Geçerli bir e-posta gir.';
+                            return l10n.emailInvalid;
                           }
 
                           return null;
@@ -341,7 +330,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         controller: _passwordController,
                         obscureText: !_isPasswordVisible,
                         decoration: InputDecoration(
-                          labelText: 'Şifre',
+                          labelText: l10n.passwordLabel,
                           border: const OutlineInputBorder(),
                           prefixIcon: const Icon(Icons.lock),
                           hintText: '******',
@@ -360,11 +349,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         validator: (value) {
                           if (value == null || value.trim().isEmpty) {
-                            return 'Şifre boş bırakılamaz.';
+                            return l10n.passwordEmpty;
                           }
 
                           if (value.trim().length < 6) {
-                            return 'Şifre en az 6 karakter olmalıdır.';
+                            return l10n.passwordMinLength;
                           }
 
                           return null;
@@ -383,13 +372,13 @@ class _LoginScreenState extends State<LoginScreen> {
                               )
                             : const Icon(Icons.login),
                         label: Text(
-                          _isLoading ? 'Giriş yapılıyor...' : 'Giriş Yap',
+                          _isLoading ? l10n.loginLoading : l10n.loginButton,
                         ),
                       ),
                       const SizedBox(height: 8),
                       TextButton(
                         onPressed: _resetPassword,
-                        child: const Text('Şifremi unuttum'),
+                        child: Text(l10n.forgotPassword),
                       ),
                       const SizedBox(height: 8),
                       TextButton(
@@ -401,7 +390,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           );
                         },
-                        child: const Text('Hesabın yok mu? Kayıt ol'),
+                        child: Text(l10n.noAccountRegister),
                       ),
                     ],
                   ),

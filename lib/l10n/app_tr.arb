@@ -1,0 +1,140 @@
+{
+  "@@locale": "tr",
+
+  "commonCancel": "Vazgeç",
+  "commonClose": "Kapat",
+  "commonOk": "Tamam",
+  "commonResend": "Tekrar Gönder",
+
+  "roleAdmin": "Yönetici",
+  "roleCoach": "Antrenör",
+  "roleParent": "Veli",
+  "roleStudent": "Öğrenci",
+  "roleViewer": "Görüntüleyici",
+  "roleUnknown": "Bilinmeyen",
+
+  "loginHeading": "Spor Okulu Yönetimi",
+  "emailLabel": "E-posta",
+  "emailHint": "example@sporokulu.com",
+  "passwordLabel": "Şifre",
+  "loginButton": "Giriş Yap",
+  "loginLoading": "Giriş yapılıyor...",
+  "forgotPassword": "Şifremi unuttum",
+  "noAccountRegister": "Hesabın yok mu? Kayıt ol",
+  "emailEmpty": "E-posta boş bırakılamaz.",
+  "emailInvalid": "Geçerli bir e-posta gir.",
+  "passwordEmpty": "Şifre boş bırakılamaz.",
+  "passwordMinLength": "Şifre en az 6 karakter olmalıdır.",
+  "emailNotVerifiedTitle": "E-posta doğrulanmamış",
+  "emailNotVerifiedBody": "Hesabını aktifleştirmek için e-postana gelen doğrulama linkine tıklamalısın. Link gelmediyse tekrar gönderebiliriz.",
+  "verificationResent": "Doğrulama e-postası tekrar gönderildi. Spam klasörünü de kontrol et.",
+  "rejectedTitle": "Başvurun reddedildi",
+  "rejectedBody": "Rol başvurun yönetici tarafından reddedildi. Hesabın kapatılıyor.",
+  "resetPasswordNeedEmail": "Şifre sıfırlamak için önce e-posta adresini yaz.",
+  "resetPasswordSent": "Şifre sıfırlama bağlantısı e-posta adresine gönderildi.",
+  "resetPasswordError": "Şifre sıfırlama sırasında bir hata oluştu.",
+  "resetInvalidEmail": "Geçerli bir e-posta adresi gir.",
+  "resetUserNotFound": "Bu e-posta adresiyle kayıtlı kullanıcı bulunamadı.",
+  "userNotFound": "Kullanıcı bulunamadı.",
+  "loginCheckError": "Giriş kontrolü sırasında bir hata oluştu: {error}",
+  "@loginCheckError": {
+    "placeholders": { "error": { "type": "Object" } }
+  },
+  "authInvalidEmail": "E-posta adresi geçersiz.",
+  "authUserDisabled": "Bu kullanıcı hesabı pasif durumda.",
+  "authWrongCredentials": "E-posta veya Şifre hatalı.",
+  "authNetwork": "İnternet bağlantısı kurulamadı. Bağlantıyı kontrol edip tekrar dene.",
+  "authOperationNotAllowed": "Firebase Console içinde Email/Password giriş yöntemi aktif değil.",
+  "authConfigNotFound": "Firebase Authentication yapılandırması bulunamadı. Firebase Console ayarlarını kontrol et.",
+  "authAppNotAuthorized": "Bu Android uygulaması Firebase projesi için yetkili görünmüyor.",
+  "authInvalidApiKey": "Firebase API anahtarı geçersiz görünüyor.",
+  "authTooManyRequests": "Çok fazla giriş denemesi yapıldı. Bir süre sonra tekrar dene.",
+  "authGenericWithCode": "Giriş yapılamadı. Hata kodu: {code}",
+  "@authGenericWithCode": {
+    "placeholders": { "code": { "type": "String" } }
+  },
+
+  "registerTitle": "Kayıt Ol",
+  "registerHeading": "Yeni Hesap Oluştur",
+  "firstNameLabel": "Ad",
+  "lastNameLabel": "Soyad",
+  "passwordAgainLabel": "Şifre Tekrar",
+  "passwordAgainEmpty": "Şifre tekrarı boş bırakılamaz.",
+  "passwordsDontMatch": "Şifreler eşleşmiyor.",
+  "accountType": "Hesap türün",
+  "selectionSentToAdmin": "Seçimin yönetici onayına gönderilir.",
+  "registerButton": "Kayıt Ol",
+  "registerLoading": "Kaydediliyor...",
+  "requiredField": "{label} boş bırakılamaz.",
+  "@requiredField": {
+    "placeholders": { "label": { "type": "String" } }
+  },
+  "registerSuccess": "Kayıt oluşturuldu. Lütfen e-postana gelen doğrulama linkine tıkla. Rol başvurun yönetici onayına gönderildi.",
+  "registerGenericError": "Kayıt sırasında bir hata oluştu.",
+  "emailAlreadyInUse": "Bu e-posta adresi zaten kullanılıyor.",
+  "passwordTooWeak": "Şifre çok zayıf. En az 6 karakter kullan.",
+  "registerErrorWith": "Kayıt hatası: {error}",
+  "@registerErrorWith": {
+    "placeholders": { "error": { "type": "Object" } }
+  },
+  "userNotCreated": "Kullanıcı oluşturulamadı.",
+
+  "roleRequestsTitle": "Rol Başvuruları",
+  "noPendingRequests": "Bekleyen başvuru yok",
+  "noPendingRequestsBody": "Yeni kayıtların rol başvuruları burada görünür.",
+  "approveTitle": "Başvuruyu onayla",
+  "approveConfirm": "{name} → {role} olarak yükseltilecek. Onaylıyor musun?",
+  "@approveConfirm": {
+    "placeholders": { "name": { "type": "String" }, "role": { "type": "String" } }
+  },
+  "approveAction": "Onayla",
+  "approvedSnack": "{name} {role} oldu.",
+  "@approvedSnack": {
+    "placeholders": { "name": { "type": "String" }, "role": { "type": "String" } }
+  },
+  "rejectTitle": "Başvuruyu reddet",
+  "rejectConfirm": "{name} başvurusu reddedilecek ve hesabı silinecek. Bu işlem geri alınamaz. Devam edilsin mi?",
+  "@rejectConfirm": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "rejectAction": "Reddet",
+  "rejectedSnack": "{name} başvurusu reddedildi.",
+  "@rejectedSnack": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "requestLabel": "Talep: {role}",
+  "@requestLabel": {
+    "placeholders": { "role": { "type": "String" } }
+  },
+  "genericOperationError": "İşlem sırasında bir hata oluştu.",
+
+  "profileTitle": "Profil",
+  "profileUserFallback": "Kullanıcı",
+  "roleDescAdmin": "Tüm kayıtları ekleyebilir, düzenleyebilir ve silebilir.",
+  "roleDescCoach": "Yoklama ve duyuru kayıtlarını yönetebilir. Diğer kayıtları görüntüleyebilir.",
+  "roleDescParent": "Çocuğunun performansını takip edebilir ve etkinliklere katılım cevabı verebilir.",
+  "roleDescStudent": "Kendi yoklama ve performans bilgisini görüntüleyebilir.",
+  "roleDescViewer": "Kayıtları görüntüleyebilir, ancak değişiklik yapamaz.",
+  "childrenSectionStudent": "Öğrenci Bilgim",
+  "childrenSectionParent": "Öğrencilerim",
+  "authorityTitle": "Yetki",
+  "appearanceTitle": "Görünüm",
+  "themeSystem": "Sistem",
+  "themeLight": "Aydınlık",
+  "themeDark": "Karanlık",
+  "backgroundEffectTitle": "Arka plan efekti",
+  "backgroundEffectDesc": "Yüksek: dalga + partikül · Orta: yalnızca dalga · Düşük: sade zemin.",
+  "backgroundHigh": "Yüksek",
+  "backgroundMedium": "Orta",
+  "backgroundLow": "Düşük",
+  "languageTitle": "Dil",
+  "languageSystem": "Sistem",
+  "editAccount": "Hesabı Düzenle",
+  "contactUs": "Bize Ulaşın",
+  "whatsappSupport": "WhatsApp Destek",
+  "kvkkTitle": "KVKK Aydınlatma Metni",
+  "termsTitle": "Kullanım Koşulları",
+  "privacyTitle": "Gizlilik Politikası",
+  "appVersionLabel": "Uygulama Sürümü",
+  "logout": "Çıkış Yap"
+}

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/app_roles.dart';
+import '../l10n/app_localizations.dart';
 import '../theme/app_colors.dart';
 import '../widgets/wave_background.dart';
 
@@ -40,6 +41,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   Future<void> _register() async {
+    final l10n = AppLocalizations.of(context);
     final isFormValid = _formKey.currentState!.validate();
 
     if (!isFormValid) {
@@ -65,7 +67,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       if (user == null) {
         throw FirebaseAuthException(
           code: 'user-not-created',
-          message: 'Kullanıcı oluşturulamadı.',
+          message: l10n.userNotCreated,
         );
       }
 
@@ -90,24 +92,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
       }
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            'Kayıt oluşturuldu. Lütfen e-postana gelen doğrulama linkine tıkla. '
-            'Rol başvurun yönetici onayına gönderildi.',
-          ),
-        ),
+        SnackBar(content: Text(l10n.registerSuccess)),
       );
 
       Navigator.pop(context);
     } on FirebaseAuthException catch (error) {
-      var message = 'Kayıt sırasında bir hata oluştu.';
+      var message = l10n.registerGenericError;
 
       if (error.code == 'email-already-in-use') {
-        message = 'Bu e-posta adresi zaten kullanılıyor.';
+        message = l10n.emailAlreadyInUse;
       } else if (error.code == 'weak-password') {
-        message = 'Şifre çok zayıf. En az 6 karakter kullan.';
+        message = l10n.passwordTooWeak;
       } else if (error.code == 'invalid-email') {
-        message = 'Geçerli bir e-posta adresi gir.';
+        message = l10n.resetInvalidEmail;
       }
 
       if (!mounted) {
@@ -124,7 +121,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text('Kayıt hatası: $error')));
+      ).showSnackBar(SnackBar(content: Text(l10n.registerErrorWith(error))));
     } finally {
       if (mounted) {
         setState(() {
@@ -134,17 +131,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
   }
 
-  String? _requiredValidator(String? value, String label) {
+  String? _requiredValidator(AppLocalizations l10n, String? value, String label) {
     if (value == null || value.trim().isEmpty) {
-      return '$label boş bırakılamaz.';
+      return l10n.requiredField(label);
     }
     return null;
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return WaveScaffold(
-      appBar: AppBar(title: const Text('Kayıt Ol')),
+      appBar: AppBar(title: Text(l10n.registerTitle)),
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
@@ -163,10 +161,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       color: AppColors.primary,
                     ),
                     const SizedBox(height: 16),
-                    const Text(
-                      'Yeni Hesap Oluştur',
+                    Text(
+                      l10n.registerHeading,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
@@ -175,41 +173,43 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     TextFormField(
                       controller: _firstNameController,
                       textCapitalization: TextCapitalization.words,
-                      decoration: const InputDecoration(
-                        labelText: 'Ad',
-                        prefixIcon: Icon(Icons.badge_outlined),
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        labelText: l10n.firstNameLabel,
+                        prefixIcon: const Icon(Icons.badge_outlined),
+                        border: const OutlineInputBorder(),
                       ),
-                      validator: (value) => _requiredValidator(value, 'Ad'),
+                      validator: (value) =>
+                          _requiredValidator(l10n, value, l10n.firstNameLabel),
                     ),
                     const SizedBox(height: 12),
                     TextFormField(
                       controller: _lastNameController,
                       textCapitalization: TextCapitalization.words,
-                      decoration: const InputDecoration(
-                        labelText: 'Soyad',
-                        prefixIcon: Icon(Icons.badge_outlined),
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        labelText: l10n.lastNameLabel,
+                        prefixIcon: const Icon(Icons.badge_outlined),
+                        border: const OutlineInputBorder(),
                       ),
-                      validator: (value) => _requiredValidator(value, 'Soyad'),
+                      validator: (value) =>
+                          _requiredValidator(l10n, value, l10n.lastNameLabel),
                     ),
                     const SizedBox(height: 12),
                     TextFormField(
                       controller: _emailController,
                       keyboardType: TextInputType.emailAddress,
-                      decoration: const InputDecoration(
-                        labelText: 'E-posta',
-                        hintText: 'example@sporokulu.com',
-                        prefixIcon: Icon(Icons.email),
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        labelText: l10n.emailLabel,
+                        hintText: l10n.emailHint,
+                        prefixIcon: const Icon(Icons.email),
+                        border: const OutlineInputBorder(),
                       ),
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
-                          return 'E-posta boş bırakılamaz.';
+                          return l10n.emailEmpty;
                         }
 
                         if (!value.contains('@')) {
-                          return 'Geçerli bir e-posta gir.';
+                          return l10n.emailInvalid;
                         }
 
                         return null;
@@ -220,7 +220,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       controller: _passwordController,
                       obscureText: !_isPasswordVisible,
                       decoration: InputDecoration(
-                        labelText: 'Şifre',
+                        labelText: l10n.passwordLabel,
                         prefixIcon: const Icon(Icons.lock),
                         border: const OutlineInputBorder(),
                         suffixIcon: IconButton(
@@ -238,11 +238,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
-                          return 'Şifre boş bırakılamaz.';
+                          return l10n.passwordEmpty;
                         }
 
                         if (value.trim().length < 6) {
-                          return 'Şifre en az 6 karakter olmalıdır.';
+                          return l10n.passwordMinLength;
                         }
 
                         return null;
@@ -252,29 +252,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     TextFormField(
                       controller: _passwordAgainController,
                       obscureText: !_isPasswordVisible,
-                      decoration: const InputDecoration(
-                        labelText: 'Şifre Tekrar',
-                        prefixIcon: Icon(Icons.lock_outline),
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        labelText: l10n.passwordAgainLabel,
+                        prefixIcon: const Icon(Icons.lock_outline),
+                        border: const OutlineInputBorder(),
                       ),
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
-                          return 'Şifre tekrarı boş bırakılamaz.';
+                          return l10n.passwordAgainEmpty;
                         }
 
                         if (value.trim() != _passwordController.text.trim()) {
-                          return 'Şifreler eşleşmiyor.';
+                          return l10n.passwordsDontMatch;
                         }
 
                         return null;
                       },
                     ),
                     const SizedBox(height: 20),
-                    const Align(
+                    Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Hesap türün',
-                        style: TextStyle(
+                        l10n.accountType,
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 14,
                         ),
@@ -282,16 +282,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     const SizedBox(height: 8),
                     SegmentedButton<String>(
-                      segments: const [
+                      segments: [
                         ButtonSegment(
                           value: AppRoles.parent,
-                          icon: Icon(Icons.family_restroom),
-                          label: Text('Veli'),
+                          icon: const Icon(Icons.family_restroom),
+                          label: Text(l10n.roleParent),
                         ),
                         ButtonSegment(
                           value: AppRoles.student,
-                          icon: Icon(Icons.school),
-                          label: Text('Öğrenci'),
+                          icon: const Icon(Icons.school),
+                          label: Text(l10n.roleStudent),
                         ),
                       ],
                       selected: {_requestedRole},
@@ -305,7 +305,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      'Seçimin yönetici onayına gönderilir.',
+                      l10n.selectionSentToAdmin,
                       style: TextStyle(
                         fontSize: 12,
                         color: Theme.of(context).textTheme.bodySmall?.color,
@@ -321,7 +321,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               child: CircularProgressIndicator(strokeWidth: 2),
                             )
                           : const Icon(Icons.person_add),
-                      label: Text(_isLoading ? 'Kaydediliyor...' : 'Kayıt Ol'),
+                      label: Text(
+                        _isLoading ? l10n.registerLoading : l10n.registerButton,
+                      ),
                     ),
                   ],
                 ),

@@ -47,6 +47,7 @@ dependencies:
   image_picker: ^1.2.3
   url_launcher: ^6.3.2
   http: ^1.6.0
+  intl: ^0.20.2
 
 dev_dependencies:
   flutter_test:
@@ -65,6 +66,9 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
+
+  # gen-l10n: lib/l10n/app_*.arb dosyalarından AppLocalizations üretilsin.
+  generate: true
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

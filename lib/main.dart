@@ -1,14 +1,15 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'theme/app_colors.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'constants/app_constants.dart';
 import 'firebase_options.dart';
+import 'l10n/app_localizations.dart';
 import 'routes/app_routes.dart';
 import 'screens/auth_gate.dart';
 import 'theme/app_theme.dart';
 import 'theme/background_controller.dart';
+import 'theme/locale_controller.dart';
 import 'theme/theme_controller.dart';
 import 'widgets/app_splash_screen.dart';
 
@@ -58,6 +59,8 @@ class _SporOkuluAppState extends State<SporOkuluApp> {
     ThemeController.instance.load();
     // Kayıtlı arka plan efekti seviyesini yükle (yoksa yüksek ile başlar).
     BackgroundController.instance.load();
+    // Kayıtlı dil tercihini yükle (yoksa cihaz dilini izler).
+    LocaleController.instance.load();
   }
 
   @override
@@ -65,24 +68,37 @@ class _SporOkuluAppState extends State<SporOkuluApp> {
     return ValueListenableBuilder<ThemeMode>(
       valueListenable: ThemeController.instance.mode,
       builder: (context, themeMode, _) {
-        return MaterialApp(
-          title: AppConstants.appTitle,
-          debugShowCheckedModeBanner: false,
-          theme: AppTheme.lightTheme,
-          darkTheme: AppTheme.darkTheme,
-          themeMode: themeMode,
-          // Uygulama Türkçe: native menüler, tarih/saat seçiciler ve metin
-          // seçim araç çubuğu Türkçe görünsün.
-          locale: const Locale('tr', 'TR'),
-          supportedLocales: const [Locale('tr', 'TR'), Locale('en', 'US')],
-          localizationsDelegates: const [
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          initialRoute: AppRoutes.login,
-          routes: AppRoutes.routes,
-          builder: _limitedTextScaleBuilder,
+        return ValueListenableBuilder<Locale?>(
+          valueListenable: LocaleController.instance.locale,
+          builder: (context, locale, _) {
+            return MaterialApp(
+              title: AppConstants.appTitle,
+              debugShowCheckedModeBanner: false,
+              theme: AppTheme.lightTheme,
+              darkTheme: AppTheme.darkTheme,
+              themeMode: themeMode,
+              // Seçili dil; null ise cihaz dili desteklenenlerle eşleştirilir
+              // (eşleşmezse ilk desteklenen dil olan Türkçe kullanılır).
+              locale: locale,
+              supportedLocales: AppLocalizations.supportedLocales,
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              // Cihaz/seçili dil desteklenenlerle dil koduna göre eşleştirilir;
+              // eşleşme yoksa Türkçe'ye düşülür.
+              localeResolutionCallback: (preferred, supported) {
+                if (preferred != null) {
+                  for (final option in supported) {
+                    if (option.languageCode == preferred.languageCode) {
+                      return option;
+                    }
+                  }
+                }
+                return const Locale('tr');
+              },
+              initialRoute: AppRoutes.login,
+              routes: AppRoutes.routes,
+              builder: _limitedTextScaleBuilder,
+            );
+          },
         );
       },
     );
