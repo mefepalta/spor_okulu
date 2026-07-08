@@ -232,6 +232,31 @@ extension _DashboardBodies on _DashboardScreenState {
     );
   }
 
+  /// Okunmamış duyuru rozeti metni (çan ile aynı kaynak); yoksa null.
+  String? _newAnnouncementNote() =>
+      _unreadAnnouncementCount > 0 ? '$_unreadAnnouncementCount yeni' : null;
+
+  /// Velinin henüz katılım cevabı vermediği etkinlik sayısı (çocuk bazında).
+  int _pendingEventRsvpCount() {
+    if (_events.isEmpty || _myChildren.isEmpty) {
+      return 0;
+    }
+    final answered = <String>{
+      for (final response in _myEventResponses)
+        '${response.eventId}_${response.studentId}',
+    };
+    var pending = 0;
+    for (final event in _events) {
+      final needsAnswer = _myChildren.any(
+        (child) => !answered.contains('${event.id}_${child.id}'),
+      );
+      if (needsAnswer) {
+        pending++;
+      }
+    }
+    return pending;
+  }
+
   Widget _buildStudentStatTilesRow(BuildContext context) {
     final performanceCount = _performanceRecords.length;
     final visibleAnnouncements = _visibleAnnouncements(_announcements).length;
@@ -266,6 +291,7 @@ extension _DashboardBodies on _DashboardScreenState {
               value: '$visibleAnnouncements',
               label: 'Duyuru',
               accent: AppColors.primary,
+              note: _newAnnouncementNote(),
               onTap: () => _openAnnouncementsScreen(context),
             ),
           ),
@@ -316,6 +342,7 @@ extension _DashboardBodies on _DashboardScreenState {
   Widget _buildParentStatTilesRow(BuildContext context) {
     final childCount = _myChildren.length;
     final visibleAnnouncements = _visibleAnnouncements(_announcements).length;
+    final pendingRsvp = _pendingEventRsvpCount();
 
     return IntrinsicHeight(
       child: Row(
@@ -337,6 +364,7 @@ extension _DashboardBodies on _DashboardScreenState {
               value: '${_events.length}',
               label: 'Etkinlik',
               accent: Colors.orange,
+              note: pendingRsvp > 0 ? '$pendingRsvp bekliyor' : null,
               onTap: () => _openEventsScreen(context),
             ),
           ),
@@ -347,6 +375,7 @@ extension _DashboardBodies on _DashboardScreenState {
               value: '$visibleAnnouncements',
               label: 'Duyuru',
               accent: AppColors.primary,
+              note: _newAnnouncementNote(),
               onTap: () => _openAnnouncementsScreen(context),
             ),
           ),

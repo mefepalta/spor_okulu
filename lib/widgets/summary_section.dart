@@ -198,6 +198,10 @@ class StatTile extends StatelessWidget {
   final Color accent;
   final VoidCallback? onTap;
 
+  /// Etikete ek küçük bir dikkat rozeti (ör. "1 yeni"). Yalnızca gerçekten
+  /// vurgulanacak bir şey varken verilir; boşsa gösterilmez.
+  final String? note;
+
   const StatTile({
     super.key,
     required this.icon,
@@ -205,6 +209,7 @@ class StatTile extends StatelessWidget {
     required this.label,
     required this.accent,
     this.onTap,
+    this.note,
   });
 
   @override
@@ -244,6 +249,29 @@ class StatTile extends StatelessWidget {
                       color: Theme.of(context).textTheme.bodySmall?.color,
                     ),
                   ),
+                  if (note != null) ...[
+                    const SizedBox(height: 6),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 3,
+                      ),
+                      decoration: BoxDecoration(
+                        color: accent.withValues(alpha: 0.15),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        note!,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w600,
+                          color: accent,
+                        ),
+                      ),
+                    ),
+                  ],
                 ],
               ),
             ),
