@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -60,13 +61,26 @@ class _LoginScreenState extends State<LoginScreen> {
         // Yenileme başarısız oldu; mevcut kullanıcı bilgisiyle devam et.
       }
       final refreshedUser = _authService.currentUser;
-      final userRole = await _userRoleService.getCurrentUserRole();
 
       if (refreshedUser == null) {
         throw FirebaseAuthException(
           code: 'user-not-found',
           message: 'Kullanıcı bulunamadı.',
         );
+      }
+
+      final account = await _userRoleService.getCurrentUserAccount();
+      final userRole = account?.role ?? 'viewer';
+
+      // Reddedilen başvuru: hesabı (belge + Auth) sil ve çık. E-posta doğrulama
+      // kontrolünden önce yapılır ki reddedilen kullanıcı her hâlükârda temizlensin.
+      if (account != null && account.requestStatus == 'rejected') {
+        if (!mounted) {
+          return;
+        }
+        await _showRejectedDialog();
+        await _deleteOwnAccount(refreshedUser);
+        return;
       }
 
       if (!refreshedUser.emailVerified && userRole == 'viewer') {
@@ -153,6 +167,46 @@ class _LoginScreenState extends State<LoginScreen> {
         );
       },
     );
+  }
+
+  Future<void> _showRejectedDialog() async {
+    await showDialog<void>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Başvurun reddedildi'),
+          content: const Text(
+            'Rol başvurun yönetici tarafından reddedildi. Hesabın kapatılıyor.',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Tamam'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  /// Reddedilen kullanıcının kendi hesabını tamamen siler: önce Firestore
+  /// belgesi (giriş yapılmışken kendi belgesini silebilir), sonra Auth hesabı
+  /// (yeni giriş olduğundan recent-login gerekmez). Silme başarısızsa yine de
+  /// oturumu kapatır.
+  Future<void> _deleteOwnAccount(User user) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .delete();
+    } catch (_) {
+      // Belge silinemese de Auth silmeyi dene.
+    }
+    try {
+      await user.delete();
+    } catch (_) {
+      await _authService.signOut();
+    }
   }
 
   Future<void> _resetPassword() async {
@@ -260,12 +314,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const SizedBox(height: 8),
-                      const Text(
-                        'Admin Girişi',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.grey),
-                      ),
                       const SizedBox(height: 24),
                       TextFormField(
                         controller: _emailController,
@@ -354,12 +402,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           );
                         },
                         child: const Text('Hesabın yok mu? Kayıt ol'),
-                      ),
-                      const SizedBox(height: 16),
-                      const Text(
-                        'Firebase hesabınla giriş yap.',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.grey, fontSize: 13),
                       ),
                     ],
                   ),

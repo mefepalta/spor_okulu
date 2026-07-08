@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../theme/app_colors.dart';
 
+import '../constants/app_roles.dart';
+import '../theme/app_colors.dart';
 import '../widgets/wave_background.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -15,16 +16,23 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
 
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _passwordAgainController =
       TextEditingController();
+
+  /// Kullanıcının talep ettiği rol: veli ya da öğrenci (yalnızca biri).
+  String _requestedRole = AppRoles.parent;
 
   bool _isLoading = false;
   bool _isPasswordVisible = false;
 
   @override
   void dispose() {
+    _firstNameController.dispose();
+    _lastNameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     _passwordAgainController.dispose();
@@ -43,6 +51,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
     });
 
     try {
+      final firstName = _firstNameController.text.trim();
+      final lastName = _lastNameController.text.trim();
+      final displayName = '$firstName $lastName'.trim();
       final email = _emailController.text.trim();
       final password = _passwordController.text.trim();
 
@@ -58,9 +69,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
         );
       }
 
+      await user.updateDisplayName(displayName);
+
+      // Rol 'viewer' başlar; kullanıcı veli/öğrenci olma talebini 'pending'
+      // olarak kaydeder. Admin onaylayınca role yükselir, reddedince silinir.
       await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
         'email': email,
-        'role': 'viewer',
+        'displayName': displayName,
+        'role': AppRoles.viewer,
+        'requestedRole': _requestedRole,
+        'roleRequestStatus': 'pending',
         'createdAt': FieldValue.serverTimestamp(),
       });
 
@@ -74,7 +92,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(
-            'Kayıt oluşturuldu. Lütfen e-postana gelen doğrulama linkine tıkla.',
+            'Kayıt oluşturuldu. Lütfen e-postana gelen doğrulama linkine tıkla. '
+            'Rol başvurun yönetici onayına gönderildi.',
           ),
         ),
       );
@@ -115,6 +134,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
   }
 
+  String? _requiredValidator(String? value, String label) {
+    if (value == null || value.trim().isEmpty) {
+      return '$label boş bırakılamaz.';
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return WaveScaffold(
@@ -146,6 +172,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ),
                     const SizedBox(height: 24),
+                    TextFormField(
+                      controller: _firstNameController,
+                      textCapitalization: TextCapitalization.words,
+                      decoration: const InputDecoration(
+                        labelText: 'Ad',
+                        prefixIcon: Icon(Icons.badge_outlined),
+                        border: OutlineInputBorder(),
+                      ),
+                      validator: (value) => _requiredValidator(value, 'Ad'),
+                    ),
+                    const SizedBox(height: 12),
+                    TextFormField(
+                      controller: _lastNameController,
+                      textCapitalization: TextCapitalization.words,
+                      decoration: const InputDecoration(
+                        labelText: 'Soyad',
+                        prefixIcon: Icon(Icons.badge_outlined),
+                        border: OutlineInputBorder(),
+                      ),
+                      validator: (value) => _requiredValidator(value, 'Soyad'),
+                    ),
+                    const SizedBox(height: 12),
                     TextFormField(
                       controller: _emailController,
                       keyboardType: TextInputType.emailAddress,
@@ -220,6 +268,48 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                         return null;
                       },
+                    ),
+                    const SizedBox(height: 20),
+                    const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Hesap türün',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    SegmentedButton<String>(
+                      segments: const [
+                        ButtonSegment(
+                          value: AppRoles.parent,
+                          icon: Icon(Icons.family_restroom),
+                          label: Text('Veli'),
+                        ),
+                        ButtonSegment(
+                          value: AppRoles.student,
+                          icon: Icon(Icons.school),
+                          label: Text('Öğrenci'),
+                        ),
+                      ],
+                      selected: {_requestedRole},
+                      onSelectionChanged: _isLoading
+                          ? null
+                          : (selection) {
+                              setState(() {
+                                _requestedRole = selection.first;
+                              });
+                            },
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      'Seçimin yönetici onayına gönderilir.',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Theme.of(context).textTheme.bodySmall?.color,
+                      ),
                     ),
                     const SizedBox(height: 20),
                     ElevatedButton.icon(
