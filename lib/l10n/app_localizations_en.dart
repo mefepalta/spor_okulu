@@ -1552,4 +1552,74 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get metricBallControl => 'Ball Control';
+
+  @override
+  String get announcementDeleteTitle => 'Delete Announcement';
+
+  @override
+  String announcementDeleteConfirm(String title) {
+    return 'Are you sure you want to delete the announcement titled $title';
+  }
+
+  @override
+  String get announcementDeleted => 'Announcement deleted.';
+
+  @override
+  String get announcementsEmptyTitle => 'No announcements yet';
+
+  @override
+  String get announcementsEmptyAdmin =>
+      'Use the + button at the bottom right to add a new announcement.';
+
+  @override
+  String get announcementsEmptyViewer =>
+      'No announcements yet. They will appear here once the admin adds an announcement.';
+
+  @override
+  String get announcementDetailTitle => 'Announcement Detail';
+
+  @override
+  String get fieldTitle => 'Title';
+
+  @override
+  String get fieldTargetAudience => 'Target Audience';
+
+  @override
+  String get editAnnouncementTitle => 'Edit Announcement';
+
+  @override
+  String get backToAnnouncementList => 'Back to Announcement List';
+
+  @override
+  String get addAnnouncementTitle => 'Add New Announcement';
+
+  @override
+  String get titleHint => 'Training time change';
+
+  @override
+  String get titleEmpty => 'Title cannot be empty.';
+
+  @override
+  String get titleMinLength => 'Title must be at least 3 characters.';
+
+  @override
+  String get fieldContent => 'Content';
+
+  @override
+  String get contentHint => 'Write the announcement content...';
+
+  @override
+  String get contentEmpty => 'Content cannot be empty.';
+
+  @override
+  String get contentMinLength => 'Content must be at least 10 characters.';
+
+  @override
+  String get audienceRequired => 'You must select a target audience.';
+
+  @override
+  String get saveAnnouncement => 'Save Announcement';
+
+  @override
+  String get audienceEveryone => 'Everyone';
 }

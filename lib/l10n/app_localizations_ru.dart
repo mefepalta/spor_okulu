@@ -1560,4 +1560,76 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get metricBallControl => 'Владение мячом';
+
+  @override
+  String get announcementDeleteTitle => 'Удалить объявление';
+
+  @override
+  String announcementDeleteConfirm(String title) {
+    return 'Вы уверены, что хотите удалить объявление с заголовком $title';
+  }
+
+  @override
+  String get announcementDeleted => 'Объявление удалено.';
+
+  @override
+  String get announcementsEmptyTitle => 'Объявлений пока нет';
+
+  @override
+  String get announcementsEmptyAdmin =>
+      'Нажмите кнопку + внизу справа, чтобы добавить новое объявление.';
+
+  @override
+  String get announcementsEmptyViewer =>
+      'Объявлений пока нет. Они появятся здесь, когда администратор добавит объявление.';
+
+  @override
+  String get announcementDetailTitle => 'Детали объявления';
+
+  @override
+  String get fieldTitle => 'Заголовок';
+
+  @override
+  String get fieldTargetAudience => 'Целевая аудитория';
+
+  @override
+  String get editAnnouncementTitle => 'Изменить объявление';
+
+  @override
+  String get backToAnnouncementList => 'Назад к списку объявлений';
+
+  @override
+  String get addAnnouncementTitle => 'Добавить новое объявление';
+
+  @override
+  String get titleHint => 'Изменение времени тренировки';
+
+  @override
+  String get titleEmpty => 'Заголовок не может быть пустым.';
+
+  @override
+  String get titleMinLength =>
+      'Заголовок должен содержать не менее 3 символов.';
+
+  @override
+  String get fieldContent => 'Содержание';
+
+  @override
+  String get contentHint => 'Напишите содержание объявления...';
+
+  @override
+  String get contentEmpty => 'Содержание не может быть пустым.';
+
+  @override
+  String get contentMinLength =>
+      'Содержание должно содержать не менее 10 символов.';
+
+  @override
+  String get audienceRequired => 'Необходимо выбрать целевую аудиторию.';
+
+  @override
+  String get saveAnnouncement => 'Сохранить объявление';
+
+  @override
+  String get audienceEveryone => 'Все';
 }

@@ -669,5 +669,31 @@
   "metricSpeed": "Sürat",
   "metricEndurance": "Dayanıklılık",
   "metricFlexibility": "Esneklik",
-  "metricBallControl": "Top Hakimiyeti"
+  "metricBallControl": "Top Hakimiyeti",
+
+  "announcementDeleteTitle": "Duyuruyu Sil",
+  "announcementDeleteConfirm": "{title} başlıklı duyuruyu silmek istediğine emin misin",
+  "@announcementDeleteConfirm": {
+    "placeholders": { "title": { "type": "String" } }
+  },
+  "announcementDeleted": "Duyuru silindi.",
+  "announcementsEmptyTitle": "Henüz duyuru yok",
+  "announcementsEmptyAdmin": "Yeni duyuru eklemek için sağ alttaki + butonunu kullan.",
+  "announcementsEmptyViewer": "Henüz duyuru yok. Admin duyuru eklediğinde burada görünecek.",
+  "announcementDetailTitle": "Duyuru Detayı",
+  "fieldTitle": "Başlık",
+  "fieldTargetAudience": "Hedef Kitle",
+  "editAnnouncementTitle": "Duyuruyu Düzenle",
+  "backToAnnouncementList": "Duyuru Listesine Dön",
+  "addAnnouncementTitle": "Yeni Duyuru Ekle",
+  "titleHint": "Antrenman saati değişikliği",
+  "titleEmpty": "Başlık boş bırakılamaz.",
+  "titleMinLength": "Başlık en az 3 karakter olmalıdır.",
+  "fieldContent": "İçerik",
+  "contentHint": "Duyuru içeriğini yaz...",
+  "contentEmpty": "İçerik boş bırakılamaz.",
+  "contentMinLength": "İçerik en az 10 karakter olmalıdır.",
+  "audienceRequired": "Hedef kitle seçmelisin.",
+  "saveAnnouncement": "Duyuruyu Kaydet",
+  "audienceEveryone": "Herkes"
 }

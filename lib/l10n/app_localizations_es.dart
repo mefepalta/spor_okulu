@@ -1565,4 +1565,75 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get metricBallControl => 'Control del balón';
+
+  @override
+  String get announcementDeleteTitle => 'Eliminar anuncio';
+
+  @override
+  String announcementDeleteConfirm(String title) {
+    return '¿Seguro que quieres eliminar el anuncio titulado $title';
+  }
+
+  @override
+  String get announcementDeleted => 'Anuncio eliminado.';
+
+  @override
+  String get announcementsEmptyTitle => 'Aún no hay anuncios';
+
+  @override
+  String get announcementsEmptyAdmin =>
+      'Usa el botón + de abajo a la derecha para añadir un nuevo anuncio.';
+
+  @override
+  String get announcementsEmptyViewer =>
+      'Aún no hay anuncios. Aparecerán aquí cuando el administrador añada un anuncio.';
+
+  @override
+  String get announcementDetailTitle => 'Detalle del anuncio';
+
+  @override
+  String get fieldTitle => 'Título';
+
+  @override
+  String get fieldTargetAudience => 'Público objetivo';
+
+  @override
+  String get editAnnouncementTitle => 'Editar anuncio';
+
+  @override
+  String get backToAnnouncementList => 'Volver a la lista de anuncios';
+
+  @override
+  String get addAnnouncementTitle => 'Añadir nuevo anuncio';
+
+  @override
+  String get titleHint => 'Cambio de horario de entrenamiento';
+
+  @override
+  String get titleEmpty => 'El título no puede estar vacío.';
+
+  @override
+  String get titleMinLength => 'El título debe tener al menos 3 caracteres.';
+
+  @override
+  String get fieldContent => 'Contenido';
+
+  @override
+  String get contentHint => 'Escribe el contenido del anuncio...';
+
+  @override
+  String get contentEmpty => 'El contenido no puede estar vacío.';
+
+  @override
+  String get contentMinLength =>
+      'El contenido debe tener al menos 10 caracteres.';
+
+  @override
+  String get audienceRequired => 'Debes seleccionar un público objetivo.';
+
+  @override
+  String get saveAnnouncement => 'Guardar anuncio';
+
+  @override
+  String get audienceEveryone => 'Todos';
 }

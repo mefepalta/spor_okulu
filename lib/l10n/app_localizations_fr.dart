@@ -1572,4 +1572,75 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get metricBallControl => 'Maîtrise du ballon';
+
+  @override
+  String get announcementDeleteTitle => 'Supprimer l\'annonce';
+
+  @override
+  String announcementDeleteConfirm(String title) {
+    return 'Voulez-vous vraiment supprimer l\'annonce intitulée $title';
+  }
+
+  @override
+  String get announcementDeleted => 'Annonce supprimée.';
+
+  @override
+  String get announcementsEmptyTitle => 'Aucune annonce pour l\'instant';
+
+  @override
+  String get announcementsEmptyAdmin =>
+      'Utilisez le bouton + en bas à droite pour ajouter une nouvelle annonce.';
+
+  @override
+  String get announcementsEmptyViewer =>
+      'Aucune annonce pour l\'instant. Elles apparaîtront ici lorsque l\'administrateur en ajoutera une.';
+
+  @override
+  String get announcementDetailTitle => 'Détail de l\'annonce';
+
+  @override
+  String get fieldTitle => 'Titre';
+
+  @override
+  String get fieldTargetAudience => 'Public cible';
+
+  @override
+  String get editAnnouncementTitle => 'Modifier l\'annonce';
+
+  @override
+  String get backToAnnouncementList => 'Retour à la liste des annonces';
+
+  @override
+  String get addAnnouncementTitle => 'Ajouter une nouvelle annonce';
+
+  @override
+  String get titleHint => 'Changement d\'horaire d\'entraînement';
+
+  @override
+  String get titleEmpty => 'Le titre ne peut pas être vide.';
+
+  @override
+  String get titleMinLength => 'Le titre doit comporter au moins 3 caractères.';
+
+  @override
+  String get fieldContent => 'Contenu';
+
+  @override
+  String get contentHint => 'Rédigez le contenu de l\'annonce...';
+
+  @override
+  String get contentEmpty => 'Le contenu ne peut pas être vide.';
+
+  @override
+  String get contentMinLength =>
+      'Le contenu doit comporter au moins 10 caractères.';
+
+  @override
+  String get audienceRequired => 'Vous devez sélectionner un public cible.';
+
+  @override
+  String get saveAnnouncement => 'Enregistrer l\'annonce';
+
+  @override
+  String get audienceEveryone => 'Tout le monde';
 }

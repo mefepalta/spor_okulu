@@ -4,7 +4,9 @@ import '../theme/app_colors.dart';
 import '../widgets/wave_background.dart';
 
 import '../constants/app_roles.dart';
+import '../l10n/app_localizations.dart';
 import '../models/app_models.dart';
+import '../utils/audience_l10n.dart';
 import '../utils/validators.dart';
 import '../widgets/empty_state.dart';
 
@@ -70,28 +72,27 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
   }
 
   Future<void> _confirmDeleteAnnouncement(int index) async {
+    final l10n = AppLocalizations.of(context);
     final announcement = widget.announcements[index];
 
     final shouldDelete = await showDialog<bool>(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Duyuruyu Sil'),
-          content: Text(
-            '${announcement.title} başlıklı duyuruyu silmek istediğine emin misin',
-          ),
+          title: Text(l10n.announcementDeleteTitle),
+          content: Text(l10n.announcementDeleteConfirm(announcement.title)),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.pop(context, false);
               },
-              child: const Text('Vazgeç'),
+              child: Text(l10n.commonCancel),
             ),
             TextButton(
               onPressed: () {
                 Navigator.pop(context, true);
               },
-              child: const Text('Sil', style: TextStyle(color: Colors.red)),
+              child: Text(l10n.commonDelete, style: const TextStyle(color: Colors.red)),
             ),
           ],
         );
@@ -112,20 +113,21 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
 
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(const SnackBar(content: Text('Duyuru silindi.')));
+    ).showSnackBar(SnackBar(content: Text(l10n.announcementDeleted)));
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return WaveScaffold(
-      appBar: AppBar(title: const Text('Duyurular')),
+      appBar: AppBar(title: Text(l10n.navAnnouncements)),
       body: widget.announcements.isEmpty
           ? EmptyState(
               icon: Icons.campaign,
-              title: 'Henüz duyuru yok',
+              title: l10n.announcementsEmptyTitle,
               message: widget.isAdmin
-                  ? 'Yeni duyuru eklemek için sağ alttaki + butonunu kullan.'
-                  : 'Henüz duyuru yok. Admin duyuru eklediçinde burada görünecek.',
+                  ? l10n.announcementsEmptyAdmin
+                  : l10n.announcementsEmptyViewer,
             )
           : ListView.builder(
               padding: const EdgeInsets.all(16),
@@ -146,7 +148,7 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
                     ),
                     title: Text(announcement.title),
                     subtitle: Text(
-                      '${announcement.targetAudience} • ${announcement.dateText}\n${announcement.content}',
+                      '${localizedAudience(l10n, announcement.targetAudience)} • ${announcement.dateText}\n${announcement.content}',
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -220,11 +222,12 @@ class _AnnouncementDetailScreenState extends State<AnnouncementDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final announcement = _announcement;
 
     return WaveScaffold(
       appBar: AppBar(
-        title: const Text('Duyuru Detayı'),
+        title: Text(l10n.announcementDetailTitle),
         actions: widget.isAdmin
             ? [
                 IconButton(
@@ -258,7 +261,7 @@ class _AnnouncementDetailScreenState extends State<AnnouncementDetailScreen> {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Text(announcement.targetAudience),
+                  Text(localizedAudience(l10n, announcement.targetAudience)),
                   const SizedBox(height: 8),
                   Text(announcement.dateText),
                 ],
@@ -269,21 +272,21 @@ class _AnnouncementDetailScreenState extends State<AnnouncementDetailScreen> {
           Card(
             child: ListTile(
               leading: const Icon(Icons.title),
-              title: const Text('Başlık'),
+              title: Text(l10n.fieldTitle),
               subtitle: Text(announcement.title),
             ),
           ),
           Card(
             child: ListTile(
               leading: const Icon(Icons.group),
-              title: const Text('Hedef Kitle'),
-              subtitle: Text(announcement.targetAudience),
+              title: Text(l10n.fieldTargetAudience),
+              subtitle: Text(localizedAudience(l10n, announcement.targetAudience)),
             ),
           ),
           Card(
             child: ListTile(
               leading: const Icon(Icons.event),
-              title: const Text('Tarih'),
+              title: Text(l10n.fieldDate),
               subtitle: Text(announcement.dateText),
             ),
           ),
@@ -301,7 +304,7 @@ class _AnnouncementDetailScreenState extends State<AnnouncementDetailScreen> {
             ElevatedButton.icon(
               onPressed: _openEditAnnouncementScreen,
               icon: const Icon(Icons.edit),
-              label: const Text('Duyuruyu Düzenle'),
+              label: Text(l10n.editAnnouncementTitle),
             ),
           const SizedBox(height: 8),
           OutlinedButton.icon(
@@ -309,7 +312,7 @@ class _AnnouncementDetailScreenState extends State<AnnouncementDetailScreen> {
               Navigator.pop(context);
             },
             icon: const Icon(Icons.arrow_back),
-            label: const Text('Duyuru Listesine Dön'),
+            label: Text(l10n.backToAnnouncementList),
           ),
         ],
       ),
@@ -390,11 +393,14 @@ class _AddAnnouncementScreenState extends State<AddAnnouncementScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final isEditing = widget.announcement != null;
 
     return WaveScaffold(
       appBar: AppBar(
-        title: Text(isEditing ? 'Duyuruyu Düzenle' : 'Yeni Duyuru Ekle'),
+        title: Text(
+          isEditing ? l10n.editAnnouncementTitle : l10n.addAnnouncementTitle,
+        ),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -405,19 +411,19 @@ class _AddAnnouncementScreenState extends State<AddAnnouncementScreen> {
             children: [
               TextFormField(
                 controller: _titleController,
-                decoration: const InputDecoration(
-                  labelText: 'Başlık',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.title),
-                  hintText: 'Antrenman saati değişikliği',
+                decoration: InputDecoration(
+                  labelText: l10n.fieldTitle,
+                  border: const OutlineInputBorder(),
+                  prefixIcon: const Icon(Icons.title),
+                  hintText: l10n.titleHint,
                 ),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return 'Başlık boş bırakılamaz.';
+                    return l10n.titleEmpty;
                   }
 
                   if (value.trim().length < 3) {
-                    return 'Başlık en az 3 karakter olmalıdır.';
+                    return l10n.titleMinLength;
                   }
 
                   return null;
@@ -427,19 +433,19 @@ class _AddAnnouncementScreenState extends State<AddAnnouncementScreen> {
               TextFormField(
                 controller: _contentController,
                 maxLines: 5,
-                decoration: const InputDecoration(
-                  labelText: 'İçerik',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.notes),
-                  hintText: 'Duyuru içeriğini yaz...',
+                decoration: InputDecoration(
+                  labelText: l10n.fieldContent,
+                  border: const OutlineInputBorder(),
+                  prefixIcon: const Icon(Icons.notes),
+                  hintText: l10n.contentHint,
                 ),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return 'İçerik boş bırakılamaz.';
+                    return l10n.contentEmpty;
                   }
 
                   if (value.trim().length < 10) {
-                    return 'İçerik en az 10 karakter olmalıdır.';
+                    return l10n.contentMinLength;
                   }
 
                   return null;
@@ -448,15 +454,15 @@ class _AddAnnouncementScreenState extends State<AddAnnouncementScreen> {
               const SizedBox(height: 12),
               DropdownButtonFormField<String>(
                 initialValue: _selectedTargetAudience,
-                decoration: const InputDecoration(
-                  labelText: 'Hedef Kitle',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.group),
+                decoration: InputDecoration(
+                  labelText: l10n.fieldTargetAudience,
+                  border: const OutlineInputBorder(),
+                  prefixIcon: const Icon(Icons.group),
                 ),
                 items: _targetAudiences.map((targetAudience) {
                   return DropdownMenuItem<String>(
                     value: targetAudience,
-                    child: Text(targetAudience),
+                    child: Text(localizedAudience(l10n, targetAudience)),
                   );
                 }).toList(),
                 onChanged: (value) {
@@ -466,7 +472,7 @@ class _AddAnnouncementScreenState extends State<AddAnnouncementScreen> {
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Hedef kitle seçmelisin.';
+                    return l10n.audienceRequired;
                   }
 
                   return null;
@@ -476,20 +482,20 @@ class _AddAnnouncementScreenState extends State<AddAnnouncementScreen> {
               TextFormField(
                 controller: _dateController,
                 keyboardType: TextInputType.datetime,
-                decoration: const InputDecoration(
-                  labelText: 'Tarih',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.event),
+                decoration: InputDecoration(
+                  labelText: l10n.fieldDate,
+                  border: const OutlineInputBorder(),
+                  prefixIcon: const Icon(Icons.event),
                   hintText: '24.06.2026',
                 ),
-                validator: validateDateText,
+                validator: dateValidator(l10n),
               ),
               const SizedBox(height: 20),
               ElevatedButton.icon(
                 onPressed: _saveAnnouncement,
                 icon: const Icon(Icons.save),
                 label: Text(
-                  isEditing ? 'Değişiklikleri Kaydet' : 'Duyuruyu Kaydet',
+                  isEditing ? l10n.saveChanges : l10n.saveAnnouncement,
                 ),
               ),
             ],

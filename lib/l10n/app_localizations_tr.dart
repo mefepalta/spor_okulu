@@ -1548,4 +1548,74 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get metricBallControl => 'Top Hakimiyeti';
+
+  @override
+  String get announcementDeleteTitle => 'Duyuruyu Sil';
+
+  @override
+  String announcementDeleteConfirm(String title) {
+    return '$title başlıklı duyuruyu silmek istediğine emin misin';
+  }
+
+  @override
+  String get announcementDeleted => 'Duyuru silindi.';
+
+  @override
+  String get announcementsEmptyTitle => 'Henüz duyuru yok';
+
+  @override
+  String get announcementsEmptyAdmin =>
+      'Yeni duyuru eklemek için sağ alttaki + butonunu kullan.';
+
+  @override
+  String get announcementsEmptyViewer =>
+      'Henüz duyuru yok. Admin duyuru eklediğinde burada görünecek.';
+
+  @override
+  String get announcementDetailTitle => 'Duyuru Detayı';
+
+  @override
+  String get fieldTitle => 'Başlık';
+
+  @override
+  String get fieldTargetAudience => 'Hedef Kitle';
+
+  @override
+  String get editAnnouncementTitle => 'Duyuruyu Düzenle';
+
+  @override
+  String get backToAnnouncementList => 'Duyuru Listesine Dön';
+
+  @override
+  String get addAnnouncementTitle => 'Yeni Duyuru Ekle';
+
+  @override
+  String get titleHint => 'Antrenman saati değişikliği';
+
+  @override
+  String get titleEmpty => 'Başlık boş bırakılamaz.';
+
+  @override
+  String get titleMinLength => 'Başlık en az 3 karakter olmalıdır.';
+
+  @override
+  String get fieldContent => 'İçerik';
+
+  @override
+  String get contentHint => 'Duyuru içeriğini yaz...';
+
+  @override
+  String get contentEmpty => 'İçerik boş bırakılamaz.';
+
+  @override
+  String get contentMinLength => 'İçerik en az 10 karakter olmalıdır.';
+
+  @override
+  String get audienceRequired => 'Hedef kitle seçmelisin.';
+
+  @override
+  String get saveAnnouncement => 'Duyuruyu Kaydet';
+
+  @override
+  String get audienceEveryone => 'Herkes';
 }

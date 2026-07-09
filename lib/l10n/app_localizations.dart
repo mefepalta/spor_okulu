@@ -2833,6 +2833,138 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Top Hakimiyeti'**
   String get metricBallControl;
+
+  /// No description provided for @announcementDeleteTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Duyuruyu Sil'**
+  String get announcementDeleteTitle;
+
+  /// No description provided for @announcementDeleteConfirm.
+  ///
+  /// In tr, this message translates to:
+  /// **'{title} başlıklı duyuruyu silmek istediğine emin misin'**
+  String announcementDeleteConfirm(String title);
+
+  /// No description provided for @announcementDeleted.
+  ///
+  /// In tr, this message translates to:
+  /// **'Duyuru silindi.'**
+  String get announcementDeleted;
+
+  /// No description provided for @announcementsEmptyTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz duyuru yok'**
+  String get announcementsEmptyTitle;
+
+  /// No description provided for @announcementsEmptyAdmin.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni duyuru eklemek için sağ alttaki + butonunu kullan.'**
+  String get announcementsEmptyAdmin;
+
+  /// No description provided for @announcementsEmptyViewer.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz duyuru yok. Admin duyuru eklediğinde burada görünecek.'**
+  String get announcementsEmptyViewer;
+
+  /// No description provided for @announcementDetailTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Duyuru Detayı'**
+  String get announcementDetailTitle;
+
+  /// No description provided for @fieldTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Başlık'**
+  String get fieldTitle;
+
+  /// No description provided for @fieldTargetAudience.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hedef Kitle'**
+  String get fieldTargetAudience;
+
+  /// No description provided for @editAnnouncementTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Duyuruyu Düzenle'**
+  String get editAnnouncementTitle;
+
+  /// No description provided for @backToAnnouncementList.
+  ///
+  /// In tr, this message translates to:
+  /// **'Duyuru Listesine Dön'**
+  String get backToAnnouncementList;
+
+  /// No description provided for @addAnnouncementTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni Duyuru Ekle'**
+  String get addAnnouncementTitle;
+
+  /// No description provided for @titleHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Antrenman saati değişikliği'**
+  String get titleHint;
+
+  /// No description provided for @titleEmpty.
+  ///
+  /// In tr, this message translates to:
+  /// **'Başlık boş bırakılamaz.'**
+  String get titleEmpty;
+
+  /// No description provided for @titleMinLength.
+  ///
+  /// In tr, this message translates to:
+  /// **'Başlık en az 3 karakter olmalıdır.'**
+  String get titleMinLength;
+
+  /// No description provided for @fieldContent.
+  ///
+  /// In tr, this message translates to:
+  /// **'İçerik'**
+  String get fieldContent;
+
+  /// No description provided for @contentHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Duyuru içeriğini yaz...'**
+  String get contentHint;
+
+  /// No description provided for @contentEmpty.
+  ///
+  /// In tr, this message translates to:
+  /// **'İçerik boş bırakılamaz.'**
+  String get contentEmpty;
+
+  /// No description provided for @contentMinLength.
+  ///
+  /// In tr, this message translates to:
+  /// **'İçerik en az 10 karakter olmalıdır.'**
+  String get contentMinLength;
+
+  /// No description provided for @audienceRequired.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hedef kitle seçmelisin.'**
+  String get audienceRequired;
+
+  /// No description provided for @saveAnnouncement.
+  ///
+  /// In tr, this message translates to:
+  /// **'Duyuruyu Kaydet'**
+  String get saveAnnouncement;
+
+  /// No description provided for @audienceEveryone.
+  ///
+  /// In tr, this message translates to:
+  /// **'Herkes'**
+  String get audienceEveryone;
 }
 
 class _AppLocalizationsDelegate
