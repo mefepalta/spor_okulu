@@ -832,5 +832,9 @@
   "sportekaiNotReadyBody": "Yapay zekâ asistanını kullanmak için Cloudflare Worker adresi (SPORTEKAI_ENDPOINT) tanımlanmalı. Kurulum: cloudflare/README.md",
   "sportekaiGreeting": "Merhaba! Ben SporTekAi ✨",
   "sportekaiHint": "SporTekAi'ye sor...",
-  "aiResponseLanguage": "Türkçe"
+  "aiResponseLanguage": "Türkçe",
+
+  "videoOpenError": "Video açılamadı.",
+  "watchIntroVideo": "Tanıtım videosunu izle",
+  "youtubeHowToPlay": "nasıl oynanır"
 }

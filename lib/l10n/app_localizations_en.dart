@@ -1932,4 +1932,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get aiResponseLanguage => 'English';
+
+  @override
+  String get videoOpenError => 'Couldn\'t open the video.';
+
+  @override
+  String get watchIntroVideo => 'Watch the intro video';
+
+  @override
+  String get youtubeHowToPlay => 'how to play';
 }

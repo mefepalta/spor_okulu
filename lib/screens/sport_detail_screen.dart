@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../data/sports_data.dart';
+import '../l10n/app_localizations.dart';
 import '../widgets/wave_background.dart';
 
 /// Bir sporun tanıtım videosu ve açıklamalarını gösteren ekran.
@@ -14,10 +15,11 @@ class SportDetailScreen extends StatelessWidget {
   const SportDetailScreen({super.key, required this.sport});
 
   Future<void> _openVideo(BuildContext context) async {
+    final l10n = AppLocalizations.of(context);
     final url = sport.videoUrl.isNotEmpty
         ? sport.videoUrl
         : 'https://www.youtube.com/results?search_query='
-              '${Uri.encodeComponent('${sport.name} nasıl oynanır')}';
+              '${Uri.encodeComponent('${sport.name} ${l10n.youtubeHowToPlay}')}';
 
     try {
       final launched = await launchUrl(
@@ -36,7 +38,7 @@ class SportDetailScreen extends StatelessWidget {
 
   void _showError(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Video açılamadı.')),
+      SnackBar(content: Text(AppLocalizations.of(context).videoOpenError)),
     );
   }
 
@@ -160,9 +162,9 @@ class _VideoCover extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      const Text(
-                        'Tanıtım videosunu izle',
-                        style: TextStyle(
+                      Text(
+                        AppLocalizations.of(context).watchIntroVideo,
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 15,
                           fontWeight: FontWeight.w500,

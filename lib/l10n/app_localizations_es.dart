@@ -1950,4 +1950,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get aiResponseLanguage => 'español';
+
+  @override
+  String get videoOpenError => 'No se pudo abrir el video.';
+
+  @override
+  String get watchIntroVideo => 'Ver el video de presentación';
+
+  @override
+  String get youtubeHowToPlay => 'cómo se juega';
 }

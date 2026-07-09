@@ -1957,4 +1957,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get aiResponseLanguage => 'français';
+
+  @override
+  String get videoOpenError => 'Impossible d\'ouvrir la vidéo.';
+
+  @override
+  String get watchIntroVideo => 'Regarder la vidéo de présentation';
+
+  @override
+  String get youtubeHowToPlay => 'comment jouer';
 }

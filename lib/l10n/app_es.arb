@@ -608,5 +608,9 @@
   "sportekaiNotReadyBody": "Para usar el asistente de IA, debe definirse la dirección del Cloudflare Worker (SPORTEKAI_ENDPOINT). Configuración: cloudflare/README.md",
   "sportekaiGreeting": "¡Hola! Soy SporTekAi ✨",
   "sportekaiHint": "Pregunta a SporTekAi...",
-  "aiResponseLanguage": "español"
+  "aiResponseLanguage": "español",
+
+  "videoOpenError": "No se pudo abrir el video.",
+  "watchIntroVideo": "Ver el video de presentación",
+  "youtubeHowToPlay": "cómo se juega"
 }

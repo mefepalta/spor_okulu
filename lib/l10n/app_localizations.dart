@@ -3518,6 +3518,24 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Türkçe'**
   String get aiResponseLanguage;
+
+  /// No description provided for @videoOpenError.
+  ///
+  /// In tr, this message translates to:
+  /// **'Video açılamadı.'**
+  String get videoOpenError;
+
+  /// No description provided for @watchIntroVideo.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tanıtım videosunu izle'**
+  String get watchIntroVideo;
+
+  /// No description provided for @youtubeHowToPlay.
+  ///
+  /// In tr, this message translates to:
+  /// **'nasıl oynanır'**
+  String get youtubeHowToPlay;
 }
 
 class _AppLocalizationsDelegate

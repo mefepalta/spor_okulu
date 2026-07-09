@@ -1943,4 +1943,13 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get aiResponseLanguage => 'русском языке';
+
+  @override
+  String get videoOpenError => 'Не удалось открыть видео.';
+
+  @override
+  String get watchIntroVideo => 'Посмотреть вводное видео';
+
+  @override
+  String get youtubeHowToPlay => 'как играть';
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../data/sports_data.dart';
+import '../l10n/app_localizations.dart';
 import '../widgets/wave_background.dart';
 import 'sport_detail_screen.dart';
 
@@ -21,7 +22,7 @@ class SportsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WaveScaffold(
-      appBar: AppBar(title: const Text('Sporlar')),
+      appBar: AppBar(title: Text(AppLocalizations.of(context).navSports)),
       body: ListView.builder(
         padding: const EdgeInsets.all(16),
         itemCount: sportsCatalog.length,

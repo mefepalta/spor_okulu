@@ -1928,4 +1928,13 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get aiResponseLanguage => 'Türkçe';
+
+  @override
+  String get videoOpenError => 'Video açılamadı.';
+
+  @override
+  String get watchIntroVideo => 'Tanıtım videosunu izle';
+
+  @override
+  String get youtubeHowToPlay => 'nasıl oynanır';
 }
