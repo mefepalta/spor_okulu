@@ -468,5 +468,25 @@
   "dateWithValue": "Fecha: {date}",
   "fieldReason": "Motivo",
   "reasonHint": "Ej.: Informe médico, visita familiar...",
-  "sendAction": "Enviar"
+  "sendAction": "Enviar",
+
+  "performanceAnalysisTitle": "Análisis de rendimiento",
+  "recordAddError": "No se pudo añadir el registro: {error}",
+  "recordDeleteError": "No se pudo eliminar el registro: {error}",
+  "recordDeleteTitle": "Eliminar registro",
+  "performanceDeleteConfirm": "¿Seguro que quieres eliminar el registro de rendimiento con fecha {date}?",
+  "noStudentFound": "No se encontró ningún estudiante",
+  "performanceEmptyManage": "Para introducir rendimiento, primero debe añadirse un estudiante.",
+  "performanceEmptyParent": "Aún no se ha asignado ningún estudiante a tu cuenta. Ponte en contacto con la dirección de la escuela deportiva.",
+  "addPerformance": "Añadir rendimiento",
+  "noPerformanceForStudent": "Aún no hay registros de rendimiento para este estudiante.",
+  "comparisonByDate": "Comparación por fecha",
+  "recordsTitle": "Registros",
+  "selectAction": "Elegir",
+  "scoresLabel": "Puntuaciones (0-100)",
+  "metricJump": "Salto",
+  "metricSpeed": "Velocidad",
+  "metricEndurance": "Resistencia",
+  "metricFlexibility": "Flexibilidad",
+  "metricBallControl": "Control del balón"
 }

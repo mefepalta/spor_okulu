@@ -2719,6 +2719,120 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Gönder'**
   String get sendAction;
+
+  /// No description provided for @performanceAnalysisTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Performans Analizi'**
+  String get performanceAnalysisTitle;
+
+  /// No description provided for @recordAddError.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kayıt eklenemedi: {error}'**
+  String recordAddError(Object error);
+
+  /// No description provided for @recordDeleteError.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kayıt silinemedi: {error}'**
+  String recordDeleteError(Object error);
+
+  /// No description provided for @recordDeleteTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaydı Sil'**
+  String get recordDeleteTitle;
+
+  /// No description provided for @performanceDeleteConfirm.
+  ///
+  /// In tr, this message translates to:
+  /// **'{date} tarihli performans kaydını silmek istediğine emin misin?'**
+  String performanceDeleteConfirm(String date);
+
+  /// No description provided for @noStudentFound.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğrenci bulunamadı'**
+  String get noStudentFound;
+
+  /// No description provided for @performanceEmptyManage.
+  ///
+  /// In tr, this message translates to:
+  /// **'Performans girmek için önce öğrenci eklenmeli.'**
+  String get performanceEmptyManage;
+
+  /// No description provided for @performanceEmptyParent.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hesabına henüz öğrenci atanmamış. Lütfen spor okulu yönetimiyle iletişime geç.'**
+  String get performanceEmptyParent;
+
+  /// No description provided for @addPerformance.
+  ///
+  /// In tr, this message translates to:
+  /// **'Performans Ekle'**
+  String get addPerformance;
+
+  /// No description provided for @noPerformanceForStudent.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu öğrenci için henüz performans kaydı yok.'**
+  String get noPerformanceForStudent;
+
+  /// No description provided for @comparisonByDate.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tarihlere Göre Karşılaştırma'**
+  String get comparisonByDate;
+
+  /// No description provided for @recordsTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kayıtlar'**
+  String get recordsTitle;
+
+  /// No description provided for @selectAction.
+  ///
+  /// In tr, this message translates to:
+  /// **'Seç'**
+  String get selectAction;
+
+  /// No description provided for @scoresLabel.
+  ///
+  /// In tr, this message translates to:
+  /// **'Puanlar (0-100)'**
+  String get scoresLabel;
+
+  /// No description provided for @metricJump.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sıçrama'**
+  String get metricJump;
+
+  /// No description provided for @metricSpeed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sürat'**
+  String get metricSpeed;
+
+  /// No description provided for @metricEndurance.
+  ///
+  /// In tr, this message translates to:
+  /// **'Dayanıklılık'**
+  String get metricEndurance;
+
+  /// No description provided for @metricFlexibility.
+  ///
+  /// In tr, this message translates to:
+  /// **'Esneklik'**
+  String get metricFlexibility;
+
+  /// No description provided for @metricBallControl.
+  ///
+  /// In tr, this message translates to:
+  /// **'Top Hakimiyeti'**
+  String get metricBallControl;
 }
 
 class _AppLocalizationsDelegate

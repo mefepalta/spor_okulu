@@ -468,5 +468,25 @@
   "dateWithValue": "Date : {date}",
   "fieldReason": "Motif",
   "reasonHint": "Ex. : certificat médical, visite familiale...",
-  "sendAction": "Envoyer"
+  "sendAction": "Envoyer",
+
+  "performanceAnalysisTitle": "Analyse des performances",
+  "recordAddError": "Impossible d'ajouter l'enregistrement : {error}",
+  "recordDeleteError": "Impossible de supprimer l'enregistrement : {error}",
+  "recordDeleteTitle": "Supprimer l'enregistrement",
+  "performanceDeleteConfirm": "Voulez-vous vraiment supprimer l'enregistrement de performance daté du {date} ?",
+  "noStudentFound": "Aucun élève trouvé",
+  "performanceEmptyManage": "Pour saisir des performances, un élève doit d'abord être ajouté.",
+  "performanceEmptyParent": "Aucun élève n'a encore été affecté à votre compte. Veuillez contacter la direction de l'école de sport.",
+  "addPerformance": "Ajouter une performance",
+  "noPerformanceForStudent": "Aucun enregistrement de performance pour cet élève pour l'instant.",
+  "comparisonByDate": "Comparaison par date",
+  "recordsTitle": "Enregistrements",
+  "selectAction": "Choisir",
+  "scoresLabel": "Scores (0-100)",
+  "metricJump": "Saut",
+  "metricSpeed": "Vitesse",
+  "metricEndurance": "Endurance",
+  "metricFlexibility": "Souplesse",
+  "metricBallControl": "Maîtrise du ballon"
 }

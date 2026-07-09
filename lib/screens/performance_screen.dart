@@ -4,7 +4,9 @@ import '../theme/app_colors.dart';
 import '../widgets/wave_background.dart';
 
 import '../constants/app_roles.dart';
+import '../l10n/app_localizations.dart';
 import '../models/app_models.dart';
+import '../utils/metric_l10n.dart';
 import '../widgets/empty_state.dart';
 import '../widgets/performance_comparison_chart.dart';
 
@@ -79,9 +81,11 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
       if (!mounted) {
         return;
       }
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Kayıt eklenemedi: $error')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(AppLocalizations.of(context).recordAddError(error)),
+        ),
+      );
       return;
     }
 
@@ -95,23 +99,21 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
   }
 
   Future<void> _confirmDeleteRecord(PerformanceRecord record) async {
+    final l10n = AppLocalizations.of(context);
     final shouldDelete = await showDialog<bool>(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Kaydı Sil'),
-          content: Text(
-            '${record.dateText} tarihli performans kaydını silmek istediğine '
-            'emin misin?',
-          ),
+          title: Text(l10n.recordDeleteTitle),
+          content: Text(l10n.performanceDeleteConfirm(record.dateText)),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context, false),
-              child: const Text('Vazgeç'),
+              child: Text(l10n.commonCancel),
             ),
             TextButton(
               onPressed: () => Navigator.pop(context, true),
-              child: const Text('Sil', style: TextStyle(color: Colors.red)),
+              child: Text(l10n.commonDelete, style: const TextStyle(color: Colors.red)),
             ),
           ],
         );
@@ -128,9 +130,9 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
       if (!mounted) {
         return;
       }
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Kayıt silinemedi: $error')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(l10n.recordDeleteError(error))),
+      );
       return;
     }
 
@@ -143,31 +145,34 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return WaveScaffold(
       appBar: AppBar(
-        title: Text(widget.canManage ? 'Performans' : 'Performans Analizi'),
+        title: Text(
+          widget.canManage ? l10n.navPerformance : l10n.performanceAnalysisTitle,
+        ),
       ),
       body: widget.students.isEmpty
           ? EmptyState(
               icon: Icons.query_stats,
-              title: 'Öğrenci bulunamadı',
+              title: l10n.noStudentFound,
               message: widget.canManage
-                  ? 'Performans girmek için önce öğrenci eklenmeli.'
-                  : 'Hesabına henüz öğrenci atanmamış. Lütfen spor okulu '
-                        'yönetimiyle iletişime geç.',
+                  ? l10n.performanceEmptyManage
+                  : l10n.performanceEmptyParent,
             )
           : _buildContent(),
       floatingActionButton: widget.canManage
           ? FloatingActionButton.extended(
               onPressed: _openAddRecordScreen,
               icon: const Icon(Icons.add),
-              label: const Text('Performans Ekle'),
+              label: Text(l10n.addPerformance),
             )
           : null,
     );
   }
 
   Widget _buildContent() {
+    final l10n = AppLocalizations.of(context);
     final records = _selectedStudentRecords;
 
     return ListView(
@@ -175,10 +180,10 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
       children: [
         DropdownButtonFormField<String>(
           initialValue: _selectedStudentId,
-          decoration: const InputDecoration(
-            labelText: 'Öğrenci',
-            border: OutlineInputBorder(),
-            prefixIcon: Icon(Icons.person),
+          decoration: InputDecoration(
+            labelText: l10n.roleStudent,
+            border: const OutlineInputBorder(),
+            prefixIcon: const Icon(Icons.person),
           ),
           items: widget.students.map((student) {
             return DropdownMenuItem<String>(
@@ -201,8 +206,8 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
                 children: [
                   Icon(Icons.insights, size: 56, color: AppColors.primary),
                   const SizedBox(height: 12),
-                  const Text(
-                    'Bu öğrenci için henüz performans kaydı yok.',
+                  Text(
+                    l10n.noPerformanceForStudent,
                     textAlign: TextAlign.center,
                   ),
                 ],
@@ -216,9 +221,12 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Tarihlere Göre Karşılaştırma',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  Text(
+                    l10n.comparisonByDate,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(height: 16),
                   PerformanceComparisonChart(records: records),
@@ -227,9 +235,9 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
             ),
           ),
           const SizedBox(height: 16),
-          const Text(
-            'Kayıtlar',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          Text(
+            l10n.recordsTitle,
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
           ...records.reversed.map(_buildRecordCard),
@@ -239,8 +247,12 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
   }
 
   Widget _buildRecordCard(PerformanceRecord record) {
+    final l10n = AppLocalizations.of(context);
     final scoreText = PerformanceMetrics.all
-        .map((metric) => '$metric: ${(record.scores[metric] ?? 0).round()}')
+        .map(
+          (metric) =>
+              '${localizedMetric(l10n, metric)}: ${(record.scores[metric] ?? 0).round()}',
+        )
         .join('  •  ');
 
     return Card(
@@ -335,17 +347,18 @@ class _AddPerformanceRecordScreenState
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return WaveScaffold(
-      appBar: AppBar(title: const Text('Performans Ekle')),
+      appBar: AppBar(title: Text(l10n.addPerformance)),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
           DropdownButtonFormField<String>(
             initialValue: _studentId,
-            decoration: const InputDecoration(
-              labelText: 'Öğrenci',
-              border: OutlineInputBorder(),
-              prefixIcon: Icon(Icons.person),
+            decoration: InputDecoration(
+              labelText: l10n.roleStudent,
+              border: const OutlineInputBorder(),
+              prefixIcon: const Icon(Icons.person),
             ),
             items: widget.students.map((student) {
               return DropdownMenuItem<String>(
@@ -363,18 +376,18 @@ class _AddPerformanceRecordScreenState
           Card(
             child: ListTile(
               leading: const Icon(Icons.calendar_today),
-              title: const Text('Tarih'),
+              title: Text(l10n.fieldDate),
               subtitle: Text(_dateText),
               trailing: TextButton(
                 onPressed: _pickDate,
-                child: const Text('Seç'),
+                child: Text(l10n.selectAction),
               ),
             ),
           ),
           const SizedBox(height: 12),
-          const Text(
-            'Puanlar (0-100)',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          Text(
+            l10n.scoresLabel,
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
           ...PerformanceMetrics.all.map(_buildScoreSlider),
@@ -382,7 +395,7 @@ class _AddPerformanceRecordScreenState
           ElevatedButton.icon(
             onPressed: _save,
             icon: const Icon(Icons.save),
-            label: const Text('Kaydet'),
+            label: Text(l10n.commonSave),
           ),
         ],
       ),
@@ -402,7 +415,7 @@ class _AddPerformanceRecordScreenState
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  metric,
+                  localizedMetric(AppLocalizations.of(context), metric),
                   style: const TextStyle(fontWeight: FontWeight.w600),
                 ),
                 Text(

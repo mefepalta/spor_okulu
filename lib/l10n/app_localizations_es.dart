@@ -1499,4 +1499,70 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get sendAction => 'Enviar';
+
+  @override
+  String get performanceAnalysisTitle => 'Análisis de rendimiento';
+
+  @override
+  String recordAddError(Object error) {
+    return 'No se pudo añadir el registro: $error';
+  }
+
+  @override
+  String recordDeleteError(Object error) {
+    return 'No se pudo eliminar el registro: $error';
+  }
+
+  @override
+  String get recordDeleteTitle => 'Eliminar registro';
+
+  @override
+  String performanceDeleteConfirm(String date) {
+    return '¿Seguro que quieres eliminar el registro de rendimiento con fecha $date?';
+  }
+
+  @override
+  String get noStudentFound => 'No se encontró ningún estudiante';
+
+  @override
+  String get performanceEmptyManage =>
+      'Para introducir rendimiento, primero debe añadirse un estudiante.';
+
+  @override
+  String get performanceEmptyParent =>
+      'Aún no se ha asignado ningún estudiante a tu cuenta. Ponte en contacto con la dirección de la escuela deportiva.';
+
+  @override
+  String get addPerformance => 'Añadir rendimiento';
+
+  @override
+  String get noPerformanceForStudent =>
+      'Aún no hay registros de rendimiento para este estudiante.';
+
+  @override
+  String get comparisonByDate => 'Comparación por fecha';
+
+  @override
+  String get recordsTitle => 'Registros';
+
+  @override
+  String get selectAction => 'Elegir';
+
+  @override
+  String get scoresLabel => 'Puntuaciones (0-100)';
+
+  @override
+  String get metricJump => 'Salto';
+
+  @override
+  String get metricSpeed => 'Velocidad';
+
+  @override
+  String get metricEndurance => 'Resistencia';
+
+  @override
+  String get metricFlexibility => 'Flexibilidad';
+
+  @override
+  String get metricBallControl => 'Control del balón';
 }

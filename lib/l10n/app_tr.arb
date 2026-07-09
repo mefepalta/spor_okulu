@@ -640,5 +640,34 @@
   },
   "fieldReason": "Gerekçe",
   "reasonHint": "Örn: Sağlık raporu, aile ziyareti...",
-  "sendAction": "Gönder"
+  "sendAction": "Gönder",
+
+  "performanceAnalysisTitle": "Performans Analizi",
+  "recordAddError": "Kayıt eklenemedi: {error}",
+  "@recordAddError": {
+    "placeholders": { "error": { "type": "Object" } }
+  },
+  "recordDeleteError": "Kayıt silinemedi: {error}",
+  "@recordDeleteError": {
+    "placeholders": { "error": { "type": "Object" } }
+  },
+  "recordDeleteTitle": "Kaydı Sil",
+  "performanceDeleteConfirm": "{date} tarihli performans kaydını silmek istediğine emin misin?",
+  "@performanceDeleteConfirm": {
+    "placeholders": { "date": { "type": "String" } }
+  },
+  "noStudentFound": "Öğrenci bulunamadı",
+  "performanceEmptyManage": "Performans girmek için önce öğrenci eklenmeli.",
+  "performanceEmptyParent": "Hesabına henüz öğrenci atanmamış. Lütfen spor okulu yönetimiyle iletişime geç.",
+  "addPerformance": "Performans Ekle",
+  "noPerformanceForStudent": "Bu öğrenci için henüz performans kaydı yok.",
+  "comparisonByDate": "Tarihlere Göre Karşılaştırma",
+  "recordsTitle": "Kayıtlar",
+  "selectAction": "Seç",
+  "scoresLabel": "Puanlar (0-100)",
+  "metricJump": "Sıçrama",
+  "metricSpeed": "Sürat",
+  "metricEndurance": "Dayanıklılık",
+  "metricFlexibility": "Esneklik",
+  "metricBallControl": "Top Hakimiyeti"
 }

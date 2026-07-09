@@ -468,5 +468,25 @@
   "dateWithValue": "Дата: {date}",
   "fieldReason": "Причина",
   "reasonHint": "Напр.: медицинская справка, семейный визит...",
-  "sendAction": "Отправить"
+  "sendAction": "Отправить",
+
+  "performanceAnalysisTitle": "Анализ результатов",
+  "recordAddError": "Не удалось добавить запись: {error}",
+  "recordDeleteError": "Не удалось удалить запись: {error}",
+  "recordDeleteTitle": "Удалить запись",
+  "performanceDeleteConfirm": "Вы уверены, что хотите удалить запись результатов от {date}?",
+  "noStudentFound": "Ученик не найден",
+  "performanceEmptyManage": "Чтобы вводить результаты, сначала нужно добавить ученика.",
+  "performanceEmptyParent": "К вашему аккаунту ещё не привязан ни один ученик. Пожалуйста, свяжитесь с руководством спортивной школы.",
+  "addPerformance": "Добавить результат",
+  "noPerformanceForStudent": "Для этого ученика ещё нет записей результатов.",
+  "comparisonByDate": "Сравнение по датам",
+  "recordsTitle": "Записи",
+  "selectAction": "Выбрать",
+  "scoresLabel": "Баллы (0-100)",
+  "metricJump": "Прыжок",
+  "metricSpeed": "Скорость",
+  "metricEndurance": "Выносливость",
+  "metricFlexibility": "Гибкость",
+  "metricBallControl": "Владение мячом"
 }

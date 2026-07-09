@@ -468,5 +468,25 @@
   "dateWithValue": "Date: {date}",
   "fieldReason": "Reason",
   "reasonHint": "e.g. Medical report, family visit...",
-  "sendAction": "Send"
+  "sendAction": "Send",
+
+  "performanceAnalysisTitle": "Performance Analysis",
+  "recordAddError": "Couldn't add record: {error}",
+  "recordDeleteError": "Couldn't delete record: {error}",
+  "recordDeleteTitle": "Delete Record",
+  "performanceDeleteConfirm": "Are you sure you want to delete the performance record dated {date}?",
+  "noStudentFound": "No student found",
+  "performanceEmptyManage": "To enter performance, a student must be added first.",
+  "performanceEmptyParent": "No student has been assigned to your account yet. Please contact the sports school management.",
+  "addPerformance": "Add Performance",
+  "noPerformanceForStudent": "No performance record for this student yet.",
+  "comparisonByDate": "Comparison by Date",
+  "recordsTitle": "Records",
+  "selectAction": "Select",
+  "scoresLabel": "Scores (0-100)",
+  "metricJump": "Jump",
+  "metricSpeed": "Speed",
+  "metricEndurance": "Endurance",
+  "metricFlexibility": "Flexibility",
+  "metricBallControl": "Ball Control"
 }

@@ -2,7 +2,9 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/app_roles.dart';
+import '../l10n/app_localizations.dart';
 import '../models/app_models.dart';
+import '../utils/metric_l10n.dart';
 
 /// Bir öğrencinin farklı tarihlerdeki performans puanlarını, ölçütler bazında
 /// gruplanmış çubuklarla karşılaştırır. Her tarih ayrı renkte bir seridir.
@@ -22,6 +24,7 @@ class PerformanceComparisonChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final metrics = PerformanceMetrics.all;
     final maxScore = PerformanceMetrics.maxScore.toDouble();
 
@@ -41,7 +44,7 @@ class PerformanceComparisonChart extends StatelessWidget {
                   getTooltipItem: (group, groupIndex, rod, rodIndex) {
                     final metric = metrics[group.x];
                     return BarTooltipItem(
-                      '$metric\n${rod.toY.round()}',
+                      '${localizedMetric(l10n, metric)}\n${rod.toY.round()}',
                       const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -88,7 +91,7 @@ class PerformanceComparisonChart extends StatelessWidget {
                         child: SizedBox(
                           width: 60,
                           child: Text(
-                            metrics[index],
+                            localizedMetric(l10n, metrics[index]),
                             textAlign: TextAlign.center,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,

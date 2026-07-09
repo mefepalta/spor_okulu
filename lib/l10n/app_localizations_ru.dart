@@ -1494,4 +1494,70 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get sendAction => 'Отправить';
+
+  @override
+  String get performanceAnalysisTitle => 'Анализ результатов';
+
+  @override
+  String recordAddError(Object error) {
+    return 'Не удалось добавить запись: $error';
+  }
+
+  @override
+  String recordDeleteError(Object error) {
+    return 'Не удалось удалить запись: $error';
+  }
+
+  @override
+  String get recordDeleteTitle => 'Удалить запись';
+
+  @override
+  String performanceDeleteConfirm(String date) {
+    return 'Вы уверены, что хотите удалить запись результатов от $date?';
+  }
+
+  @override
+  String get noStudentFound => 'Ученик не найден';
+
+  @override
+  String get performanceEmptyManage =>
+      'Чтобы вводить результаты, сначала нужно добавить ученика.';
+
+  @override
+  String get performanceEmptyParent =>
+      'К вашему аккаунту ещё не привязан ни один ученик. Пожалуйста, свяжитесь с руководством спортивной школы.';
+
+  @override
+  String get addPerformance => 'Добавить результат';
+
+  @override
+  String get noPerformanceForStudent =>
+      'Для этого ученика ещё нет записей результатов.';
+
+  @override
+  String get comparisonByDate => 'Сравнение по датам';
+
+  @override
+  String get recordsTitle => 'Записи';
+
+  @override
+  String get selectAction => 'Выбрать';
+
+  @override
+  String get scoresLabel => 'Баллы (0-100)';
+
+  @override
+  String get metricJump => 'Прыжок';
+
+  @override
+  String get metricSpeed => 'Скорость';
+
+  @override
+  String get metricEndurance => 'Выносливость';
+
+  @override
+  String get metricFlexibility => 'Гибкость';
+
+  @override
+  String get metricBallControl => 'Владение мячом';
 }

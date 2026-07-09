@@ -1486,4 +1486,70 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sendAction => 'Send';
+
+  @override
+  String get performanceAnalysisTitle => 'Performance Analysis';
+
+  @override
+  String recordAddError(Object error) {
+    return 'Couldn\'t add record: $error';
+  }
+
+  @override
+  String recordDeleteError(Object error) {
+    return 'Couldn\'t delete record: $error';
+  }
+
+  @override
+  String get recordDeleteTitle => 'Delete Record';
+
+  @override
+  String performanceDeleteConfirm(String date) {
+    return 'Are you sure you want to delete the performance record dated $date?';
+  }
+
+  @override
+  String get noStudentFound => 'No student found';
+
+  @override
+  String get performanceEmptyManage =>
+      'To enter performance, a student must be added first.';
+
+  @override
+  String get performanceEmptyParent =>
+      'No student has been assigned to your account yet. Please contact the sports school management.';
+
+  @override
+  String get addPerformance => 'Add Performance';
+
+  @override
+  String get noPerformanceForStudent =>
+      'No performance record for this student yet.';
+
+  @override
+  String get comparisonByDate => 'Comparison by Date';
+
+  @override
+  String get recordsTitle => 'Records';
+
+  @override
+  String get selectAction => 'Select';
+
+  @override
+  String get scoresLabel => 'Scores (0-100)';
+
+  @override
+  String get metricJump => 'Jump';
+
+  @override
+  String get metricSpeed => 'Speed';
+
+  @override
+  String get metricEndurance => 'Endurance';
+
+  @override
+  String get metricFlexibility => 'Flexibility';
+
+  @override
+  String get metricBallControl => 'Ball Control';
 }

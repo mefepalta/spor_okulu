@@ -1482,4 +1482,70 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get sendAction => 'Gönder';
+
+  @override
+  String get performanceAnalysisTitle => 'Performans Analizi';
+
+  @override
+  String recordAddError(Object error) {
+    return 'Kayıt eklenemedi: $error';
+  }
+
+  @override
+  String recordDeleteError(Object error) {
+    return 'Kayıt silinemedi: $error';
+  }
+
+  @override
+  String get recordDeleteTitle => 'Kaydı Sil';
+
+  @override
+  String performanceDeleteConfirm(String date) {
+    return '$date tarihli performans kaydını silmek istediğine emin misin?';
+  }
+
+  @override
+  String get noStudentFound => 'Öğrenci bulunamadı';
+
+  @override
+  String get performanceEmptyManage =>
+      'Performans girmek için önce öğrenci eklenmeli.';
+
+  @override
+  String get performanceEmptyParent =>
+      'Hesabına henüz öğrenci atanmamış. Lütfen spor okulu yönetimiyle iletişime geç.';
+
+  @override
+  String get addPerformance => 'Performans Ekle';
+
+  @override
+  String get noPerformanceForStudent =>
+      'Bu öğrenci için henüz performans kaydı yok.';
+
+  @override
+  String get comparisonByDate => 'Tarihlere Göre Karşılaştırma';
+
+  @override
+  String get recordsTitle => 'Kayıtlar';
+
+  @override
+  String get selectAction => 'Seç';
+
+  @override
+  String get scoresLabel => 'Puanlar (0-100)';
+
+  @override
+  String get metricJump => 'Sıçrama';
+
+  @override
+  String get metricSpeed => 'Sürat';
+
+  @override
+  String get metricEndurance => 'Dayanıklılık';
+
+  @override
+  String get metricFlexibility => 'Esneklik';
+
+  @override
+  String get metricBallControl => 'Top Hakimiyeti';
 }
