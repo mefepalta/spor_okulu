@@ -3199,6 +3199,150 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Not (isteğe bağlı)'**
   String get fieldNoteOptional;
+
+  /// No description provided for @equipmentDeleteTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Malzemeyi sil'**
+  String get equipmentDeleteTitle;
+
+  /// No description provided for @equipmentDeleteConfirm.
+  ///
+  /// In tr, this message translates to:
+  /// **'\"{name}\" kaydını silmek istiyor musunuz?'**
+  String equipmentDeleteConfirm(String name);
+
+  /// No description provided for @newEquipment.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni Malzeme'**
+  String get newEquipment;
+
+  /// No description provided for @equipmentEmptyTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Depo boş'**
+  String get equipmentEmptyTitle;
+
+  /// No description provided for @equipmentEmptyManage.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz malzeme yok. Sağ alttaki butonla ilk kaydı ekleyin.'**
+  String get equipmentEmptyManage;
+
+  /// No description provided for @equipmentEmptyViewer.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz depoya malzeme eklenmemiş.'**
+  String get equipmentEmptyViewer;
+
+  /// No description provided for @noResultTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sonuç yok'**
+  String get noResultTitle;
+
+  /// No description provided for @noResultInCategory.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu kategoride malzeme bulunmuyor.'**
+  String get noResultInCategory;
+
+  /// No description provided for @equipmentSummaryTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Depo Özeti'**
+  String get equipmentSummaryTitle;
+
+  /// No description provided for @metricVariety.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çeşit'**
+  String get metricVariety;
+
+  /// No description provided for @metricTotalQuantity.
+  ///
+  /// In tr, this message translates to:
+  /// **'Toplam Adet'**
+  String get metricTotalQuantity;
+
+  /// No description provided for @metricAttention.
+  ///
+  /// In tr, this message translates to:
+  /// **'Dikkat'**
+  String get metricAttention;
+
+  /// No description provided for @assignedPrefix.
+  ///
+  /// In tr, this message translates to:
+  /// **'Zimmet: {who}'**
+  String assignedPrefix(String who);
+
+  /// No description provided for @editEquipment.
+  ///
+  /// In tr, this message translates to:
+  /// **'Malzemeyi Düzenle'**
+  String get editEquipment;
+
+  /// No description provided for @fieldEquipmentName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Malzeme adı'**
+  String get fieldEquipmentName;
+
+  /// No description provided for @equipmentNameHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Örn: Futbol topu, forma...'**
+  String get equipmentNameHint;
+
+  /// No description provided for @equipmentNameRequired.
+  ///
+  /// In tr, this message translates to:
+  /// **'Lütfen malzeme adını yazın.'**
+  String get equipmentNameRequired;
+
+  /// No description provided for @quantityMustBePositive.
+  ///
+  /// In tr, this message translates to:
+  /// **'Adet 0\'dan büyük olmalıdır.'**
+  String get quantityMustBePositive;
+
+  /// No description provided for @fieldQuantity.
+  ///
+  /// In tr, this message translates to:
+  /// **'Adet'**
+  String get fieldQuantity;
+
+  /// No description provided for @fieldAssignedOptional.
+  ///
+  /// In tr, this message translates to:
+  /// **'Zimmet (isteğe bağlı)'**
+  String get fieldAssignedOptional;
+
+  /// No description provided for @assignedHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kimde / nerede'**
+  String get assignedHint;
+
+  /// No description provided for @conditionGood.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sağlam'**
+  String get conditionGood;
+
+  /// No description provided for @conditionMaintenance.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bakımda'**
+  String get conditionMaintenance;
+
+  /// No description provided for @conditionWorn.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yıpranmış'**
+  String get conditionWorn;
 }
 
 class _AppLocalizationsDelegate

@@ -1780,4 +1780,82 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get fieldNoteOptional => 'Note (facultative)';
+
+  @override
+  String get equipmentDeleteTitle => 'Supprimer l\'article';
+
+  @override
+  String equipmentDeleteConfirm(String name) {
+    return 'Voulez-vous supprimer l\'enregistrement « $name » ?';
+  }
+
+  @override
+  String get newEquipment => 'Nouvel article';
+
+  @override
+  String get equipmentEmptyTitle => 'Le stock est vide';
+
+  @override
+  String get equipmentEmptyManage =>
+      'Aucun article pour l\'instant. Ajoutez le premier enregistrement avec le bouton en bas à droite.';
+
+  @override
+  String get equipmentEmptyViewer =>
+      'Aucun article n\'a encore été ajouté au stock.';
+
+  @override
+  String get noResultTitle => 'Aucun résultat';
+
+  @override
+  String get noResultInCategory => 'Aucun article dans cette catégorie.';
+
+  @override
+  String get equipmentSummaryTitle => 'Résumé du stock';
+
+  @override
+  String get metricVariety => 'Types';
+
+  @override
+  String get metricTotalQuantity => 'Quantité totale';
+
+  @override
+  String get metricAttention => 'Attention';
+
+  @override
+  String assignedPrefix(String who) {
+    return 'Attribué : $who';
+  }
+
+  @override
+  String get editEquipment => 'Modifier l\'article';
+
+  @override
+  String get fieldEquipmentName => 'Nom de l\'article';
+
+  @override
+  String get equipmentNameHint => 'Ex. : ballon de foot, maillot...';
+
+  @override
+  String get equipmentNameRequired => 'Veuillez saisir le nom de l\'article.';
+
+  @override
+  String get quantityMustBePositive => 'La quantité doit être supérieure à 0.';
+
+  @override
+  String get fieldQuantity => 'Quantité';
+
+  @override
+  String get fieldAssignedOptional => 'Attribué à (facultatif)';
+
+  @override
+  String get assignedHint => 'À qui / où';
+
+  @override
+  String get conditionGood => 'Bon état';
+
+  @override
+  String get conditionMaintenance => 'En maintenance';
+
+  @override
+  String get conditionWorn => 'Usé';
 }

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../l10n/app_localizations.dart';
 import '../models/app_models.dart';
 import '../theme/app_colors.dart';
+import '../utils/condition_l10n.dart';
 import '../widgets/empty_state.dart';
 import '../widgets/summary_section.dart';
 import '../widgets/wave_background.dart';
@@ -100,19 +102,20 @@ class _EquipmentScreenState extends State<EquipmentScreen> {
   }
 
   Future<void> _delete(EquipmentItem item) async {
+    final l10n = AppLocalizations.of(context);
     final confirm = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Malzemeyi sil'),
-        content: Text('"${item.name}" kaydını silmek istiyor musunuz?'),
+        title: Text(l10n.equipmentDeleteTitle),
+        content: Text(l10n.equipmentDeleteConfirm(item.name)),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Vazgeç'),
+            child: Text(l10n.commonCancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Sil'),
+            child: Text(l10n.commonDelete),
           ),
         ],
       ),
@@ -129,24 +132,25 @@ class _EquipmentScreenState extends State<EquipmentScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final filtered = _filteredItems;
 
     return WaveScaffold(
-      appBar: AppBar(title: const Text('Depo')),
+      appBar: AppBar(title: Text(l10n.navEquipment)),
       floatingActionButton: widget.canManage
           ? FloatingActionButton.extended(
               onPressed: () => _openForm(),
               icon: const Icon(Icons.add),
-              label: const Text('Yeni Malzeme'),
+              label: Text(l10n.newEquipment),
             )
           : null,
       body: _items.isEmpty
           ? EmptyState(
               icon: Icons.inventory_2_outlined,
-              title: 'Depo boş',
+              title: l10n.equipmentEmptyTitle,
               message: widget.canManage
-                  ? 'Henüz malzeme yok. Sağ alttaki butonla ilk kaydı ekleyin.'
-                  : 'Henüz depoya malzeme eklenmemiş.',
+                  ? l10n.equipmentEmptyManage
+                  : l10n.equipmentEmptyViewer,
             )
           : Column(
               children: [
@@ -157,10 +161,10 @@ class _EquipmentScreenState extends State<EquipmentScreen> {
                 _buildCategoryFilter(),
                 Expanded(
                   child: filtered.isEmpty
-                      ? const EmptyState(
+                      ? EmptyState(
                           icon: Icons.search_off,
-                          title: 'Sonuç yok',
-                          message: 'Bu kategoride malzeme bulunmuyor.',
+                          title: l10n.noResultTitle,
+                          message: l10n.noResultInCategory,
                         )
                       : ListView(
                           padding: const EdgeInsets.fromLTRB(16, 4, 16, 90),
@@ -175,25 +179,26 @@ class _EquipmentScreenState extends State<EquipmentScreen> {
   }
 
   Widget _buildSummaryCard(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return SummarySection(
       icon: Icons.inventory_2,
-      title: 'Depo Özeti',
+      title: l10n.equipmentSummaryTitle,
       iconColor: AppColors.primary,
       child: SummaryMetricsRow(
         metrics: [
           SummaryMetric(
             value: '${_items.length}',
-            label: 'Çeşit',
+            label: l10n.metricVariety,
             color: AppColors.primary,
           ),
           SummaryMetric(
             value: '$_totalQuantity',
-            label: 'Toplam Adet',
+            label: l10n.metricTotalQuantity,
             color: Colors.green,
           ),
           SummaryMetric(
             value: '$_attentionCount',
-            label: 'Dikkat',
+            label: l10n.metricAttention,
             color: _attentionCount > 0 ? Colors.orange : Colors.green,
           ),
         ],
@@ -236,7 +241,7 @@ class _EquipmentScreenState extends State<EquipmentScreen> {
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 16),
         children: [
-          chip('Tümü', null),
+          chip(AppLocalizations.of(context).commonAll, null),
           for (final category in categories) chip(category, category),
         ],
       ),
@@ -244,10 +249,11 @@ class _EquipmentScreenState extends State<EquipmentScreen> {
   }
 
   Widget _buildTile(EquipmentItem item) {
+    final l10n = AppLocalizations.of(context);
     final conditionColor = _conditionColor(item.condition);
     final subtitleParts = [
       if (item.category.isNotEmpty) item.category,
-      if (item.assignedTo.isNotEmpty) 'Zimmet: ${item.assignedTo}',
+      if (item.assignedTo.isNotEmpty) l10n.assignedPrefix(item.assignedTo),
     ];
 
     return Card(
@@ -301,7 +307,7 @@ class _EquipmentScreenState extends State<EquipmentScreen> {
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Text(
-                item.condition,
+                localizedCondition(l10n, item.condition),
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
@@ -313,7 +319,7 @@ class _EquipmentScreenState extends State<EquipmentScreen> {
               IconButton(
                 icon: const Icon(Icons.delete_outline, size: 20),
                 color: Colors.red,
-                tooltip: 'Sil',
+                tooltip: l10n.commonDelete,
                 onPressed: () => _delete(item),
               ),
           ],
@@ -370,17 +376,18 @@ class _EquipmentFormState extends State<_EquipmentForm> {
   }
 
   void _save() {
+    final l10n = AppLocalizations.of(context);
     final name = _nameController.text.trim();
     final quantity = int.tryParse(_quantityController.text.trim()) ?? 0;
     if (name.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Lütfen malzeme adını yazın.')),
+        SnackBar(content: Text(l10n.equipmentNameRequired)),
       );
       return;
     }
     if (quantity <= 0) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Adet 0’dan büyük olmalıdır.')),
+        SnackBar(content: Text(l10n.quantityMustBePositive)),
       );
       return;
     }
@@ -399,6 +406,7 @@ class _EquipmentFormState extends State<_EquipmentForm> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final isEditing = widget.existing != null;
 
     return Padding(
@@ -414,26 +422,26 @@ class _EquipmentFormState extends State<_EquipmentForm> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              isEditing ? 'Malzemeyi Düzenle' : 'Yeni Malzeme',
+              isEditing ? l10n.editEquipment : l10n.newEquipment,
               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
             TextField(
               controller: _nameController,
               textCapitalization: TextCapitalization.sentences,
-              decoration: const InputDecoration(
-                labelText: 'Malzeme adı',
-                hintText: 'Örn: Futbol topu, forma...',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.fieldEquipmentName,
+                hintText: l10n.equipmentNameHint,
+                border: const OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: 12),
             DropdownButtonFormField<String>(
               initialValue: _category,
               isExpanded: true,
-              decoration: const InputDecoration(
-                labelText: 'Kategori',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.fieldCategory,
+                border: const OutlineInputBorder(),
               ),
               items: [
                 for (final category in EquipmentCategories.all)
@@ -446,22 +454,25 @@ class _EquipmentFormState extends State<_EquipmentForm> {
               controller: _quantityController,
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              decoration: const InputDecoration(
-                labelText: 'Adet',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.fieldQuantity,
+                border: const OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: 12),
             DropdownButtonFormField<String>(
               initialValue: _condition,
               isExpanded: true,
-              decoration: const InputDecoration(
-                labelText: 'Durum',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.fieldStatus,
+                border: const OutlineInputBorder(),
               ),
               items: [
                 for (final condition in EquipmentCondition.all)
-                  DropdownMenuItem(value: condition, child: Text(condition)),
+                  DropdownMenuItem(
+                    value: condition,
+                    child: Text(localizedCondition(l10n, condition)),
+                  ),
               ],
               onChanged: (value) =>
                   setState(() => _condition = value ?? EquipmentCondition.good),
@@ -470,10 +481,10 @@ class _EquipmentFormState extends State<_EquipmentForm> {
             TextField(
               controller: _assignedController,
               textCapitalization: TextCapitalization.sentences,
-              decoration: const InputDecoration(
-                labelText: 'Zimmet (isteğe bağlı)',
-                hintText: 'Kimde / nerede',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.fieldAssignedOptional,
+                hintText: l10n.assignedHint,
+                border: const OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: 12),
@@ -481,16 +492,16 @@ class _EquipmentFormState extends State<_EquipmentForm> {
               controller: _noteController,
               maxLines: 2,
               textCapitalization: TextCapitalization.sentences,
-              decoration: const InputDecoration(
-                labelText: 'Not (isteğe bağlı)',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.fieldNoteOptional,
+                border: const OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: 16),
             FilledButton.icon(
               onPressed: _save,
               icon: const Icon(Icons.check),
-              label: Text(isEditing ? 'Kaydet' : 'Ekle'),
+              label: Text(isEditing ? l10n.commonSave : l10n.commonAdd),
             ),
           ],
         ),

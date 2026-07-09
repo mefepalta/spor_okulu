@@ -760,5 +760,36 @@
   "cashTitleHint": "Örn: Mart aidatları, salon kirası...",
   "fieldAmountCurrency": "Tutar (₺)",
   "fieldCategory": "Kategori",
-  "fieldNoteOptional": "Not (isteğe bağlı)"
+  "fieldNoteOptional": "Not (isteğe bağlı)",
+
+  "equipmentDeleteTitle": "Malzemeyi sil",
+  "equipmentDeleteConfirm": "\"{name}\" kaydını silmek istiyor musunuz?",
+  "@equipmentDeleteConfirm": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "newEquipment": "Yeni Malzeme",
+  "equipmentEmptyTitle": "Depo boş",
+  "equipmentEmptyManage": "Henüz malzeme yok. Sağ alttaki butonla ilk kaydı ekleyin.",
+  "equipmentEmptyViewer": "Henüz depoya malzeme eklenmemiş.",
+  "noResultTitle": "Sonuç yok",
+  "noResultInCategory": "Bu kategoride malzeme bulunmuyor.",
+  "equipmentSummaryTitle": "Depo Özeti",
+  "metricVariety": "Çeşit",
+  "metricTotalQuantity": "Toplam Adet",
+  "metricAttention": "Dikkat",
+  "assignedPrefix": "Zimmet: {who}",
+  "@assignedPrefix": {
+    "placeholders": { "who": { "type": "String" } }
+  },
+  "editEquipment": "Malzemeyi Düzenle",
+  "fieldEquipmentName": "Malzeme adı",
+  "equipmentNameHint": "Örn: Futbol topu, forma...",
+  "equipmentNameRequired": "Lütfen malzeme adını yazın.",
+  "quantityMustBePositive": "Adet 0'dan büyük olmalıdır.",
+  "fieldQuantity": "Adet",
+  "fieldAssignedOptional": "Zimmet (isteğe bağlı)",
+  "assignedHint": "Kimde / nerede",
+  "conditionGood": "Sağlam",
+  "conditionMaintenance": "Bakımda",
+  "conditionWorn": "Yıpranmış"
 }

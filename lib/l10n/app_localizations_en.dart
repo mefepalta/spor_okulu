@@ -1758,4 +1758,81 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get fieldNoteOptional => 'Note (optional)';
+
+  @override
+  String get equipmentDeleteTitle => 'Delete item';
+
+  @override
+  String equipmentDeleteConfirm(String name) {
+    return 'Do you want to delete the \"$name\" record?';
+  }
+
+  @override
+  String get newEquipment => 'New Item';
+
+  @override
+  String get equipmentEmptyTitle => 'Storage is empty';
+
+  @override
+  String get equipmentEmptyManage =>
+      'No items yet. Add the first record with the button at the bottom right.';
+
+  @override
+  String get equipmentEmptyViewer => 'No items have been added to storage yet.';
+
+  @override
+  String get noResultTitle => 'No results';
+
+  @override
+  String get noResultInCategory => 'No items in this category.';
+
+  @override
+  String get equipmentSummaryTitle => 'Storage Summary';
+
+  @override
+  String get metricVariety => 'Types';
+
+  @override
+  String get metricTotalQuantity => 'Total Quantity';
+
+  @override
+  String get metricAttention => 'Attention';
+
+  @override
+  String assignedPrefix(String who) {
+    return 'Assigned: $who';
+  }
+
+  @override
+  String get editEquipment => 'Edit Item';
+
+  @override
+  String get fieldEquipmentName => 'Item name';
+
+  @override
+  String get equipmentNameHint => 'e.g. Football, jersey...';
+
+  @override
+  String get equipmentNameRequired => 'Please write the item name.';
+
+  @override
+  String get quantityMustBePositive => 'Quantity must be greater than 0.';
+
+  @override
+  String get fieldQuantity => 'Quantity';
+
+  @override
+  String get fieldAssignedOptional => 'Assigned to (optional)';
+
+  @override
+  String get assignedHint => 'Who / where';
+
+  @override
+  String get conditionGood => 'Good';
+
+  @override
+  String get conditionMaintenance => 'In maintenance';
+
+  @override
+  String get conditionWorn => 'Worn';
 }

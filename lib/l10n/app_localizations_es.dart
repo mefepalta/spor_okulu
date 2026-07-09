@@ -1773,4 +1773,83 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get fieldNoteOptional => 'Nota (opcional)';
+
+  @override
+  String get equipmentDeleteTitle => 'Eliminar artículo';
+
+  @override
+  String equipmentDeleteConfirm(String name) {
+    return '¿Quieres eliminar el registro \"$name\"?';
+  }
+
+  @override
+  String get newEquipment => 'Nuevo artículo';
+
+  @override
+  String get equipmentEmptyTitle => 'El almacén está vacío';
+
+  @override
+  String get equipmentEmptyManage =>
+      'Aún no hay artículos. Añade el primer registro con el botón de abajo a la derecha.';
+
+  @override
+  String get equipmentEmptyViewer =>
+      'Aún no se han añadido artículos al almacén.';
+
+  @override
+  String get noResultTitle => 'Sin resultados';
+
+  @override
+  String get noResultInCategory => 'No hay artículos en esta categoría.';
+
+  @override
+  String get equipmentSummaryTitle => 'Resumen del almacén';
+
+  @override
+  String get metricVariety => 'Tipos';
+
+  @override
+  String get metricTotalQuantity => 'Cantidad total';
+
+  @override
+  String get metricAttention => 'Atención';
+
+  @override
+  String assignedPrefix(String who) {
+    return 'Asignado: $who';
+  }
+
+  @override
+  String get editEquipment => 'Editar artículo';
+
+  @override
+  String get fieldEquipmentName => 'Nombre del artículo';
+
+  @override
+  String get equipmentNameHint => 'Ej.: balón de fútbol, camiseta...';
+
+  @override
+  String get equipmentNameRequired =>
+      'Por favor, escribe el nombre del artículo.';
+
+  @override
+  String get quantityMustBePositive => 'La cantidad debe ser mayor que 0.';
+
+  @override
+  String get fieldQuantity => 'Cantidad';
+
+  @override
+  String get fieldAssignedOptional => 'Asignado a (opcional)';
+
+  @override
+  String get assignedHint => 'Quién / dónde';
+
+  @override
+  String get conditionGood => 'En buen estado';
+
+  @override
+  String get conditionMaintenance => 'En mantenimiento';
+
+  @override
+  String get conditionWorn => 'Desgastado';
 }

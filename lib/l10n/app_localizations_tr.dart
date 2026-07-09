@@ -1754,4 +1754,81 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get fieldNoteOptional => 'Not (isteğe bağlı)';
+
+  @override
+  String get equipmentDeleteTitle => 'Malzemeyi sil';
+
+  @override
+  String equipmentDeleteConfirm(String name) {
+    return '\"$name\" kaydını silmek istiyor musunuz?';
+  }
+
+  @override
+  String get newEquipment => 'Yeni Malzeme';
+
+  @override
+  String get equipmentEmptyTitle => 'Depo boş';
+
+  @override
+  String get equipmentEmptyManage =>
+      'Henüz malzeme yok. Sağ alttaki butonla ilk kaydı ekleyin.';
+
+  @override
+  String get equipmentEmptyViewer => 'Henüz depoya malzeme eklenmemiş.';
+
+  @override
+  String get noResultTitle => 'Sonuç yok';
+
+  @override
+  String get noResultInCategory => 'Bu kategoride malzeme bulunmuyor.';
+
+  @override
+  String get equipmentSummaryTitle => 'Depo Özeti';
+
+  @override
+  String get metricVariety => 'Çeşit';
+
+  @override
+  String get metricTotalQuantity => 'Toplam Adet';
+
+  @override
+  String get metricAttention => 'Dikkat';
+
+  @override
+  String assignedPrefix(String who) {
+    return 'Zimmet: $who';
+  }
+
+  @override
+  String get editEquipment => 'Malzemeyi Düzenle';
+
+  @override
+  String get fieldEquipmentName => 'Malzeme adı';
+
+  @override
+  String get equipmentNameHint => 'Örn: Futbol topu, forma...';
+
+  @override
+  String get equipmentNameRequired => 'Lütfen malzeme adını yazın.';
+
+  @override
+  String get quantityMustBePositive => 'Adet 0\'dan büyük olmalıdır.';
+
+  @override
+  String get fieldQuantity => 'Adet';
+
+  @override
+  String get fieldAssignedOptional => 'Zimmet (isteğe bağlı)';
+
+  @override
+  String get assignedHint => 'Kimde / nerede';
+
+  @override
+  String get conditionGood => 'Sağlam';
+
+  @override
+  String get conditionMaintenance => 'Bakımda';
+
+  @override
+  String get conditionWorn => 'Yıpranmış';
 }

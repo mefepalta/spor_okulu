@@ -1769,4 +1769,82 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get fieldNoteOptional => 'Заметка (необязательно)';
+
+  @override
+  String get equipmentDeleteTitle => 'Удалить предмет';
+
+  @override
+  String equipmentDeleteConfirm(String name) {
+    return 'Вы хотите удалить запись «$name»?';
+  }
+
+  @override
+  String get newEquipment => 'Новый предмет';
+
+  @override
+  String get equipmentEmptyTitle => 'Склад пуст';
+
+  @override
+  String get equipmentEmptyManage =>
+      'Предметов пока нет. Добавьте первую запись кнопкой внизу справа.';
+
+  @override
+  String get equipmentEmptyViewer =>
+      'На склад ещё не добавлено ни одного предмета.';
+
+  @override
+  String get noResultTitle => 'Нет результатов';
+
+  @override
+  String get noResultInCategory => 'В этой категории нет предметов.';
+
+  @override
+  String get equipmentSummaryTitle => 'Сводка по складу';
+
+  @override
+  String get metricVariety => 'Виды';
+
+  @override
+  String get metricTotalQuantity => 'Всего штук';
+
+  @override
+  String get metricAttention => 'Внимание';
+
+  @override
+  String assignedPrefix(String who) {
+    return 'Закреплено: $who';
+  }
+
+  @override
+  String get editEquipment => 'Изменить предмет';
+
+  @override
+  String get fieldEquipmentName => 'Название предмета';
+
+  @override
+  String get equipmentNameHint => 'Напр.: футбольный мяч, форма...';
+
+  @override
+  String get equipmentNameRequired => 'Пожалуйста, введите название предмета.';
+
+  @override
+  String get quantityMustBePositive => 'Количество должно быть больше 0.';
+
+  @override
+  String get fieldQuantity => 'Количество';
+
+  @override
+  String get fieldAssignedOptional => 'Закреплено за (необязательно)';
+
+  @override
+  String get assignedHint => 'У кого / где';
+
+  @override
+  String get conditionGood => 'Исправно';
+
+  @override
+  String get conditionMaintenance => 'На обслуживании';
+
+  @override
+  String get conditionWorn => 'Изношено';
 }
