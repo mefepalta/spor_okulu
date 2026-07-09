@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import '../widgets/wave_background.dart';
 import 'package:flutter/services.dart';
 
+import '../l10n/app_localizations.dart';
 import '../models/app_models.dart';
 import '../theme/app_colors.dart';
 import '../utils/formatters.dart';
 import '../utils/launchers.dart';
+import '../utils/status_l10n.dart';
 import '../utils/validators.dart';
 import '../widgets/empty_state.dart';
 
@@ -97,28 +99,29 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
   }
 
   Future<void> _confirmDeletePayment(int index) async {
+    final l10n = AppLocalizations.of(context);
     final payment = widget.payments[index];
 
     final shouldDelete = await showDialog<bool>(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Ödemeyi Sil'),
+          title: Text(l10n.paymentDeleteTitle),
           content: Text(
-            '${payment.studentName} - ${payment.period} ödeme kaydını silmek istediğine emin misin',
+            l10n.paymentDeleteConfirm(payment.studentName, payment.period),
           ),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.pop(context, false);
               },
-              child: const Text('Vazgeç'),
+              child: Text(l10n.commonCancel),
             ),
             TextButton(
               onPressed: () {
                 Navigator.pop(context, true);
               },
-              child: const Text('Sil', style: TextStyle(color: Colors.red)),
+              child: Text(l10n.commonDelete, style: const TextStyle(color: Colors.red)),
             ),
           ],
         );
@@ -139,11 +142,12 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
 
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(const SnackBar(content: Text('Ödeme kaydı silindi.')));
+    ).showSnackBar(SnackBar(content: Text(l10n.paymentDeleted)));
   }
 
   /// Durum filtresi çipleri: Tümü / Ödendi / Bekliyor / Gecikti.
   Widget _buildStatusFilters() {
+    final l10n = AppLocalizations.of(context);
     const statuses = ['Ödendi', 'Bekliyor', 'Gecikti'];
 
     Widget chip(String label, String? value) {
@@ -179,8 +183,9 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 16),
         children: [
-          chip('Tümü', null),
-          for (final status in statuses) chip(status, status),
+          chip(l10n.commonAll, null),
+          for (final status in statuses)
+            chip(localizedPaymentStatus(l10n, status), status),
         ],
       ),
     );
@@ -223,6 +228,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
 
   /// Dönem seçim satırı: tüm dönemler + kayıtlardaki her dönem için bir seçenek.
   Widget _buildPeriodFilter() {
+    final l10n = AppLocalizations.of(context);
     final periods = _distinctPeriods();
 
     return Padding(
@@ -235,18 +241,18 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
             color: Theme.of(context).textTheme.bodySmall?.color,
           ),
           const SizedBox(width: 8),
-          const Text('Dönem:'),
+          Text(l10n.periodLabel),
           const SizedBox(width: 12),
           Expanded(
             child: DropdownButton<String?>(
               isExpanded: true,
               value: _periodFilter,
-              hint: const Text('Tüm dönemler'),
+              hint: Text(l10n.allPeriods),
               underline: const SizedBox.shrink(),
               items: [
-                const DropdownMenuItem<String?>(
+                DropdownMenuItem<String?>(
                   value: null,
-                  child: Text('Tüm dönemler'),
+                  child: Text(l10n.allPeriods),
                 ),
                 for (final period in periods)
                   DropdownMenuItem<String?>(
@@ -274,6 +280,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final query = _searchQuery.toLowerCase();
 
     // Arama + dönem filtresi: özet şeridi bu kümeyi yansıtır (durum çipleri
@@ -298,7 +305,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
     final canAddPayment = widget.isAdmin && widget.students.isNotEmpty;
 
     return WaveScaffold(
-      appBar: AppBar(title: const Text('Ödemeler')),
+      appBar: AppBar(title: Text(l10n.navPayments)),
       body: Column(
         children: [
           if (widget.payments.isNotEmpty)
@@ -306,10 +313,10 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
           Padding(
             padding: const EdgeInsets.all(16),
             child: TextField(
-              decoration: const InputDecoration(
-                labelText: 'Ödeme ara',
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.paymentsSearchHint,
+                prefixIcon: const Icon(Icons.search),
+                border: const OutlineInputBorder(),
               ),
               onChanged: (value) {
                 setState(() {
@@ -324,21 +331,22 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
             child: widget.payments.isEmpty
                 ? EmptyState(
                     icon: Icons.payment,
-                    title: 'Henüz ödeme kaydı yok',
+                    title: l10n.paymentsEmptyTitle,
                     message: widget.isAdmin
                         ? widget.students.isNotEmpty
-                              ? 'Yeni ödeme kaydı eklemek için sağ alttaki + butonunu kullan.'
-                              : 'Odeme eklemek için once en az bir öğrenci ekle.'
-                        : 'Henüz ödeme kaydı yok. Admin ödeme eklediçinde burada görünecek.',
+                              ? l10n.paymentsEmptyAdmin
+                              : l10n.paymentsEmptyNoStudent
+                        : l10n.paymentsEmptyViewer,
                   )
                 : filteredPayments.isEmpty
                 ? EmptyState(
                     icon: Icons.search_off,
-                    title: 'Sonuç bulunamadı',
+                    title: l10n.searchNoResults,
                     message: _statusFilter != null
-                        ? '"$_statusFilter" durumunda kayıt yok. '
-                              'Farklı bir filtre veya "Tümü" seç.'
-                        : 'Arama metnini değiştirerek tekrar dene.',
+                        ? l10n.paymentsNoStatusResults(
+                            localizedPaymentStatus(l10n, _statusFilter!),
+                          )
+                        : l10n.searchNoResultsBody,
                   )
                 : ListView.builder(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -360,7 +368,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
                           ),
                           title: Text(payment.studentName),
                           subtitle: Text(
-                            '${payment.period} • ${payment.amount} TL\n${payment.status} • ${payment.dateText}',
+                            '${payment.period} • ${payment.amount} TL\n${localizedPaymentStatus(l10n, payment.status)} • ${payment.dateText}',
                           ),
                           isThreeLine: true,
                           trailing: widget.isAdmin
@@ -373,7 +381,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
                                           Icons.notifications_active,
                                           color: Colors.teal,
                                         ),
-                                        tooltip: 'Hatırlatma gönder',
+                                        tooltip: l10n.remindTooltip,
                                         onPressed: () => _remindPayment(payment),
                                       ),
                                     IconButton(
@@ -434,8 +442,8 @@ Future<void> sendPaymentReminder(
   final phone = student?.parentPhone ?? '';
   if (sanitizeTrPhone(phone).isEmpty) {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Öğrencinin veli telefonu kayıtlı değil.'),
+      SnackBar(
+        content: Text(AppLocalizations.of(context).noParentPhone),
       ),
     );
     return;
@@ -470,6 +478,7 @@ class _PaymentSummaryBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Card(
       margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
       child: Padding(
@@ -478,7 +487,7 @@ class _PaymentSummaryBar extends StatelessWidget {
           children: [
             _stat(
               context,
-              label: 'Tahsil edilen',
+              label: l10n.paymentCollectedLabel,
               amount: _sumFor('Ödendi'),
               count: _countFor('Ödendi'),
               color: Colors.green,
@@ -486,7 +495,7 @@ class _PaymentSummaryBar extends StatelessWidget {
             _divider(),
             _stat(
               context,
-              label: 'Bekleyen',
+              label: l10n.metricPending,
               amount: _sumFor('Bekliyor'),
               count: _countFor('Bekliyor'),
               color: Colors.orange,
@@ -494,7 +503,7 @@ class _PaymentSummaryBar extends StatelessWidget {
             _divider(),
             _stat(
               context,
-              label: 'Geciken',
+              label: l10n.metricOverdue,
               amount: _sumFor('Gecikti'),
               count: _countFor('Gecikti'),
               color: Colors.red,
@@ -544,7 +553,7 @@ class _PaymentSummaryBar extends StatelessWidget {
           ),
           const SizedBox(height: 2),
           Text(
-            count == 1 ? '1 kayıt' : '$count kayıt',
+            AppLocalizations.of(context).recordCount(count),
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 11,
@@ -617,11 +626,12 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final payment = _payment;
 
     return WaveScaffold(
       appBar: AppBar(
-        title: const Text('Ödeme Detayı'),
+        title: Text(l10n.paymentDetailTitle),
         actions: widget.isAdmin
             ? [
                 IconButton(
@@ -659,7 +669,7 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
                   Text('${payment.period} • ${payment.amount} TL'),
                   const SizedBox(height: 8),
                   Text(
-                    payment.status,
+                    localizedPaymentStatus(l10n, payment.status),
                     style: TextStyle(
                       color: _statusColor(payment.status),
                       fontWeight: FontWeight.bold,
@@ -673,43 +683,43 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
           Card(
             child: ListTile(
               leading: const Icon(Icons.person),
-              title: const Text('Öğrenci'),
+              title: Text(l10n.roleStudent),
               subtitle: Text(payment.studentName),
             ),
           ),
           Card(
             child: ListTile(
               leading: const Icon(Icons.calendar_month),
-              title: const Text('Ay / Dönem'),
+              title: Text(l10n.fieldPeriod),
               subtitle: Text(payment.period),
             ),
           ),
           Card(
             child: ListTile(
               leading: const Icon(Icons.attach_money),
-              title: const Text('Tutar'),
+              title: Text(l10n.fieldAmount),
               subtitle: Text('${payment.amount} TL'),
             ),
           ),
           Card(
             child: ListTile(
               leading: const Icon(Icons.info),
-              title: const Text('Durum'),
-              subtitle: Text(payment.status),
+              title: Text(l10n.fieldStatus),
+              subtitle: Text(localizedPaymentStatus(l10n, payment.status)),
             ),
           ),
           Card(
             child: ListTile(
               leading: const Icon(Icons.event),
-              title: const Text('Tarih'),
+              title: Text(l10n.fieldDate),
               subtitle: Text(payment.dateText),
             ),
           ),
           Card(
             child: ListTile(
               leading: const Icon(Icons.note),
-              title: const Text('Not'),
-              subtitle: Text(payment.note.isEmpty ? 'Not yok.' : payment.note),
+              title: Text(l10n.fieldNote),
+              subtitle: Text(payment.note.isEmpty ? l10n.noNote : payment.note),
             ),
           ),
           const SizedBox(height: 20),
@@ -725,7 +735,7 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
                 foregroundColor: Colors.white,
               ),
               icon: const Icon(Icons.notifications_active),
-              label: const Text('WhatsApp ile Hatırlat'),
+              label: Text(l10n.remindViaWhatsApp),
             ),
             const SizedBox(height: 8),
           ],
@@ -733,7 +743,7 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
             ElevatedButton.icon(
               onPressed: _openEditPaymentScreen,
               icon: const Icon(Icons.edit),
-              label: const Text('Ödemeyi Düzenle'),
+              label: Text(l10n.editPaymentTitle),
             ),
           const SizedBox(height: 8),
           OutlinedButton.icon(
@@ -741,7 +751,7 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
               Navigator.pop(context);
             },
             icon: const Icon(Icons.arrow_back),
-            label: const Text('Ödeme Listesine Dön'),
+            label: Text(l10n.backToPaymentList),
           ),
         ],
       ),
@@ -841,7 +851,7 @@ class _AddPaymentScreenState extends State<AddPaymentScreen> {
     final student = _selectedStudent;
     if (student == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Önce bir öğrenci seçmelisin.')),
+        SnackBar(content: Text(AppLocalizations.of(context).selectStudentFirst)),
       );
       return;
     }
@@ -861,18 +871,19 @@ class _AddPaymentScreenState extends State<AddPaymentScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final isEditing = widget.payment != null;
 
     return WaveScaffold(
       appBar: AppBar(
-        title: Text(isEditing ? 'Ödemeyi Düzenle' : 'Yeni Ödeme Ekle'),
+        title: Text(isEditing ? l10n.editPaymentTitle : l10n.addPaymentTitle),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: widget.students.isEmpty
-            ? const Center(
+            ? Center(
                 child: Text(
-                  'Ödeme eklemek için önce en az bir öğrenci eklemelisin.',
+                  l10n.paymentNeedStudent,
                   textAlign: TextAlign.center,
                 ),
               )
@@ -883,10 +894,10 @@ class _AddPaymentScreenState extends State<AddPaymentScreen> {
                   children: [
                     DropdownButtonFormField<String>(
                       initialValue: _selectedStudentId,
-                      decoration: const InputDecoration(
-                        labelText: 'Öğrenci',
-                        border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.person),
+                      decoration: InputDecoration(
+                        labelText: l10n.roleStudent,
+                        border: const OutlineInputBorder(),
+                        prefixIcon: const Icon(Icons.person),
                       ),
                       items: widget.students.map((student) {
                         return DropdownMenuItem<String>(
@@ -901,7 +912,7 @@ class _AddPaymentScreenState extends State<AddPaymentScreen> {
                       },
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Öğrenci seçmelisin.';
+                          return l10n.studentRequired;
                         }
 
                         return null;
@@ -910,15 +921,15 @@ class _AddPaymentScreenState extends State<AddPaymentScreen> {
                     const SizedBox(height: 12),
                     TextFormField(
                       controller: _periodController,
-                      decoration: const InputDecoration(
-                        labelText: 'Ay / Dönem',
-                        border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.calendar_month),
+                      decoration: InputDecoration(
+                        labelText: l10n.fieldPeriod,
+                        border: const OutlineInputBorder(),
+                        prefixIcon: const Icon(Icons.calendar_month),
                         hintText: 'Haziran 2026',
                       ),
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
-                          return 'Ay / dönem boş bırakılamaz.';
+                          return l10n.periodEmpty;
                         }
 
                         return null;
@@ -929,30 +940,30 @@ class _AddPaymentScreenState extends State<AddPaymentScreen> {
                       controller: _amountController,
                       keyboardType: TextInputType.number,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      decoration: const InputDecoration(
-                        labelText: 'Tutar',
-                        border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.attach_money),
+                      decoration: InputDecoration(
+                        labelText: l10n.fieldAmount,
+                        border: const OutlineInputBorder(),
+                        prefixIcon: const Icon(Icons.attach_money),
                         hintText: '1500',
                         suffixText: 'TL',
                       ),
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
-                          return 'Tutar boş bırakılamaz.';
+                          return l10n.amountEmpty;
                         }
 
                         final amount = int.tryParse(value.trim());
 
                         if (amount == null) {
-                          return 'Tutar sayı olmalıdır.';
+                          return l10n.amountMustBeNumber;
                         }
 
                         if (amount <= 0) {
-                          return 'Tutar 0’dan büyük olmalıdır.';
+                          return l10n.amountPositive;
                         }
 
                         if (amount > 100000) {
-                          return 'Tutar çok yüksek görünüyor.';
+                          return l10n.amountTooHigh;
                         }
 
                         return null;
@@ -961,15 +972,15 @@ class _AddPaymentScreenState extends State<AddPaymentScreen> {
                     const SizedBox(height: 12),
                     DropdownButtonFormField<String>(
                       initialValue: _selectedStatus,
-                      decoration: const InputDecoration(
-                        labelText: 'Durum',
-                        border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.info),
+                      decoration: InputDecoration(
+                        labelText: l10n.fieldStatus,
+                        border: const OutlineInputBorder(),
+                        prefixIcon: const Icon(Icons.info),
                       ),
                       items: _statuses.map((status) {
                         return DropdownMenuItem<String>(
                           value: status,
-                          child: Text(status),
+                          child: Text(localizedPaymentStatus(l10n, status)),
                         );
                       }).toList(),
                       onChanged: (value) {
@@ -979,7 +990,7 @@ class _AddPaymentScreenState extends State<AddPaymentScreen> {
                       },
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Durum seçmelisin.';
+                          return l10n.statusRequired;
                         }
 
                         return null;
@@ -989,23 +1000,23 @@ class _AddPaymentScreenState extends State<AddPaymentScreen> {
                     TextFormField(
                       controller: _dateController,
                       keyboardType: TextInputType.datetime,
-                      decoration: const InputDecoration(
-                        labelText: 'Tarih',
-                        border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.event),
+                      decoration: InputDecoration(
+                        labelText: l10n.fieldDate,
+                        border: const OutlineInputBorder(),
+                        prefixIcon: const Icon(Icons.event),
                         hintText: '24.06.2026',
                       ),
-                      validator: validateDateText,
+                      validator: dateValidator(l10n),
                     ),
                     const SizedBox(height: 12),
                     TextFormField(
                       controller: _noteController,
                       maxLines: 3,
-                      decoration: const InputDecoration(
-                        labelText: 'Not',
-                        border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.note),
-                        hintText: 'İsteğe bağlı not',
+                      decoration: InputDecoration(
+                        labelText: l10n.fieldNote,
+                        border: const OutlineInputBorder(),
+                        prefixIcon: const Icon(Icons.note),
+                        hintText: l10n.noteHint,
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -1013,7 +1024,7 @@ class _AddPaymentScreenState extends State<AddPaymentScreen> {
                       onPressed: _savePayment,
                       icon: const Icon(Icons.save),
                       label: Text(
-                        isEditing ? 'Değişiklikleri Kaydet' : 'Ödemeyi Kaydet',
+                        isEditing ? l10n.saveChanges : l10n.savePayment,
                       ),
                     ),
                   ],
