@@ -814,5 +814,23 @@
   "notificationsEmptyTitle": "Bildirim yok",
   "notificationsEmptyBody": "Şu an gösterilecek bir bildirim bulunmuyor.",
   "noRecordsTitle": "Kayıt yok",
-  "noNotificationsInCategory": "Bu kategoride bildirim bulunmuyor."
+  "noNotificationsInCategory": "Bu kategoride bildirim bulunmuyor.",
+
+  "aiStaffSuggestion1": "Bu ayı özetle",
+  "aiStaffSuggestion2": "Nelere dikkat etmeliyim?",
+  "aiStaffSuggestion3": "Devamsızlık için veliye kısa bir mesaj taslağı yaz",
+  "aiStaffSuggestion4": "Tahsilatı artırmak için 3 öneri ver",
+  "aiParentSuggestion1": "Çocuğumun durumunu özetle",
+  "aiParentSuggestion2": "Devamsızlık durumu nasıl?",
+  "aiParentSuggestion3": "Ödeme durumumu açıkla",
+  "aiParentSuggestion4": "Gelişimi için ne önerirsin?",
+  "aiStudentSuggestion1": "Durumumu özetle",
+  "aiStudentSuggestion2": "Devamsızlığım nasıl?",
+  "aiStudentSuggestion3": "Performansımı yorumla",
+  "aiStudentSuggestion4": "Gelişmek için ne önerirsin?",
+  "sportekaiNotReadyTitle": "SporTekAi henüz hazır değil",
+  "sportekaiNotReadyBody": "Yapay zekâ asistanını kullanmak için Cloudflare Worker adresi (SPORTEKAI_ENDPOINT) tanımlanmalı. Kurulum: cloudflare/README.md",
+  "sportekaiGreeting": "Merhaba! Ben SporTekAi ✨",
+  "sportekaiHint": "SporTekAi'ye sor...",
+  "aiResponseLanguage": "Türkçe"
 }

@@ -590,5 +590,23 @@
   "notificationsEmptyTitle": "Нет уведомлений",
   "notificationsEmptyBody": "Сейчас нет уведомлений для показа.",
   "noRecordsTitle": "Нет записей",
-  "noNotificationsInCategory": "В этой категории нет уведомлений."
+  "noNotificationsInCategory": "В этой категории нет уведомлений.",
+
+  "aiStaffSuggestion1": "Подведи итоги этого месяца",
+  "aiStaffSuggestion2": "На что мне стоит обратить внимание?",
+  "aiStaffSuggestion3": "Составь короткое сообщение родителю о пропуске",
+  "aiStaffSuggestion4": "Дай 3 совета по улучшению сбора платежей",
+  "aiParentSuggestion1": "Кратко опиши ситуацию моего ребёнка",
+  "aiParentSuggestion2": "Как обстоят дела с посещаемостью?",
+  "aiParentSuggestion3": "Объясни мой статус оплаты",
+  "aiParentSuggestion4": "Что посоветуешь для его развития?",
+  "aiStudentSuggestion1": "Кратко опиши мою ситуацию",
+  "aiStudentSuggestion2": "Как моя посещаемость?",
+  "aiStudentSuggestion3": "Прокомментируй мои результаты",
+  "aiStudentSuggestion4": "Что посоветуешь для улучшения?",
+  "sportekaiNotReadyTitle": "SporTekAi ещё не готов",
+  "sportekaiNotReadyBody": "Чтобы использовать ИИ-ассистента, необходимо указать адрес Cloudflare Worker (SPORTEKAI_ENDPOINT). Настройка: cloudflare/README.md",
+  "sportekaiGreeting": "Привет! Я SporTekAi ✨",
+  "sportekaiHint": "Спросите SporTekAi...",
+  "aiResponseLanguage": "русском языке"
 }

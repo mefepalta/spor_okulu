@@ -3416,6 +3416,108 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Bu kategoride bildirim bulunmuyor.'**
   String get noNotificationsInCategory;
+
+  /// No description provided for @aiStaffSuggestion1.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu ayı özetle'**
+  String get aiStaffSuggestion1;
+
+  /// No description provided for @aiStaffSuggestion2.
+  ///
+  /// In tr, this message translates to:
+  /// **'Nelere dikkat etmeliyim?'**
+  String get aiStaffSuggestion2;
+
+  /// No description provided for @aiStaffSuggestion3.
+  ///
+  /// In tr, this message translates to:
+  /// **'Devamsızlık için veliye kısa bir mesaj taslağı yaz'**
+  String get aiStaffSuggestion3;
+
+  /// No description provided for @aiStaffSuggestion4.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tahsilatı artırmak için 3 öneri ver'**
+  String get aiStaffSuggestion4;
+
+  /// No description provided for @aiParentSuggestion1.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çocuğumun durumunu özetle'**
+  String get aiParentSuggestion1;
+
+  /// No description provided for @aiParentSuggestion2.
+  ///
+  /// In tr, this message translates to:
+  /// **'Devamsızlık durumu nasıl?'**
+  String get aiParentSuggestion2;
+
+  /// No description provided for @aiParentSuggestion3.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ödeme durumumu açıkla'**
+  String get aiParentSuggestion3;
+
+  /// No description provided for @aiParentSuggestion4.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gelişimi için ne önerirsin?'**
+  String get aiParentSuggestion4;
+
+  /// No description provided for @aiStudentSuggestion1.
+  ///
+  /// In tr, this message translates to:
+  /// **'Durumumu özetle'**
+  String get aiStudentSuggestion1;
+
+  /// No description provided for @aiStudentSuggestion2.
+  ///
+  /// In tr, this message translates to:
+  /// **'Devamsızlığım nasıl?'**
+  String get aiStudentSuggestion2;
+
+  /// No description provided for @aiStudentSuggestion3.
+  ///
+  /// In tr, this message translates to:
+  /// **'Performansımı yorumla'**
+  String get aiStudentSuggestion3;
+
+  /// No description provided for @aiStudentSuggestion4.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gelişmek için ne önerirsin?'**
+  String get aiStudentSuggestion4;
+
+  /// No description provided for @sportekaiNotReadyTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'SporTekAi henüz hazır değil'**
+  String get sportekaiNotReadyTitle;
+
+  /// No description provided for @sportekaiNotReadyBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yapay zekâ asistanını kullanmak için Cloudflare Worker adresi (SPORTEKAI_ENDPOINT) tanımlanmalı. Kurulum: cloudflare/README.md'**
+  String get sportekaiNotReadyBody;
+
+  /// No description provided for @sportekaiGreeting.
+  ///
+  /// In tr, this message translates to:
+  /// **'Merhaba! Ben SporTekAi ✨'**
+  String get sportekaiGreeting;
+
+  /// No description provided for @sportekaiHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'SporTekAi\'ye sor...'**
+  String get sportekaiHint;
+
+  /// No description provided for @aiResponseLanguage.
+  ///
+  /// In tr, this message translates to:
+  /// **'Türkçe'**
+  String get aiResponseLanguage;
 }
 
 class _AppLocalizationsDelegate

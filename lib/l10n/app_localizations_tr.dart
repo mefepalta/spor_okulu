@@ -1875,4 +1875,57 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get noNotificationsInCategory => 'Bu kategoride bildirim bulunmuyor.';
+
+  @override
+  String get aiStaffSuggestion1 => 'Bu ayı özetle';
+
+  @override
+  String get aiStaffSuggestion2 => 'Nelere dikkat etmeliyim?';
+
+  @override
+  String get aiStaffSuggestion3 =>
+      'Devamsızlık için veliye kısa bir mesaj taslağı yaz';
+
+  @override
+  String get aiStaffSuggestion4 => 'Tahsilatı artırmak için 3 öneri ver';
+
+  @override
+  String get aiParentSuggestion1 => 'Çocuğumun durumunu özetle';
+
+  @override
+  String get aiParentSuggestion2 => 'Devamsızlık durumu nasıl?';
+
+  @override
+  String get aiParentSuggestion3 => 'Ödeme durumumu açıkla';
+
+  @override
+  String get aiParentSuggestion4 => 'Gelişimi için ne önerirsin?';
+
+  @override
+  String get aiStudentSuggestion1 => 'Durumumu özetle';
+
+  @override
+  String get aiStudentSuggestion2 => 'Devamsızlığım nasıl?';
+
+  @override
+  String get aiStudentSuggestion3 => 'Performansımı yorumla';
+
+  @override
+  String get aiStudentSuggestion4 => 'Gelişmek için ne önerirsin?';
+
+  @override
+  String get sportekaiNotReadyTitle => 'SporTekAi henüz hazır değil';
+
+  @override
+  String get sportekaiNotReadyBody =>
+      'Yapay zekâ asistanını kullanmak için Cloudflare Worker adresi (SPORTEKAI_ENDPOINT) tanımlanmalı. Kurulum: cloudflare/README.md';
+
+  @override
+  String get sportekaiGreeting => 'Merhaba! Ben SporTekAi ✨';
+
+  @override
+  String get sportekaiHint => 'SporTekAi\'ye sor...';
+
+  @override
+  String get aiResponseLanguage => 'Türkçe';
 }

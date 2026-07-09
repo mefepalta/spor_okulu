@@ -590,5 +590,23 @@
   "notificationsEmptyTitle": "No hay notificaciones",
   "notificationsEmptyBody": "No hay notificaciones para mostrar en este momento.",
   "noRecordsTitle": "Sin registros",
-  "noNotificationsInCategory": "No hay notificaciones en esta categoría."
+  "noNotificationsInCategory": "No hay notificaciones en esta categoría.",
+
+  "aiStaffSuggestion1": "Resume este mes",
+  "aiStaffSuggestion2": "¿A qué debo prestar atención?",
+  "aiStaffSuggestion3": "Redacta un mensaje breve para un padre sobre una ausencia",
+  "aiStaffSuggestion4": "Da 3 consejos para mejorar los cobros",
+  "aiParentSuggestion1": "Resume la situación de mi hijo/a",
+  "aiParentSuggestion2": "¿Cómo está la asistencia?",
+  "aiParentSuggestion3": "Explica mi estado de pago",
+  "aiParentSuggestion4": "¿Qué sugieres para su progreso?",
+  "aiStudentSuggestion1": "Resume mi situación",
+  "aiStudentSuggestion2": "¿Cómo está mi asistencia?",
+  "aiStudentSuggestion3": "Comenta mi rendimiento",
+  "aiStudentSuggestion4": "¿Qué sugieres para mejorar?",
+  "sportekaiNotReadyTitle": "SporTekAi aún no está listo",
+  "sportekaiNotReadyBody": "Para usar el asistente de IA, debe definirse la dirección del Cloudflare Worker (SPORTEKAI_ENDPOINT). Configuración: cloudflare/README.md",
+  "sportekaiGreeting": "¡Hola! Soy SporTekAi ✨",
+  "sportekaiHint": "Pregunta a SporTekAi...",
+  "aiResponseLanguage": "español"
 }

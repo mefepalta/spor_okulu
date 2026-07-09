@@ -590,5 +590,23 @@
   "notificationsEmptyTitle": "No notifications",
   "notificationsEmptyBody": "There are no notifications to show right now.",
   "noRecordsTitle": "No records",
-  "noNotificationsInCategory": "No notifications in this category."
+  "noNotificationsInCategory": "No notifications in this category.",
+
+  "aiStaffSuggestion1": "Summarize this month",
+  "aiStaffSuggestion2": "What should I pay attention to?",
+  "aiStaffSuggestion3": "Draft a short message to a parent about absence",
+  "aiStaffSuggestion4": "Give 3 tips to improve collections",
+  "aiParentSuggestion1": "Summarize my child's status",
+  "aiParentSuggestion2": "How is the attendance situation?",
+  "aiParentSuggestion3": "Explain my payment status",
+  "aiParentSuggestion4": "What do you suggest for their progress?",
+  "aiStudentSuggestion1": "Summarize my status",
+  "aiStudentSuggestion2": "How is my attendance?",
+  "aiStudentSuggestion3": "Comment on my performance",
+  "aiStudentSuggestion4": "What do you suggest to improve?",
+  "sportekaiNotReadyTitle": "SporTekAi is not ready yet",
+  "sportekaiNotReadyBody": "To use the AI assistant, the Cloudflare Worker address (SPORTEKAI_ENDPOINT) must be defined. Setup: cloudflare/README.md",
+  "sportekaiGreeting": "Hello! I'm SporTekAi ✨",
+  "sportekaiHint": "Ask SporTekAi...",
+  "aiResponseLanguage": "English"
 }

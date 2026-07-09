@@ -1879,4 +1879,57 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noNotificationsInCategory => 'No notifications in this category.';
+
+  @override
+  String get aiStaffSuggestion1 => 'Summarize this month';
+
+  @override
+  String get aiStaffSuggestion2 => 'What should I pay attention to?';
+
+  @override
+  String get aiStaffSuggestion3 =>
+      'Draft a short message to a parent about absence';
+
+  @override
+  String get aiStaffSuggestion4 => 'Give 3 tips to improve collections';
+
+  @override
+  String get aiParentSuggestion1 => 'Summarize my child\'s status';
+
+  @override
+  String get aiParentSuggestion2 => 'How is the attendance situation?';
+
+  @override
+  String get aiParentSuggestion3 => 'Explain my payment status';
+
+  @override
+  String get aiParentSuggestion4 => 'What do you suggest for their progress?';
+
+  @override
+  String get aiStudentSuggestion1 => 'Summarize my status';
+
+  @override
+  String get aiStudentSuggestion2 => 'How is my attendance?';
+
+  @override
+  String get aiStudentSuggestion3 => 'Comment on my performance';
+
+  @override
+  String get aiStudentSuggestion4 => 'What do you suggest to improve?';
+
+  @override
+  String get sportekaiNotReadyTitle => 'SporTekAi is not ready yet';
+
+  @override
+  String get sportekaiNotReadyBody =>
+      'To use the AI assistant, the Cloudflare Worker address (SPORTEKAI_ENDPOINT) must be defined. Setup: cloudflare/README.md';
+
+  @override
+  String get sportekaiGreeting => 'Hello! I\'m SporTekAi ✨';
+
+  @override
+  String get sportekaiHint => 'Ask SporTekAi...';
+
+  @override
+  String get aiResponseLanguage => 'English';
 }

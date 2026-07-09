@@ -585,7 +585,12 @@ extension _DashboardHandlers on _DashboardScreenState {
         eventCount: _events.length,
         pendingLeaveCount: pendingLeaves,
       );
-      suggestions = kParentAiSuggestions;
+      suggestions = [
+        l10n.aiParentSuggestion1,
+        l10n.aiParentSuggestion2,
+        l10n.aiParentSuggestion3,
+        l10n.aiParentSuggestion4,
+      ];
       introSubtitle = l10n.aiIntroParent;
     } else if (_isStudent) {
       summary = AiSummary.buildStudentSummary(
@@ -593,7 +598,12 @@ extension _DashboardHandlers on _DashboardScreenState {
         performance: _performanceRecords,
         eventCount: _events.length,
       );
-      suggestions = kStudentAiSuggestions;
+      suggestions = [
+        l10n.aiStudentSuggestion1,
+        l10n.aiStudentSuggestion2,
+        l10n.aiStudentSuggestion3,
+        l10n.aiStudentSuggestion4,
+      ];
       introSubtitle = l10n.aiIntroStudent;
     } else {
       summary = AiSummary.buildStaffSummary(
@@ -607,7 +617,12 @@ extension _DashboardHandlers on _DashboardScreenState {
         equipment: _equipment,
         pendingLeaveCount: pendingLeaves,
       );
-      suggestions = kStaffAiSuggestions;
+      suggestions = [
+        l10n.aiStaffSuggestion1,
+        l10n.aiStaffSuggestion2,
+        l10n.aiStaffSuggestion3,
+        l10n.aiStaffSuggestion4,
+      ];
       introSubtitle = l10n.aiIntroStaff;
     }
 

@@ -1,35 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../constants/ai_config.dart';
+import '../l10n/app_localizations.dart';
 import '../services/ai_service.dart';
 import '../theme/app_colors.dart';
 import '../widgets/ai_rich_text.dart';
 import '../widgets/empty_state.dart';
 import '../widgets/wave_background.dart';
-
-/// Personel için varsayılan hazır komutlar.
-const List<String> kStaffAiSuggestions = [
-  'Bu ayı özetle',
-  'Nelere dikkat etmeliyim?',
-  'Devamsızlık için veliye kısa bir mesaj taslağı yaz',
-  'Tahsilatı artırmak için 3 öneri ver',
-];
-
-/// Veli için varsayılan hazır komutlar.
-const List<String> kParentAiSuggestions = [
-  'Çocuğumun durumunu özetle',
-  'Devamsızlık durumu nasıl?',
-  'Ödeme durumumu açıkla',
-  'Gelişimi için ne önerirsin?',
-];
-
-/// Öğrenci için varsayılan hazır komutlar.
-const List<String> kStudentAiSuggestions = [
-  'Durumumu özetle',
-  'Devamsızlığım nasıl?',
-  'Performansımı yorumla',
-  'Gelişmek için ne önerirsin?',
-];
 
 /// SporTekAi ✨ — anonim özeti bağlam alan sohbet asistanı.
 ///
@@ -39,19 +16,17 @@ class SporTekAiScreen extends StatefulWidget {
   /// Anonim özet (AiSummary ile üretilir).
   final String summary;
 
-  /// Boş ekranda gösterilen hazır komutlar (role göre).
+  /// Boş ekranda gösterilen hazır komutlar (role göre, yerelleştirilmiş).
   final List<String> suggestions;
 
-  /// Giriş ekranındaki açıklama metni (role göre).
+  /// Giriş ekranındaki açıklama metni (role göre, yerelleştirilmiş).
   final String introSubtitle;
 
   const SporTekAiScreen({
     super.key,
     required this.summary,
-    this.suggestions = kStaffAiSuggestions,
-    this.introSubtitle =
-        'Kulübünüzün güncel özetini biliyorum. Aşağıdakilerden birini '
-        'seçebilir ya da kendi sorunu yazabilirsin.',
+    required this.suggestions,
+    required this.introSubtitle,
   });
 
   @override
@@ -68,11 +43,11 @@ class _SporTekAiScreenState extends State<SporTekAiScreen> {
 
   String get _systemPrompt =>
       'Sen SporTekAi\'sın; bir spor okulu yönetim asistanısın. Aşağıda kulübün '
-      'güncel ANONİM özeti var. Sorulara Türkçe, kısa ve uygulanabilir yanıt '
-      'ver; uygun olduğunda maddeler halinde yaz. Sana verilen özet toplu ya da '
-      'genel olabilir; yine de eldeki bilgilerle en yararlı özeti/yanıtı sun. '
-      'Sayı uydurma; bir bilgi gerçekten yoksa kısaca belirt ama olabildiğince '
-      'yardımcı ol.\n\n'
+      'güncel ANONİM özeti var. Sorulara ${AppLocalizations.of(context).aiResponseLanguage} '
+      'yanıt ver; kısa ve uygulanabilir olsun; uygun olduğunda maddeler halinde '
+      'yaz. Sana verilen özet toplu ya da genel olabilir; yine de eldeki '
+      'bilgilerle en yararlı özeti/yanıtı sun. Sayı uydurma; bir bilgi gerçekten '
+      'yoksa kısaca belirt ama olabildiğince yardımcı ol.\n\n'
       '${widget.summary}';
 
   @override
@@ -133,6 +108,7 @@ class _SporTekAiScreenState extends State<SporTekAiScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return WaveScaffold(
       appBar: AppBar(
         title: const Row(
@@ -145,13 +121,10 @@ class _SporTekAiScreenState extends State<SporTekAiScreen> {
         ),
       ),
       body: !AiConfig.isConfigured
-          ? const EmptyState(
+          ? EmptyState(
               icon: Icons.auto_awesome,
-              title: 'SporTekAi henüz hazır değil',
-              message:
-                  'Yapay zekâ asistanını kullanmak için Cloudflare Worker '
-                  'adresi (SPORTEKAI_ENDPOINT) tanımlanmalı. Kurulum: '
-                  'cloudflare/README.md',
+              title: l10n.sportekaiNotReadyTitle,
+              message: l10n.sportekaiNotReadyBody,
             )
           : Column(
               children: [
@@ -177,6 +150,7 @@ class _SporTekAiScreenState extends State<SporTekAiScreen> {
   }
 
   Widget _buildIntro(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
@@ -191,10 +165,10 @@ class _SporTekAiScreenState extends State<SporTekAiScreen> {
           ),
         ),
         const SizedBox(height: 12),
-        const Text(
-          'Merhaba! Ben SporTekAi ✨',
+        Text(
+          l10n.sportekaiGreeting,
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 6),
         Text(
@@ -299,7 +273,7 @@ class _SporTekAiScreenState extends State<SporTekAiScreen> {
                 maxLines: 4,
                 onSubmitted: _isSending ? null : _send,
                 decoration: InputDecoration(
-                  hintText: 'SporTekAi\'ye sor...',
+                  hintText: AppLocalizations.of(context).sportekaiHint,
                   filled: true,
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 16,
