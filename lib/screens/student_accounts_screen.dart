@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../widgets/wave_background.dart';
 
+import '../l10n/app_localizations.dart';
 import '../models/app_models.dart';
 import '../widgets/empty_state.dart';
 import 'parents_screen.dart';
@@ -41,10 +42,11 @@ class _StudentAccountsScreenState extends State<StudentAccountsScreen> {
         return student.name;
       }
     }
-    return 'Bilinmeyen öğrenci';
+    return AppLocalizations.of(context).unknownStudent;
   }
 
   Future<void> _openAddDialog() async {
+    final l10n = AppLocalizations.of(context);
     final email = await showDialog<String>(
       context: context,
       builder: (context) => const _AddStudentAccountDialog(),
@@ -63,7 +65,7 @@ class _StudentAccountsScreenState extends State<StudentAccountsScreen> {
 
       setState(() {});
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Öğrenci hesabı eklendi.')),
+        SnackBar(content: Text(l10n.studentAccountAdded)),
       );
     } catch (error) {
       if (!mounted) {
@@ -72,7 +74,7 @@ class _StudentAccountsScreenState extends State<StudentAccountsScreen> {
 
       final message = error is StateError
           ? error.message
-          : 'Öğrenci hesabı eklenirken bir hata oluştu.';
+          : l10n.studentAccountAddError;
 
       ScaffoldMessenger.of(
         context,
@@ -88,7 +90,7 @@ class _StudentAccountsScreenState extends State<StudentAccountsScreen> {
           parent: account,
           students: widget.students,
           singleSelect: true,
-          accountLabel: 'Öğrenci hesabı',
+          accountLabel: AppLocalizations.of(context).accountLabelStudent,
         ),
       ),
     );
@@ -107,25 +109,23 @@ class _StudentAccountsScreenState extends State<StudentAccountsScreen> {
   }
 
   Future<void> _confirmRemove(ParentAccount account) async {
+    final l10n = AppLocalizations.of(context);
     final shouldRemove = await showDialog<bool>(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Hesabı Kaldır'),
-          content: Text(
-            '${account.email} artık öğrenci olmayacak ve öğrenci eşleşmesi '
-            'silinecek. Devam edilsin mi?',
-          ),
+          title: Text(l10n.removeAccountTitle),
+          content: Text(l10n.removeAccountConfirm(account.email)),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context, false),
-              child: const Text('Vazgeç'),
+              child: Text(l10n.commonCancel),
             ),
             TextButton(
               onPressed: () => Navigator.pop(context, true),
-              child: const Text(
-                'Kaldır',
-                style: TextStyle(color: Colors.red),
+              child: Text(
+                l10n.removeAction,
+                style: const TextStyle(color: Colors.red),
               ),
             ),
           ],
@@ -148,14 +148,14 @@ class _StudentAccountsScreenState extends State<StudentAccountsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return WaveScaffold(
-      appBar: AppBar(title: const Text('Öğrenci Hesapları')),
+      appBar: AppBar(title: Text(l10n.navStudentAccounts)),
       body: widget.accounts.isEmpty
-          ? const EmptyState(
+          ? EmptyState(
               icon: Icons.school,
-              title: 'Henüz öğrenci hesabı yok',
-              message: 'Öğrenci hesabı eklemek için sağ alttaki + butonunu '
-                  'kullan. Öğrencinin önce uygulamaya kayıt olması gerekir.',
+              title: l10n.studentAccountsEmptyTitle,
+              message: l10n.studentAccountsEmptyBody,
             )
           : ListView.builder(
               padding: const EdgeInsets.all(16),
@@ -178,8 +178,8 @@ class _StudentAccountsScreenState extends State<StudentAccountsScreen> {
                     title: Text(account.email),
                     subtitle: Text(
                       linkedName == null
-                          ? 'Öğrenci eşleşmedi'
-                          : 'Öğrenci: $linkedName',
+                          ? l10n.studentNotLinked
+                          : l10n.studentLinked(linkedName),
                     ),
                     trailing: IconButton(
                       icon: const Icon(Icons.person_remove, color: Colors.red),
@@ -224,17 +224,17 @@ class _AddStudentAccountDialogState extends State<_AddStudentAccountDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return AlertDialog(
-      title: const Text('Öğrenci Hesabı Ekle'),
+      title: Text(l10n.addStudentAccountTitle),
       content: Form(
         key: _formKey,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text(
-              'Öğrencinin uygulamaya kayıtlı e-posta adresini gir. Öğrenci '
-              'önce kendisi kayıt olmalıdır.',
-              style: TextStyle(fontSize: 13),
+            Text(
+              l10n.addStudentAccountHint,
+              style: const TextStyle(fontSize: 13),
             ),
             const SizedBox(height: 12),
             TextFormField(
@@ -242,17 +242,17 @@ class _AddStudentAccountDialogState extends State<_AddStudentAccountDialog> {
               keyboardType: TextInputType.emailAddress,
               autofocus: true,
               onFieldSubmitted: (_) => _submit(),
-              decoration: const InputDecoration(
-                labelText: 'E-posta',
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.email),
+              decoration: InputDecoration(
+                labelText: l10n.emailLabel,
+                border: const OutlineInputBorder(),
+                prefixIcon: const Icon(Icons.email),
               ),
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'E-posta boş bırakılamaz.';
+                  return l10n.emailEmpty;
                 }
                 if (!value.contains('@')) {
-                  return 'Geçerli bir e-posta gir.';
+                  return l10n.emailInvalid;
                 }
                 return null;
               },
@@ -263,11 +263,11 @@ class _AddStudentAccountDialogState extends State<_AddStudentAccountDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Vazgeç'),
+          child: Text(l10n.commonCancel),
         ),
         TextButton(
           onPressed: _submit,
-          child: const Text('Ekle'),
+          child: Text(l10n.commonAdd),
         ),
       ],
     );

@@ -2137,6 +2137,72 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'{label}: {email}'**
   String accountAssignHeader(String label, String email);
+
+  /// No description provided for @studentAccountAdded.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğrenci hesabı eklendi.'**
+  String get studentAccountAdded;
+
+  /// No description provided for @studentAccountAddError.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğrenci hesabı eklenirken bir hata oluştu.'**
+  String get studentAccountAddError;
+
+  /// No description provided for @removeAccountTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hesabı Kaldır'**
+  String get removeAccountTitle;
+
+  /// No description provided for @removeAccountConfirm.
+  ///
+  /// In tr, this message translates to:
+  /// **'{email} artık öğrenci olmayacak ve öğrenci eşleşmesi silinecek. Devam edilsin mi?'**
+  String removeAccountConfirm(String email);
+
+  /// No description provided for @studentAccountsEmptyTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz öğrenci hesabı yok'**
+  String get studentAccountsEmptyTitle;
+
+  /// No description provided for @studentAccountsEmptyBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğrenci hesabı eklemek için sağ alttaki + butonunu kullan. Öğrencinin önce uygulamaya kayıt olması gerekir.'**
+  String get studentAccountsEmptyBody;
+
+  /// No description provided for @studentNotLinked.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğrenci eşleşmedi'**
+  String get studentNotLinked;
+
+  /// No description provided for @studentLinked.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğrenci: {name}'**
+  String studentLinked(String name);
+
+  /// No description provided for @addStudentAccountTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğrenci Hesabı Ekle'**
+  String get addStudentAccountTitle;
+
+  /// No description provided for @addStudentAccountHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğrencinin uygulamaya kayıtlı e-posta adresini gir. Öğrenci önce kendisi kayıt olmalıdır.'**
+  String get addStudentAccountHint;
+
+  /// No description provided for @accountLabelStudent.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğrenci hesabı'**
+  String get accountLabelStudent;
 }
 
 class _AppLocalizationsDelegate

@@ -365,5 +365,17 @@
   "noStudentAssigned": "Sin estudiante asignado",
   "studentsAssigned": "Estudiantes: {names}",
   "assignStudentsTitle": "Asignar estudiantes",
-  "accountAssignHeader": "{label}: {email}"
+  "accountAssignHeader": "{label}: {email}",
+
+  "studentAccountAdded": "Cuenta de estudiante añadida.",
+  "studentAccountAddError": "Ocurrió un error al añadir la cuenta de estudiante.",
+  "removeAccountTitle": "Quitar cuenta",
+  "removeAccountConfirm": "{email} dejará de ser estudiante y se eliminará la vinculación de estudiante. ¿Continuar?",
+  "studentAccountsEmptyTitle": "Aún no hay cuentas de estudiante",
+  "studentAccountsEmptyBody": "Usa el botón + de abajo a la derecha para añadir una cuenta de estudiante. El estudiante debe registrarse primero en la app.",
+  "studentNotLinked": "Sin estudiante vinculado",
+  "studentLinked": "Estudiante: {name}",
+  "addStudentAccountTitle": "Añadir cuenta de estudiante",
+  "addStudentAccountHint": "Introduce el correo del estudiante registrado en la app. El estudiante debe registrarse primero.",
+  "accountLabelStudent": "Cuenta de estudiante"
 }

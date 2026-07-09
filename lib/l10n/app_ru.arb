@@ -365,5 +365,17 @@
   "noStudentAssigned": "Ученик не назначен",
   "studentsAssigned": "Ученики: {names}",
   "assignStudentsTitle": "Назначить учеников",
-  "accountAssignHeader": "{label}: {email}"
+  "accountAssignHeader": "{label}: {email}",
+
+  "studentAccountAdded": "Аккаунт ученика добавлен.",
+  "studentAccountAddError": "Произошла ошибка при добавлении аккаунта ученика.",
+  "removeAccountTitle": "Удалить аккаунт",
+  "removeAccountConfirm": "{email} больше не будет учеником, а привязка ученика будет удалена. Продолжить?",
+  "studentAccountsEmptyTitle": "Аккаунтов учеников пока нет",
+  "studentAccountsEmptyBody": "Нажмите кнопку + внизу справа, чтобы добавить аккаунт ученика. Ученик должен сначала зарегистрироваться в приложении.",
+  "studentNotLinked": "Ученик не привязан",
+  "studentLinked": "Ученик: {name}",
+  "addStudentAccountTitle": "Добавить аккаунт ученика",
+  "addStudentAccountHint": "Введите адрес электронной почты ученика, зарегистрированный в приложении. Ученик должен сначала зарегистрироваться.",
+  "accountLabelStudent": "Аккаунт ученика"
 }

@@ -1164,4 +1164,44 @@ class AppLocalizationsFr extends AppLocalizations {
   String accountAssignHeader(String label, String email) {
     return '$label : $email';
   }
+
+  @override
+  String get studentAccountAdded => 'Compte élève ajouté.';
+
+  @override
+  String get studentAccountAddError =>
+      'Une erreur s\'est produite lors de l\'ajout du compte élève.';
+
+  @override
+  String get removeAccountTitle => 'Retirer le compte';
+
+  @override
+  String removeAccountConfirm(String email) {
+    return '$email ne sera plus élève et l\'association d\'élève sera supprimée. Continuer ?';
+  }
+
+  @override
+  String get studentAccountsEmptyTitle => 'Aucun compte élève pour l\'instant';
+
+  @override
+  String get studentAccountsEmptyBody =>
+      'Utilisez le bouton + en bas à droite pour ajouter un compte élève. L\'élève doit d\'abord s\'inscrire dans l\'application.';
+
+  @override
+  String get studentNotLinked => 'Aucun élève associé';
+
+  @override
+  String studentLinked(String name) {
+    return 'Élève : $name';
+  }
+
+  @override
+  String get addStudentAccountTitle => 'Ajouter un compte élève';
+
+  @override
+  String get addStudentAccountHint =>
+      'Saisissez l\'adresse e-mail de l\'élève enregistrée dans l\'application. L\'élève doit d\'abord s\'inscrire.';
+
+  @override
+  String get accountLabelStudent => 'Compte élève';
 }

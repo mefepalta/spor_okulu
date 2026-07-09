@@ -498,5 +498,23 @@
   "accountAssignHeader": "{label}: {email}",
   "@accountAssignHeader": {
     "placeholders": { "label": { "type": "String" }, "email": { "type": "String" } }
-  }
+  },
+
+  "studentAccountAdded": "Öğrenci hesabı eklendi.",
+  "studentAccountAddError": "Öğrenci hesabı eklenirken bir hata oluştu.",
+  "removeAccountTitle": "Hesabı Kaldır",
+  "removeAccountConfirm": "{email} artık öğrenci olmayacak ve öğrenci eşleşmesi silinecek. Devam edilsin mi?",
+  "@removeAccountConfirm": {
+    "placeholders": { "email": { "type": "String" } }
+  },
+  "studentAccountsEmptyTitle": "Henüz öğrenci hesabı yok",
+  "studentAccountsEmptyBody": "Öğrenci hesabı eklemek için sağ alttaki + butonunu kullan. Öğrencinin önce uygulamaya kayıt olması gerekir.",
+  "studentNotLinked": "Öğrenci eşleşmedi",
+  "studentLinked": "Öğrenci: {name}",
+  "@studentLinked": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "addStudentAccountTitle": "Öğrenci Hesabı Ekle",
+  "addStudentAccountHint": "Öğrencinin uygulamaya kayıtlı e-posta adresini gir. Öğrenci önce kendisi kayıt olmalıdır.",
+  "accountLabelStudent": "Öğrenci hesabı"
 }

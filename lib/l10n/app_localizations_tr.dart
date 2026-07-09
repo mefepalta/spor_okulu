@@ -1145,4 +1145,44 @@ class AppLocalizationsTr extends AppLocalizations {
   String accountAssignHeader(String label, String email) {
     return '$label: $email';
   }
+
+  @override
+  String get studentAccountAdded => 'Öğrenci hesabı eklendi.';
+
+  @override
+  String get studentAccountAddError =>
+      'Öğrenci hesabı eklenirken bir hata oluştu.';
+
+  @override
+  String get removeAccountTitle => 'Hesabı Kaldır';
+
+  @override
+  String removeAccountConfirm(String email) {
+    return '$email artık öğrenci olmayacak ve öğrenci eşleşmesi silinecek. Devam edilsin mi?';
+  }
+
+  @override
+  String get studentAccountsEmptyTitle => 'Henüz öğrenci hesabı yok';
+
+  @override
+  String get studentAccountsEmptyBody =>
+      'Öğrenci hesabı eklemek için sağ alttaki + butonunu kullan. Öğrencinin önce uygulamaya kayıt olması gerekir.';
+
+  @override
+  String get studentNotLinked => 'Öğrenci eşleşmedi';
+
+  @override
+  String studentLinked(String name) {
+    return 'Öğrenci: $name';
+  }
+
+  @override
+  String get addStudentAccountTitle => 'Öğrenci Hesabı Ekle';
+
+  @override
+  String get addStudentAccountHint =>
+      'Öğrencinin uygulamaya kayıtlı e-posta adresini gir. Öğrenci önce kendisi kayıt olmalıdır.';
+
+  @override
+  String get accountLabelStudent => 'Öğrenci hesabı';
 }

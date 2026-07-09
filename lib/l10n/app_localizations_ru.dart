@@ -1155,4 +1155,44 @@ class AppLocalizationsRu extends AppLocalizations {
   String accountAssignHeader(String label, String email) {
     return '$label: $email';
   }
+
+  @override
+  String get studentAccountAdded => 'Аккаунт ученика добавлен.';
+
+  @override
+  String get studentAccountAddError =>
+      'Произошла ошибка при добавлении аккаунта ученика.';
+
+  @override
+  String get removeAccountTitle => 'Удалить аккаунт';
+
+  @override
+  String removeAccountConfirm(String email) {
+    return '$email больше не будет учеником, а привязка ученика будет удалена. Продолжить?';
+  }
+
+  @override
+  String get studentAccountsEmptyTitle => 'Аккаунтов учеников пока нет';
+
+  @override
+  String get studentAccountsEmptyBody =>
+      'Нажмите кнопку + внизу справа, чтобы добавить аккаунт ученика. Ученик должен сначала зарегистрироваться в приложении.';
+
+  @override
+  String get studentNotLinked => 'Ученик не привязан';
+
+  @override
+  String studentLinked(String name) {
+    return 'Ученик: $name';
+  }
+
+  @override
+  String get addStudentAccountTitle => 'Добавить аккаунт ученика';
+
+  @override
+  String get addStudentAccountHint =>
+      'Введите адрес электронной почты ученика, зарегистрированный в приложении. Ученик должен сначала зарегистрироваться.';
+
+  @override
+  String get accountLabelStudent => 'Аккаунт ученика';
 }

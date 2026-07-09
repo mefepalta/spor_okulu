@@ -365,5 +365,17 @@
   "noStudentAssigned": "No student assigned",
   "studentsAssigned": "Students: {names}",
   "assignStudentsTitle": "Assign Students",
-  "accountAssignHeader": "{label}: {email}"
+  "accountAssignHeader": "{label}: {email}",
+
+  "studentAccountAdded": "Student account added.",
+  "studentAccountAddError": "An error occurred while adding the student account.",
+  "removeAccountTitle": "Remove Account",
+  "removeAccountConfirm": "{email} will no longer be a student and the student link will be removed. Continue?",
+  "studentAccountsEmptyTitle": "No student accounts yet",
+  "studentAccountsEmptyBody": "Use the + button at the bottom right to add a student account. The student must register in the app first.",
+  "studentNotLinked": "No student linked",
+  "studentLinked": "Student: {name}",
+  "addStudentAccountTitle": "Add Student Account",
+  "addStudentAccountHint": "Enter the student's email address registered in the app. The student must register first.",
+  "accountLabelStudent": "Student account"
 }
