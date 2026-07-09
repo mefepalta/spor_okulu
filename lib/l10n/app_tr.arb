@@ -836,5 +836,7 @@
 
   "videoOpenError": "Video açılamadı.",
   "watchIntroVideo": "Tanıtım videosunu izle",
-  "youtubeHowToPlay": "nasıl oynanır"
+  "youtubeHowToPlay": "nasıl oynanır",
+
+  "fullNameHint": "Mehmet Ali Yılmaz"
 }

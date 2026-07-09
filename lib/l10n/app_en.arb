@@ -612,5 +612,7 @@
 
   "videoOpenError": "Couldn't open the video.",
   "watchIntroVideo": "Watch the intro video",
-  "youtubeHowToPlay": "how to play"
+  "youtubeHowToPlay": "how to play",
+
+  "fullNameHint": "John Smith"
 }

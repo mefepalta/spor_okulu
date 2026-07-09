@@ -1959,4 +1959,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get youtubeHowToPlay => 'cómo se juega';
+
+  @override
+  String get fullNameHint => 'Juan Pérez';
 }

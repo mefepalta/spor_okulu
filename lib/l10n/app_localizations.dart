@@ -3536,6 +3536,12 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'nasıl oynanır'**
   String get youtubeHowToPlay;
+
+  /// No description provided for @fullNameHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mehmet Ali Yılmaz'**
+  String get fullNameHint;
 }
 
 class _AppLocalizationsDelegate

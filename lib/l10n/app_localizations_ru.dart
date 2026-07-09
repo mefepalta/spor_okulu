@@ -1952,4 +1952,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get youtubeHowToPlay => 'как играть';
+
+  @override
+  String get fullNameHint => 'Иван Иванов';
 }

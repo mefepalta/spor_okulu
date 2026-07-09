@@ -435,7 +435,7 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
                   labelText: l10n.fieldFullName,
                   border: const OutlineInputBorder(),
                   prefixIcon: const Icon(Icons.person),
-                  hintText: 'Mehmet Ali Yılmaz',
+                  hintText: l10n.fullNameHint,
                 ),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {

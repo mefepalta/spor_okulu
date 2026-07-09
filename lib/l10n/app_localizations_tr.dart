@@ -1937,4 +1937,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get youtubeHowToPlay => 'nasıl oynanır';
+
+  @override
+  String get fullNameHint => 'Mehmet Ali Yılmaz';
 }

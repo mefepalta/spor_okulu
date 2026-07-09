@@ -1966,4 +1966,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get youtubeHowToPlay => 'comment jouer';
+
+  @override
+  String get fullNameHint => 'Jean Dupont';
 }

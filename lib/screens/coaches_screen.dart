@@ -414,7 +414,7 @@ class _AddCoachScreenState extends State<AddCoachScreen> {
                   labelText: l10n.fieldFullName,
                   border: const OutlineInputBorder(),
                   prefixIcon: const Icon(Icons.person),
-                  hintText: 'Ahmet Yılmaz',
+                  hintText: l10n.fullNameHint,
                 ),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {

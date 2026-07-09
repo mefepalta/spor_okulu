@@ -612,5 +612,7 @@
 
   "videoOpenError": "No se pudo abrir el video.",
   "watchIntroVideo": "Ver el video de presentación",
-  "youtubeHowToPlay": "cómo se juega"
+  "youtubeHowToPlay": "cómo se juega",
+
+  "fullNameHint": "Juan Pérez"
 }

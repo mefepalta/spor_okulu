@@ -612,5 +612,7 @@
 
   "videoOpenError": "Не удалось открыть видео.",
   "watchIntroVideo": "Посмотреть вводное видео",
-  "youtubeHowToPlay": "как играть"
+  "youtubeHowToPlay": "как играть",
+
+  "fullNameHint": "Иван Иванов"
 }

@@ -612,5 +612,7 @@
 
   "videoOpenError": "Impossible d'ouvrir la vidéo.",
   "watchIntroVideo": "Regarder la vidéo de présentation",
-  "youtubeHowToPlay": "comment jouer"
+  "youtubeHowToPlay": "comment jouer",
+
+  "fullNameHint": "Jean Dupont"
 }

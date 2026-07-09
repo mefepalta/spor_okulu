@@ -1941,4 +1941,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get youtubeHowToPlay => 'how to play';
+
+  @override
+  String get fullNameHint => 'John Smith';
 }
