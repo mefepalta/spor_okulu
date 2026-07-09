@@ -339,5 +339,17 @@
   "capacityExceeded": "Вместимость превышена",
   "noStudentsTitle": "Нет учеников",
   "noStudentsBody": "Сначала нужно добавить учеников.",
-  "studentBranchAge": "{branch} • {age} лет"
+  "studentBranchAge": "{branch} • {age} лет",
+
+  "usersSearchHint": "Поиск по эл. почте",
+  "usersEmptyTitle": "Нет пользователей",
+  "usersEmptyBody": "Зарегистрированных пользователей пока нет.",
+  "noEmail": "(нет эл. почты)",
+  "youLabel": "(вы)",
+  "cannotChangeOwnRole": "Здесь нельзя изменить собственную роль.",
+  "roleUpdateError": "Произошла ошибка при обновлении роли.",
+  "userRoleUpdated": "{email} → обновлено на «{role}».",
+  "changeRoleTitle": "Изменить роль",
+  "parentAssignHint": "Назначение учеников выполняется на экране «Родители».",
+  "studentAssignHint": "Сопоставление учеников выполняется на экране «Аккаунты учеников»."
 }

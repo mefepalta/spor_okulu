@@ -1993,6 +1993,72 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'{branch} • {age} yaş'**
   String studentBranchAge(String branch, int age);
+
+  /// No description provided for @usersSearchHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'E-posta ara'**
+  String get usersSearchHint;
+
+  /// No description provided for @usersEmptyTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kullanıcı yok'**
+  String get usersEmptyTitle;
+
+  /// No description provided for @usersEmptyBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz kayıtlı kullanıcı bulunmuyor.'**
+  String get usersEmptyBody;
+
+  /// No description provided for @noEmail.
+  ///
+  /// In tr, this message translates to:
+  /// **'(e-posta yok)'**
+  String get noEmail;
+
+  /// No description provided for @youLabel.
+  ///
+  /// In tr, this message translates to:
+  /// **'(sen)'**
+  String get youLabel;
+
+  /// No description provided for @cannotChangeOwnRole.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kendi rolünü buradan değiştiremezsin.'**
+  String get cannotChangeOwnRole;
+
+  /// No description provided for @roleUpdateError.
+  ///
+  /// In tr, this message translates to:
+  /// **'Rol güncellenirken bir hata oluştu.'**
+  String get roleUpdateError;
+
+  /// No description provided for @userRoleUpdated.
+  ///
+  /// In tr, this message translates to:
+  /// **'{email} → {role} olarak güncellendi.'**
+  String userRoleUpdated(String email, String role);
+
+  /// No description provided for @changeRoleTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Rol Değiştir'**
+  String get changeRoleTitle;
+
+  /// No description provided for @parentAssignHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğrenci ataması \"Veliler\" ekranından yapılır.'**
+  String get parentAssignHint;
+
+  /// No description provided for @studentAssignHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğrenci eşleştirmesi \"Öğrenci Hesapları\" ekranından yapılır.'**
+  String get studentAssignHint;
 }
 
 class _AppLocalizationsDelegate

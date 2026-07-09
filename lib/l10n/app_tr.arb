@@ -460,5 +460,20 @@
   "studentBranchAge": "{branch} • {age} yaş",
   "@studentBranchAge": {
     "placeholders": { "branch": { "type": "String" }, "age": { "type": "int" } }
-  }
+  },
+
+  "usersSearchHint": "E-posta ara",
+  "usersEmptyTitle": "Kullanıcı yok",
+  "usersEmptyBody": "Henüz kayıtlı kullanıcı bulunmuyor.",
+  "noEmail": "(e-posta yok)",
+  "youLabel": "(sen)",
+  "cannotChangeOwnRole": "Kendi rolünü buradan değiştiremezsin.",
+  "roleUpdateError": "Rol güncellenirken bir hata oluştu.",
+  "userRoleUpdated": "{email} → {role} olarak güncellendi.",
+  "@userRoleUpdated": {
+    "placeholders": { "email": { "type": "String" }, "role": { "type": "String" } }
+  },
+  "changeRoleTitle": "Rol Değiştir",
+  "parentAssignHint": "Öğrenci ataması \"Veliler\" ekranından yapılır.",
+  "studentAssignHint": "Öğrenci eşleştirmesi \"Öğrenci Hesapları\" ekranından yapılır."
 }

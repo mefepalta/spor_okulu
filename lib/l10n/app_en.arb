@@ -339,5 +339,17 @@
   "capacityExceeded": "Capacity exceeded",
   "noStudentsTitle": "No students",
   "noStudentsBody": "Students must be added first.",
-  "studentBranchAge": "{branch} • age {age}"
+  "studentBranchAge": "{branch} • age {age}",
+
+  "usersSearchHint": "Search email",
+  "usersEmptyTitle": "No users",
+  "usersEmptyBody": "No registered users yet.",
+  "noEmail": "(no email)",
+  "youLabel": "(you)",
+  "cannotChangeOwnRole": "You can't change your own role here.",
+  "roleUpdateError": "An error occurred while updating the role.",
+  "userRoleUpdated": "{email} → updated to {role}.",
+  "changeRoleTitle": "Change Role",
+  "parentAssignHint": "Student assignment is done from the \"Parents\" screen.",
+  "studentAssignHint": "Student matching is done from the \"Student Accounts\" screen."
 }

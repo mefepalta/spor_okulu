@@ -339,5 +339,17 @@
   "capacityExceeded": "Capacidad superada",
   "noStudentsTitle": "Sin estudiantes",
   "noStudentsBody": "Primero deben añadirse estudiantes.",
-  "studentBranchAge": "{branch} • {age} años"
+  "studentBranchAge": "{branch} • {age} años",
+
+  "usersSearchHint": "Buscar correo",
+  "usersEmptyTitle": "Sin usuarios",
+  "usersEmptyBody": "Aún no hay usuarios registrados.",
+  "noEmail": "(sin correo)",
+  "youLabel": "(tú)",
+  "cannotChangeOwnRole": "No puedes cambiar tu propio rol aquí.",
+  "roleUpdateError": "Se produjo un error al actualizar el rol.",
+  "userRoleUpdated": "{email} → actualizado a {role}.",
+  "changeRoleTitle": "Cambiar rol",
+  "parentAssignHint": "La asignación de estudiantes se hace desde la pantalla \"Padres\".",
+  "studentAssignHint": "La vinculación de estudiantes se hace desde la pantalla \"Cuentas de estudiantes\"."
 }

@@ -4,7 +4,9 @@ import '../theme/app_colors.dart';
 import '../widgets/wave_background.dart';
 
 import '../constants/app_roles.dart';
+import '../l10n/app_localizations.dart';
 import '../models/app_models.dart';
+import '../utils/role_l10n.dart';
 import '../widgets/empty_state.dart';
 
 /// Admin'in tüm kullanıcıların rolünü yönettiği ekran.
@@ -32,9 +34,10 @@ class _UsersScreenState extends State<UsersScreen> {
   String _searchQuery = '';
 
   Future<void> _openChangeRoleDialog(UserAccount user) async {
+    final l10n = AppLocalizations.of(context);
     if (user.uid == widget.currentUserUid) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Kendi rolünü buradan değiştiremezsin.')),
+        SnackBar(content: Text(l10n.cannotChangeOwnRole)),
       );
       return;
     }
@@ -59,7 +62,10 @@ class _UsersScreenState extends State<UsersScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            '${user.email} → ${AppRoleLabels.of(selectedRole)} olarak güncellendi.',
+            l10n.userRoleUpdated(
+              user.email,
+              localizedRole(l10n, selectedRole),
+            ),
           ),
         ),
       );
@@ -70,7 +76,7 @@ class _UsersScreenState extends State<UsersScreen> {
 
       final message = error is StateError
           ? error.message
-          : 'Rol güncellenirken bir hata oluştu.';
+          : l10n.roleUpdateError;
 
       ScaffoldMessenger.of(
         context,
@@ -80,6 +86,7 @@ class _UsersScreenState extends State<UsersScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final query = _searchQuery.trim().toLowerCase();
     final filteredUsers = query.isEmpty
         ? widget.users
@@ -102,16 +109,16 @@ class _UsersScreenState extends State<UsersScreen> {
       });
 
     return WaveScaffold(
-      appBar: AppBar(title: const Text('Kullanıcılar')),
+      appBar: AppBar(title: Text(l10n.navUsers)),
       body: Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(16),
             child: TextField(
-              decoration: const InputDecoration(
-                labelText: 'E-posta ara',
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.usersSearchHint,
+                prefixIcon: const Icon(Icons.search),
+                border: const OutlineInputBorder(),
               ),
               onChanged: (value) {
                 setState(() {
@@ -122,16 +129,16 @@ class _UsersScreenState extends State<UsersScreen> {
           ),
           Expanded(
             child: widget.users.isEmpty
-                ? const EmptyState(
+                ? EmptyState(
                     icon: Icons.manage_accounts,
-                    title: 'Kullanıcı yok',
-                    message: 'Henüz kayıtlı kullanıcı bulunmuyor.',
+                    title: l10n.usersEmptyTitle,
+                    message: l10n.usersEmptyBody,
                   )
                 : sortedUsers.isEmpty
-                ? const EmptyState(
+                ? EmptyState(
                     icon: Icons.search_off,
-                    title: 'Sonuç bulunamadı',
-                    message: 'Arama metnini değiştirerek tekrar dene.',
+                    title: l10n.searchNoResults,
+                    message: l10n.searchNoResultsBody,
                   )
                 : ListView.builder(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -153,7 +160,7 @@ class _UsersScreenState extends State<UsersScreen> {
                             user.displayName.isNotEmpty
                                 ? user.displayName
                                 : (user.email.isEmpty
-                                      ? '(e-posta yok)'
+                                      ? l10n.noEmail
                                       : user.email),
                           ),
                           subtitle: Text(
@@ -161,8 +168,8 @@ class _UsersScreenState extends State<UsersScreen> {
                               if (user.displayName.isNotEmpty &&
                                   user.email.isNotEmpty)
                                 user.email,
-                              AppRoleLabels.of(user.role),
-                              if (isSelf) '(sen)',
+                              localizedRole(l10n, user.role),
+                              if (isSelf) l10n.youLabel,
                             ].join(' • '),
                           ),
                           trailing: isSelf
@@ -219,8 +226,9 @@ class _ChangeRoleDialogState extends State<_ChangeRoleDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return AlertDialog(
-      title: const Text('Rol Değiştir'),
+      title: Text(l10n.changeRoleTitle),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -242,7 +250,7 @@ class _ChangeRoleDialogState extends State<_ChangeRoleDialog> {
                 AppRoleLabels.icon(role),
                 color: AppRoleLabels.color(role),
               ),
-              title: Text(AppRoleLabels.of(role)),
+              title: Text(localizedRole(l10n, role)),
               trailing: isSelected
                   ? const Icon(Icons.check_circle, color: Colors.green)
                   : const Icon(
@@ -253,19 +261,19 @@ class _ChangeRoleDialogState extends State<_ChangeRoleDialog> {
             );
           }),
           if (_selectedRole == AppRoles.parent)
-            const Padding(
-              padding: EdgeInsets.only(top: 8),
+            Padding(
+              padding: const EdgeInsets.only(top: 8),
               child: Text(
-                'Öğrenci ataması "Veliler" ekranından yapılır.',
-                style: TextStyle(fontSize: 12, color: Colors.grey),
+                l10n.parentAssignHint,
+                style: const TextStyle(fontSize: 12, color: Colors.grey),
               ),
             ),
           if (_selectedRole == AppRoles.student)
-            const Padding(
-              padding: EdgeInsets.only(top: 8),
+            Padding(
+              padding: const EdgeInsets.only(top: 8),
               child: Text(
-                'Öğrenci eşleştirmesi "Öğrenci Hesapları" ekranından yapılır.',
-                style: TextStyle(fontSize: 12, color: Colors.grey),
+                l10n.studentAssignHint,
+                style: const TextStyle(fontSize: 12, color: Colors.grey),
               ),
             ),
         ],
@@ -273,11 +281,11 @@ class _ChangeRoleDialogState extends State<_ChangeRoleDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Vazgeç'),
+          child: Text(l10n.commonCancel),
         ),
         TextButton(
           onPressed: () => Navigator.pop(context, _selectedRole),
-          child: const Text('Kaydet'),
+          child: Text(l10n.commonSave),
         ),
       ],
     );

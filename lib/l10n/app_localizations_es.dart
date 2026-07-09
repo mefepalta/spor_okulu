@@ -1075,4 +1075,41 @@ class AppLocalizationsEs extends AppLocalizations {
   String studentBranchAge(String branch, int age) {
     return '$branch • $age años';
   }
+
+  @override
+  String get usersSearchHint => 'Buscar correo';
+
+  @override
+  String get usersEmptyTitle => 'Sin usuarios';
+
+  @override
+  String get usersEmptyBody => 'Aún no hay usuarios registrados.';
+
+  @override
+  String get noEmail => '(sin correo)';
+
+  @override
+  String get youLabel => '(tú)';
+
+  @override
+  String get cannotChangeOwnRole => 'No puedes cambiar tu propio rol aquí.';
+
+  @override
+  String get roleUpdateError => 'Se produjo un error al actualizar el rol.';
+
+  @override
+  String userRoleUpdated(String email, String role) {
+    return '$email → actualizado a $role.';
+  }
+
+  @override
+  String get changeRoleTitle => 'Cambiar rol';
+
+  @override
+  String get parentAssignHint =>
+      'La asignación de estudiantes se hace desde la pantalla \"Padres\".';
+
+  @override
+  String get studentAssignHint =>
+      'La vinculación de estudiantes se hace desde la pantalla \"Cuentas de estudiantes\".';
 }

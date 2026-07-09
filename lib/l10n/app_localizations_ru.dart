@@ -1071,4 +1071,41 @@ class AppLocalizationsRu extends AppLocalizations {
   String studentBranchAge(String branch, int age) {
     return '$branch • $age лет';
   }
+
+  @override
+  String get usersSearchHint => 'Поиск по эл. почте';
+
+  @override
+  String get usersEmptyTitle => 'Нет пользователей';
+
+  @override
+  String get usersEmptyBody => 'Зарегистрированных пользователей пока нет.';
+
+  @override
+  String get noEmail => '(нет эл. почты)';
+
+  @override
+  String get youLabel => '(вы)';
+
+  @override
+  String get cannotChangeOwnRole => 'Здесь нельзя изменить собственную роль.';
+
+  @override
+  String get roleUpdateError => 'Произошла ошибка при обновлении роли.';
+
+  @override
+  String userRoleUpdated(String email, String role) {
+    return '$email → обновлено на «$role».';
+  }
+
+  @override
+  String get changeRoleTitle => 'Изменить роль';
+
+  @override
+  String get parentAssignHint =>
+      'Назначение учеников выполняется на экране «Родители».';
+
+  @override
+  String get studentAssignHint =>
+      'Сопоставление учеников выполняется на экране «Аккаунты учеников».';
 }
