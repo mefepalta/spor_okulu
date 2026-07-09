@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/app_localizations.dart';
 import '../widgets/empty_state.dart';
 import '../widgets/wave_background.dart';
 
@@ -66,26 +67,27 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final categories = _categories;
     final filtered = _filtered;
 
     return WaveScaffold(
-      appBar: AppBar(title: const Text('Bildirimler')),
+      appBar: AppBar(title: Text(l10n.notificationsTooltip)),
       body: widget.notifications.isEmpty
-          ? const EmptyState(
+          ? EmptyState(
               icon: Icons.notifications_none,
-              title: 'Bildirim yok',
-              message: 'Şu an gösterilecek bir bildirim bulunmuyor.',
+              title: l10n.notificationsEmptyTitle,
+              message: l10n.notificationsEmptyBody,
             )
           : Column(
               children: [
                 if (categories.length > 1) _buildFilters(categories),
                 Expanded(
                   child: filtered.isEmpty
-                      ? const EmptyState(
+                      ? EmptyState(
                           icon: Icons.filter_alt_off,
-                          title: 'Kayıt yok',
-                          message: 'Bu kategoride bildirim bulunmuyor.',
+                          title: l10n.noRecordsTitle,
+                          message: l10n.noNotificationsInCategory,
                         )
                       : ListView.builder(
                           padding: const EdgeInsets.fromLTRB(16, 4, 16, 16),
@@ -119,7 +121,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         children: [
-          chip('Tümü', null),
+          chip(AppLocalizations.of(context).commonAll, null),
           for (final category in categories) chip(category, category),
         ],
       ),

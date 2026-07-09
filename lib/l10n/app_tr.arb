@@ -809,5 +809,10 @@
       "paid": { "type": "int" },
       "pending": { "type": "int" }
     }
-  }
+  },
+
+  "notificationsEmptyTitle": "Bildirim yok",
+  "notificationsEmptyBody": "Şu an gösterilecek bir bildirim bulunmuyor.",
+  "noRecordsTitle": "Kayıt yok",
+  "noNotificationsInCategory": "Bu kategoride bildirim bulunmuyor."
 }

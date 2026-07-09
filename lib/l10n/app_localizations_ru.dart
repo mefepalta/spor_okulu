@@ -1878,4 +1878,16 @@ class AppLocalizationsRu extends AppLocalizations {
   ) {
     return 'В системе $students учеников, $coaches тренеров и $groups групп. Из $payments записей о платежах $paid оплачено, $pending ожидают.';
   }
+
+  @override
+  String get notificationsEmptyTitle => 'Нет уведомлений';
+
+  @override
+  String get notificationsEmptyBody => 'Сейчас нет уведомлений для показа.';
+
+  @override
+  String get noRecordsTitle => 'Нет записей';
+
+  @override
+  String get noNotificationsInCategory => 'В этой категории нет уведомлений.';
 }

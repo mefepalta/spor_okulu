@@ -1889,4 +1889,18 @@ class AppLocalizationsFr extends AppLocalizations {
   ) {
     return 'Le système compte $students élèves, $coaches entraîneurs et $groups groupes. Sur $payments enregistrements de paiement au total, $paid sont payés et $pending en attente.';
   }
+
+  @override
+  String get notificationsEmptyTitle => 'Aucune notification';
+
+  @override
+  String get notificationsEmptyBody =>
+      'Aucune notification à afficher pour le moment.';
+
+  @override
+  String get noRecordsTitle => 'Aucun enregistrement';
+
+  @override
+  String get noNotificationsInCategory =>
+      'Aucune notification dans cette catégorie.';
 }

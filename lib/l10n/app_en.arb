@@ -585,5 +585,10 @@
   "pendingPayments": "Pending payments",
   "statusComment": "Status Overview",
   "reportsNoData": "Not enough data yet. As student, group and payment records are added, a general status summary will appear here.",
-  "reportsSummary": "The system has {students} students, {coaches} coaches and {groups} groups. Of {payments} total payment records, {paid} are paid and {pending} are pending."
+  "reportsSummary": "The system has {students} students, {coaches} coaches and {groups} groups. Of {payments} total payment records, {paid} are paid and {pending} are pending.",
+
+  "notificationsEmptyTitle": "No notifications",
+  "notificationsEmptyBody": "There are no notifications to show right now.",
+  "noRecordsTitle": "No records",
+  "noNotificationsInCategory": "No notifications in this category."
 }

@@ -585,5 +585,10 @@
   "pendingPayments": "Paiements en attente",
   "statusComment": "Aperçu de la situation",
   "reportsNoData": "Pas encore assez de données. À mesure que des enregistrements d'élèves, de groupes et de paiements sont ajoutés, un résumé général de la situation apparaîtra ici.",
-  "reportsSummary": "Le système compte {students} élèves, {coaches} entraîneurs et {groups} groupes. Sur {payments} enregistrements de paiement au total, {paid} sont payés et {pending} en attente."
+  "reportsSummary": "Le système compte {students} élèves, {coaches} entraîneurs et {groups} groupes. Sur {payments} enregistrements de paiement au total, {paid} sont payés et {pending} en attente.",
+
+  "notificationsEmptyTitle": "Aucune notification",
+  "notificationsEmptyBody": "Aucune notification à afficher pour le moment.",
+  "noRecordsTitle": "Aucun enregistrement",
+  "noNotificationsInCategory": "Aucune notification dans cette catégorie."
 }

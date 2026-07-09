@@ -3392,6 +3392,30 @@ abstract class AppLocalizations {
     int paid,
     int pending,
   );
+
+  /// No description provided for @notificationsEmptyTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bildirim yok'**
+  String get notificationsEmptyTitle;
+
+  /// No description provided for @notificationsEmptyBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şu an gösterilecek bir bildirim bulunmuyor.'**
+  String get notificationsEmptyBody;
+
+  /// No description provided for @noRecordsTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kayıt yok'**
+  String get noRecordsTitle;
+
+  /// No description provided for @noNotificationsInCategory.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu kategoride bildirim bulunmuyor.'**
+  String get noNotificationsInCategory;
 }
 
 class _AppLocalizationsDelegate

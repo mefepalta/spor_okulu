@@ -1862,4 +1862,17 @@ class AppLocalizationsTr extends AppLocalizations {
   ) {
     return 'Sistemde $students öğrenci, $coaches antrenör ve $groups grup bulunuyor. Toplam $payments ödeme kaydının $paid tanesi ödenmiş, $pending tanesi bekleyen durumda.';
   }
+
+  @override
+  String get notificationsEmptyTitle => 'Bildirim yok';
+
+  @override
+  String get notificationsEmptyBody =>
+      'Şu an gösterilecek bir bildirim bulunmuyor.';
+
+  @override
+  String get noRecordsTitle => 'Kayıt yok';
+
+  @override
+  String get noNotificationsInCategory => 'Bu kategoride bildirim bulunmuyor.';
 }

@@ -1866,4 +1866,17 @@ class AppLocalizationsEn extends AppLocalizations {
   ) {
     return 'The system has $students students, $coaches coaches and $groups groups. Of $payments total payment records, $paid are paid and $pending are pending.';
   }
+
+  @override
+  String get notificationsEmptyTitle => 'No notifications';
+
+  @override
+  String get notificationsEmptyBody =>
+      'There are no notifications to show right now.';
+
+  @override
+  String get noRecordsTitle => 'No records';
+
+  @override
+  String get noNotificationsInCategory => 'No notifications in this category.';
 }
