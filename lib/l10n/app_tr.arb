@@ -531,5 +531,97 @@
   "removePhoto": "Fotoğrafı kaldır",
   "nameTooLong": "Ad çok uzun.",
   "phoneTooLong": "Telefon çok uzun.",
-  "commonSaving": "Kaydediliyor..."
+  "commonSaving": "Kaydediliyor...",
+
+  "attendanceDeleteTitle": "Yoklamayı Sil",
+  "attendanceDeleteConfirm": "{group} - {date} yoklama kaydını silmek istediğine emin misin",
+  "@attendanceDeleteConfirm": {
+    "placeholders": { "group": { "type": "String" }, "date": { "type": "String" } }
+  },
+  "attendanceDeleted": "Yoklama kaydı silindi.",
+  "attendanceEmptyTitle": "Henüz yoklama kaydı yok",
+  "attendanceEmptyAdmin": "Yeni yoklama kaydı eklemek için sağ alttaki + butonunu kullan.",
+  "attendanceEmptyNoGroup": "Yoklama almak için önce en az bir grup ve öğrenci ekle.",
+  "attendanceEmptyViewer": "Henüz yoklama kaydı yok. Admin yoklama eklediğinde burada görünecek.",
+  "attendanceCountLine": "Geldi: {present} • Gelmedi: {absent}",
+  "@attendanceCountLine": {
+    "placeholders": { "present": { "type": "int" }, "absent": { "type": "int" } }
+  },
+  "takeAttendanceTitle": "Yoklama Al",
+  "editAttendanceTitle": "Yoklamayı Düzenle",
+  "selectGroupFirst": "Önce bir grup seçmelisin.",
+  "fieldGroup": "Grup",
+  "groupRequired": "Grup seçmelisin.",
+  "fieldDate": "Tarih",
+  "studentsCountTitle": "Öğrenciler ({count})",
+  "@studentsCountTitle": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "groupNoStudentsTitle": "Bu grupta öğrenci yok.",
+  "groupNoStudentsBody": "Grup detayından öğrenci ekleyebilirsin.",
+  "saveAttendance": "Yoklamayı Kaydet",
+  "attendanceNeedGroupStudent": "Yoklama almak için önce en az bir grup ve öğrenci eklemelisin.",
+  "attendanceDetailTitle": "Yoklama Detayı",
+  "presentStudentsTitle": "Gelen Öğrenciler",
+  "noPresentStudents": "Gelen öğrenci yok.",
+  "absentStudentsTitle": "Gelmeyen Öğrenciler",
+  "noAbsentStudents": "Gelmeyen öğrenci yok.",
+  "backToAttendanceList": "Yoklama Listesine Dön",
+
+  "childAttendanceEmptyTitle": "Yoklama kaydı yok",
+  "childAttendanceEmptyBody": "Çocuğunuzun bulunduğu bir yoklama kaydı henüz oluşturulmadı.",
+  "attendedOfLessons": "{total} dersin {present} tanesine geldi",
+  "@attendedOfLessons": {
+    "placeholders": { "total": { "type": "int" }, "present": { "type": "int" } }
+  },
+  "percentValue": "%{percent}",
+  "@percentValue": {
+    "placeholders": { "percent": { "type": "int" } }
+  },
+
+  "paymentDeleteTitle": "Ödemeyi Sil",
+  "paymentDeleteConfirm": "{name} - {period} ödeme kaydını silmek istediğine emin misin",
+  "@paymentDeleteConfirm": {
+    "placeholders": { "name": { "type": "String" }, "period": { "type": "String" } }
+  },
+  "paymentDeleted": "Ödeme kaydı silindi.",
+  "periodLabel": "Dönem:",
+  "allPeriods": "Tüm dönemler",
+  "paymentsSearchHint": "Ödeme ara",
+  "paymentsEmptyTitle": "Henüz ödeme kaydı yok",
+  "paymentsEmptyAdmin": "Yeni ödeme kaydı eklemek için sağ alttaki + butonunu kullan.",
+  "paymentsEmptyNoStudent": "Ödeme eklemek için önce en az bir öğrenci ekle.",
+  "paymentsEmptyViewer": "Henüz ödeme kaydı yok. Admin ödeme eklediğinde burada görünecek.",
+  "paymentsNoStatusResults": "\"{status}\" durumunda kayıt yok. Farklı bir filtre veya \"Tümü\" seç.",
+  "@paymentsNoStatusResults": {
+    "placeholders": { "status": { "type": "String" } }
+  },
+  "remindTooltip": "Hatırlatma gönder",
+  "noParentPhone": "Öğrencinin veli telefonu kayıtlı değil.",
+  "paymentCollectedLabel": "Tahsil edilen",
+  "recordCount": "{count, plural, =1{1 kayıt} other{{count} kayıt}}",
+  "@recordCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "paymentDetailTitle": "Ödeme Detayı",
+  "fieldPeriod": "Ay / Dönem",
+  "fieldAmount": "Tutar",
+  "fieldStatus": "Durum",
+  "fieldNote": "Not",
+  "noNote": "Not yok.",
+  "remindViaWhatsApp": "WhatsApp ile Hatırlat",
+  "editPaymentTitle": "Ödemeyi Düzenle",
+  "backToPaymentList": "Ödeme Listesine Dön",
+  "addPaymentTitle": "Yeni Ödeme Ekle",
+  "paymentNeedStudent": "Ödeme eklemek için önce en az bir öğrenci eklemelisin.",
+  "studentRequired": "Öğrenci seçmelisin.",
+  "periodEmpty": "Ay / dönem boş bırakılamaz.",
+  "amountEmpty": "Tutar boş bırakılamaz.",
+  "amountMustBeNumber": "Tutar sayı olmalıdır.",
+  "amountPositive": "Tutar 0'dan büyük olmalıdır.",
+  "amountTooHigh": "Tutar çok yüksek görünüyor.",
+  "statusRequired": "Durum seçmelisin.",
+  "noteHint": "İsteğe bağlı not",
+  "selectStudentFirst": "Önce bir öğrenci seçmelisin.",
+  "savePayment": "Ödemeyi Kaydet"
 }

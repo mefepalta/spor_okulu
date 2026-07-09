@@ -3,6 +3,7 @@ import '../theme/app_colors.dart';
 
 import '../widgets/wave_background.dart';
 
+import '../l10n/app_localizations.dart';
 import '../models/app_models.dart';
 import '../utils/validators.dart';
 import '../widgets/empty_state.dart';
@@ -80,28 +81,29 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
   }
 
   Future<void> _confirmDeleteAttendanceRecord(int index) async {
+    final l10n = AppLocalizations.of(context);
     final record = widget.attendanceRecords[index];
 
     final shouldDelete = await showDialog<bool>(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Yoklamayı Sil'),
+          title: Text(l10n.attendanceDeleteTitle),
           content: Text(
-            '${record.groupName} - ${record.dateText} yoklama kaydını silmek istediğine emin misin',
+            l10n.attendanceDeleteConfirm(record.groupName, record.dateText),
           ),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.pop(context, false);
               },
-              child: const Text('Vazgeç'),
+              child: Text(l10n.commonCancel),
             ),
             TextButton(
               onPressed: () {
                 Navigator.pop(context, true);
               },
-              child: const Text('Sil', style: TextStyle(color: Colors.red)),
+              child: Text(l10n.commonDelete, style: const TextStyle(color: Colors.red)),
             ),
           ],
         );
@@ -122,25 +124,26 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
 
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(const SnackBar(content: Text('Yoklama kaydı silindi.')));
+    ).showSnackBar(SnackBar(content: Text(l10n.attendanceDeleted)));
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final canTakeAttendance =
         widget.groups.isNotEmpty && widget.students.isNotEmpty;
 
     return WaveScaffold(
-      appBar: AppBar(title: const Text('Yoklama')),
+      appBar: AppBar(title: Text(l10n.navAttendance)),
       body: widget.attendanceRecords.isEmpty
           ? EmptyState(
               icon: Icons.check_circle,
-              title: 'Henüz yoklama kaydı yok',
+              title: l10n.attendanceEmptyTitle,
               message: widget.isAdmin
                   ? canTakeAttendance
-                        ? 'Yeni yoklama kaydı eklemek için sağ alttaki + butonunu kullan.'
-                        : 'Yoklama almak için once en az bir grup ve öğrenci ekle.'
-                  : 'Henüz yoklama kaydı yok. Admin yoklama eklediçinde burada görünecek.',
+                        ? l10n.attendanceEmptyAdmin
+                        : l10n.attendanceEmptyNoGroup
+                  : l10n.attendanceEmptyViewer,
             )
           : ListView.builder(
               padding: const EdgeInsets.all(16),
@@ -162,8 +165,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                     title: Text(record.groupName),
                     subtitle: Text(
                       '${record.dateText}\n'
-                      'Geldi: ${record.presentStudentNames.length} • '
-                      'Gelmedi: ${record.absentStudentNames.length}',
+                      '${l10n.attendanceCountLine(record.presentStudentNames.length, record.absentStudentNames.length)}',
                     ),
                     isThreeLine: true,
                     trailing: widget.isAdmin
@@ -298,7 +300,7 @@ class _TakeAttendanceScreenState extends State<TakeAttendanceScreen> {
     final group = _selectedGroup;
     if (group == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Önce bir grup seçmelisin.')),
+        SnackBar(content: Text(AppLocalizations.of(context).selectGroupFirst)),
       );
       return;
     }
@@ -336,16 +338,19 @@ class _TakeAttendanceScreenState extends State<TakeAttendanceScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final isEditing = widget.record != null;
 
     return WaveScaffold(
       appBar: AppBar(
-        title: Text(isEditing ? 'Yoklamayı Düzenle' : 'Yoklama Al'),
+        title: Text(
+          isEditing ? l10n.editAttendanceTitle : l10n.takeAttendanceTitle,
+        ),
       ),
       body: widget.groups.isEmpty || widget.students.isEmpty
-          ? const Center(
+          ? Center(
               child: Text(
-                'Yoklama almak için önce en az bir grup ve öğrenci eklemelisin.',
+                l10n.attendanceNeedGroupStudent,
                 textAlign: TextAlign.center,
               ),
             )
@@ -356,10 +361,10 @@ class _TakeAttendanceScreenState extends State<TakeAttendanceScreen> {
                 children: [
                   DropdownButtonFormField<String>(
                     initialValue: _selectedGroupId,
-                    decoration: const InputDecoration(
-                      labelText: 'Grup',
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.groups),
+                    decoration: InputDecoration(
+                      labelText: l10n.fieldGroup,
+                      border: const OutlineInputBorder(),
+                      prefixIcon: const Icon(Icons.groups),
                     ),
                     items: widget.groups.map((group) {
                       return DropdownMenuItem<String>(
@@ -374,7 +379,7 @@ class _TakeAttendanceScreenState extends State<TakeAttendanceScreen> {
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Grup seçmelisin.';
+                        return l10n.groupRequired;
                       }
 
                       return null;
@@ -384,13 +389,13 @@ class _TakeAttendanceScreenState extends State<TakeAttendanceScreen> {
                   TextFormField(
                     controller: _dateController,
                     keyboardType: TextInputType.datetime,
-                    decoration: const InputDecoration(
-                      labelText: 'Tarih',
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.event),
+                    decoration: InputDecoration(
+                      labelText: l10n.fieldDate,
+                      border: const OutlineInputBorder(),
+                      prefixIcon: const Icon(Icons.event),
                       hintText: '24.06.2026',
                     ),
-                    validator: validateDateText,
+                    validator: dateValidator(l10n),
                   ),
                   const SizedBox(height: 20),
                   Builder(
@@ -400,7 +405,7 @@ class _TakeAttendanceScreenState extends State<TakeAttendanceScreen> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Text(
-                            'Öğrenciler (${roster.length})',
+                            l10n.studentsCountTitle(roster.length),
                             style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -408,13 +413,11 @@ class _TakeAttendanceScreenState extends State<TakeAttendanceScreen> {
                           ),
                           const SizedBox(height: 8),
                           if (roster.isEmpty)
-                            const Card(
+                            Card(
                               child: ListTile(
-                                leading: Icon(Icons.info_outline),
-                                title: Text('Bu grupta öğrenci yok.'),
-                                subtitle: Text(
-                                  'Grup detayından öğrenci ekleyebilirsin.',
-                                ),
+                                leading: const Icon(Icons.info_outline),
+                                title: Text(l10n.groupNoStudentsTitle),
+                                subtitle: Text(l10n.groupNoStudentsBody),
                               ),
                             )
                           else
@@ -427,7 +430,10 @@ class _TakeAttendanceScreenState extends State<TakeAttendanceScreen> {
                                   value: isPresent,
                                   title: Text(student.name),
                                   subtitle: Text(
-                                    '${student.branch} • ${student.age} yaş',
+                                    l10n.studentBranchAge(
+                                      student.branch,
+                                      student.age,
+                                    ),
                                   ),
                                   secondary: const Icon(Icons.person),
                                   onChanged: (value) {
@@ -448,7 +454,7 @@ class _TakeAttendanceScreenState extends State<TakeAttendanceScreen> {
                     onPressed: _saveAttendanceRecord,
                     icon: const Icon(Icons.save),
                     label: Text(
-                      isEditing ? 'Değişiklikleri Kaydet' : 'Yoklamayı Kaydet',
+                      isEditing ? l10n.saveChanges : l10n.saveAttendance,
                     ),
                   ),
                 ],
@@ -511,11 +517,12 @@ class _AttendanceDetailScreenState extends State<AttendanceDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final record = _record;
 
     return WaveScaffold(
       appBar: AppBar(
-        title: const Text('Yoklama Detayı'),
+        title: Text(l10n.attendanceDetailTitle),
         actions: widget.isAdmin
             ? [
                 IconButton(
@@ -552,24 +559,26 @@ class _AttendanceDetailScreenState extends State<AttendanceDetailScreen> {
                   Text(record.dateText),
                   const SizedBox(height: 8),
                   Text(
-                    'Geldi: ${record.presentStudentNames.length} • '
-                    'Gelmedi: ${record.absentStudentNames.length}',
+                    l10n.attendanceCountLine(
+                      record.presentStudentNames.length,
+                      record.absentStudentNames.length,
+                    ),
                   ),
                 ],
               ),
             ),
           ),
           const SizedBox(height: 16),
-          const Text(
-            'Gelen Öğrenciler',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          Text(
+            l10n.presentStudentsTitle,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
           if (record.presentStudentNames.isEmpty)
-            const Card(
+            Card(
               child: ListTile(
-                leading: Icon(Icons.info),
-                title: Text('Gelen öğrenci yok.'),
+                leading: const Icon(Icons.info),
+                title: Text(l10n.noPresentStudents),
               ),
             )
           else
@@ -582,16 +591,16 @@ class _AttendanceDetailScreenState extends State<AttendanceDetailScreen> {
               );
             }),
           const SizedBox(height: 16),
-          const Text(
-            'Gelmeyen Öğrenciler',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          Text(
+            l10n.absentStudentsTitle,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
           if (record.absentStudentNames.isEmpty)
-            const Card(
+            Card(
               child: ListTile(
-                leading: Icon(Icons.info),
-                title: Text('Gelmeyen öğrenci yok.'),
+                leading: const Icon(Icons.info),
+                title: Text(l10n.noAbsentStudents),
               ),
             )
           else
@@ -608,7 +617,7 @@ class _AttendanceDetailScreenState extends State<AttendanceDetailScreen> {
             ElevatedButton.icon(
               onPressed: _openEditAttendanceScreen,
               icon: const Icon(Icons.edit),
-              label: const Text('Yoklamayı Düzenle'),
+              label: Text(l10n.editAttendanceTitle),
             ),
           const SizedBox(height: 8),
           OutlinedButton.icon(
@@ -616,7 +625,7 @@ class _AttendanceDetailScreenState extends State<AttendanceDetailScreen> {
               Navigator.pop(context);
             },
             icon: const Icon(Icons.arrow_back),
-            label: const Text('Yoklama Listesine Dön'),
+            label: Text(l10n.backToAttendanceList),
           ),
         ],
       ),

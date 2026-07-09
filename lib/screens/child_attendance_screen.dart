@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../widgets/wave_background.dart';
 
+import '../l10n/app_localizations.dart';
 import '../models/app_models.dart';
 import '../widgets/empty_state.dart';
 
@@ -21,6 +22,7 @@ class ChildAttendanceScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     // (kayıt, çocuk) çiftlerini düzleştir: her çocuğun her kayıttaki durumu.
     final entries = <_AttendanceEntry>[];
     for (final record in records) {
@@ -40,13 +42,12 @@ class ChildAttendanceScreen extends StatelessWidget {
     }
 
     return WaveScaffold(
-      appBar: AppBar(title: const Text('Yoklama')),
+      appBar: AppBar(title: Text(l10n.navAttendance)),
       body: entries.isEmpty
-          ? const EmptyState(
+          ? EmptyState(
               icon: Icons.check_circle,
-              title: 'Yoklama kaydı yok',
-              message:
-                  'Çocuğunuzun bulunduğu bir yoklama kaydı henüz oluşturulmadı.',
+              title: l10n.childAttendanceEmptyTitle,
+              message: l10n.childAttendanceEmptyBody,
             )
           : Column(
               children: [
@@ -71,7 +72,7 @@ class ChildAttendanceScreen extends StatelessWidget {
                           ),
                           title: Text(
                             '${entry.childName} • '
-                            '${present ? 'Geldi' : 'Gelmedi'}',
+                            '${present ? l10n.metricPresent : l10n.metricAbsent}',
                           ),
                           subtitle: Text(
                             '${entry.record.groupName} • '
@@ -110,6 +111,7 @@ class _AttendanceSummaryBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final total = entries.length;
     final present = entries.where((e) => e.present).length;
     final percent = total == 0 ? 0 : (present / total * 100).round();
@@ -129,7 +131,7 @@ class _AttendanceSummaryBar extends StatelessWidget {
                   radius: 26,
                   backgroundColor: _rateColor(percent).withValues(alpha: 0.15),
                   child: Text(
-                    '%$percent',
+                    l10n.percentValue(percent),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: _rateColor(percent),
@@ -141,16 +143,16 @@ class _AttendanceSummaryBar extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Katılım',
-                        style: TextStyle(
+                      Text(
+                        l10n.metricAttendanceRate,
+                        style: const TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        '$total dersin $present tanesine geldi',
+                        l10n.attendedOfLessons(total, present),
                         style: TextStyle(
                           fontSize: 13,
                           color: Theme.of(context).textTheme.bodySmall?.color,
@@ -172,6 +174,7 @@ class _AttendanceSummaryBar extends StatelessWidget {
   }
 
   List<Widget> _perChildRows(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final rows = <Widget>[];
     for (final child in children) {
       final childEntries = entries.where((e) => e.childName == child.name);
@@ -204,7 +207,7 @@ class _AttendanceSummaryBar extends StatelessWidget {
               ),
               const SizedBox(width: 10),
               Text(
-                '%$percent',
+                l10n.percentValue(percent),
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.bold,

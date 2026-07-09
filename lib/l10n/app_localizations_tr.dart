@@ -1213,4 +1213,230 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get commonSaving => 'Kaydediliyor...';
+
+  @override
+  String get attendanceDeleteTitle => 'Yoklamayı Sil';
+
+  @override
+  String attendanceDeleteConfirm(String group, String date) {
+    return '$group - $date yoklama kaydını silmek istediğine emin misin';
+  }
+
+  @override
+  String get attendanceDeleted => 'Yoklama kaydı silindi.';
+
+  @override
+  String get attendanceEmptyTitle => 'Henüz yoklama kaydı yok';
+
+  @override
+  String get attendanceEmptyAdmin =>
+      'Yeni yoklama kaydı eklemek için sağ alttaki + butonunu kullan.';
+
+  @override
+  String get attendanceEmptyNoGroup =>
+      'Yoklama almak için önce en az bir grup ve öğrenci ekle.';
+
+  @override
+  String get attendanceEmptyViewer =>
+      'Henüz yoklama kaydı yok. Admin yoklama eklediğinde burada görünecek.';
+
+  @override
+  String attendanceCountLine(int present, int absent) {
+    return 'Geldi: $present • Gelmedi: $absent';
+  }
+
+  @override
+  String get takeAttendanceTitle => 'Yoklama Al';
+
+  @override
+  String get editAttendanceTitle => 'Yoklamayı Düzenle';
+
+  @override
+  String get selectGroupFirst => 'Önce bir grup seçmelisin.';
+
+  @override
+  String get fieldGroup => 'Grup';
+
+  @override
+  String get groupRequired => 'Grup seçmelisin.';
+
+  @override
+  String get fieldDate => 'Tarih';
+
+  @override
+  String studentsCountTitle(int count) {
+    return 'Öğrenciler ($count)';
+  }
+
+  @override
+  String get groupNoStudentsTitle => 'Bu grupta öğrenci yok.';
+
+  @override
+  String get groupNoStudentsBody => 'Grup detayından öğrenci ekleyebilirsin.';
+
+  @override
+  String get saveAttendance => 'Yoklamayı Kaydet';
+
+  @override
+  String get attendanceNeedGroupStudent =>
+      'Yoklama almak için önce en az bir grup ve öğrenci eklemelisin.';
+
+  @override
+  String get attendanceDetailTitle => 'Yoklama Detayı';
+
+  @override
+  String get presentStudentsTitle => 'Gelen Öğrenciler';
+
+  @override
+  String get noPresentStudents => 'Gelen öğrenci yok.';
+
+  @override
+  String get absentStudentsTitle => 'Gelmeyen Öğrenciler';
+
+  @override
+  String get noAbsentStudents => 'Gelmeyen öğrenci yok.';
+
+  @override
+  String get backToAttendanceList => 'Yoklama Listesine Dön';
+
+  @override
+  String get childAttendanceEmptyTitle => 'Yoklama kaydı yok';
+
+  @override
+  String get childAttendanceEmptyBody =>
+      'Çocuğunuzun bulunduğu bir yoklama kaydı henüz oluşturulmadı.';
+
+  @override
+  String attendedOfLessons(int total, int present) {
+    return '$total dersin $present tanesine geldi';
+  }
+
+  @override
+  String percentValue(int percent) {
+    return '%$percent';
+  }
+
+  @override
+  String get paymentDeleteTitle => 'Ödemeyi Sil';
+
+  @override
+  String paymentDeleteConfirm(String name, String period) {
+    return '$name - $period ödeme kaydını silmek istediğine emin misin';
+  }
+
+  @override
+  String get paymentDeleted => 'Ödeme kaydı silindi.';
+
+  @override
+  String get periodLabel => 'Dönem:';
+
+  @override
+  String get allPeriods => 'Tüm dönemler';
+
+  @override
+  String get paymentsSearchHint => 'Ödeme ara';
+
+  @override
+  String get paymentsEmptyTitle => 'Henüz ödeme kaydı yok';
+
+  @override
+  String get paymentsEmptyAdmin =>
+      'Yeni ödeme kaydı eklemek için sağ alttaki + butonunu kullan.';
+
+  @override
+  String get paymentsEmptyNoStudent =>
+      'Ödeme eklemek için önce en az bir öğrenci ekle.';
+
+  @override
+  String get paymentsEmptyViewer =>
+      'Henüz ödeme kaydı yok. Admin ödeme eklediğinde burada görünecek.';
+
+  @override
+  String paymentsNoStatusResults(String status) {
+    return '\"$status\" durumunda kayıt yok. Farklı bir filtre veya \"Tümü\" seç.';
+  }
+
+  @override
+  String get remindTooltip => 'Hatırlatma gönder';
+
+  @override
+  String get noParentPhone => 'Öğrencinin veli telefonu kayıtlı değil.';
+
+  @override
+  String get paymentCollectedLabel => 'Tahsil edilen';
+
+  @override
+  String recordCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count kayıt',
+      one: '1 kayıt',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get paymentDetailTitle => 'Ödeme Detayı';
+
+  @override
+  String get fieldPeriod => 'Ay / Dönem';
+
+  @override
+  String get fieldAmount => 'Tutar';
+
+  @override
+  String get fieldStatus => 'Durum';
+
+  @override
+  String get fieldNote => 'Not';
+
+  @override
+  String get noNote => 'Not yok.';
+
+  @override
+  String get remindViaWhatsApp => 'WhatsApp ile Hatırlat';
+
+  @override
+  String get editPaymentTitle => 'Ödemeyi Düzenle';
+
+  @override
+  String get backToPaymentList => 'Ödeme Listesine Dön';
+
+  @override
+  String get addPaymentTitle => 'Yeni Ödeme Ekle';
+
+  @override
+  String get paymentNeedStudent =>
+      'Ödeme eklemek için önce en az bir öğrenci eklemelisin.';
+
+  @override
+  String get studentRequired => 'Öğrenci seçmelisin.';
+
+  @override
+  String get periodEmpty => 'Ay / dönem boş bırakılamaz.';
+
+  @override
+  String get amountEmpty => 'Tutar boş bırakılamaz.';
+
+  @override
+  String get amountMustBeNumber => 'Tutar sayı olmalıdır.';
+
+  @override
+  String get amountPositive => 'Tutar 0\'dan büyük olmalıdır.';
+
+  @override
+  String get amountTooHigh => 'Tutar çok yüksek görünüyor.';
+
+  @override
+  String get statusRequired => 'Durum seçmelisin.';
+
+  @override
+  String get noteHint => 'İsteğe bağlı not';
+
+  @override
+  String get selectStudentFirst => 'Önce bir öğrenci seçmelisin.';
+
+  @override
+  String get savePayment => 'Ödemeyi Kaydet';
 }

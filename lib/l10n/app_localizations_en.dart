@@ -1216,4 +1216,232 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get commonSaving => 'Saving...';
+
+  @override
+  String get attendanceDeleteTitle => 'Delete Attendance';
+
+  @override
+  String attendanceDeleteConfirm(String group, String date) {
+    return 'Are you sure you want to delete the $group - $date attendance record';
+  }
+
+  @override
+  String get attendanceDeleted => 'Attendance record deleted.';
+
+  @override
+  String get attendanceEmptyTitle => 'No attendance records yet';
+
+  @override
+  String get attendanceEmptyAdmin =>
+      'Use the + button at the bottom right to add a new attendance record.';
+
+  @override
+  String get attendanceEmptyNoGroup =>
+      'To take attendance, first add at least one group and student.';
+
+  @override
+  String get attendanceEmptyViewer =>
+      'No attendance records yet. They will appear here once the admin adds attendance.';
+
+  @override
+  String attendanceCountLine(int present, int absent) {
+    return 'Present: $present • Absent: $absent';
+  }
+
+  @override
+  String get takeAttendanceTitle => 'Take Attendance';
+
+  @override
+  String get editAttendanceTitle => 'Edit Attendance';
+
+  @override
+  String get selectGroupFirst => 'Select a group first.';
+
+  @override
+  String get fieldGroup => 'Group';
+
+  @override
+  String get groupRequired => 'You must select a group.';
+
+  @override
+  String get fieldDate => 'Date';
+
+  @override
+  String studentsCountTitle(int count) {
+    return 'Students ($count)';
+  }
+
+  @override
+  String get groupNoStudentsTitle => 'No students in this group.';
+
+  @override
+  String get groupNoStudentsBody =>
+      'You can add students from the group details.';
+
+  @override
+  String get saveAttendance => 'Save Attendance';
+
+  @override
+  String get attendanceNeedGroupStudent =>
+      'To take attendance, you must first add at least one group and student.';
+
+  @override
+  String get attendanceDetailTitle => 'Attendance Detail';
+
+  @override
+  String get presentStudentsTitle => 'Present Students';
+
+  @override
+  String get noPresentStudents => 'No present students.';
+
+  @override
+  String get absentStudentsTitle => 'Absent Students';
+
+  @override
+  String get noAbsentStudents => 'No absent students.';
+
+  @override
+  String get backToAttendanceList => 'Back to Attendance List';
+
+  @override
+  String get childAttendanceEmptyTitle => 'No attendance records';
+
+  @override
+  String get childAttendanceEmptyBody =>
+      'No attendance record including your child has been created yet.';
+
+  @override
+  String attendedOfLessons(int total, int present) {
+    return 'Attended $present of $total lessons';
+  }
+
+  @override
+  String percentValue(int percent) {
+    return '$percent%';
+  }
+
+  @override
+  String get paymentDeleteTitle => 'Delete Payment';
+
+  @override
+  String paymentDeleteConfirm(String name, String period) {
+    return 'Are you sure you want to delete the $name - $period payment record';
+  }
+
+  @override
+  String get paymentDeleted => 'Payment record deleted.';
+
+  @override
+  String get periodLabel => 'Period:';
+
+  @override
+  String get allPeriods => 'All periods';
+
+  @override
+  String get paymentsSearchHint => 'Search payments';
+
+  @override
+  String get paymentsEmptyTitle => 'No payment records yet';
+
+  @override
+  String get paymentsEmptyAdmin =>
+      'Use the + button at the bottom right to add a new payment record.';
+
+  @override
+  String get paymentsEmptyNoStudent =>
+      'To add a payment, first add at least one student.';
+
+  @override
+  String get paymentsEmptyViewer =>
+      'No payment records yet. They will appear here once the admin adds a payment.';
+
+  @override
+  String paymentsNoStatusResults(String status) {
+    return 'No records with \"$status\" status. Choose a different filter or \"All\".';
+  }
+
+  @override
+  String get remindTooltip => 'Send reminder';
+
+  @override
+  String get noParentPhone =>
+      'The student\'s parent phone number is not saved.';
+
+  @override
+  String get paymentCollectedLabel => 'Collected';
+
+  @override
+  String recordCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count records',
+      one: '1 record',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get paymentDetailTitle => 'Payment Detail';
+
+  @override
+  String get fieldPeriod => 'Month / Period';
+
+  @override
+  String get fieldAmount => 'Amount';
+
+  @override
+  String get fieldStatus => 'Status';
+
+  @override
+  String get fieldNote => 'Note';
+
+  @override
+  String get noNote => 'No note.';
+
+  @override
+  String get remindViaWhatsApp => 'Remind via WhatsApp';
+
+  @override
+  String get editPaymentTitle => 'Edit Payment';
+
+  @override
+  String get backToPaymentList => 'Back to Payment List';
+
+  @override
+  String get addPaymentTitle => 'Add New Payment';
+
+  @override
+  String get paymentNeedStudent =>
+      'To add a payment, you must first add at least one student.';
+
+  @override
+  String get studentRequired => 'You must select a student.';
+
+  @override
+  String get periodEmpty => 'Month / period cannot be empty.';
+
+  @override
+  String get amountEmpty => 'Amount cannot be empty.';
+
+  @override
+  String get amountMustBeNumber => 'Amount must be a number.';
+
+  @override
+  String get amountPositive => 'Amount must be greater than 0.';
+
+  @override
+  String get amountTooHigh => 'Amount seems too high.';
+
+  @override
+  String get statusRequired => 'You must select a status.';
+
+  @override
+  String get noteHint => 'Optional note';
+
+  @override
+  String get selectStudentFirst => 'Select a student first.';
+
+  @override
+  String get savePayment => 'Save Payment';
 }

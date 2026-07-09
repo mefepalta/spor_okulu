@@ -2251,6 +2251,396 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Kaydediliyor...'**
   String get commonSaving;
+
+  /// No description provided for @attendanceDeleteTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yoklamayı Sil'**
+  String get attendanceDeleteTitle;
+
+  /// No description provided for @attendanceDeleteConfirm.
+  ///
+  /// In tr, this message translates to:
+  /// **'{group} - {date} yoklama kaydını silmek istediğine emin misin'**
+  String attendanceDeleteConfirm(String group, String date);
+
+  /// No description provided for @attendanceDeleted.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yoklama kaydı silindi.'**
+  String get attendanceDeleted;
+
+  /// No description provided for @attendanceEmptyTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz yoklama kaydı yok'**
+  String get attendanceEmptyTitle;
+
+  /// No description provided for @attendanceEmptyAdmin.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni yoklama kaydı eklemek için sağ alttaki + butonunu kullan.'**
+  String get attendanceEmptyAdmin;
+
+  /// No description provided for @attendanceEmptyNoGroup.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yoklama almak için önce en az bir grup ve öğrenci ekle.'**
+  String get attendanceEmptyNoGroup;
+
+  /// No description provided for @attendanceEmptyViewer.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz yoklama kaydı yok. Admin yoklama eklediğinde burada görünecek.'**
+  String get attendanceEmptyViewer;
+
+  /// No description provided for @attendanceCountLine.
+  ///
+  /// In tr, this message translates to:
+  /// **'Geldi: {present} • Gelmedi: {absent}'**
+  String attendanceCountLine(int present, int absent);
+
+  /// No description provided for @takeAttendanceTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yoklama Al'**
+  String get takeAttendanceTitle;
+
+  /// No description provided for @editAttendanceTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yoklamayı Düzenle'**
+  String get editAttendanceTitle;
+
+  /// No description provided for @selectGroupFirst.
+  ///
+  /// In tr, this message translates to:
+  /// **'Önce bir grup seçmelisin.'**
+  String get selectGroupFirst;
+
+  /// No description provided for @fieldGroup.
+  ///
+  /// In tr, this message translates to:
+  /// **'Grup'**
+  String get fieldGroup;
+
+  /// No description provided for @groupRequired.
+  ///
+  /// In tr, this message translates to:
+  /// **'Grup seçmelisin.'**
+  String get groupRequired;
+
+  /// No description provided for @fieldDate.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tarih'**
+  String get fieldDate;
+
+  /// No description provided for @studentsCountTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğrenciler ({count})'**
+  String studentsCountTitle(int count);
+
+  /// No description provided for @groupNoStudentsTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu grupta öğrenci yok.'**
+  String get groupNoStudentsTitle;
+
+  /// No description provided for @groupNoStudentsBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'Grup detayından öğrenci ekleyebilirsin.'**
+  String get groupNoStudentsBody;
+
+  /// No description provided for @saveAttendance.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yoklamayı Kaydet'**
+  String get saveAttendance;
+
+  /// No description provided for @attendanceNeedGroupStudent.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yoklama almak için önce en az bir grup ve öğrenci eklemelisin.'**
+  String get attendanceNeedGroupStudent;
+
+  /// No description provided for @attendanceDetailTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yoklama Detayı'**
+  String get attendanceDetailTitle;
+
+  /// No description provided for @presentStudentsTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gelen Öğrenciler'**
+  String get presentStudentsTitle;
+
+  /// No description provided for @noPresentStudents.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gelen öğrenci yok.'**
+  String get noPresentStudents;
+
+  /// No description provided for @absentStudentsTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gelmeyen Öğrenciler'**
+  String get absentStudentsTitle;
+
+  /// No description provided for @noAbsentStudents.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gelmeyen öğrenci yok.'**
+  String get noAbsentStudents;
+
+  /// No description provided for @backToAttendanceList.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yoklama Listesine Dön'**
+  String get backToAttendanceList;
+
+  /// No description provided for @childAttendanceEmptyTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yoklama kaydı yok'**
+  String get childAttendanceEmptyTitle;
+
+  /// No description provided for @childAttendanceEmptyBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çocuğunuzun bulunduğu bir yoklama kaydı henüz oluşturulmadı.'**
+  String get childAttendanceEmptyBody;
+
+  /// No description provided for @attendedOfLessons.
+  ///
+  /// In tr, this message translates to:
+  /// **'{total} dersin {present} tanesine geldi'**
+  String attendedOfLessons(int total, int present);
+
+  /// No description provided for @percentValue.
+  ///
+  /// In tr, this message translates to:
+  /// **'%{percent}'**
+  String percentValue(int percent);
+
+  /// No description provided for @paymentDeleteTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ödemeyi Sil'**
+  String get paymentDeleteTitle;
+
+  /// No description provided for @paymentDeleteConfirm.
+  ///
+  /// In tr, this message translates to:
+  /// **'{name} - {period} ödeme kaydını silmek istediğine emin misin'**
+  String paymentDeleteConfirm(String name, String period);
+
+  /// No description provided for @paymentDeleted.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ödeme kaydı silindi.'**
+  String get paymentDeleted;
+
+  /// No description provided for @periodLabel.
+  ///
+  /// In tr, this message translates to:
+  /// **'Dönem:'**
+  String get periodLabel;
+
+  /// No description provided for @allPeriods.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tüm dönemler'**
+  String get allPeriods;
+
+  /// No description provided for @paymentsSearchHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ödeme ara'**
+  String get paymentsSearchHint;
+
+  /// No description provided for @paymentsEmptyTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz ödeme kaydı yok'**
+  String get paymentsEmptyTitle;
+
+  /// No description provided for @paymentsEmptyAdmin.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni ödeme kaydı eklemek için sağ alttaki + butonunu kullan.'**
+  String get paymentsEmptyAdmin;
+
+  /// No description provided for @paymentsEmptyNoStudent.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ödeme eklemek için önce en az bir öğrenci ekle.'**
+  String get paymentsEmptyNoStudent;
+
+  /// No description provided for @paymentsEmptyViewer.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz ödeme kaydı yok. Admin ödeme eklediğinde burada görünecek.'**
+  String get paymentsEmptyViewer;
+
+  /// No description provided for @paymentsNoStatusResults.
+  ///
+  /// In tr, this message translates to:
+  /// **'\"{status}\" durumunda kayıt yok. Farklı bir filtre veya \"Tümü\" seç.'**
+  String paymentsNoStatusResults(String status);
+
+  /// No description provided for @remindTooltip.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hatırlatma gönder'**
+  String get remindTooltip;
+
+  /// No description provided for @noParentPhone.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğrencinin veli telefonu kayıtlı değil.'**
+  String get noParentPhone;
+
+  /// No description provided for @paymentCollectedLabel.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tahsil edilen'**
+  String get paymentCollectedLabel;
+
+  /// No description provided for @recordCount.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count, plural, =1{1 kayıt} other{{count} kayıt}}'**
+  String recordCount(int count);
+
+  /// No description provided for @paymentDetailTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ödeme Detayı'**
+  String get paymentDetailTitle;
+
+  /// No description provided for @fieldPeriod.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ay / Dönem'**
+  String get fieldPeriod;
+
+  /// No description provided for @fieldAmount.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tutar'**
+  String get fieldAmount;
+
+  /// No description provided for @fieldStatus.
+  ///
+  /// In tr, this message translates to:
+  /// **'Durum'**
+  String get fieldStatus;
+
+  /// No description provided for @fieldNote.
+  ///
+  /// In tr, this message translates to:
+  /// **'Not'**
+  String get fieldNote;
+
+  /// No description provided for @noNote.
+  ///
+  /// In tr, this message translates to:
+  /// **'Not yok.'**
+  String get noNote;
+
+  /// No description provided for @remindViaWhatsApp.
+  ///
+  /// In tr, this message translates to:
+  /// **'WhatsApp ile Hatırlat'**
+  String get remindViaWhatsApp;
+
+  /// No description provided for @editPaymentTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ödemeyi Düzenle'**
+  String get editPaymentTitle;
+
+  /// No description provided for @backToPaymentList.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ödeme Listesine Dön'**
+  String get backToPaymentList;
+
+  /// No description provided for @addPaymentTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni Ödeme Ekle'**
+  String get addPaymentTitle;
+
+  /// No description provided for @paymentNeedStudent.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ödeme eklemek için önce en az bir öğrenci eklemelisin.'**
+  String get paymentNeedStudent;
+
+  /// No description provided for @studentRequired.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğrenci seçmelisin.'**
+  String get studentRequired;
+
+  /// No description provided for @periodEmpty.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ay / dönem boş bırakılamaz.'**
+  String get periodEmpty;
+
+  /// No description provided for @amountEmpty.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tutar boş bırakılamaz.'**
+  String get amountEmpty;
+
+  /// No description provided for @amountMustBeNumber.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tutar sayı olmalıdır.'**
+  String get amountMustBeNumber;
+
+  /// No description provided for @amountPositive.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tutar 0\'dan büyük olmalıdır.'**
+  String get amountPositive;
+
+  /// No description provided for @amountTooHigh.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tutar çok yüksek görünüyor.'**
+  String get amountTooHigh;
+
+  /// No description provided for @statusRequired.
+  ///
+  /// In tr, this message translates to:
+  /// **'Durum seçmelisin.'**
+  String get statusRequired;
+
+  /// No description provided for @noteHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'İsteğe bağlı not'**
+  String get noteHint;
+
+  /// No description provided for @selectStudentFirst.
+  ///
+  /// In tr, this message translates to:
+  /// **'Önce bir öğrenci seçmelisin.'**
+  String get selectStudentFirst;
+
+  /// No description provided for @savePayment.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ödemeyi Kaydet'**
+  String get savePayment;
 }
 
 class _AppLocalizationsDelegate

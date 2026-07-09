@@ -1223,4 +1223,233 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get commonSaving => 'Сохранение...';
+
+  @override
+  String get attendanceDeleteTitle => 'Удалить посещаемость';
+
+  @override
+  String attendanceDeleteConfirm(String group, String date) {
+    return 'Вы уверены, что хотите удалить запись посещаемости $group - $date';
+  }
+
+  @override
+  String get attendanceDeleted => 'Запись посещаемости удалена.';
+
+  @override
+  String get attendanceEmptyTitle => 'Записей о посещаемости пока нет';
+
+  @override
+  String get attendanceEmptyAdmin =>
+      'Нажмите кнопку + внизу справа, чтобы добавить новую запись посещаемости.';
+
+  @override
+  String get attendanceEmptyNoGroup =>
+      'Чтобы отметить посещаемость, сначала добавьте хотя бы одну группу и ученика.';
+
+  @override
+  String get attendanceEmptyViewer =>
+      'Записей о посещаемости пока нет. Они появятся здесь, когда администратор добавит посещаемость.';
+
+  @override
+  String attendanceCountLine(int present, int absent) {
+    return 'Присутствовали: $present • Отсутствовали: $absent';
+  }
+
+  @override
+  String get takeAttendanceTitle => 'Отметить посещаемость';
+
+  @override
+  String get editAttendanceTitle => 'Изменить посещаемость';
+
+  @override
+  String get selectGroupFirst => 'Сначала выберите группу.';
+
+  @override
+  String get fieldGroup => 'Группа';
+
+  @override
+  String get groupRequired => 'Необходимо выбрать группу.';
+
+  @override
+  String get fieldDate => 'Дата';
+
+  @override
+  String studentsCountTitle(int count) {
+    return 'Ученики ($count)';
+  }
+
+  @override
+  String get groupNoStudentsTitle => 'В этой группе нет учеников.';
+
+  @override
+  String get groupNoStudentsBody =>
+      'Вы можете добавить учеников в деталях группы.';
+
+  @override
+  String get saveAttendance => 'Сохранить посещаемость';
+
+  @override
+  String get attendanceNeedGroupStudent =>
+      'Чтобы отметить посещаемость, сначала нужно добавить хотя бы одну группу и ученика.';
+
+  @override
+  String get attendanceDetailTitle => 'Детали посещаемости';
+
+  @override
+  String get presentStudentsTitle => 'Присутствующие ученики';
+
+  @override
+  String get noPresentStudents => 'Присутствующих учеников нет.';
+
+  @override
+  String get absentStudentsTitle => 'Отсутствующие ученики';
+
+  @override
+  String get noAbsentStudents => 'Отсутствующих учеников нет.';
+
+  @override
+  String get backToAttendanceList => 'Назад к списку посещаемости';
+
+  @override
+  String get childAttendanceEmptyTitle => 'Нет записей о посещаемости';
+
+  @override
+  String get childAttendanceEmptyBody =>
+      'Запись посещаемости с участием вашего ребёнка ещё не создана.';
+
+  @override
+  String attendedOfLessons(int total, int present) {
+    return 'Посещено $present из $total занятий';
+  }
+
+  @override
+  String percentValue(int percent) {
+    return '$percent%';
+  }
+
+  @override
+  String get paymentDeleteTitle => 'Удалить платёж';
+
+  @override
+  String paymentDeleteConfirm(String name, String period) {
+    return 'Вы уверены, что хотите удалить запись о платеже $name - $period';
+  }
+
+  @override
+  String get paymentDeleted => 'Запись о платеже удалена.';
+
+  @override
+  String get periodLabel => 'Период:';
+
+  @override
+  String get allPeriods => 'Все периоды';
+
+  @override
+  String get paymentsSearchHint => 'Поиск платежей';
+
+  @override
+  String get paymentsEmptyTitle => 'Записей о платежах пока нет';
+
+  @override
+  String get paymentsEmptyAdmin =>
+      'Нажмите кнопку + внизу справа, чтобы добавить новую запись о платеже.';
+
+  @override
+  String get paymentsEmptyNoStudent =>
+      'Чтобы добавить платёж, сначала добавьте хотя бы одного ученика.';
+
+  @override
+  String get paymentsEmptyViewer =>
+      'Записей о платежах пока нет. Они появятся здесь, когда администратор добавит платёж.';
+
+  @override
+  String paymentsNoStatusResults(String status) {
+    return 'Нет записей со статусом «$status». Выберите другой фильтр или «Все».';
+  }
+
+  @override
+  String get remindTooltip => 'Отправить напоминание';
+
+  @override
+  String get noParentPhone => 'Телефон родителя ученика не сохранён.';
+
+  @override
+  String get paymentCollectedLabel => 'Собрано';
+
+  @override
+  String recordCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count записи',
+      many: '$count записей',
+      few: '$count записи',
+      one: '1 запись',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get paymentDetailTitle => 'Детали платежа';
+
+  @override
+  String get fieldPeriod => 'Месяц / период';
+
+  @override
+  String get fieldAmount => 'Сумма';
+
+  @override
+  String get fieldStatus => 'Статус';
+
+  @override
+  String get fieldNote => 'Заметка';
+
+  @override
+  String get noNote => 'Без заметки.';
+
+  @override
+  String get remindViaWhatsApp => 'Напомнить через WhatsApp';
+
+  @override
+  String get editPaymentTitle => 'Изменить платёж';
+
+  @override
+  String get backToPaymentList => 'Назад к списку платежей';
+
+  @override
+  String get addPaymentTitle => 'Добавить новый платёж';
+
+  @override
+  String get paymentNeedStudent =>
+      'Чтобы добавить платёж, сначала нужно добавить хотя бы одного ученика.';
+
+  @override
+  String get studentRequired => 'Необходимо выбрать ученика.';
+
+  @override
+  String get periodEmpty => 'Месяц / период не может быть пустым.';
+
+  @override
+  String get amountEmpty => 'Сумма не может быть пустой.';
+
+  @override
+  String get amountMustBeNumber => 'Сумма должна быть числом.';
+
+  @override
+  String get amountPositive => 'Сумма должна быть больше 0.';
+
+  @override
+  String get amountTooHigh => 'Сумма выглядит слишком большой.';
+
+  @override
+  String get statusRequired => 'Необходимо выбрать статус.';
+
+  @override
+  String get noteHint => 'Необязательная заметка';
+
+  @override
+  String get selectStudentFirst => 'Сначала выберите ученика.';
+
+  @override
+  String get savePayment => 'Сохранить платёж';
 }

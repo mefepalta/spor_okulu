@@ -1227,4 +1227,232 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get commonSaving => 'Guardando...';
+
+  @override
+  String get attendanceDeleteTitle => 'Eliminar asistencia';
+
+  @override
+  String attendanceDeleteConfirm(String group, String date) {
+    return '¿Seguro que quieres eliminar el registro de asistencia de $group - $date';
+  }
+
+  @override
+  String get attendanceDeleted => 'Registro de asistencia eliminado.';
+
+  @override
+  String get attendanceEmptyTitle => 'Aún no hay registros de asistencia';
+
+  @override
+  String get attendanceEmptyAdmin =>
+      'Usa el botón + de abajo a la derecha para añadir un nuevo registro de asistencia.';
+
+  @override
+  String get attendanceEmptyNoGroup =>
+      'Para tomar asistencia, primero añade al menos un grupo y un estudiante.';
+
+  @override
+  String get attendanceEmptyViewer =>
+      'Aún no hay registros de asistencia. Aparecerán aquí cuando el administrador añada asistencia.';
+
+  @override
+  String attendanceCountLine(int present, int absent) {
+    return 'Presentes: $present • Ausentes: $absent';
+  }
+
+  @override
+  String get takeAttendanceTitle => 'Tomar asistencia';
+
+  @override
+  String get editAttendanceTitle => 'Editar asistencia';
+
+  @override
+  String get selectGroupFirst => 'Primero selecciona un grupo.';
+
+  @override
+  String get fieldGroup => 'Grupo';
+
+  @override
+  String get groupRequired => 'Debes seleccionar un grupo.';
+
+  @override
+  String get fieldDate => 'Fecha';
+
+  @override
+  String studentsCountTitle(int count) {
+    return 'Estudiantes ($count)';
+  }
+
+  @override
+  String get groupNoStudentsTitle => 'No hay estudiantes en este grupo.';
+
+  @override
+  String get groupNoStudentsBody =>
+      'Puedes añadir estudiantes desde los detalles del grupo.';
+
+  @override
+  String get saveAttendance => 'Guardar asistencia';
+
+  @override
+  String get attendanceNeedGroupStudent =>
+      'Para tomar asistencia, primero debes añadir al menos un grupo y un estudiante.';
+
+  @override
+  String get attendanceDetailTitle => 'Detalle de asistencia';
+
+  @override
+  String get presentStudentsTitle => 'Estudiantes presentes';
+
+  @override
+  String get noPresentStudents => 'No hay estudiantes presentes.';
+
+  @override
+  String get absentStudentsTitle => 'Estudiantes ausentes';
+
+  @override
+  String get noAbsentStudents => 'No hay estudiantes ausentes.';
+
+  @override
+  String get backToAttendanceList => 'Volver a la lista de asistencia';
+
+  @override
+  String get childAttendanceEmptyTitle => 'No hay registros de asistencia';
+
+  @override
+  String get childAttendanceEmptyBody =>
+      'Aún no se ha creado ningún registro de asistencia que incluya a su hijo.';
+
+  @override
+  String attendedOfLessons(int total, int present) {
+    return 'Asistió a $present de $total clases';
+  }
+
+  @override
+  String percentValue(int percent) {
+    return '$percent %';
+  }
+
+  @override
+  String get paymentDeleteTitle => 'Eliminar pago';
+
+  @override
+  String paymentDeleteConfirm(String name, String period) {
+    return '¿Seguro que quieres eliminar el registro de pago de $name - $period';
+  }
+
+  @override
+  String get paymentDeleted => 'Registro de pago eliminado.';
+
+  @override
+  String get periodLabel => 'Período:';
+
+  @override
+  String get allPeriods => 'Todos los períodos';
+
+  @override
+  String get paymentsSearchHint => 'Buscar pagos';
+
+  @override
+  String get paymentsEmptyTitle => 'Aún no hay registros de pago';
+
+  @override
+  String get paymentsEmptyAdmin =>
+      'Usa el botón + de abajo a la derecha para añadir un nuevo registro de pago.';
+
+  @override
+  String get paymentsEmptyNoStudent =>
+      'Para añadir un pago, primero añade al menos un estudiante.';
+
+  @override
+  String get paymentsEmptyViewer =>
+      'Aún no hay registros de pago. Aparecerán aquí cuando el administrador añada un pago.';
+
+  @override
+  String paymentsNoStatusResults(String status) {
+    return 'No hay registros con estado \"$status\". Elige otro filtro o \"Todos\".';
+  }
+
+  @override
+  String get remindTooltip => 'Enviar recordatorio';
+
+  @override
+  String get noParentPhone =>
+      'El teléfono del padre del estudiante no está registrado.';
+
+  @override
+  String get paymentCollectedLabel => 'Cobrado';
+
+  @override
+  String recordCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count registros',
+      one: '1 registro',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get paymentDetailTitle => 'Detalle del pago';
+
+  @override
+  String get fieldPeriod => 'Mes / Período';
+
+  @override
+  String get fieldAmount => 'Importe';
+
+  @override
+  String get fieldStatus => 'Estado';
+
+  @override
+  String get fieldNote => 'Nota';
+
+  @override
+  String get noNote => 'Sin nota.';
+
+  @override
+  String get remindViaWhatsApp => 'Recordar por WhatsApp';
+
+  @override
+  String get editPaymentTitle => 'Editar pago';
+
+  @override
+  String get backToPaymentList => 'Volver a la lista de pagos';
+
+  @override
+  String get addPaymentTitle => 'Añadir nuevo pago';
+
+  @override
+  String get paymentNeedStudent =>
+      'Para añadir un pago, primero debes añadir al menos un estudiante.';
+
+  @override
+  String get studentRequired => 'Debes seleccionar un estudiante.';
+
+  @override
+  String get periodEmpty => 'El mes / período no puede estar vacío.';
+
+  @override
+  String get amountEmpty => 'El importe no puede estar vacío.';
+
+  @override
+  String get amountMustBeNumber => 'El importe debe ser un número.';
+
+  @override
+  String get amountPositive => 'El importe debe ser mayor que 0.';
+
+  @override
+  String get amountTooHigh => 'El importe parece demasiado alto.';
+
+  @override
+  String get statusRequired => 'Debes seleccionar un estado.';
+
+  @override
+  String get noteHint => 'Nota opcional';
+
+  @override
+  String get selectStudentFirst => 'Primero selecciona un estudiante.';
+
+  @override
+  String get savePayment => 'Guardar pago';
 }

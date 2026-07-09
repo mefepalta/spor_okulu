@@ -1232,4 +1232,234 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get commonSaving => 'Enregistrement...';
+
+  @override
+  String get attendanceDeleteTitle => 'Supprimer la présence';
+
+  @override
+  String attendanceDeleteConfirm(String group, String date) {
+    return 'Voulez-vous vraiment supprimer l\'enregistrement de présence $group - $date';
+  }
+
+  @override
+  String get attendanceDeleted => 'Enregistrement de présence supprimé.';
+
+  @override
+  String get attendanceEmptyTitle =>
+      'Aucun enregistrement de présence pour l\'instant';
+
+  @override
+  String get attendanceEmptyAdmin =>
+      'Utilisez le bouton + en bas à droite pour ajouter un nouvel enregistrement de présence.';
+
+  @override
+  String get attendanceEmptyNoGroup =>
+      'Pour faire l\'appel, ajoutez d\'abord au moins un groupe et un élève.';
+
+  @override
+  String get attendanceEmptyViewer =>
+      'Aucun enregistrement de présence pour l\'instant. Ils apparaîtront ici lorsque l\'administrateur en ajoutera.';
+
+  @override
+  String attendanceCountLine(int present, int absent) {
+    return 'Présents : $present • Absents : $absent';
+  }
+
+  @override
+  String get takeAttendanceTitle => 'Faire l\'appel';
+
+  @override
+  String get editAttendanceTitle => 'Modifier la présence';
+
+  @override
+  String get selectGroupFirst => 'Sélectionnez d\'abord un groupe.';
+
+  @override
+  String get fieldGroup => 'Groupe';
+
+  @override
+  String get groupRequired => 'Vous devez sélectionner un groupe.';
+
+  @override
+  String get fieldDate => 'Date';
+
+  @override
+  String studentsCountTitle(int count) {
+    return 'Élèves ($count)';
+  }
+
+  @override
+  String get groupNoStudentsTitle => 'Aucun élève dans ce groupe.';
+
+  @override
+  String get groupNoStudentsBody =>
+      'Vous pouvez ajouter des élèves depuis les détails du groupe.';
+
+  @override
+  String get saveAttendance => 'Enregistrer la présence';
+
+  @override
+  String get attendanceNeedGroupStudent =>
+      'Pour faire l\'appel, vous devez d\'abord ajouter au moins un groupe et un élève.';
+
+  @override
+  String get attendanceDetailTitle => 'Détail de la présence';
+
+  @override
+  String get presentStudentsTitle => 'Élèves présents';
+
+  @override
+  String get noPresentStudents => 'Aucun élève présent.';
+
+  @override
+  String get absentStudentsTitle => 'Élèves absents';
+
+  @override
+  String get noAbsentStudents => 'Aucun élève absent.';
+
+  @override
+  String get backToAttendanceList => 'Retour à la liste de présence';
+
+  @override
+  String get childAttendanceEmptyTitle => 'Aucun enregistrement de présence';
+
+  @override
+  String get childAttendanceEmptyBody =>
+      'Aucun enregistrement de présence incluant votre enfant n\'a encore été créé.';
+
+  @override
+  String attendedOfLessons(int total, int present) {
+    return 'A assisté à $present sur $total cours';
+  }
+
+  @override
+  String percentValue(int percent) {
+    return '$percent %';
+  }
+
+  @override
+  String get paymentDeleteTitle => 'Supprimer le paiement';
+
+  @override
+  String paymentDeleteConfirm(String name, String period) {
+    return 'Voulez-vous vraiment supprimer l\'enregistrement de paiement $name - $period';
+  }
+
+  @override
+  String get paymentDeleted => 'Enregistrement de paiement supprimé.';
+
+  @override
+  String get periodLabel => 'Période :';
+
+  @override
+  String get allPeriods => 'Toutes les périodes';
+
+  @override
+  String get paymentsSearchHint => 'Rechercher des paiements';
+
+  @override
+  String get paymentsEmptyTitle =>
+      'Aucun enregistrement de paiement pour l\'instant';
+
+  @override
+  String get paymentsEmptyAdmin =>
+      'Utilisez le bouton + en bas à droite pour ajouter un nouvel enregistrement de paiement.';
+
+  @override
+  String get paymentsEmptyNoStudent =>
+      'Pour ajouter un paiement, ajoutez d\'abord au moins un élève.';
+
+  @override
+  String get paymentsEmptyViewer =>
+      'Aucun enregistrement de paiement pour l\'instant. Ils apparaîtront ici lorsque l\'administrateur en ajoutera.';
+
+  @override
+  String paymentsNoStatusResults(String status) {
+    return 'Aucun enregistrement avec le statut « $status ». Choisissez un autre filtre ou « Tous ».';
+  }
+
+  @override
+  String get remindTooltip => 'Envoyer un rappel';
+
+  @override
+  String get noParentPhone =>
+      'Le numéro de téléphone du parent de l\'élève n\'est pas enregistré.';
+
+  @override
+  String get paymentCollectedLabel => 'Encaissé';
+
+  @override
+  String recordCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count enregistrements',
+      one: '1 enregistrement',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get paymentDetailTitle => 'Détail du paiement';
+
+  @override
+  String get fieldPeriod => 'Mois / Période';
+
+  @override
+  String get fieldAmount => 'Montant';
+
+  @override
+  String get fieldStatus => 'Statut';
+
+  @override
+  String get fieldNote => 'Note';
+
+  @override
+  String get noNote => 'Aucune note.';
+
+  @override
+  String get remindViaWhatsApp => 'Rappeler via WhatsApp';
+
+  @override
+  String get editPaymentTitle => 'Modifier le paiement';
+
+  @override
+  String get backToPaymentList => 'Retour à la liste des paiements';
+
+  @override
+  String get addPaymentTitle => 'Ajouter un nouveau paiement';
+
+  @override
+  String get paymentNeedStudent =>
+      'Pour ajouter un paiement, vous devez d\'abord ajouter au moins un élève.';
+
+  @override
+  String get studentRequired => 'Vous devez sélectionner un élève.';
+
+  @override
+  String get periodEmpty => 'Le mois / la période ne peut pas être vide.';
+
+  @override
+  String get amountEmpty => 'Le montant ne peut pas être vide.';
+
+  @override
+  String get amountMustBeNumber => 'Le montant doit être un nombre.';
+
+  @override
+  String get amountPositive => 'Le montant doit être supérieur à 0.';
+
+  @override
+  String get amountTooHigh => 'Le montant semble trop élevé.';
+
+  @override
+  String get statusRequired => 'Vous devez sélectionner un statut.';
+
+  @override
+  String get noteHint => 'Note facultative';
+
+  @override
+  String get selectStudentFirst => 'Sélectionnez d\'abord un élève.';
+
+  @override
+  String get savePayment => 'Enregistrer le paiement';
 }
