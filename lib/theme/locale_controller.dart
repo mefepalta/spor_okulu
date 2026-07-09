@@ -25,13 +25,15 @@ class LocaleController {
 
   static const String _prefKey = 'localeCode';
 
-  /// Uygulamanın desteklediği diller. (Arapça sonraki aşamada eklenecek.)
+  /// Uygulamanın desteklediği diller. Arapça (RTL) dahildir; yön (LTR/RTL)
+  /// flutter_localizations delegeleri tarafından dile göre otomatik ayarlanır.
   static const List<Locale> supportedLocales = [
     Locale('tr'),
     Locale('en'),
     Locale('es'),
     Locale('ru'),
     Locale('fr'),
+    Locale('ar'),
   ];
 
   /// Dil seçicide listelenecek seçenekler (Sistem + her dil).
@@ -42,6 +44,7 @@ class LocaleController {
     AppLocaleOption(Locale('es'), 'Español'),
     AppLocaleOption(Locale('ru'), 'Русский'),
     AppLocaleOption(Locale('fr'), 'Français'),
+    AppLocaleOption(Locale('ar'), 'العربية'),
   ];
 
   /// Seçili dil; `null` ise cihaz dili izlenir.
