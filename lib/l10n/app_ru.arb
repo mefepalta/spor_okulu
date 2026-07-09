@@ -577,5 +577,13 @@
   "assignedHint": "У кого / где",
   "conditionGood": "Исправно",
   "conditionMaintenance": "На обслуживании",
-  "conditionWorn": "Изношено"
+  "conditionWorn": "Изношено",
+
+  "generalSummary": "Общая сводка",
+  "paymentSummary": "Сводка по платежам",
+  "paidPayments": "Оплаченные платежи",
+  "pendingPayments": "Ожидающие платежи",
+  "statusComment": "Обзор состояния",
+  "reportsNoData": "Пока недостаточно данных. По мере добавления записей об учениках, группах и платежах здесь появится общая сводка состояния.",
+  "reportsSummary": "В системе {students} учеников, {coaches} тренеров и {groups} групп. Из {payments} записей о платежах {paid} оплачено, {pending} ожидают."
 }

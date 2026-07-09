@@ -3,6 +3,7 @@ import '../theme/app_colors.dart';
 
 import '../widgets/wave_background.dart';
 
+import '../l10n/app_localizations.dart';
 import '../models/app_models.dart';
 
 class ReportsScreen extends StatelessWidget {
@@ -39,14 +40,15 @@ class ReportsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return WaveScaffold(
-      appBar: AppBar(title: const Text('Raporlar')),
+      appBar: AppBar(title: Text(l10n.navReports)),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          const Text(
-            'Genel Özet',
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          Text(
+            l10n.generalSummary,
+            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 12),
           GridView.count(
@@ -59,46 +61,46 @@ class ReportsScreen extends StatelessWidget {
             children: [
               _ReportCard(
                 icon: Icons.people,
-                title: 'Öğrenciler',
+                title: l10n.navStudents,
                 value: students.length.toString(),
                 color: AppColors.primary,
               ),
               _ReportCard(
                 icon: Icons.sports,
-                title: 'Antrenörler',
+                title: l10n.navCoaches,
                 value: coaches.length.toString(),
                 color: Colors.deepPurple,
               ),
               _ReportCard(
                 icon: Icons.groups,
-                title: 'Gruplar',
+                title: l10n.navGroups,
                 value: groups.length.toString(),
                 color: Colors.blue,
               ),
               _ReportCard(
                 icon: Icons.check_circle,
-                title: 'Yoklama',
+                title: l10n.navAttendance,
                 value: attendanceRecords.length.toString(),
                 color: Colors.green,
               ),
               _ReportCard(
                 icon: Icons.payment,
-                title: 'Ödemeler',
+                title: l10n.navPayments,
                 value: payments.length.toString(),
                 color: Colors.orange,
               ),
               _ReportCard(
                 icon: Icons.campaign,
-                title: 'Duyurular',
+                title: l10n.navAnnouncements,
                 value: announcements.length.toString(),
                 color: Colors.redAccent,
               ),
             ],
           ),
           const SizedBox(height: 24),
-          const Text(
-            'Ödeme Özeti',
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          Text(
+            l10n.paymentSummary,
+            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 12),
           Card(
@@ -106,7 +108,7 @@ class ReportsScreen extends StatelessWidget {
               children: [
                 ListTile(
                   leading: const Icon(Icons.check_circle, color: Colors.green),
-                  title: const Text('Ödenmiş ödemeler'),
+                  title: Text(l10n.paidPayments),
                   trailing: Text(
                     _paidPaymentCount.toString(),
                     style: const TextStyle(
@@ -121,7 +123,7 @@ class ReportsScreen extends StatelessWidget {
                     Icons.pending_actions,
                     color: Colors.orange,
                   ),
-                  title: const Text('Bekleyen ödemeler'),
+                  title: Text(l10n.pendingPayments),
                   trailing: Text(
                     _pendingPaymentCount.toString(),
                     style: const TextStyle(
@@ -134,16 +136,16 @@ class ReportsScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 24),
-          const Text(
-            'Durum Yorumu',
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          Text(
+            l10n.statusComment,
+            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 12),
           Card(
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: Text(
-                _buildSummaryText(),
+                _buildSummaryText(l10n),
                 style: const TextStyle(height: 1.4),
               ),
             ),
@@ -153,13 +155,19 @@ class ReportsScreen extends StatelessWidget {
     );
   }
 
-  String _buildSummaryText() {
+  String _buildSummaryText(AppLocalizations l10n) {
     if (students.isEmpty && groups.isEmpty && payments.isEmpty) {
-      return 'Henüz yeterli veri yok. Öğrenci, grup ve ödeme kayıtları eklendikçe burada genel durum özeti görünecek.';
+      return l10n.reportsNoData;
     }
 
-    return 'Sistemde ${students.length} öğrenci, ${coaches.length} antrenör ve ${groups.length} grup bulunuyor. '
-        'Toplam ${payments.length} ödeme kaydının $_paidPaymentCount tanesi ödenmiş, $_pendingPaymentCount tanesi bekleyen durumda.';
+    return l10n.reportsSummary(
+      students.length,
+      coaches.length,
+      groups.length,
+      payments.length,
+      _paidPaymentCount,
+      _pendingPaymentCount,
+    );
   }
 }
 

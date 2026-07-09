@@ -791,5 +791,23 @@
   "assignedHint": "Kimde / nerede",
   "conditionGood": "Sağlam",
   "conditionMaintenance": "Bakımda",
-  "conditionWorn": "Yıpranmış"
+  "conditionWorn": "Yıpranmış",
+
+  "generalSummary": "Genel Özet",
+  "paymentSummary": "Ödeme Özeti",
+  "paidPayments": "Ödenmiş ödemeler",
+  "pendingPayments": "Bekleyen ödemeler",
+  "statusComment": "Durum Yorumu",
+  "reportsNoData": "Henüz yeterli veri yok. Öğrenci, grup ve ödeme kayıtları eklendikçe burada genel durum özeti görünecek.",
+  "reportsSummary": "Sistemde {students} öğrenci, {coaches} antrenör ve {groups} grup bulunuyor. Toplam {payments} ödeme kaydının {paid} tanesi ödenmiş, {pending} tanesi bekleyen durumda.",
+  "@reportsSummary": {
+    "placeholders": {
+      "students": { "type": "int" },
+      "coaches": { "type": "int" },
+      "groups": { "type": "int" },
+      "payments": { "type": "int" },
+      "paid": { "type": "int" },
+      "pending": { "type": "int" }
+    }
+  }
 }

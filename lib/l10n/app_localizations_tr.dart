@@ -1831,4 +1831,35 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get conditionWorn => 'Yıpranmış';
+
+  @override
+  String get generalSummary => 'Genel Özet';
+
+  @override
+  String get paymentSummary => 'Ödeme Özeti';
+
+  @override
+  String get paidPayments => 'Ödenmiş ödemeler';
+
+  @override
+  String get pendingPayments => 'Bekleyen ödemeler';
+
+  @override
+  String get statusComment => 'Durum Yorumu';
+
+  @override
+  String get reportsNoData =>
+      'Henüz yeterli veri yok. Öğrenci, grup ve ödeme kayıtları eklendikçe burada genel durum özeti görünecek.';
+
+  @override
+  String reportsSummary(
+    int students,
+    int coaches,
+    int groups,
+    int payments,
+    int paid,
+    int pending,
+  ) {
+    return 'Sistemde $students öğrenci, $coaches antrenör ve $groups grup bulunuyor. Toplam $payments ödeme kaydının $paid tanesi ödenmiş, $pending tanesi bekleyen durumda.';
+  }
 }

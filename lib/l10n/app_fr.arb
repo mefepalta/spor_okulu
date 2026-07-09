@@ -577,5 +577,13 @@
   "assignedHint": "À qui / où",
   "conditionGood": "Bon état",
   "conditionMaintenance": "En maintenance",
-  "conditionWorn": "Usé"
+  "conditionWorn": "Usé",
+
+  "generalSummary": "Résumé général",
+  "paymentSummary": "Résumé des paiements",
+  "paidPayments": "Paiements effectués",
+  "pendingPayments": "Paiements en attente",
+  "statusComment": "Aperçu de la situation",
+  "reportsNoData": "Pas encore assez de données. À mesure que des enregistrements d'élèves, de groupes et de paiements sont ajoutés, un résumé général de la situation apparaîtra ici.",
+  "reportsSummary": "Le système compte {students} élèves, {coaches} entraîneurs et {groups} groupes. Sur {payments} enregistrements de paiement au total, {paid} sont payés et {pending} en attente."
 }

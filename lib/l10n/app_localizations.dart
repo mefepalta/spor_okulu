@@ -3343,6 +3343,55 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Yıpranmış'**
   String get conditionWorn;
+
+  /// No description provided for @generalSummary.
+  ///
+  /// In tr, this message translates to:
+  /// **'Genel Özet'**
+  String get generalSummary;
+
+  /// No description provided for @paymentSummary.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ödeme Özeti'**
+  String get paymentSummary;
+
+  /// No description provided for @paidPayments.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ödenmiş ödemeler'**
+  String get paidPayments;
+
+  /// No description provided for @pendingPayments.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bekleyen ödemeler'**
+  String get pendingPayments;
+
+  /// No description provided for @statusComment.
+  ///
+  /// In tr, this message translates to:
+  /// **'Durum Yorumu'**
+  String get statusComment;
+
+  /// No description provided for @reportsNoData.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz yeterli veri yok. Öğrenci, grup ve ödeme kayıtları eklendikçe burada genel durum özeti görünecek.'**
+  String get reportsNoData;
+
+  /// No description provided for @reportsSummary.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sistemde {students} öğrenci, {coaches} antrenör ve {groups} grup bulunuyor. Toplam {payments} ödeme kaydının {paid} tanesi ödenmiş, {pending} tanesi bekleyen durumda.'**
+  String reportsSummary(
+    int students,
+    int coaches,
+    int groups,
+    int payments,
+    int paid,
+    int pending,
+  );
 }
 
 class _AppLocalizationsDelegate

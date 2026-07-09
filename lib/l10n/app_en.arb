@@ -577,5 +577,13 @@
   "assignedHint": "Who / where",
   "conditionGood": "Good",
   "conditionMaintenance": "In maintenance",
-  "conditionWorn": "Worn"
+  "conditionWorn": "Worn",
+
+  "generalSummary": "General Summary",
+  "paymentSummary": "Payment Summary",
+  "paidPayments": "Paid payments",
+  "pendingPayments": "Pending payments",
+  "statusComment": "Status Overview",
+  "reportsNoData": "Not enough data yet. As student, group and payment records are added, a general status summary will appear here.",
+  "reportsSummary": "The system has {students} students, {coaches} coaches and {groups} groups. Of {payments} total payment records, {paid} are paid and {pending} are pending."
 }

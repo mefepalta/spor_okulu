@@ -1847,4 +1847,35 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get conditionWorn => 'Изношено';
+
+  @override
+  String get generalSummary => 'Общая сводка';
+
+  @override
+  String get paymentSummary => 'Сводка по платежам';
+
+  @override
+  String get paidPayments => 'Оплаченные платежи';
+
+  @override
+  String get pendingPayments => 'Ожидающие платежи';
+
+  @override
+  String get statusComment => 'Обзор состояния';
+
+  @override
+  String get reportsNoData =>
+      'Пока недостаточно данных. По мере добавления записей об учениках, группах и платежах здесь появится общая сводка состояния.';
+
+  @override
+  String reportsSummary(
+    int students,
+    int coaches,
+    int groups,
+    int payments,
+    int paid,
+    int pending,
+  ) {
+    return 'В системе $students учеников, $coaches тренеров и $groups групп. Из $payments записей о платежах $paid оплачено, $pending ожидают.';
+  }
 }

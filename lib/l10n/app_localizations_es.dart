@@ -1852,4 +1852,35 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get conditionWorn => 'Desgastado';
+
+  @override
+  String get generalSummary => 'Resumen general';
+
+  @override
+  String get paymentSummary => 'Resumen de pagos';
+
+  @override
+  String get paidPayments => 'Pagos realizados';
+
+  @override
+  String get pendingPayments => 'Pagos pendientes';
+
+  @override
+  String get statusComment => 'Resumen del estado';
+
+  @override
+  String get reportsNoData =>
+      'Aún no hay suficientes datos. A medida que se añadan registros de estudiantes, grupos y pagos, aquí aparecerá un resumen general del estado.';
+
+  @override
+  String reportsSummary(
+    int students,
+    int coaches,
+    int groups,
+    int payments,
+    int paid,
+    int pending,
+  ) {
+    return 'El sistema tiene $students estudiantes, $coaches entrenadores y $groups grupos. De $payments registros de pago en total, $paid están pagados y $pending pendientes.';
+  }
 }

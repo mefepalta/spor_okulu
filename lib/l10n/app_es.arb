@@ -577,5 +577,13 @@
   "assignedHint": "Quién / dónde",
   "conditionGood": "En buen estado",
   "conditionMaintenance": "En mantenimiento",
-  "conditionWorn": "Desgastado"
+  "conditionWorn": "Desgastado",
+
+  "generalSummary": "Resumen general",
+  "paymentSummary": "Resumen de pagos",
+  "paidPayments": "Pagos realizados",
+  "pendingPayments": "Pagos pendientes",
+  "statusComment": "Resumen del estado",
+  "reportsNoData": "Aún no hay suficientes datos. A medida que se añadan registros de estudiantes, grupos y pagos, aquí aparecerá un resumen general del estado.",
+  "reportsSummary": "El sistema tiene {students} estudiantes, {coaches} entrenadores y {groups} grupos. De {payments} registros de pago en total, {paid} están pagados y {pending} pendientes."
 }
