@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../data/sports_content_l10n.dart';
 import '../data/sports_data.dart';
 import '../l10n/app_localizations.dart';
 import '../widgets/wave_background.dart';
@@ -16,10 +17,11 @@ class SportDetailScreen extends StatelessWidget {
 
   Future<void> _openVideo(BuildContext context) async {
     final l10n = AppLocalizations.of(context);
+    final content = localizedSportContent(sport, Localizations.localeOf(context));
     final url = sport.videoUrl.isNotEmpty
         ? sport.videoUrl
         : 'https://www.youtube.com/results?search_query='
-              '${Uri.encodeComponent('${sport.name} ${l10n.youtubeHowToPlay}')}';
+              '${Uri.encodeComponent('${content.name} ${l10n.youtubeHowToPlay}')}';
 
     try {
       final launched = await launchUrl(
@@ -45,15 +47,16 @@ class SportDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final sectionTitleColor = Theme.of(context).colorScheme.primary;
+    final content = localizedSportContent(sport, Localizations.localeOf(context));
 
     return WaveScaffold(
-      appBar: AppBar(title: Text(sport.name)),
+      appBar: AppBar(title: Text(content.name)),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
           _VideoCover(sport: sport, onTap: () => _openVideo(context)),
           const SizedBox(height: 16),
-          for (final section in sport.sections) ...[
+          for (final section in content.sections) ...[
             Card(
               child: Padding(
                 padding: const EdgeInsets.all(16),

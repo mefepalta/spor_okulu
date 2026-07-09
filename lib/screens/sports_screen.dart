@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../data/sports_content_l10n.dart';
 import '../data/sports_data.dart';
 import '../l10n/app_localizations.dart';
 import '../widgets/wave_background.dart';
@@ -28,6 +29,10 @@ class SportsScreen extends StatelessWidget {
         itemCount: sportsCatalog.length,
         itemBuilder: (context, index) {
           final sport = sportsCatalog[index];
+          final content = localizedSportContent(
+            sport,
+            Localizations.localeOf(context),
+          );
 
           return Card(
             margin: const EdgeInsets.only(bottom: 12),
@@ -45,13 +50,13 @@ class SportsScreen extends StatelessWidget {
                 child: Icon(sport.icon, color: sport.color, size: 26),
               ),
               title: Text(
-                sport.name,
+                content.name,
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              subtitle: Text(sport.tagline),
+              subtitle: Text(content.tagline),
               trailing: const Icon(Icons.chevron_right),
               onTap: () => _openDetail(context, sport),
             ),
