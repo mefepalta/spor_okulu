@@ -1439,4 +1439,47 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get savePayment => 'Ödemeyi Kaydet';
+
+  @override
+  String get leaveReported => 'Mazeret bildirildi.';
+
+  @override
+  String get leaveDeleteTitle => 'Mazereti sil';
+
+  @override
+  String get leaveDeleteConfirm =>
+      'Bu mazeret talebini silmek istiyor musunuz?';
+
+  @override
+  String get newLeave => 'Yeni Mazeret';
+
+  @override
+  String get leaveEmptyTitle => 'Mazeret yok';
+
+  @override
+  String get leaveEmptyParent =>
+      'Henüz bir mazeret bildirmediniz. Sağ alttaki butonla ekleyebilirsiniz.';
+
+  @override
+  String get leaveEmptyStaff => 'Henüz gönderilmiş bir mazeret talebi yok.';
+
+  @override
+  String get cancelLeaveAction => 'İptal Et';
+
+  @override
+  String get reasonRequired => 'Lütfen bir gerekçe yazın.';
+
+  @override
+  String dateWithValue(String date) {
+    return 'Tarih: $date';
+  }
+
+  @override
+  String get fieldReason => 'Gerekçe';
+
+  @override
+  String get reasonHint => 'Örn: Sağlık raporu, aile ziyareti...';
+
+  @override
+  String get sendAction => 'Gönder';
 }

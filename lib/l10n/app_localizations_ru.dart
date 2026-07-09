@@ -1452,4 +1452,46 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get savePayment => 'Сохранить платёж';
+
+  @override
+  String get leaveReported => 'Заявка на пропуск отправлена.';
+
+  @override
+  String get leaveDeleteTitle => 'Удалить заявку на пропуск';
+
+  @override
+  String get leaveDeleteConfirm => 'Вы хотите удалить эту заявку на пропуск?';
+
+  @override
+  String get newLeave => 'Новая заявка на пропуск';
+
+  @override
+  String get leaveEmptyTitle => 'Заявок на пропуск нет';
+
+  @override
+  String get leaveEmptyParent =>
+      'Вы ещё не отправили ни одной заявки на пропуск. Используйте кнопку внизу справа, чтобы добавить.';
+
+  @override
+  String get leaveEmptyStaff => 'Заявки на пропуск ещё не отправлены.';
+
+  @override
+  String get cancelLeaveAction => 'Отменить';
+
+  @override
+  String get reasonRequired => 'Пожалуйста, укажите причину.';
+
+  @override
+  String dateWithValue(String date) {
+    return 'Дата: $date';
+  }
+
+  @override
+  String get fieldReason => 'Причина';
+
+  @override
+  String get reasonHint => 'Напр.: медицинская справка, семейный визит...';
+
+  @override
+  String get sendAction => 'Отправить';
 }

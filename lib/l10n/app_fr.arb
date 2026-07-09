@@ -454,5 +454,19 @@
   "statusRequired": "Vous devez sélectionner un statut.",
   "noteHint": "Note facultative",
   "selectStudentFirst": "Sélectionnez d'abord un élève.",
-  "savePayment": "Enregistrer le paiement"
+  "savePayment": "Enregistrer le paiement",
+
+  "leaveReported": "Demande d'absence envoyée.",
+  "leaveDeleteTitle": "Supprimer la demande d'absence",
+  "leaveDeleteConfirm": "Voulez-vous supprimer cette demande d'absence ?",
+  "newLeave": "Nouvelle demande d'absence",
+  "leaveEmptyTitle": "Aucune demande d'absence",
+  "leaveEmptyParent": "Vous n'avez encore soumis aucune demande d'absence. Utilisez le bouton en bas à droite pour en ajouter une.",
+  "leaveEmptyStaff": "Aucune demande d'absence n'a encore été soumise.",
+  "cancelLeaveAction": "Annuler",
+  "reasonRequired": "Veuillez indiquer un motif.",
+  "dateWithValue": "Date : {date}",
+  "fieldReason": "Motif",
+  "reasonHint": "Ex. : certificat médical, visite familiale...",
+  "sendAction": "Envoyer"
 }

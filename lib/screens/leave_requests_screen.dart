@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/app_localizations.dart';
 import '../models/app_models.dart';
+import '../utils/status_l10n.dart';
 import '../widgets/empty_state.dart';
 import '../widgets/wave_background.dart';
 
@@ -71,7 +73,7 @@ class _LeaveRequestsScreenState extends State<LeaveRequestsScreen> {
     setState(() => _requests.insert(0, created));
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Mazeret bildirildi.')),
+        SnackBar(content: Text(AppLocalizations.of(context).leaveReported)),
       );
     }
   }
@@ -88,19 +90,20 @@ class _LeaveRequestsScreenState extends State<LeaveRequestsScreen> {
   }
 
   Future<void> _delete(LeaveRequest request) async {
+    final l10n = AppLocalizations.of(context);
     final confirm = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Mazereti sil'),
-        content: const Text('Bu mazeret talebini silmek istiyor musunuz?'),
+        title: Text(l10n.leaveDeleteTitle),
+        content: Text(l10n.leaveDeleteConfirm),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Vazgeç'),
+            child: Text(l10n.commonCancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Sil'),
+            child: Text(l10n.commonDelete),
           ),
         ],
       ),
@@ -117,24 +120,25 @@ class _LeaveRequestsScreenState extends State<LeaveRequestsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return WaveScaffold(
       appBar: AppBar(
-        title: Text(widget.isParent ? 'Mazeret Bildir' : 'Mazeretler'),
+        title: Text(widget.isParent ? l10n.navReportAbsence : l10n.navLeaveRequests),
       ),
       floatingActionButton: widget.isParent && widget.children.isNotEmpty
           ? FloatingActionButton.extended(
               onPressed: _submit,
               icon: const Icon(Icons.add),
-              label: const Text('Yeni Mazeret'),
+              label: Text(l10n.newLeave),
             )
           : null,
       body: _requests.isEmpty
           ? EmptyState(
               icon: Icons.event_busy,
-              title: 'Mazeret yok',
+              title: l10n.leaveEmptyTitle,
               message: widget.isParent
-                  ? 'Henüz bir mazeret bildirmediniz. Sağ alttaki butonla ekleyebilirsiniz.'
-                  : 'Henüz gönderilmiş bir mazeret talebi yok.',
+                  ? l10n.leaveEmptyParent
+                  : l10n.leaveEmptyStaff,
             )
           : ListView.builder(
               padding: const EdgeInsets.fromLTRB(16, 16, 16, 90),
@@ -178,7 +182,10 @@ class _LeaveRequestsScreenState extends State<LeaveRequestsScreen> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
-                    request.status,
+                    localizedLeaveStatus(
+                      AppLocalizations.of(context),
+                      request.status,
+                    ),
                     style: TextStyle(
                       color: statusColor,
                       fontWeight: FontWeight.w600,
@@ -218,6 +225,7 @@ class _LeaveRequestsScreenState extends State<LeaveRequestsScreen> {
   }
 
   Widget _buildActions(LeaveRequest request, bool isPending) {
+    final l10n = AppLocalizations.of(context);
     // Personel: bekleyen talepleri onaylar/reddeder.
     if (widget.canManage && isPending) {
       return Row(
@@ -226,9 +234,9 @@ class _LeaveRequestsScreenState extends State<LeaveRequestsScreen> {
             child: OutlinedButton.icon(
               onPressed: () => _setStatus(request, LeaveStatus.approved),
               icon: const Icon(Icons.check, color: Colors.green),
-              label: const Text(
-                'Onayla',
-                style: TextStyle(color: Colors.green),
+              label: Text(
+                l10n.approveAction,
+                style: const TextStyle(color: Colors.green),
               ),
             ),
           ),
@@ -237,9 +245,9 @@ class _LeaveRequestsScreenState extends State<LeaveRequestsScreen> {
             child: OutlinedButton.icon(
               onPressed: () => _setStatus(request, LeaveStatus.rejected),
               icon: const Icon(Icons.close, color: Colors.red),
-              label: const Text(
-                'Reddet',
-                style: TextStyle(color: Colors.red),
+              label: Text(
+                l10n.rejectAction,
+                style: const TextStyle(color: Colors.red),
               ),
             ),
           ),
@@ -254,7 +262,10 @@ class _LeaveRequestsScreenState extends State<LeaveRequestsScreen> {
         child: TextButton.icon(
           onPressed: () => _delete(request),
           icon: const Icon(Icons.delete_outline, color: Colors.red),
-          label: const Text('İptal Et', style: TextStyle(color: Colors.red)),
+          label: Text(
+            l10n.cancelLeaveAction,
+            style: const TextStyle(color: Colors.red),
+          ),
         ),
       );
     }
@@ -306,7 +317,7 @@ class _LeaveFormState extends State<_LeaveForm> {
     final reason = _reasonController.text.trim();
     if (reason.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Lütfen bir gerekçe yazın.')),
+        SnackBar(content: Text(AppLocalizations.of(context).reasonRequired)),
       );
       return;
     }
@@ -325,6 +336,7 @@ class _LeaveFormState extends State<_LeaveForm> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Padding(
       padding: EdgeInsets.only(
         left: 16,
@@ -336,17 +348,17 @@ class _LeaveFormState extends State<_LeaveForm> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Text(
-            'Yeni Mazeret',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          Text(
+            l10n.newLeave,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),
           if (widget.children.length > 1) ...[
             DropdownButtonFormField<Student>(
               initialValue: _selectedChild,
-              decoration: const InputDecoration(
-                labelText: 'Öğrenci',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.roleStudent,
+                border: const OutlineInputBorder(),
               ),
               items: [
                 for (final child in widget.children)
@@ -363,24 +375,24 @@ class _LeaveFormState extends State<_LeaveForm> {
           OutlinedButton.icon(
             onPressed: _pickDate,
             icon: const Icon(Icons.calendar_today),
-            label: Text('Tarih: ${_fmt(_date)}'),
+            label: Text(l10n.dateWithValue(_fmt(_date))),
           ),
           const SizedBox(height: 12),
           TextField(
             controller: _reasonController,
             maxLines: 3,
             textCapitalization: TextCapitalization.sentences,
-            decoration: const InputDecoration(
-              labelText: 'Gerekçe',
-              hintText: 'Örn: Sağlık raporu, aile ziyareti...',
-              border: OutlineInputBorder(),
+            decoration: InputDecoration(
+              labelText: l10n.fieldReason,
+              hintText: l10n.reasonHint,
+              border: const OutlineInputBorder(),
             ),
           ),
           const SizedBox(height: 16),
           FilledButton.icon(
             onPressed: _save,
             icon: const Icon(Icons.send),
-            label: const Text('Gönder'),
+            label: Text(l10n.sendAction),
           ),
         ],
       ),

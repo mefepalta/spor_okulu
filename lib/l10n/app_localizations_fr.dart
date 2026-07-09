@@ -1462,4 +1462,48 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get savePayment => 'Enregistrer le paiement';
+
+  @override
+  String get leaveReported => 'Demande d\'absence envoyée.';
+
+  @override
+  String get leaveDeleteTitle => 'Supprimer la demande d\'absence';
+
+  @override
+  String get leaveDeleteConfirm =>
+      'Voulez-vous supprimer cette demande d\'absence ?';
+
+  @override
+  String get newLeave => 'Nouvelle demande d\'absence';
+
+  @override
+  String get leaveEmptyTitle => 'Aucune demande d\'absence';
+
+  @override
+  String get leaveEmptyParent =>
+      'Vous n\'avez encore soumis aucune demande d\'absence. Utilisez le bouton en bas à droite pour en ajouter une.';
+
+  @override
+  String get leaveEmptyStaff =>
+      'Aucune demande d\'absence n\'a encore été soumise.';
+
+  @override
+  String get cancelLeaveAction => 'Annuler';
+
+  @override
+  String get reasonRequired => 'Veuillez indiquer un motif.';
+
+  @override
+  String dateWithValue(String date) {
+    return 'Date : $date';
+  }
+
+  @override
+  String get fieldReason => 'Motif';
+
+  @override
+  String get reasonHint => 'Ex. : certificat médical, visite familiale...';
+
+  @override
+  String get sendAction => 'Envoyer';
 }

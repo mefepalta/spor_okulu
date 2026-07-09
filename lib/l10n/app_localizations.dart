@@ -2641,6 +2641,84 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Ödemeyi Kaydet'**
   String get savePayment;
+
+  /// No description provided for @leaveReported.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mazeret bildirildi.'**
+  String get leaveReported;
+
+  /// No description provided for @leaveDeleteTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mazereti sil'**
+  String get leaveDeleteTitle;
+
+  /// No description provided for @leaveDeleteConfirm.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu mazeret talebini silmek istiyor musunuz?'**
+  String get leaveDeleteConfirm;
+
+  /// No description provided for @newLeave.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni Mazeret'**
+  String get newLeave;
+
+  /// No description provided for @leaveEmptyTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mazeret yok'**
+  String get leaveEmptyTitle;
+
+  /// No description provided for @leaveEmptyParent.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz bir mazeret bildirmediniz. Sağ alttaki butonla ekleyebilirsiniz.'**
+  String get leaveEmptyParent;
+
+  /// No description provided for @leaveEmptyStaff.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz gönderilmiş bir mazeret talebi yok.'**
+  String get leaveEmptyStaff;
+
+  /// No description provided for @cancelLeaveAction.
+  ///
+  /// In tr, this message translates to:
+  /// **'İptal Et'**
+  String get cancelLeaveAction;
+
+  /// No description provided for @reasonRequired.
+  ///
+  /// In tr, this message translates to:
+  /// **'Lütfen bir gerekçe yazın.'**
+  String get reasonRequired;
+
+  /// No description provided for @dateWithValue.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tarih: {date}'**
+  String dateWithValue(String date);
+
+  /// No description provided for @fieldReason.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gerekçe'**
+  String get fieldReason;
+
+  /// No description provided for @reasonHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Örn: Sağlık raporu, aile ziyareti...'**
+  String get reasonHint;
+
+  /// No description provided for @sendAction.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gönder'**
+  String get sendAction;
 }
 
 class _AppLocalizationsDelegate

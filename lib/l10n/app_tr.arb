@@ -623,5 +623,22 @@
   "statusRequired": "Durum seçmelisin.",
   "noteHint": "İsteğe bağlı not",
   "selectStudentFirst": "Önce bir öğrenci seçmelisin.",
-  "savePayment": "Ödemeyi Kaydet"
+  "savePayment": "Ödemeyi Kaydet",
+
+  "leaveReported": "Mazeret bildirildi.",
+  "leaveDeleteTitle": "Mazereti sil",
+  "leaveDeleteConfirm": "Bu mazeret talebini silmek istiyor musunuz?",
+  "newLeave": "Yeni Mazeret",
+  "leaveEmptyTitle": "Mazeret yok",
+  "leaveEmptyParent": "Henüz bir mazeret bildirmediniz. Sağ alttaki butonla ekleyebilirsiniz.",
+  "leaveEmptyStaff": "Henüz gönderilmiş bir mazeret talebi yok.",
+  "cancelLeaveAction": "İptal Et",
+  "reasonRequired": "Lütfen bir gerekçe yazın.",
+  "dateWithValue": "Tarih: {date}",
+  "@dateWithValue": {
+    "placeholders": { "date": { "type": "String" } }
+  },
+  "fieldReason": "Gerekçe",
+  "reasonHint": "Örn: Sağlık raporu, aile ziyareti...",
+  "sendAction": "Gönder"
 }

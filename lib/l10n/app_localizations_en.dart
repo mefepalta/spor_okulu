@@ -1444,4 +1444,46 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get savePayment => 'Save Payment';
+
+  @override
+  String get leaveReported => 'Leave request submitted.';
+
+  @override
+  String get leaveDeleteTitle => 'Delete leave request';
+
+  @override
+  String get leaveDeleteConfirm => 'Do you want to delete this leave request?';
+
+  @override
+  String get newLeave => 'New Leave Request';
+
+  @override
+  String get leaveEmptyTitle => 'No leave requests';
+
+  @override
+  String get leaveEmptyParent =>
+      'You haven\'t submitted any leave requests yet. Use the button at the bottom right to add one.';
+
+  @override
+  String get leaveEmptyStaff => 'No leave requests have been submitted yet.';
+
+  @override
+  String get cancelLeaveAction => 'Cancel';
+
+  @override
+  String get reasonRequired => 'Please write a reason.';
+
+  @override
+  String dateWithValue(String date) {
+    return 'Date: $date';
+  }
+
+  @override
+  String get fieldReason => 'Reason';
+
+  @override
+  String get reasonHint => 'e.g. Medical report, family visit...';
+
+  @override
+  String get sendAction => 'Send';
 }

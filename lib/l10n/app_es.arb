@@ -454,5 +454,19 @@
   "statusRequired": "Debes seleccionar un estado.",
   "noteHint": "Nota opcional",
   "selectStudentFirst": "Primero selecciona un estudiante.",
-  "savePayment": "Guardar pago"
+  "savePayment": "Guardar pago",
+
+  "leaveReported": "Solicitud de ausencia enviada.",
+  "leaveDeleteTitle": "Eliminar solicitud de ausencia",
+  "leaveDeleteConfirm": "¿Quieres eliminar esta solicitud de ausencia?",
+  "newLeave": "Nueva solicitud de ausencia",
+  "leaveEmptyTitle": "No hay solicitudes de ausencia",
+  "leaveEmptyParent": "Aún no has enviado ninguna solicitud de ausencia. Usa el botón de abajo a la derecha para añadir una.",
+  "leaveEmptyStaff": "Aún no se ha enviado ninguna solicitud de ausencia.",
+  "cancelLeaveAction": "Cancelar",
+  "reasonRequired": "Por favor, escribe un motivo.",
+  "dateWithValue": "Fecha: {date}",
+  "fieldReason": "Motivo",
+  "reasonHint": "Ej.: Informe médico, visita familiar...",
+  "sendAction": "Enviar"
 }
