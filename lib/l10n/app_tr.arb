@@ -695,5 +695,52 @@
   "contentMinLength": "İçerik en az 10 karakter olmalıdır.",
   "audienceRequired": "Hedef kitle seçmelisin.",
   "saveAnnouncement": "Duyuruyu Kaydet",
-  "audienceEveryone": "Herkes"
+  "audienceEveryone": "Herkes",
+
+  "eventAddError": "Etkinlik eklenemedi: {error}",
+  "@eventAddError": {
+    "placeholders": { "error": { "type": "Object" } }
+  },
+  "eventDeleteError": "Etkinlik silinemedi: {error}",
+  "@eventDeleteError": {
+    "placeholders": { "error": { "type": "Object" } }
+  },
+  "eventDeleteTitle": "Etkinliği Sil",
+  "eventDeleteConfirm": "{title} etkinliğini silmek istiyor musun?",
+  "@eventDeleteConfirm": {
+    "placeholders": { "title": { "type": "String" } }
+  },
+  "eventsEmptyTitle": "Planlanan etkinlik yok",
+  "eventsEmptyManage": "Yeni etkinlik eklemek için sağ alttaki + butonunu kullan.",
+  "eventsEmptyViewer": "Antrenörler etkinlik planladığında burada görünecek.",
+  "addEvent": "Etkinlik Ekle",
+  "selectAttendanceFirst": "Lütfen önce katılım durumu seç.",
+  "responseAlreadySaved": "Cevabın zaten kayıtlı.",
+  "responseSendError": "Cevap gönderilemedi: {error}",
+  "@responseSendError": {
+    "placeholders": { "error": { "type": "Object" } }
+  },
+  "responseSent": "Cevabın gönderildi.",
+  "attendingCount": "Katılacak: {count}",
+  "@attendingCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "notAttendingCount": "Katılmayacak: {count}",
+  "@notAttendingCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "eventDateLabel": "Etkinlik Tarihi: {date}",
+  "@eventDateLabel": {
+    "placeholders": { "date": { "type": "String" } }
+  },
+  "willAttend": "Katılacak",
+  "willNotAttend": "Katılmayacak",
+  "sendingLabel": "Gönderiliyor...",
+  "sentLabel": "Gönderildi",
+  "addEventTitle": "Yeni Etkinlik",
+  "fieldEventName": "Etkinlik Adı",
+  "eventNameHint": "Hazırlık Maçı",
+  "eventNameEmpty": "Etkinlik adı boş bırakılamaz.",
+  "fieldDescriptionOptional": "Açıklama (isteğe bağlı)",
+  "saveEvent": "Etkinliği Kaydet"
 }

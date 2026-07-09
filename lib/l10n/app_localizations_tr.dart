@@ -1618,4 +1618,95 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get audienceEveryone => 'Herkes';
+
+  @override
+  String eventAddError(Object error) {
+    return 'Etkinlik eklenemedi: $error';
+  }
+
+  @override
+  String eventDeleteError(Object error) {
+    return 'Etkinlik silinemedi: $error';
+  }
+
+  @override
+  String get eventDeleteTitle => 'Etkinliği Sil';
+
+  @override
+  String eventDeleteConfirm(String title) {
+    return '$title etkinliğini silmek istiyor musun?';
+  }
+
+  @override
+  String get eventsEmptyTitle => 'Planlanan etkinlik yok';
+
+  @override
+  String get eventsEmptyManage =>
+      'Yeni etkinlik eklemek için sağ alttaki + butonunu kullan.';
+
+  @override
+  String get eventsEmptyViewer =>
+      'Antrenörler etkinlik planladığında burada görünecek.';
+
+  @override
+  String get addEvent => 'Etkinlik Ekle';
+
+  @override
+  String get selectAttendanceFirst => 'Lütfen önce katılım durumu seç.';
+
+  @override
+  String get responseAlreadySaved => 'Cevabın zaten kayıtlı.';
+
+  @override
+  String responseSendError(Object error) {
+    return 'Cevap gönderilemedi: $error';
+  }
+
+  @override
+  String get responseSent => 'Cevabın gönderildi.';
+
+  @override
+  String attendingCount(int count) {
+    return 'Katılacak: $count';
+  }
+
+  @override
+  String notAttendingCount(int count) {
+    return 'Katılmayacak: $count';
+  }
+
+  @override
+  String eventDateLabel(String date) {
+    return 'Etkinlik Tarihi: $date';
+  }
+
+  @override
+  String get willAttend => 'Katılacak';
+
+  @override
+  String get willNotAttend => 'Katılmayacak';
+
+  @override
+  String get sendingLabel => 'Gönderiliyor...';
+
+  @override
+  String get sentLabel => 'Gönderildi';
+
+  @override
+  String get addEventTitle => 'Yeni Etkinlik';
+
+  @override
+  String get fieldEventName => 'Etkinlik Adı';
+
+  @override
+  String get eventNameHint => 'Hazırlık Maçı';
+
+  @override
+  String get eventNameEmpty => 'Etkinlik adı boş bırakılamaz.';
+
+  @override
+  String get fieldDescriptionOptional => 'Açıklama (isteğe bağlı)';
+
+  @override
+  String get saveEvent => 'Etkinliği Kaydet';
 }

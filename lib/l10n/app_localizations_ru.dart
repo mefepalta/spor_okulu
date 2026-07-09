@@ -1632,4 +1632,96 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get audienceEveryone => 'Все';
+
+  @override
+  String eventAddError(Object error) {
+    return 'Не удалось добавить событие: $error';
+  }
+
+  @override
+  String eventDeleteError(Object error) {
+    return 'Не удалось удалить событие: $error';
+  }
+
+  @override
+  String get eventDeleteTitle => 'Удалить событие';
+
+  @override
+  String eventDeleteConfirm(String title) {
+    return 'Вы хотите удалить событие $title?';
+  }
+
+  @override
+  String get eventsEmptyTitle => 'Запланированных событий нет';
+
+  @override
+  String get eventsEmptyManage =>
+      'Нажмите кнопку + внизу справа, чтобы добавить новое событие.';
+
+  @override
+  String get eventsEmptyViewer =>
+      'События появятся здесь, когда тренеры их запланируют.';
+
+  @override
+  String get addEvent => 'Добавить событие';
+
+  @override
+  String get selectAttendanceFirst =>
+      'Пожалуйста, сначала выберите статус участия.';
+
+  @override
+  String get responseAlreadySaved => 'Ваш ответ уже сохранён.';
+
+  @override
+  String responseSendError(Object error) {
+    return 'Не удалось отправить ответ: $error';
+  }
+
+  @override
+  String get responseSent => 'Ваш ответ отправлен.';
+
+  @override
+  String attendingCount(int count) {
+    return 'Придут: $count';
+  }
+
+  @override
+  String notAttendingCount(int count) {
+    return 'Не придут: $count';
+  }
+
+  @override
+  String eventDateLabel(String date) {
+    return 'Дата события: $date';
+  }
+
+  @override
+  String get willAttend => 'Придёт';
+
+  @override
+  String get willNotAttend => 'Не придёт';
+
+  @override
+  String get sendingLabel => 'Отправка...';
+
+  @override
+  String get sentLabel => 'Отправлено';
+
+  @override
+  String get addEventTitle => 'Новое событие';
+
+  @override
+  String get fieldEventName => 'Название события';
+
+  @override
+  String get eventNameHint => 'Товарищеский матч';
+
+  @override
+  String get eventNameEmpty => 'Название события не может быть пустым.';
+
+  @override
+  String get fieldDescriptionOptional => 'Описание (необязательно)';
+
+  @override
+  String get saveEvent => 'Сохранить событие';
 }

@@ -1622,4 +1622,95 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get audienceEveryone => 'Everyone';
+
+  @override
+  String eventAddError(Object error) {
+    return 'Couldn\'t add event: $error';
+  }
+
+  @override
+  String eventDeleteError(Object error) {
+    return 'Couldn\'t delete event: $error';
+  }
+
+  @override
+  String get eventDeleteTitle => 'Delete Event';
+
+  @override
+  String eventDeleteConfirm(String title) {
+    return 'Do you want to delete the event $title?';
+  }
+
+  @override
+  String get eventsEmptyTitle => 'No planned events';
+
+  @override
+  String get eventsEmptyManage =>
+      'Use the + button at the bottom right to add a new event.';
+
+  @override
+  String get eventsEmptyViewer =>
+      'Events will appear here once coaches plan them.';
+
+  @override
+  String get addEvent => 'Add Event';
+
+  @override
+  String get selectAttendanceFirst => 'Please select attendance status first.';
+
+  @override
+  String get responseAlreadySaved => 'Your response is already saved.';
+
+  @override
+  String responseSendError(Object error) {
+    return 'Couldn\'t send response: $error';
+  }
+
+  @override
+  String get responseSent => 'Your response has been sent.';
+
+  @override
+  String attendingCount(int count) {
+    return 'Attending: $count';
+  }
+
+  @override
+  String notAttendingCount(int count) {
+    return 'Not attending: $count';
+  }
+
+  @override
+  String eventDateLabel(String date) {
+    return 'Event date: $date';
+  }
+
+  @override
+  String get willAttend => 'Attending';
+
+  @override
+  String get willNotAttend => 'Not attending';
+
+  @override
+  String get sendingLabel => 'Sending...';
+
+  @override
+  String get sentLabel => 'Sent';
+
+  @override
+  String get addEventTitle => 'New Event';
+
+  @override
+  String get fieldEventName => 'Event Name';
+
+  @override
+  String get eventNameHint => 'Friendly match';
+
+  @override
+  String get eventNameEmpty => 'Event name cannot be empty.';
+
+  @override
+  String get fieldDescriptionOptional => 'Description (optional)';
+
+  @override
+  String get saveEvent => 'Save Event';
 }

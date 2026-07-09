@@ -1643,4 +1643,96 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get audienceEveryone => 'Tout le monde';
+
+  @override
+  String eventAddError(Object error) {
+    return 'Impossible d\'ajouter l\'événement : $error';
+  }
+
+  @override
+  String eventDeleteError(Object error) {
+    return 'Impossible de supprimer l\'événement : $error';
+  }
+
+  @override
+  String get eventDeleteTitle => 'Supprimer l\'événement';
+
+  @override
+  String eventDeleteConfirm(String title) {
+    return 'Voulez-vous supprimer l\'événement $title ?';
+  }
+
+  @override
+  String get eventsEmptyTitle => 'Aucun événement planifié';
+
+  @override
+  String get eventsEmptyManage =>
+      'Utilisez le bouton + en bas à droite pour ajouter un nouvel événement.';
+
+  @override
+  String get eventsEmptyViewer =>
+      'Les événements apparaîtront ici lorsque les entraîneurs les planifieront.';
+
+  @override
+  String get addEvent => 'Ajouter un événement';
+
+  @override
+  String get selectAttendanceFirst =>
+      'Veuillez d\'abord sélectionner le statut de participation.';
+
+  @override
+  String get responseAlreadySaved => 'Votre réponse est déjà enregistrée.';
+
+  @override
+  String responseSendError(Object error) {
+    return 'Impossible d\'envoyer la réponse : $error';
+  }
+
+  @override
+  String get responseSent => 'Votre réponse a été envoyée.';
+
+  @override
+  String attendingCount(int count) {
+    return 'Présents : $count';
+  }
+
+  @override
+  String notAttendingCount(int count) {
+    return 'Absents : $count';
+  }
+
+  @override
+  String eventDateLabel(String date) {
+    return 'Date de l\'événement : $date';
+  }
+
+  @override
+  String get willAttend => 'Présent';
+
+  @override
+  String get willNotAttend => 'Absent';
+
+  @override
+  String get sendingLabel => 'Envoi...';
+
+  @override
+  String get sentLabel => 'Envoyé';
+
+  @override
+  String get addEventTitle => 'Nouvel événement';
+
+  @override
+  String get fieldEventName => 'Nom de l\'événement';
+
+  @override
+  String get eventNameHint => 'Match amical';
+
+  @override
+  String get eventNameEmpty => 'Le nom de l\'événement ne peut pas être vide.';
+
+  @override
+  String get fieldDescriptionOptional => 'Description (facultative)';
+
+  @override
+  String get saveEvent => 'Enregistrer l\'événement';
 }

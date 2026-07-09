@@ -3,6 +3,7 @@ import '../theme/app_colors.dart';
 
 import '../widgets/wave_background.dart';
 
+import '../l10n/app_localizations.dart';
 import '../models/app_models.dart';
 import '../widgets/empty_state.dart';
 
@@ -98,9 +99,11 @@ class _EventsScreenState extends State<EventsScreen> {
       if (!mounted) {
         return;
       }
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Etkinlik eklenemedi: $error')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(AppLocalizations.of(context).eventAddError(error)),
+        ),
+      );
       return;
     }
 
@@ -112,20 +115,21 @@ class _EventsScreenState extends State<EventsScreen> {
   }
 
   Future<void> _confirmDeleteEvent(PlannedEvent event) async {
+    final l10n = AppLocalizations.of(context);
     final shouldDelete = await showDialog<bool>(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Etkinliği Sil'),
-          content: Text('${event.title} etkinliğini silmek istiyor musun?'),
+          title: Text(l10n.eventDeleteTitle),
+          content: Text(l10n.eventDeleteConfirm(event.title)),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context, false),
-              child: const Text('Vazgeç'),
+              child: Text(l10n.commonCancel),
             ),
             TextButton(
               onPressed: () => Navigator.pop(context, true),
-              child: const Text('Sil', style: TextStyle(color: Colors.red)),
+              child: Text(l10n.commonDelete, style: const TextStyle(color: Colors.red)),
             ),
           ],
         );
@@ -142,9 +146,9 @@ class _EventsScreenState extends State<EventsScreen> {
       if (!mounted) {
         return;
       }
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Etkinlik silinemedi: $error')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(l10n.eventDeleteError(error))),
+      );
       return;
     }
 
@@ -162,12 +166,13 @@ class _EventsScreenState extends State<EventsScreen> {
     }
 
     // Hiç seçim yapılmamışsa kullanıcıyı yönlendir.
+    final l10n = AppLocalizations.of(context);
     final hasAnySelection = widget.children.any((child) {
       return _pending[EventResponse.buildId(event.id, child.id)] != null;
     });
     if (!hasAnySelection) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Lütfen önce katılım durumu seç.')),
+        SnackBar(content: Text(l10n.selectAttendanceFirst)),
       );
       return;
     }
@@ -176,7 +181,7 @@ class _EventsScreenState extends State<EventsScreen> {
     if (!_hasUnsentChanges(event)) {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text('Cevabın zaten kayıtlı.')));
+      ).showSnackBar(SnackBar(content: Text(l10n.responseAlreadySaved)));
       return;
     }
 
@@ -214,9 +219,9 @@ class _EventsScreenState extends State<EventsScreen> {
       setState(() {
         _submitting.remove(event.id);
       });
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Cevap gönderilemedi: $error')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(l10n.responseSendError(error))),
+      );
       return;
     }
 
@@ -231,7 +236,7 @@ class _EventsScreenState extends State<EventsScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          sentCount == 0 ? 'Cevabın zaten kayıtlı.' : 'Cevabın gönderildi.',
+          sentCount == 0 ? l10n.responseAlreadySaved : l10n.responseSent,
         ),
       ),
     );
@@ -239,17 +244,18 @@ class _EventsScreenState extends State<EventsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final events = _sortedEvents;
 
     return WaveScaffold(
-      appBar: AppBar(title: const Text('Etkinlikler')),
+      appBar: AppBar(title: Text(l10n.navEvents)),
       body: events.isEmpty
           ? EmptyState(
               icon: Icons.event_available,
-              title: 'Planlanan etkinlik yok',
+              title: l10n.eventsEmptyTitle,
               message: widget.canManage
-                  ? 'Yeni etkinlik eklemek için sağ alttaki + butonunu kullan.'
-                  : 'Antrenörler etkinlik planladığında burada görünecek.',
+                  ? l10n.eventsEmptyManage
+                  : l10n.eventsEmptyViewer,
             )
           : ListView(
               padding: const EdgeInsets.all(16),
@@ -263,13 +269,14 @@ class _EventsScreenState extends State<EventsScreen> {
           ? FloatingActionButton.extended(
               onPressed: _openAddEventScreen,
               icon: const Icon(Icons.add),
-              label: const Text('Etkinlik Ekle'),
+              label: Text(l10n.addEvent),
             )
           : null,
     );
   }
 
   Widget _buildManageCard(PlannedEvent event) {
+    final l10n = AppLocalizations.of(context);
     final eventResponses = widget.responses
         .where((response) => response.eventId == event.id)
         .toList();
@@ -303,7 +310,7 @@ class _EventsScreenState extends State<EventsScreen> {
               ],
             ),
             const SizedBox(height: 4),
-            Text('Tarih: ${event.dateText}'),
+            Text(l10n.dateWithValue(event.dateText)),
             if (event.description.trim().isNotEmpty) ...[
               const SizedBox(height: 4),
               Text(event.description),
@@ -314,13 +321,13 @@ class _EventsScreenState extends State<EventsScreen> {
                 _StatChip(
                   icon: Icons.sentiment_satisfied_alt,
                   color: Colors.green,
-                  label: 'Katılacak: $attending',
+                  label: l10n.attendingCount(attending),
                 ),
                 const SizedBox(width: 8),
                 _StatChip(
                   icon: Icons.sentiment_dissatisfied,
                   color: Colors.red,
-                  label: 'Katılmayacak: $notAttending',
+                  label: l10n.notAttendingCount(notAttending),
                 ),
               ],
             ),
@@ -331,6 +338,7 @@ class _EventsScreenState extends State<EventsScreen> {
   }
 
   Widget _buildRespondCard(PlannedEvent event) {
+    final l10n = AppLocalizations.of(context);
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
       child: Padding(
@@ -339,7 +347,7 @@ class _EventsScreenState extends State<EventsScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Etkinlik Tarihi: ${event.dateText}',
+              l10n.eventDateLabel(event.dateText),
               style: TextStyle(color: Colors.grey.shade600),
             ),
             const SizedBox(height: 4),
@@ -367,6 +375,7 @@ class _EventsScreenState extends State<EventsScreen> {
   }
 
   Widget _buildSubmitButton(PlannedEvent event) {
+    final l10n = AppLocalizations.of(context);
     final isSubmitting = _submitting.contains(event.id);
     final hasChanges = _hasUnsentChanges(event);
     // Gönderim sürerken ya da gönderilecek yeni bir şey yokken buton pasif.
@@ -383,15 +392,16 @@ class _EventsScreenState extends State<EventsScreen> {
           : Icon(hasChanges ? Icons.send : Icons.check),
       label: Text(
         isSubmitting
-            ? 'Gönderiliyor...'
+            ? l10n.sendingLabel
             : hasChanges
-            ? 'Gönder'
-            : 'Gönderildi',
+            ? l10n.sendAction
+            : l10n.sentLabel,
       ),
     );
   }
 
   Widget _buildChildResponse(PlannedEvent event, Student child) {
+    final l10n = AppLocalizations.of(context);
     final key = EventResponse.buildId(event.id, child.id);
     final selection = _pending[key];
 
@@ -406,7 +416,7 @@ class _EventsScreenState extends State<EventsScreen> {
             children: [
               Expanded(
                 child: ChoiceChip(
-                  label: const Text('Katılacak'),
+                  label: Text(l10n.willAttend),
                   selected: selection == true,
                   selectedColor: Colors.green.shade100,
                   onSelected: (_) {
@@ -419,7 +429,7 @@ class _EventsScreenState extends State<EventsScreen> {
               const SizedBox(width: 8),
               Expanded(
                 child: ChoiceChip(
-                  label: const Text('Katılmayacak'),
+                  label: Text(l10n.willNotAttend),
                   selected: selection == false,
                   selectedColor: Colors.red.shade100,
                   onSelected: (_) {
@@ -517,8 +527,9 @@ class _AddEventScreenState extends State<AddEventScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return WaveScaffold(
-      appBar: AppBar(title: const Text('Yeni Etkinlik')),
+      appBar: AppBar(title: Text(l10n.addEventTitle)),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Form(
@@ -528,15 +539,15 @@ class _AddEventScreenState extends State<AddEventScreen> {
             children: [
               TextFormField(
                 controller: _titleController,
-                decoration: const InputDecoration(
-                  labelText: 'Etkinlik Adı',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.event),
-                  hintText: 'Hazırlık Maçı',
+                decoration: InputDecoration(
+                  labelText: l10n.fieldEventName,
+                  border: const OutlineInputBorder(),
+                  prefixIcon: const Icon(Icons.event),
+                  hintText: l10n.eventNameHint,
                 ),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return 'Etkinlik adı boş bırakılamaz.';
+                    return l10n.eventNameEmpty;
                   }
                   return null;
                 },
@@ -545,21 +556,21 @@ class _AddEventScreenState extends State<AddEventScreen> {
               TextFormField(
                 controller: _descriptionController,
                 maxLines: 3,
-                decoration: const InputDecoration(
-                  labelText: 'Açıklama (isteğe bağlı)',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.notes),
+                decoration: InputDecoration(
+                  labelText: l10n.fieldDescriptionOptional,
+                  border: const OutlineInputBorder(),
+                  prefixIcon: const Icon(Icons.notes),
                 ),
               ),
               const SizedBox(height: 12),
               Card(
                 child: ListTile(
                   leading: const Icon(Icons.calendar_today),
-                  title: const Text('Tarih'),
+                  title: Text(l10n.fieldDate),
                   subtitle: Text(_dateText),
                   trailing: TextButton(
                     onPressed: _pickDate,
-                    child: const Text('Seç'),
+                    child: Text(l10n.selectAction),
                   ),
                 ),
               ),
@@ -567,7 +578,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
               ElevatedButton.icon(
                 onPressed: _save,
                 icon: const Icon(Icons.save),
-                label: const Text('Etkinliği Kaydet'),
+                label: Text(l10n.saveEvent),
               ),
             ],
           ),

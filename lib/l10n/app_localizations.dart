@@ -2965,6 +2965,156 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Herkes'**
   String get audienceEveryone;
+
+  /// No description provided for @eventAddError.
+  ///
+  /// In tr, this message translates to:
+  /// **'Etkinlik eklenemedi: {error}'**
+  String eventAddError(Object error);
+
+  /// No description provided for @eventDeleteError.
+  ///
+  /// In tr, this message translates to:
+  /// **'Etkinlik silinemedi: {error}'**
+  String eventDeleteError(Object error);
+
+  /// No description provided for @eventDeleteTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Etkinliği Sil'**
+  String get eventDeleteTitle;
+
+  /// No description provided for @eventDeleteConfirm.
+  ///
+  /// In tr, this message translates to:
+  /// **'{title} etkinliğini silmek istiyor musun?'**
+  String eventDeleteConfirm(String title);
+
+  /// No description provided for @eventsEmptyTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Planlanan etkinlik yok'**
+  String get eventsEmptyTitle;
+
+  /// No description provided for @eventsEmptyManage.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni etkinlik eklemek için sağ alttaki + butonunu kullan.'**
+  String get eventsEmptyManage;
+
+  /// No description provided for @eventsEmptyViewer.
+  ///
+  /// In tr, this message translates to:
+  /// **'Antrenörler etkinlik planladığında burada görünecek.'**
+  String get eventsEmptyViewer;
+
+  /// No description provided for @addEvent.
+  ///
+  /// In tr, this message translates to:
+  /// **'Etkinlik Ekle'**
+  String get addEvent;
+
+  /// No description provided for @selectAttendanceFirst.
+  ///
+  /// In tr, this message translates to:
+  /// **'Lütfen önce katılım durumu seç.'**
+  String get selectAttendanceFirst;
+
+  /// No description provided for @responseAlreadySaved.
+  ///
+  /// In tr, this message translates to:
+  /// **'Cevabın zaten kayıtlı.'**
+  String get responseAlreadySaved;
+
+  /// No description provided for @responseSendError.
+  ///
+  /// In tr, this message translates to:
+  /// **'Cevap gönderilemedi: {error}'**
+  String responseSendError(Object error);
+
+  /// No description provided for @responseSent.
+  ///
+  /// In tr, this message translates to:
+  /// **'Cevabın gönderildi.'**
+  String get responseSent;
+
+  /// No description provided for @attendingCount.
+  ///
+  /// In tr, this message translates to:
+  /// **'Katılacak: {count}'**
+  String attendingCount(int count);
+
+  /// No description provided for @notAttendingCount.
+  ///
+  /// In tr, this message translates to:
+  /// **'Katılmayacak: {count}'**
+  String notAttendingCount(int count);
+
+  /// No description provided for @eventDateLabel.
+  ///
+  /// In tr, this message translates to:
+  /// **'Etkinlik Tarihi: {date}'**
+  String eventDateLabel(String date);
+
+  /// No description provided for @willAttend.
+  ///
+  /// In tr, this message translates to:
+  /// **'Katılacak'**
+  String get willAttend;
+
+  /// No description provided for @willNotAttend.
+  ///
+  /// In tr, this message translates to:
+  /// **'Katılmayacak'**
+  String get willNotAttend;
+
+  /// No description provided for @sendingLabel.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gönderiliyor...'**
+  String get sendingLabel;
+
+  /// No description provided for @sentLabel.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gönderildi'**
+  String get sentLabel;
+
+  /// No description provided for @addEventTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni Etkinlik'**
+  String get addEventTitle;
+
+  /// No description provided for @fieldEventName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Etkinlik Adı'**
+  String get fieldEventName;
+
+  /// No description provided for @eventNameHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hazırlık Maçı'**
+  String get eventNameHint;
+
+  /// No description provided for @eventNameEmpty.
+  ///
+  /// In tr, this message translates to:
+  /// **'Etkinlik adı boş bırakılamaz.'**
+  String get eventNameEmpty;
+
+  /// No description provided for @fieldDescriptionOptional.
+  ///
+  /// In tr, this message translates to:
+  /// **'Açıklama (isteğe bağlı)'**
+  String get fieldDescriptionOptional;
+
+  /// No description provided for @saveEvent.
+  ///
+  /// In tr, this message translates to:
+  /// **'Etkinliği Kaydet'**
+  String get saveEvent;
 }
 
 class _AppLocalizationsDelegate
