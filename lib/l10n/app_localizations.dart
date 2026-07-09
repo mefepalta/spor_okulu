@@ -1375,6 +1375,174 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Son Duyuru'**
   String get latestAnnouncementTitle;
+
+  /// No description provided for @commonSave.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaydet'**
+  String get commonSave;
+
+  /// No description provided for @commonEdit.
+  ///
+  /// In tr, this message translates to:
+  /// **'Düzenle'**
+  String get commonEdit;
+
+  /// No description provided for @saveChanges.
+  ///
+  /// In tr, this message translates to:
+  /// **'Değişiklikleri Kaydet'**
+  String get saveChanges;
+
+  /// No description provided for @searchNoResults.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sonuç bulunamadı'**
+  String get searchNoResults;
+
+  /// No description provided for @searchNoResultsBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'Arama metnini değiştirerek tekrar dene.'**
+  String get searchNoResultsBody;
+
+  /// No description provided for @fieldFullName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ad Soyad'**
+  String get fieldFullName;
+
+  /// No description provided for @fieldAge.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yaş'**
+  String get fieldAge;
+
+  /// No description provided for @fieldBranch.
+  ///
+  /// In tr, this message translates to:
+  /// **'Branş'**
+  String get fieldBranch;
+
+  /// No description provided for @fieldParentPhone.
+  ///
+  /// In tr, this message translates to:
+  /// **'Veli Telefonu'**
+  String get fieldParentPhone;
+
+  /// No description provided for @studentsSearchHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğrenci ara'**
+  String get studentsSearchHint;
+
+  /// No description provided for @studentsEmptyTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz öğrenci yok'**
+  String get studentsEmptyTitle;
+
+  /// No description provided for @studentsEmptyAdmin.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni öğrenci eklemek için sağ alttaki + butonunu kullan.'**
+  String get studentsEmptyAdmin;
+
+  /// No description provided for @studentsEmptyViewer.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz öğrenci kaydı yok. Admin öğrenci eklediğinde burada görünecek.'**
+  String get studentsEmptyViewer;
+
+  /// No description provided for @studentSubtitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'{branch} • {age} yaş\nVeli: {phone}'**
+  String studentSubtitle(String branch, int age, String phone);
+
+  /// No description provided for @studentDeleteTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğrenciyi Sil'**
+  String get studentDeleteTitle;
+
+  /// No description provided for @studentDeleteConfirm.
+  ///
+  /// In tr, this message translates to:
+  /// **'{name} adlı öğrenciyi silmek istediğine emin misin'**
+  String studentDeleteConfirm(String name);
+
+  /// No description provided for @studentDeleted.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğrenci silindi.'**
+  String get studentDeleted;
+
+  /// No description provided for @studentDetailTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğrenci Detayı'**
+  String get studentDetailTitle;
+
+  /// No description provided for @editStudent.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğrenciyi Düzenle'**
+  String get editStudent;
+
+  /// No description provided for @backToStudentList.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğrenci Listesine Dön'**
+  String get backToStudentList;
+
+  /// No description provided for @addStudent.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni Öğrenci Ekle'**
+  String get addStudent;
+
+  /// No description provided for @saveStudent.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğrenciyi Kaydet'**
+  String get saveStudent;
+
+  /// No description provided for @fullNameEmpty.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ad soyad boş bırakılamaz.'**
+  String get fullNameEmpty;
+
+  /// No description provided for @fullNameMinLength.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ad soyad en az 3 karakter olmalıdır.'**
+  String get fullNameMinLength;
+
+  /// No description provided for @ageEmpty.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yaş boş bırakılamaz.'**
+  String get ageEmpty;
+
+  /// No description provided for @ageMustBeNumber.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yaş sayı olmalıdır.'**
+  String get ageMustBeNumber;
+
+  /// No description provided for @agePositive.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yaş 0\'dan büyük olmalıdır.'**
+  String get agePositive;
+
+  /// No description provided for @ageTooHigh.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yaş çok yüksek görünüyor.'**
+  String get ageTooHigh;
 }
 
 class _AppLocalizationsDelegate

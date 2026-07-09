@@ -714,4 +714,94 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get latestAnnouncementTitle => 'Son Duyuru';
+
+  @override
+  String get commonSave => 'Kaydet';
+
+  @override
+  String get commonEdit => 'Düzenle';
+
+  @override
+  String get saveChanges => 'Değişiklikleri Kaydet';
+
+  @override
+  String get searchNoResults => 'Sonuç bulunamadı';
+
+  @override
+  String get searchNoResultsBody => 'Arama metnini değiştirerek tekrar dene.';
+
+  @override
+  String get fieldFullName => 'Ad Soyad';
+
+  @override
+  String get fieldAge => 'Yaş';
+
+  @override
+  String get fieldBranch => 'Branş';
+
+  @override
+  String get fieldParentPhone => 'Veli Telefonu';
+
+  @override
+  String get studentsSearchHint => 'Öğrenci ara';
+
+  @override
+  String get studentsEmptyTitle => 'Henüz öğrenci yok';
+
+  @override
+  String get studentsEmptyAdmin =>
+      'Yeni öğrenci eklemek için sağ alttaki + butonunu kullan.';
+
+  @override
+  String get studentsEmptyViewer =>
+      'Henüz öğrenci kaydı yok. Admin öğrenci eklediğinde burada görünecek.';
+
+  @override
+  String studentSubtitle(String branch, int age, String phone) {
+    return '$branch • $age yaş\nVeli: $phone';
+  }
+
+  @override
+  String get studentDeleteTitle => 'Öğrenciyi Sil';
+
+  @override
+  String studentDeleteConfirm(String name) {
+    return '$name adlı öğrenciyi silmek istediğine emin misin';
+  }
+
+  @override
+  String get studentDeleted => 'Öğrenci silindi.';
+
+  @override
+  String get studentDetailTitle => 'Öğrenci Detayı';
+
+  @override
+  String get editStudent => 'Öğrenciyi Düzenle';
+
+  @override
+  String get backToStudentList => 'Öğrenci Listesine Dön';
+
+  @override
+  String get addStudent => 'Yeni Öğrenci Ekle';
+
+  @override
+  String get saveStudent => 'Öğrenciyi Kaydet';
+
+  @override
+  String get fullNameEmpty => 'Ad soyad boş bırakılamaz.';
+
+  @override
+  String get fullNameMinLength => 'Ad soyad en az 3 karakter olmalıdır.';
+
+  @override
+  String get ageEmpty => 'Yaş boş bırakılamaz.';
+
+  @override
+  String get ageMustBeNumber => 'Yaş sayı olmalıdır.';
+
+  @override
+  String get agePositive => 'Yaş 0\'dan büyük olmalıdır.';
+
+  @override
+  String get ageTooHigh => 'Yaş çok yüksek görünüyor.';
 }

@@ -231,5 +231,35 @@
 
   "unpaidDuesTitle": "Unpaid Dues ({count})",
   "moreStudents": "+{count} more students",
-  "latestAnnouncementTitle": "Latest Announcement"
+  "latestAnnouncementTitle": "Latest Announcement",
+
+  "commonSave": "Save",
+  "commonEdit": "Edit",
+  "saveChanges": "Save Changes",
+  "searchNoResults": "No results found",
+  "searchNoResultsBody": "Try changing the search text.",
+  "fieldFullName": "Full Name",
+  "fieldAge": "Age",
+  "fieldBranch": "Branch",
+  "fieldParentPhone": "Parent Phone",
+
+  "studentsSearchHint": "Search students",
+  "studentsEmptyTitle": "No students yet",
+  "studentsEmptyAdmin": "Use the + button at the bottom right to add a new student.",
+  "studentsEmptyViewer": "No student records yet. They'll appear here once an admin adds a student.",
+  "studentSubtitle": "{branch} • age {age}\nParent: {phone}",
+  "studentDeleteTitle": "Delete Student",
+  "studentDeleteConfirm": "Are you sure you want to delete {name}",
+  "studentDeleted": "Student deleted.",
+  "studentDetailTitle": "Student Details",
+  "editStudent": "Edit Student",
+  "backToStudentList": "Back to Student List",
+  "addStudent": "Add New Student",
+  "saveStudent": "Save Student",
+  "fullNameEmpty": "Full name cannot be empty.",
+  "fullNameMinLength": "Full name must be at least 3 characters.",
+  "ageEmpty": "Age cannot be empty.",
+  "ageMustBeNumber": "Age must be a number.",
+  "agePositive": "Age must be greater than 0.",
+  "ageTooHigh": "Age seems too high."
 }

@@ -726,4 +726,96 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get latestAnnouncementTitle => 'Dernière annonce';
+
+  @override
+  String get commonSave => 'Enregistrer';
+
+  @override
+  String get commonEdit => 'Modifier';
+
+  @override
+  String get saveChanges => 'Enregistrer les modifications';
+
+  @override
+  String get searchNoResults => 'Aucun résultat trouvé';
+
+  @override
+  String get searchNoResultsBody =>
+      'Essayez de modifier le texte de recherche.';
+
+  @override
+  String get fieldFullName => 'Nom complet';
+
+  @override
+  String get fieldAge => 'Âge';
+
+  @override
+  String get fieldBranch => 'Discipline';
+
+  @override
+  String get fieldParentPhone => 'Téléphone du parent';
+
+  @override
+  String get studentsSearchHint => 'Rechercher des élèves';
+
+  @override
+  String get studentsEmptyTitle => 'Aucun élève pour le moment';
+
+  @override
+  String get studentsEmptyAdmin =>
+      'Utilisez le bouton + en bas à droite pour ajouter un nouvel élève.';
+
+  @override
+  String get studentsEmptyViewer =>
+      'Aucun enregistrement d\'élève pour le moment. Ils apparaîtront ici lorsqu\'un administrateur en ajoutera un.';
+
+  @override
+  String studentSubtitle(String branch, int age, String phone) {
+    return '$branch • $age ans\nParent : $phone';
+  }
+
+  @override
+  String get studentDeleteTitle => 'Supprimer l\'élève';
+
+  @override
+  String studentDeleteConfirm(String name) {
+    return 'Voulez-vous vraiment supprimer $name';
+  }
+
+  @override
+  String get studentDeleted => 'Élève supprimé.';
+
+  @override
+  String get studentDetailTitle => 'Détails de l\'élève';
+
+  @override
+  String get editStudent => 'Modifier l\'élève';
+
+  @override
+  String get backToStudentList => 'Retour à la liste des élèves';
+
+  @override
+  String get addStudent => 'Ajouter un nouvel élève';
+
+  @override
+  String get saveStudent => 'Enregistrer l\'élève';
+
+  @override
+  String get fullNameEmpty => 'Le nom complet ne peut pas être vide.';
+
+  @override
+  String get fullNameMinLength =>
+      'Le nom complet doit comporter au moins 3 caractères.';
+
+  @override
+  String get ageEmpty => 'L\'âge ne peut pas être vide.';
+
+  @override
+  String get ageMustBeNumber => 'L\'âge doit être un nombre.';
+
+  @override
+  String get agePositive => 'L\'âge doit être supérieur à 0.';
+
+  @override
+  String get ageTooHigh => 'L\'âge semble trop élevé.';
 }

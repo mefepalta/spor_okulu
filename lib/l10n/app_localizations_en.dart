@@ -717,4 +717,94 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get latestAnnouncementTitle => 'Latest Announcement';
+
+  @override
+  String get commonSave => 'Save';
+
+  @override
+  String get commonEdit => 'Edit';
+
+  @override
+  String get saveChanges => 'Save Changes';
+
+  @override
+  String get searchNoResults => 'No results found';
+
+  @override
+  String get searchNoResultsBody => 'Try changing the search text.';
+
+  @override
+  String get fieldFullName => 'Full Name';
+
+  @override
+  String get fieldAge => 'Age';
+
+  @override
+  String get fieldBranch => 'Branch';
+
+  @override
+  String get fieldParentPhone => 'Parent Phone';
+
+  @override
+  String get studentsSearchHint => 'Search students';
+
+  @override
+  String get studentsEmptyTitle => 'No students yet';
+
+  @override
+  String get studentsEmptyAdmin =>
+      'Use the + button at the bottom right to add a new student.';
+
+  @override
+  String get studentsEmptyViewer =>
+      'No student records yet. They\'ll appear here once an admin adds a student.';
+
+  @override
+  String studentSubtitle(String branch, int age, String phone) {
+    return '$branch • age $age\nParent: $phone';
+  }
+
+  @override
+  String get studentDeleteTitle => 'Delete Student';
+
+  @override
+  String studentDeleteConfirm(String name) {
+    return 'Are you sure you want to delete $name';
+  }
+
+  @override
+  String get studentDeleted => 'Student deleted.';
+
+  @override
+  String get studentDetailTitle => 'Student Details';
+
+  @override
+  String get editStudent => 'Edit Student';
+
+  @override
+  String get backToStudentList => 'Back to Student List';
+
+  @override
+  String get addStudent => 'Add New Student';
+
+  @override
+  String get saveStudent => 'Save Student';
+
+  @override
+  String get fullNameEmpty => 'Full name cannot be empty.';
+
+  @override
+  String get fullNameMinLength => 'Full name must be at least 3 characters.';
+
+  @override
+  String get ageEmpty => 'Age cannot be empty.';
+
+  @override
+  String get ageMustBeNumber => 'Age must be a number.';
+
+  @override
+  String get agePositive => 'Age must be greater than 0.';
+
+  @override
+  String get ageTooHigh => 'Age seems too high.';
 }

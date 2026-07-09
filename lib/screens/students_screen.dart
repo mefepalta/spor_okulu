@@ -4,6 +4,7 @@ import '../theme/app_colors.dart';
 import '../widgets/wave_background.dart';
 import 'package:flutter/services.dart';
 
+import '../l10n/app_localizations.dart';
 import '../models/app_models.dart';
 import '../utils/validators.dart';
 import '../widgets/branch_dropdown.dart';
@@ -74,27 +75,30 @@ class _StudentsScreenState extends State<StudentsScreen> {
 
   Future<void> _confirmDeleteStudent(int index) async {
     final student = widget.students[index];
+    final l10n = AppLocalizations.of(context);
 
     final shouldDelete = await showDialog<bool>(
       context: context,
       builder: (context) {
+        final l10n = AppLocalizations.of(context);
         return AlertDialog(
-          title: const Text('Öğrenciyi Sil'),
-          content: Text(
-            '${student.name} adlı öğrenciyi silmek istediğine emin misin',
-          ),
+          title: Text(l10n.studentDeleteTitle),
+          content: Text(l10n.studentDeleteConfirm(student.name)),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.pop(context, false);
               },
-              child: const Text('Vazgeç'),
+              child: Text(l10n.commonCancel),
             ),
             TextButton(
               onPressed: () {
                 Navigator.pop(context, true);
               },
-              child: const Text('Sil', style: TextStyle(color: Colors.red)),
+              child: Text(
+                l10n.commonDelete,
+                style: const TextStyle(color: Colors.red),
+              ),
             ),
           ],
         );
@@ -115,11 +119,12 @@ class _StudentsScreenState extends State<StudentsScreen> {
 
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(const SnackBar(content: Text('Öğrenci silindi.')));
+    ).showSnackBar(SnackBar(content: Text(l10n.studentDeleted)));
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final filteredStudents = widget.students.where((student) {
       final query = _searchQuery.toLowerCase();
 
@@ -128,16 +133,16 @@ class _StudentsScreenState extends State<StudentsScreen> {
           student.parentPhone.toLowerCase().contains(query);
     }).toList();
     return WaveScaffold(
-      appBar: AppBar(title: const Text('Öğrenciler')),
+      appBar: AppBar(title: Text(l10n.navStudents)),
       body: Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(16),
             child: TextField(
-              decoration: const InputDecoration(
-                labelText: 'Öğrenci ara',
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.studentsSearchHint,
+                prefixIcon: const Icon(Icons.search),
+                border: const OutlineInputBorder(),
               ),
               onChanged: (value) {
                 setState(() {
@@ -150,16 +155,16 @@ class _StudentsScreenState extends State<StudentsScreen> {
             child: widget.students.isEmpty
                 ? EmptyState(
                     icon: Icons.people,
-                    title: 'Henüz öğrenci yok',
+                    title: l10n.studentsEmptyTitle,
                     message: widget.isAdmin
-                        ? 'Yeni öğrenci eklemek için sağ alttaki + butonunu kullan.'
-                        : 'Henüz öğrenci kaydı yok. Admin öğrenci eklediçinde burada görünecek.',
+                        ? l10n.studentsEmptyAdmin
+                        : l10n.studentsEmptyViewer,
                   )
                 : filteredStudents.isEmpty
-                ? const EmptyState(
+                ? EmptyState(
                     icon: Icons.search_off,
-                    title: 'Sonuç bulunamadı',
-                    message: 'Arama metnini değiştirerek tekrar dene.',
+                    title: l10n.searchNoResults,
+                    message: l10n.searchNoResultsBody,
                   )
                 : ListView.builder(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -181,8 +186,11 @@ class _StudentsScreenState extends State<StudentsScreen> {
                           ),
                           title: Text(student.name),
                           subtitle: Text(
-                            '${student.branch} • ${student.age} yaş\n'
-                            'Veli: ${student.parentPhone}',
+                            l10n.studentSubtitle(
+                              student.branch,
+                              student.age,
+                              student.parentPhone,
+                            ),
                           ),
                           isThreeLine: true,
                           trailing: widget.isAdmin
@@ -259,10 +267,11 @@ class _StudentDetailScreenState extends State<StudentDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final student = _student;
+    final l10n = AppLocalizations.of(context);
 
     return WaveScaffold(
       appBar: AppBar(
-        title: const Text('Öğrenci Detayı'),
+        title: Text(l10n.studentDetailTitle),
         actions: widget.isAdmin
             ? [
                 IconButton(
@@ -301,28 +310,28 @@ class _StudentDetailScreenState extends State<StudentDetailScreen> {
           Card(
             child: ListTile(
               leading: const Icon(Icons.person),
-              title: const Text('Ad Soyad'),
+              title: Text(l10n.fieldFullName),
               subtitle: Text(student.name),
             ),
           ),
           Card(
             child: ListTile(
               leading: const Icon(Icons.cake),
-              title: const Text('Yaş'),
+              title: Text(l10n.fieldAge),
               subtitle: Text('${student.age}'),
             ),
           ),
           Card(
             child: ListTile(
               leading: const Icon(Icons.sports_soccer),
-              title: const Text('Branş'),
+              title: Text(l10n.fieldBranch),
               subtitle: Text(student.branch),
             ),
           ),
           Card(
             child: ListTile(
               leading: const Icon(Icons.phone),
-              title: const Text('Veli Telefonu'),
+              title: Text(l10n.fieldParentPhone),
               subtitle: Text(student.parentPhone),
             ),
           ),
@@ -331,7 +340,7 @@ class _StudentDetailScreenState extends State<StudentDetailScreen> {
             ElevatedButton.icon(
               onPressed: _openEditStudentScreen,
               icon: const Icon(Icons.edit),
-              label: const Text('Öğrenciyi Düzenle'),
+              label: Text(l10n.editStudent),
             ),
           const SizedBox(height: 8),
           OutlinedButton.icon(
@@ -339,7 +348,7 @@ class _StudentDetailScreenState extends State<StudentDetailScreen> {
               Navigator.pop(context);
             },
             icon: const Icon(Icons.arrow_back),
-            label: const Text('Öğrenci Listesine Dön'),
+            label: Text(l10n.backToStudentList),
           ),
         ],
       ),
@@ -407,10 +416,11 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
   @override
   Widget build(BuildContext context) {
     final isEditing = widget.student != null;
+    final l10n = AppLocalizations.of(context);
 
     return WaveScaffold(
       appBar: AppBar(
-        title: Text(isEditing ? 'Öğrenciyi Düzenle' : 'Yeni Öğrenci Ekle'),
+        title: Text(isEditing ? l10n.editStudent : l10n.addStudent),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -421,19 +431,19 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
             children: [
               TextFormField(
                 controller: _nameController,
-                decoration: const InputDecoration(
-                  labelText: 'Ad Soyad',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.person),
+                decoration: InputDecoration(
+                  labelText: l10n.fieldFullName,
+                  border: const OutlineInputBorder(),
+                  prefixIcon: const Icon(Icons.person),
                   hintText: 'Mehmet Ali Yılmaz',
                 ),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return 'Ad soyad boş bırakılamaz.';
+                    return l10n.fullNameEmpty;
                   }
 
                   if (value.trim().length < 3) {
-                    return 'Ad soyad en az 3 karakter olmalıdır.';
+                    return l10n.fullNameMinLength;
                   }
 
                   return null;
@@ -447,29 +457,29 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
                   FilteringTextInputFormatter.digitsOnly,
                   LengthLimitingTextInputFormatter(2),
                 ],
-                decoration: const InputDecoration(
-                  labelText: 'Yaş',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.cake),
+                decoration: InputDecoration(
+                  labelText: l10n.fieldAge,
+                  border: const OutlineInputBorder(),
+                  prefixIcon: const Icon(Icons.cake),
                   hintText: '12',
                 ),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return 'Yaş boş bırakılamaz.';
+                    return l10n.ageEmpty;
                   }
 
                   final age = int.tryParse(value.trim());
 
                   if (age == null) {
-                    return 'Yaş sayı olmalıdır.';
+                    return l10n.ageMustBeNumber;
                   }
 
                   if (age <= 0) {
-                    return 'Yaş 0’dan büyük olmalıdır.';
+                    return l10n.agePositive;
                   }
 
                   if (age > 99) {
-                    return 'Yaş çok yüksek görünüyor.';
+                    return l10n.ageTooHigh;
                   }
 
                   return null;
@@ -492,10 +502,10 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
                   FilteringTextInputFormatter.digitsOnly,
                   LengthLimitingTextInputFormatter(11),
                 ],
-                decoration: const InputDecoration(
-                  labelText: 'Veli Telefonu',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.phone),
+                decoration: InputDecoration(
+                  labelText: l10n.fieldParentPhone,
+                  border: const OutlineInputBorder(),
+                  prefixIcon: const Icon(Icons.phone),
                   hintText: '05XXXXXXXXX',
                 ),
                 validator: validatePhoneNumber,
@@ -504,9 +514,7 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
               ElevatedButton.icon(
                 onPressed: _saveStudent,
                 icon: const Icon(Icons.save),
-                label: Text(
-                  isEditing ? 'Değişiklikleri Kaydet' : 'Öğrenciyi Kaydet',
-                ),
+                label: Text(isEditing ? l10n.saveChanges : l10n.saveStudent),
               ),
             ],
           ),

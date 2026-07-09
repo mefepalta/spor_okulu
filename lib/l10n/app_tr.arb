@@ -300,5 +300,45 @@
   "@moreStudents": {
     "placeholders": { "count": { "type": "int" } }
   },
-  "latestAnnouncementTitle": "Son Duyuru"
+  "latestAnnouncementTitle": "Son Duyuru",
+
+  "commonSave": "Kaydet",
+  "commonEdit": "Düzenle",
+  "saveChanges": "Değişiklikleri Kaydet",
+  "searchNoResults": "Sonuç bulunamadı",
+  "searchNoResultsBody": "Arama metnini değiştirerek tekrar dene.",
+  "fieldFullName": "Ad Soyad",
+  "fieldAge": "Yaş",
+  "fieldBranch": "Branş",
+  "fieldParentPhone": "Veli Telefonu",
+
+  "studentsSearchHint": "Öğrenci ara",
+  "studentsEmptyTitle": "Henüz öğrenci yok",
+  "studentsEmptyAdmin": "Yeni öğrenci eklemek için sağ alttaki + butonunu kullan.",
+  "studentsEmptyViewer": "Henüz öğrenci kaydı yok. Admin öğrenci eklediğinde burada görünecek.",
+  "studentSubtitle": "{branch} • {age} yaş\nVeli: {phone}",
+  "@studentSubtitle": {
+    "placeholders": {
+      "branch": { "type": "String" },
+      "age": { "type": "int" },
+      "phone": { "type": "String" }
+    }
+  },
+  "studentDeleteTitle": "Öğrenciyi Sil",
+  "studentDeleteConfirm": "{name} adlı öğrenciyi silmek istediğine emin misin",
+  "@studentDeleteConfirm": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "studentDeleted": "Öğrenci silindi.",
+  "studentDetailTitle": "Öğrenci Detayı",
+  "editStudent": "Öğrenciyi Düzenle",
+  "backToStudentList": "Öğrenci Listesine Dön",
+  "addStudent": "Yeni Öğrenci Ekle",
+  "saveStudent": "Öğrenciyi Kaydet",
+  "fullNameEmpty": "Ad soyad boş bırakılamaz.",
+  "fullNameMinLength": "Ad soyad en az 3 karakter olmalıdır.",
+  "ageEmpty": "Yaş boş bırakılamaz.",
+  "ageMustBeNumber": "Yaş sayı olmalıdır.",
+  "agePositive": "Yaş 0'dan büyük olmalıdır.",
+  "ageTooHigh": "Yaş çok yüksek görünüyor."
 }

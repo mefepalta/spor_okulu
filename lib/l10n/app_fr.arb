@@ -231,5 +231,35 @@
 
   "unpaidDuesTitle": "Cotisations impayées ({count})",
   "moreStudents": "+{count} élèves de plus",
-  "latestAnnouncementTitle": "Dernière annonce"
+  "latestAnnouncementTitle": "Dernière annonce",
+
+  "commonSave": "Enregistrer",
+  "commonEdit": "Modifier",
+  "saveChanges": "Enregistrer les modifications",
+  "searchNoResults": "Aucun résultat trouvé",
+  "searchNoResultsBody": "Essayez de modifier le texte de recherche.",
+  "fieldFullName": "Nom complet",
+  "fieldAge": "Âge",
+  "fieldBranch": "Discipline",
+  "fieldParentPhone": "Téléphone du parent",
+
+  "studentsSearchHint": "Rechercher des élèves",
+  "studentsEmptyTitle": "Aucun élève pour le moment",
+  "studentsEmptyAdmin": "Utilisez le bouton + en bas à droite pour ajouter un nouvel élève.",
+  "studentsEmptyViewer": "Aucun enregistrement d'élève pour le moment. Ils apparaîtront ici lorsqu'un administrateur en ajoutera un.",
+  "studentSubtitle": "{branch} • {age} ans\nParent : {phone}",
+  "studentDeleteTitle": "Supprimer l'élève",
+  "studentDeleteConfirm": "Voulez-vous vraiment supprimer {name}",
+  "studentDeleted": "Élève supprimé.",
+  "studentDetailTitle": "Détails de l'élève",
+  "editStudent": "Modifier l'élève",
+  "backToStudentList": "Retour à la liste des élèves",
+  "addStudent": "Ajouter un nouvel élève",
+  "saveStudent": "Enregistrer l'élève",
+  "fullNameEmpty": "Le nom complet ne peut pas être vide.",
+  "fullNameMinLength": "Le nom complet doit comporter au moins 3 caractères.",
+  "ageEmpty": "L'âge ne peut pas être vide.",
+  "ageMustBeNumber": "L'âge doit être un nombre.",
+  "agePositive": "L'âge doit être supérieur à 0.",
+  "ageTooHigh": "L'âge semble trop élevé."
 }

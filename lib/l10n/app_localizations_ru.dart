@@ -722,4 +722,95 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get latestAnnouncementTitle => 'Последнее объявление';
+
+  @override
+  String get commonSave => 'Сохранить';
+
+  @override
+  String get commonEdit => 'Изменить';
+
+  @override
+  String get saveChanges => 'Сохранить изменения';
+
+  @override
+  String get searchNoResults => 'Ничего не найдено';
+
+  @override
+  String get searchNoResultsBody => 'Попробуйте изменить текст поиска.';
+
+  @override
+  String get fieldFullName => 'Имя и фамилия';
+
+  @override
+  String get fieldAge => 'Возраст';
+
+  @override
+  String get fieldBranch => 'Дисциплина';
+
+  @override
+  String get fieldParentPhone => 'Телефон родителя';
+
+  @override
+  String get studentsSearchHint => 'Поиск учеников';
+
+  @override
+  String get studentsEmptyTitle => 'Учеников пока нет';
+
+  @override
+  String get studentsEmptyAdmin =>
+      'Нажмите кнопку + в правом нижнем углу, чтобы добавить ученика.';
+
+  @override
+  String get studentsEmptyViewer =>
+      'Записей об учениках пока нет. Они появятся здесь, когда администратор добавит ученика.';
+
+  @override
+  String studentSubtitle(String branch, int age, String phone) {
+    return '$branch • $age лет\nРодитель: $phone';
+  }
+
+  @override
+  String get studentDeleteTitle => 'Удалить ученика';
+
+  @override
+  String studentDeleteConfirm(String name) {
+    return 'Вы уверены, что хотите удалить: $name';
+  }
+
+  @override
+  String get studentDeleted => 'Ученик удалён.';
+
+  @override
+  String get studentDetailTitle => 'Данные ученика';
+
+  @override
+  String get editStudent => 'Изменить ученика';
+
+  @override
+  String get backToStudentList => 'Назад к списку учеников';
+
+  @override
+  String get addStudent => 'Добавить ученика';
+
+  @override
+  String get saveStudent => 'Сохранить ученика';
+
+  @override
+  String get fullNameEmpty => 'Имя и фамилия не могут быть пустыми.';
+
+  @override
+  String get fullNameMinLength =>
+      'Имя и фамилия должны содержать не менее 3 символов.';
+
+  @override
+  String get ageEmpty => 'Возраст не может быть пустым.';
+
+  @override
+  String get ageMustBeNumber => 'Возраст должен быть числом.';
+
+  @override
+  String get agePositive => 'Возраст должен быть больше 0.';
+
+  @override
+  String get ageTooHigh => 'Возраст выглядит слишком большим.';
 }

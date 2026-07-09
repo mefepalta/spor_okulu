@@ -231,5 +231,35 @@
 
   "unpaidDuesTitle": "Неоплаченные взносы ({count})",
   "moreStudents": "+{count} учеников ещё",
-  "latestAnnouncementTitle": "Последнее объявление"
+  "latestAnnouncementTitle": "Последнее объявление",
+
+  "commonSave": "Сохранить",
+  "commonEdit": "Изменить",
+  "saveChanges": "Сохранить изменения",
+  "searchNoResults": "Ничего не найдено",
+  "searchNoResultsBody": "Попробуйте изменить текст поиска.",
+  "fieldFullName": "Имя и фамилия",
+  "fieldAge": "Возраст",
+  "fieldBranch": "Дисциплина",
+  "fieldParentPhone": "Телефон родителя",
+
+  "studentsSearchHint": "Поиск учеников",
+  "studentsEmptyTitle": "Учеников пока нет",
+  "studentsEmptyAdmin": "Нажмите кнопку + в правом нижнем углу, чтобы добавить ученика.",
+  "studentsEmptyViewer": "Записей об учениках пока нет. Они появятся здесь, когда администратор добавит ученика.",
+  "studentSubtitle": "{branch} • {age} лет\nРодитель: {phone}",
+  "studentDeleteTitle": "Удалить ученика",
+  "studentDeleteConfirm": "Вы уверены, что хотите удалить: {name}",
+  "studentDeleted": "Ученик удалён.",
+  "studentDetailTitle": "Данные ученика",
+  "editStudent": "Изменить ученика",
+  "backToStudentList": "Назад к списку учеников",
+  "addStudent": "Добавить ученика",
+  "saveStudent": "Сохранить ученика",
+  "fullNameEmpty": "Имя и фамилия не могут быть пустыми.",
+  "fullNameMinLength": "Имя и фамилия должны содержать не менее 3 символов.",
+  "ageEmpty": "Возраст не может быть пустым.",
+  "ageMustBeNumber": "Возраст должен быть числом.",
+  "agePositive": "Возраст должен быть больше 0.",
+  "ageTooHigh": "Возраст выглядит слишком большим."
 }
