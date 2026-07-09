@@ -1675,6 +1675,324 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Branş seçilmelidir.'**
   String get branchRequired;
+
+  /// No description provided for @dayMonday.
+  ///
+  /// In tr, this message translates to:
+  /// **'Pazartesi'**
+  String get dayMonday;
+
+  /// No description provided for @dayTuesday.
+  ///
+  /// In tr, this message translates to:
+  /// **'Salı'**
+  String get dayTuesday;
+
+  /// No description provided for @dayWednesday.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çarşamba'**
+  String get dayWednesday;
+
+  /// No description provided for @dayThursday.
+  ///
+  /// In tr, this message translates to:
+  /// **'Perşembe'**
+  String get dayThursday;
+
+  /// No description provided for @dayFriday.
+  ///
+  /// In tr, this message translates to:
+  /// **'Cuma'**
+  String get dayFriday;
+
+  /// No description provided for @daySaturday.
+  ///
+  /// In tr, this message translates to:
+  /// **'Cumartesi'**
+  String get daySaturday;
+
+  /// No description provided for @daySunday.
+  ///
+  /// In tr, this message translates to:
+  /// **'Pazar'**
+  String get daySunday;
+
+  /// No description provided for @groupsSearchHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Grup ara'**
+  String get groupsSearchHint;
+
+  /// No description provided for @groupsEmptyTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz grup yok'**
+  String get groupsEmptyTitle;
+
+  /// No description provided for @groupsEmptyAdd.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni grup eklemek için sağ alttaki + butonunu kullan.'**
+  String get groupsEmptyAdd;
+
+  /// No description provided for @groupsEmptyNoCoach.
+  ///
+  /// In tr, this message translates to:
+  /// **'Grup eklemek için önce en az bir antrenör ekle.'**
+  String get groupsEmptyNoCoach;
+
+  /// No description provided for @groupsEmptyViewer.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz grup kaydı yok. Admin grup eklediğinde burada görünecek.'**
+  String get groupsEmptyViewer;
+
+  /// No description provided for @groupSubtitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'{branch} • {schedule}\nAntrenör: {coach} • {count}/{capacity} öğrenci'**
+  String groupSubtitle(
+    String branch,
+    String schedule,
+    String coach,
+    int count,
+    int capacity,
+  );
+
+  /// No description provided for @groupDeleteTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Grubu Sil'**
+  String get groupDeleteTitle;
+
+  /// No description provided for @groupDeleteConfirm.
+  ///
+  /// In tr, this message translates to:
+  /// **'{name} grubunu silmek istediğine emin misin'**
+  String groupDeleteConfirm(String name);
+
+  /// No description provided for @groupDeleted.
+  ///
+  /// In tr, this message translates to:
+  /// **'Grup silindi.'**
+  String get groupDeleted;
+
+  /// No description provided for @groupDetailTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Grup Detayı'**
+  String get groupDetailTitle;
+
+  /// No description provided for @unknownStudent.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bilinmeyen öğrenci'**
+  String get unknownStudent;
+
+  /// No description provided for @fieldGroupName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Grup Adı'**
+  String get fieldGroupName;
+
+  /// No description provided for @fieldSchedule.
+  ///
+  /// In tr, this message translates to:
+  /// **'Program'**
+  String get fieldSchedule;
+
+  /// No description provided for @fieldCapacity.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kapasite'**
+  String get fieldCapacity;
+
+  /// No description provided for @fieldDay.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gün'**
+  String get fieldDay;
+
+  /// No description provided for @fieldTime.
+  ///
+  /// In tr, this message translates to:
+  /// **'Saat'**
+  String get fieldTime;
+
+  /// No description provided for @capacityPeople.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count}/{capacity} kişi'**
+  String capacityPeople(int count, int capacity);
+
+  /// No description provided for @membersTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Üyeler ({count})'**
+  String membersTitle(int count);
+
+  /// No description provided for @noMembersAssigned.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz öğrenci atanmadı.'**
+  String get noMembersAssigned;
+
+  /// No description provided for @editGroup.
+  ///
+  /// In tr, this message translates to:
+  /// **'Grubu Düzenle'**
+  String get editGroup;
+
+  /// No description provided for @backToGroupList.
+  ///
+  /// In tr, this message translates to:
+  /// **'Grup Listesine Dön'**
+  String get backToGroupList;
+
+  /// No description provided for @addGroup.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni Grup Ekle'**
+  String get addGroup;
+
+  /// No description provided for @saveGroup.
+  ///
+  /// In tr, this message translates to:
+  /// **'Grubu Kaydet'**
+  String get saveGroup;
+
+  /// No description provided for @groupsNeedCoach.
+  ///
+  /// In tr, this message translates to:
+  /// **'Grup eklemek için önce en az bir antrenör eklemelisin.'**
+  String get groupsNeedCoach;
+
+  /// No description provided for @groupNameEmpty.
+  ///
+  /// In tr, this message translates to:
+  /// **'Grup adı boş bırakılamaz.'**
+  String get groupNameEmpty;
+
+  /// No description provided for @groupNameMinLength.
+  ///
+  /// In tr, this message translates to:
+  /// **'Grup adı en az 2 karakter olmalıdır.'**
+  String get groupNameMinLength;
+
+  /// No description provided for @coachRequired.
+  ///
+  /// In tr, this message translates to:
+  /// **'Antrenör seçmelisin.'**
+  String get coachRequired;
+
+  /// No description provided for @dayRequired.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gün seçmelisin.'**
+  String get dayRequired;
+
+  /// No description provided for @capacityEmpty.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kapasite boş bırakılamaz.'**
+  String get capacityEmpty;
+
+  /// No description provided for @capacityMustBeNumber.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kapasite sayı olmalıdır.'**
+  String get capacityMustBeNumber;
+
+  /// No description provided for @capacityPositive.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kapasite 0\'dan büyük olmalıdır.'**
+  String get capacityPositive;
+
+  /// No description provided for @capacityMax.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kapasite 100\'den büyük olmamalıdır.'**
+  String get capacityMax;
+
+  /// No description provided for @membersLabel.
+  ///
+  /// In tr, this message translates to:
+  /// **'Üyeler'**
+  String get membersLabel;
+
+  /// No description provided for @noStudentSelected.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğrenci seçilmedi'**
+  String get noStudentSelected;
+
+  /// No description provided for @studentsSelected.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count} öğrenci seçildi'**
+  String studentsSelected(int count);
+
+  /// No description provided for @membersNeedStudents.
+  ///
+  /// In tr, this message translates to:
+  /// **'Üye eklemek için önce öğrenci kaydı gerekir.'**
+  String get membersNeedStudents;
+
+  /// No description provided for @selectCoachFirst.
+  ///
+  /// In tr, this message translates to:
+  /// **'Önce bir antrenör seçmelisin.'**
+  String get selectCoachFirst;
+
+  /// No description provided for @studentsExceedCapacity.
+  ///
+  /// In tr, this message translates to:
+  /// **'Seçilen öğrenci sayısı ({count}) kapasiteyi ({capacity}) aşıyor.'**
+  String studentsExceedCapacity(int count, int capacity);
+
+  /// No description provided for @selectMembersTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Üye Seç'**
+  String get selectMembersTitle;
+
+  /// No description provided for @selectedCount.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count} seçildi'**
+  String selectedCount(int count);
+
+  /// No description provided for @selectedCountOf.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count}/{capacity} seçildi'**
+  String selectedCountOf(int count, int capacity);
+
+  /// No description provided for @capacityExceeded.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kapasite aşıldı'**
+  String get capacityExceeded;
+
+  /// No description provided for @noStudentsTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğrenci yok'**
+  String get noStudentsTitle;
+
+  /// No description provided for @noStudentsBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'Önce öğrenci eklenmeli.'**
+  String get noStudentsBody;
+
+  /// No description provided for @studentBranchAge.
+  ///
+  /// In tr, this message translates to:
+  /// **'{branch} • {age} yaş'**
+  String studentBranchAge(String branch, int age);
 }
 
 class _AppLocalizationsDelegate

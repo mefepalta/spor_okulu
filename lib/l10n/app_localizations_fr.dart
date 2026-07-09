@@ -890,4 +890,191 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get branchRequired => 'Une discipline doit être sélectionnée.';
+
+  @override
+  String get dayMonday => 'Lundi';
+
+  @override
+  String get dayTuesday => 'Mardi';
+
+  @override
+  String get dayWednesday => 'Mercredi';
+
+  @override
+  String get dayThursday => 'Jeudi';
+
+  @override
+  String get dayFriday => 'Vendredi';
+
+  @override
+  String get daySaturday => 'Samedi';
+
+  @override
+  String get daySunday => 'Dimanche';
+
+  @override
+  String get groupsSearchHint => 'Rechercher des groupes';
+
+  @override
+  String get groupsEmptyTitle => 'Aucun groupe pour le moment';
+
+  @override
+  String get groupsEmptyAdd =>
+      'Utilisez le bouton + en bas à droite pour ajouter un nouveau groupe.';
+
+  @override
+  String get groupsEmptyNoCoach =>
+      'Ajoutez d\'abord au moins un entraîneur pour créer un groupe.';
+
+  @override
+  String get groupsEmptyViewer =>
+      'Aucun enregistrement de groupe pour le moment. Ils apparaîtront ici lorsqu\'un administrateur en ajoutera un.';
+
+  @override
+  String groupSubtitle(
+    String branch,
+    String schedule,
+    String coach,
+    int count,
+    int capacity,
+  ) {
+    return '$branch • $schedule\nEntraîneur : $coach • $count/$capacity élèves';
+  }
+
+  @override
+  String get groupDeleteTitle => 'Supprimer le groupe';
+
+  @override
+  String groupDeleteConfirm(String name) {
+    return 'Voulez-vous vraiment supprimer le groupe $name';
+  }
+
+  @override
+  String get groupDeleted => 'Groupe supprimé.';
+
+  @override
+  String get groupDetailTitle => 'Détails du groupe';
+
+  @override
+  String get unknownStudent => 'Élève inconnu';
+
+  @override
+  String get fieldGroupName => 'Nom du groupe';
+
+  @override
+  String get fieldSchedule => 'Horaire';
+
+  @override
+  String get fieldCapacity => 'Capacité';
+
+  @override
+  String get fieldDay => 'Jour';
+
+  @override
+  String get fieldTime => 'Heure';
+
+  @override
+  String capacityPeople(int count, int capacity) {
+    return '$count/$capacity personnes';
+  }
+
+  @override
+  String membersTitle(int count) {
+    return 'Membres ($count)';
+  }
+
+  @override
+  String get noMembersAssigned => 'Aucun élève assigné pour le moment.';
+
+  @override
+  String get editGroup => 'Modifier le groupe';
+
+  @override
+  String get backToGroupList => 'Retour à la liste des groupes';
+
+  @override
+  String get addGroup => 'Ajouter un nouveau groupe';
+
+  @override
+  String get saveGroup => 'Enregistrer le groupe';
+
+  @override
+  String get groupsNeedCoach =>
+      'Vous devez d\'abord ajouter au moins un entraîneur pour créer un groupe.';
+
+  @override
+  String get groupNameEmpty => 'Le nom du groupe ne peut pas être vide.';
+
+  @override
+  String get groupNameMinLength =>
+      'Le nom du groupe doit comporter au moins 2 caractères.';
+
+  @override
+  String get coachRequired => 'Vous devez sélectionner un entraîneur.';
+
+  @override
+  String get dayRequired => 'Vous devez sélectionner un jour.';
+
+  @override
+  String get capacityEmpty => 'La capacité ne peut pas être vide.';
+
+  @override
+  String get capacityMustBeNumber => 'La capacité doit être un nombre.';
+
+  @override
+  String get capacityPositive => 'La capacité doit être supérieure à 0.';
+
+  @override
+  String get capacityMax => 'La capacité ne doit pas dépasser 100.';
+
+  @override
+  String get membersLabel => 'Membres';
+
+  @override
+  String get noStudentSelected => 'Aucun élève sélectionné';
+
+  @override
+  String studentsSelected(int count) {
+    return '$count élèves sélectionnés';
+  }
+
+  @override
+  String get membersNeedStudents =>
+      'Des enregistrements d\'élèves sont d\'abord nécessaires pour ajouter des membres.';
+
+  @override
+  String get selectCoachFirst =>
+      'Vous devez d\'abord sélectionner un entraîneur.';
+
+  @override
+  String studentsExceedCapacity(int count, int capacity) {
+    return 'Le nombre d\'élèves sélectionnés ($count) dépasse la capacité ($capacity).';
+  }
+
+  @override
+  String get selectMembersTitle => 'Sélectionner des membres';
+
+  @override
+  String selectedCount(int count) {
+    return '$count sélectionnés';
+  }
+
+  @override
+  String selectedCountOf(int count, int capacity) {
+    return '$count/$capacity sélectionnés';
+  }
+
+  @override
+  String get capacityExceeded => 'Capacité dépassée';
+
+  @override
+  String get noStudentsTitle => 'Aucun élève';
+
+  @override
+  String get noStudentsBody => 'Des élèves doivent d\'abord être ajoutés.';
+
+  @override
+  String studentBranchAge(String branch, int age) {
+    return '$branch • $age ans';
+  }
 }

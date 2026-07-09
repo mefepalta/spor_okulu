@@ -885,4 +885,190 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get branchRequired => 'Необходимо выбрать дисциплину.';
+
+  @override
+  String get dayMonday => 'Понедельник';
+
+  @override
+  String get dayTuesday => 'Вторник';
+
+  @override
+  String get dayWednesday => 'Среда';
+
+  @override
+  String get dayThursday => 'Четверг';
+
+  @override
+  String get dayFriday => 'Пятница';
+
+  @override
+  String get daySaturday => 'Суббота';
+
+  @override
+  String get daySunday => 'Воскресенье';
+
+  @override
+  String get groupsSearchHint => 'Поиск групп';
+
+  @override
+  String get groupsEmptyTitle => 'Групп пока нет';
+
+  @override
+  String get groupsEmptyAdd =>
+      'Нажмите кнопку + в правом нижнем углу, чтобы добавить группу.';
+
+  @override
+  String get groupsEmptyNoCoach =>
+      'Сначала добавьте хотя бы одного тренера, чтобы создать группу.';
+
+  @override
+  String get groupsEmptyViewer =>
+      'Записей о группах пока нет. Они появятся здесь, когда администратор добавит группу.';
+
+  @override
+  String groupSubtitle(
+    String branch,
+    String schedule,
+    String coach,
+    int count,
+    int capacity,
+  ) {
+    return '$branch • $schedule\nТренер: $coach • $count/$capacity учеников';
+  }
+
+  @override
+  String get groupDeleteTitle => 'Удалить группу';
+
+  @override
+  String groupDeleteConfirm(String name) {
+    return 'Вы уверены, что хотите удалить группу $name';
+  }
+
+  @override
+  String get groupDeleted => 'Группа удалена.';
+
+  @override
+  String get groupDetailTitle => 'Данные группы';
+
+  @override
+  String get unknownStudent => 'Неизвестный ученик';
+
+  @override
+  String get fieldGroupName => 'Название группы';
+
+  @override
+  String get fieldSchedule => 'Расписание';
+
+  @override
+  String get fieldCapacity => 'Вместимость';
+
+  @override
+  String get fieldDay => 'День';
+
+  @override
+  String get fieldTime => 'Время';
+
+  @override
+  String capacityPeople(int count, int capacity) {
+    return '$count/$capacity чел.';
+  }
+
+  @override
+  String membersTitle(int count) {
+    return 'Участники ($count)';
+  }
+
+  @override
+  String get noMembersAssigned => 'Ученики ещё не назначены.';
+
+  @override
+  String get editGroup => 'Изменить группу';
+
+  @override
+  String get backToGroupList => 'Назад к списку групп';
+
+  @override
+  String get addGroup => 'Добавить группу';
+
+  @override
+  String get saveGroup => 'Сохранить группу';
+
+  @override
+  String get groupsNeedCoach =>
+      'Сначала нужно добавить хотя бы одного тренера, чтобы создать группу.';
+
+  @override
+  String get groupNameEmpty => 'Название группы не может быть пустым.';
+
+  @override
+  String get groupNameMinLength =>
+      'Название группы должно содержать не менее 2 символов.';
+
+  @override
+  String get coachRequired => 'Необходимо выбрать тренера.';
+
+  @override
+  String get dayRequired => 'Необходимо выбрать день.';
+
+  @override
+  String get capacityEmpty => 'Вместимость не может быть пустой.';
+
+  @override
+  String get capacityMustBeNumber => 'Вместимость должна быть числом.';
+
+  @override
+  String get capacityPositive => 'Вместимость должна быть больше 0.';
+
+  @override
+  String get capacityMax => 'Вместимость не должна превышать 100.';
+
+  @override
+  String get membersLabel => 'Участники';
+
+  @override
+  String get noStudentSelected => 'Ученики не выбраны';
+
+  @override
+  String studentsSelected(int count) {
+    return 'Выбрано учеников: $count';
+  }
+
+  @override
+  String get membersNeedStudents =>
+      'Чтобы добавить участников, сначала нужны записи об учениках.';
+
+  @override
+  String get selectCoachFirst => 'Сначала необходимо выбрать тренера.';
+
+  @override
+  String studentsExceedCapacity(int count, int capacity) {
+    return 'Число выбранных учеников ($count) превышает вместимость ($capacity).';
+  }
+
+  @override
+  String get selectMembersTitle => 'Выбрать участников';
+
+  @override
+  String selectedCount(int count) {
+    return 'Выбрано: $count';
+  }
+
+  @override
+  String selectedCountOf(int count, int capacity) {
+    return 'Выбрано $count/$capacity';
+  }
+
+  @override
+  String get capacityExceeded => 'Вместимость превышена';
+
+  @override
+  String get noStudentsTitle => 'Нет учеников';
+
+  @override
+  String get noStudentsBody => 'Сначала нужно добавить учеников.';
+
+  @override
+  String studentBranchAge(String branch, int age) {
+    return '$branch • $age лет';
+  }
 }

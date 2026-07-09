@@ -876,4 +876,189 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get branchRequired => 'Branş seçilmelidir.';
+
+  @override
+  String get dayMonday => 'Pazartesi';
+
+  @override
+  String get dayTuesday => 'Salı';
+
+  @override
+  String get dayWednesday => 'Çarşamba';
+
+  @override
+  String get dayThursday => 'Perşembe';
+
+  @override
+  String get dayFriday => 'Cuma';
+
+  @override
+  String get daySaturday => 'Cumartesi';
+
+  @override
+  String get daySunday => 'Pazar';
+
+  @override
+  String get groupsSearchHint => 'Grup ara';
+
+  @override
+  String get groupsEmptyTitle => 'Henüz grup yok';
+
+  @override
+  String get groupsEmptyAdd =>
+      'Yeni grup eklemek için sağ alttaki + butonunu kullan.';
+
+  @override
+  String get groupsEmptyNoCoach =>
+      'Grup eklemek için önce en az bir antrenör ekle.';
+
+  @override
+  String get groupsEmptyViewer =>
+      'Henüz grup kaydı yok. Admin grup eklediğinde burada görünecek.';
+
+  @override
+  String groupSubtitle(
+    String branch,
+    String schedule,
+    String coach,
+    int count,
+    int capacity,
+  ) {
+    return '$branch • $schedule\nAntrenör: $coach • $count/$capacity öğrenci';
+  }
+
+  @override
+  String get groupDeleteTitle => 'Grubu Sil';
+
+  @override
+  String groupDeleteConfirm(String name) {
+    return '$name grubunu silmek istediğine emin misin';
+  }
+
+  @override
+  String get groupDeleted => 'Grup silindi.';
+
+  @override
+  String get groupDetailTitle => 'Grup Detayı';
+
+  @override
+  String get unknownStudent => 'Bilinmeyen öğrenci';
+
+  @override
+  String get fieldGroupName => 'Grup Adı';
+
+  @override
+  String get fieldSchedule => 'Program';
+
+  @override
+  String get fieldCapacity => 'Kapasite';
+
+  @override
+  String get fieldDay => 'Gün';
+
+  @override
+  String get fieldTime => 'Saat';
+
+  @override
+  String capacityPeople(int count, int capacity) {
+    return '$count/$capacity kişi';
+  }
+
+  @override
+  String membersTitle(int count) {
+    return 'Üyeler ($count)';
+  }
+
+  @override
+  String get noMembersAssigned => 'Henüz öğrenci atanmadı.';
+
+  @override
+  String get editGroup => 'Grubu Düzenle';
+
+  @override
+  String get backToGroupList => 'Grup Listesine Dön';
+
+  @override
+  String get addGroup => 'Yeni Grup Ekle';
+
+  @override
+  String get saveGroup => 'Grubu Kaydet';
+
+  @override
+  String get groupsNeedCoach =>
+      'Grup eklemek için önce en az bir antrenör eklemelisin.';
+
+  @override
+  String get groupNameEmpty => 'Grup adı boş bırakılamaz.';
+
+  @override
+  String get groupNameMinLength => 'Grup adı en az 2 karakter olmalıdır.';
+
+  @override
+  String get coachRequired => 'Antrenör seçmelisin.';
+
+  @override
+  String get dayRequired => 'Gün seçmelisin.';
+
+  @override
+  String get capacityEmpty => 'Kapasite boş bırakılamaz.';
+
+  @override
+  String get capacityMustBeNumber => 'Kapasite sayı olmalıdır.';
+
+  @override
+  String get capacityPositive => 'Kapasite 0\'dan büyük olmalıdır.';
+
+  @override
+  String get capacityMax => 'Kapasite 100\'den büyük olmamalıdır.';
+
+  @override
+  String get membersLabel => 'Üyeler';
+
+  @override
+  String get noStudentSelected => 'Öğrenci seçilmedi';
+
+  @override
+  String studentsSelected(int count) {
+    return '$count öğrenci seçildi';
+  }
+
+  @override
+  String get membersNeedStudents =>
+      'Üye eklemek için önce öğrenci kaydı gerekir.';
+
+  @override
+  String get selectCoachFirst => 'Önce bir antrenör seçmelisin.';
+
+  @override
+  String studentsExceedCapacity(int count, int capacity) {
+    return 'Seçilen öğrenci sayısı ($count) kapasiteyi ($capacity) aşıyor.';
+  }
+
+  @override
+  String get selectMembersTitle => 'Üye Seç';
+
+  @override
+  String selectedCount(int count) {
+    return '$count seçildi';
+  }
+
+  @override
+  String selectedCountOf(int count, int capacity) {
+    return '$count/$capacity seçildi';
+  }
+
+  @override
+  String get capacityExceeded => 'Kapasite aşıldı';
+
+  @override
+  String get noStudentsTitle => 'Öğrenci yok';
+
+  @override
+  String get noStudentsBody => 'Önce öğrenci eklenmeli.';
+
+  @override
+  String studentBranchAge(String branch, int age) {
+    return '$branch • $age yaş';
+  }
 }

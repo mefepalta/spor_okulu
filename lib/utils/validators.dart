@@ -77,21 +77,6 @@ String dropdownDayFromText(String value) {
   }
 }
 
-String? validateTime(String? value) {
-  if (value == null || value.trim().isEmpty) {
-    return 'Saat boş bırakılamaz.';
-  }
-
-  final time = value.trim();
-  final timeRegExp = RegExp(r'^([01]\d|2[0-3]):[0-5]\d$');
-
-  if (!timeRegExp.hasMatch(time)) {
-    return 'Saat 18:00 formatında olmalıdır.';
-  }
-
-  return null;
-}
-
 String normalizeTime(String value) {
   final parts = value.trim().split(':');
 

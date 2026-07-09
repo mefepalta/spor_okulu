@@ -373,5 +373,92 @@
   "timeFormat": "Saat 18:00 formatında olmalıdır.",
   "dateEmpty": "Tarih boş bırakılamaz.",
   "dateFormat": "Tarih 24.06.2026 formatında olmalı.",
-  "branchRequired": "Branş seçilmelidir."
+  "branchRequired": "Branş seçilmelidir.",
+
+  "dayMonday": "Pazartesi",
+  "dayTuesday": "Salı",
+  "dayWednesday": "Çarşamba",
+  "dayThursday": "Perşembe",
+  "dayFriday": "Cuma",
+  "daySaturday": "Cumartesi",
+  "daySunday": "Pazar",
+
+  "groupsSearchHint": "Grup ara",
+  "groupsEmptyTitle": "Henüz grup yok",
+  "groupsEmptyAdd": "Yeni grup eklemek için sağ alttaki + butonunu kullan.",
+  "groupsEmptyNoCoach": "Grup eklemek için önce en az bir antrenör ekle.",
+  "groupsEmptyViewer": "Henüz grup kaydı yok. Admin grup eklediğinde burada görünecek.",
+  "groupSubtitle": "{branch} • {schedule}\nAntrenör: {coach} • {count}/{capacity} öğrenci",
+  "@groupSubtitle": {
+    "placeholders": {
+      "branch": { "type": "String" },
+      "schedule": { "type": "String" },
+      "coach": { "type": "String" },
+      "count": { "type": "int" },
+      "capacity": { "type": "int" }
+    }
+  },
+  "groupDeleteTitle": "Grubu Sil",
+  "groupDeleteConfirm": "{name} grubunu silmek istediğine emin misin",
+  "@groupDeleteConfirm": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "groupDeleted": "Grup silindi.",
+  "groupDetailTitle": "Grup Detayı",
+  "unknownStudent": "Bilinmeyen öğrenci",
+  "fieldGroupName": "Grup Adı",
+  "fieldSchedule": "Program",
+  "fieldCapacity": "Kapasite",
+  "fieldDay": "Gün",
+  "fieldTime": "Saat",
+  "capacityPeople": "{count}/{capacity} kişi",
+  "@capacityPeople": {
+    "placeholders": { "count": { "type": "int" }, "capacity": { "type": "int" } }
+  },
+  "membersTitle": "Üyeler ({count})",
+  "@membersTitle": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "noMembersAssigned": "Henüz öğrenci atanmadı.",
+  "editGroup": "Grubu Düzenle",
+  "backToGroupList": "Grup Listesine Dön",
+  "addGroup": "Yeni Grup Ekle",
+  "saveGroup": "Grubu Kaydet",
+  "groupsNeedCoach": "Grup eklemek için önce en az bir antrenör eklemelisin.",
+  "groupNameEmpty": "Grup adı boş bırakılamaz.",
+  "groupNameMinLength": "Grup adı en az 2 karakter olmalıdır.",
+  "coachRequired": "Antrenör seçmelisin.",
+  "dayRequired": "Gün seçmelisin.",
+  "capacityEmpty": "Kapasite boş bırakılamaz.",
+  "capacityMustBeNumber": "Kapasite sayı olmalıdır.",
+  "capacityPositive": "Kapasite 0'dan büyük olmalıdır.",
+  "capacityMax": "Kapasite 100'den büyük olmamalıdır.",
+  "membersLabel": "Üyeler",
+  "noStudentSelected": "Öğrenci seçilmedi",
+  "studentsSelected": "{count} öğrenci seçildi",
+  "@studentsSelected": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "membersNeedStudents": "Üye eklemek için önce öğrenci kaydı gerekir.",
+  "selectCoachFirst": "Önce bir antrenör seçmelisin.",
+  "studentsExceedCapacity": "Seçilen öğrenci sayısı ({count}) kapasiteyi ({capacity}) aşıyor.",
+  "@studentsExceedCapacity": {
+    "placeholders": { "count": { "type": "int" }, "capacity": { "type": "int" } }
+  },
+  "selectMembersTitle": "Üye Seç",
+  "selectedCount": "{count} seçildi",
+  "@selectedCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "selectedCountOf": "{count}/{capacity} seçildi",
+  "@selectedCountOf": {
+    "placeholders": { "count": { "type": "int" }, "capacity": { "type": "int" } }
+  },
+  "capacityExceeded": "Kapasite aşıldı",
+  "noStudentsTitle": "Öğrenci yok",
+  "noStudentsBody": "Önce öğrenci eklenmeli.",
+  "studentBranchAge": "{branch} • {age} yaş",
+  "@studentBranchAge": {
+    "placeholders": { "branch": { "type": "String" }, "age": { "type": "int" } }
+  }
 }

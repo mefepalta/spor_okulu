@@ -4,7 +4,9 @@ import '../theme/app_colors.dart';
 import '../widgets/wave_background.dart';
 import 'package:flutter/services.dart';
 
+import '../l10n/app_localizations.dart';
 import '../models/app_models.dart';
+import '../utils/day_l10n.dart';
 import '../utils/validators.dart';
 import '../widgets/branch_dropdown.dart';
 import '../widgets/empty_state.dart';
@@ -89,25 +91,30 @@ class _GroupsScreenState extends State<GroupsScreen> {
 
   Future<void> _confirmDeleteGroup(int index) async {
     final group = widget.groups[index];
+    final l10n = AppLocalizations.of(context);
 
     final shouldDelete = await showDialog<bool>(
       context: context,
       builder: (context) {
+        final l10n = AppLocalizations.of(context);
         return AlertDialog(
-          title: const Text('Grubu Sil'),
-          content: Text('${group.name} grubunu silmek istediğine emin misin'),
+          title: Text(l10n.groupDeleteTitle),
+          content: Text(l10n.groupDeleteConfirm(group.name)),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.pop(context, false);
               },
-              child: const Text('Vazgeç'),
+              child: Text(l10n.commonCancel),
             ),
             TextButton(
               onPressed: () {
                 Navigator.pop(context, true);
               },
-              child: const Text('Sil', style: TextStyle(color: Colors.red)),
+              child: Text(
+                l10n.commonDelete,
+                style: const TextStyle(color: Colors.red),
+              ),
             ),
           ],
         );
@@ -128,11 +135,12 @@ class _GroupsScreenState extends State<GroupsScreen> {
 
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(const SnackBar(content: Text('Grup silindi.')));
+    ).showSnackBar(SnackBar(content: Text(l10n.groupDeleted)));
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final filteredGroups = widget.groups.where((group) {
       final query = _searchQuery.toLowerCase();
 
@@ -143,16 +151,16 @@ class _GroupsScreenState extends State<GroupsScreen> {
     final canAddGroup = widget.canManage && widget.coaches.isNotEmpty;
 
     return WaveScaffold(
-      appBar: AppBar(title: const Text('Gruplar')),
+      appBar: AppBar(title: Text(l10n.navGroups)),
       body: Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(16),
             child: TextField(
-              decoration: const InputDecoration(
-                labelText: 'Grup ara',
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.groupsSearchHint,
+                prefixIcon: const Icon(Icons.search),
+                border: const OutlineInputBorder(),
               ),
               onChanged: (value) {
                 setState(() {
@@ -165,18 +173,18 @@ class _GroupsScreenState extends State<GroupsScreen> {
             child: widget.groups.isEmpty
                 ? EmptyState(
                     icon: Icons.groups,
-                    title: 'Henüz grup yok',
+                    title: l10n.groupsEmptyTitle,
                     message: widget.canManage
                         ? widget.coaches.isNotEmpty
-                              ? 'Yeni grup eklemek için sağ alttaki + butonunu kullan.'
-                              : 'Grup eklemek için once en az bir antrenör ekle.'
-                        : 'Henüz grup kaydı yok. Admin grup eklediçinde burada görünecek.',
+                              ? l10n.groupsEmptyAdd
+                              : l10n.groupsEmptyNoCoach
+                        : l10n.groupsEmptyViewer,
                   )
                 : filteredGroups.isEmpty
-                ? const EmptyState(
+                ? EmptyState(
                     icon: Icons.search_off,
-                    title: 'Sonuç bulunamadı',
-                    message: 'Arama metnini değiştirerek tekrar dene.',
+                    title: l10n.searchNoResults,
+                    message: l10n.searchNoResultsBody,
                   )
                 : ListView.builder(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -198,9 +206,13 @@ class _GroupsScreenState extends State<GroupsScreen> {
                           ),
                           title: Text(group.name),
                           subtitle: Text(
-                            '${group.branch} • ${group.schedule}\n'
-                            'Antrenör: ${group.coachName} • '
-                            '${group.studentIds.length}/${group.capacity} öğrenci',
+                            l10n.groupSubtitle(
+                              group.branch,
+                              localizedSchedule(l10n, group.schedule),
+                              group.coachName,
+                              group.studentIds.length,
+                              group.capacity,
+                            ),
                           ),
                           isThreeLine: true,
                           trailing: widget.canDelete
@@ -263,7 +275,7 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
         return '${student.name} • ${student.branch}';
       }
     }
-    return 'Bilinmeyen öğrenci';
+    return AppLocalizations.of(context).unknownStudent;
   }
 
   Future<void> _openEditGroupScreen() async {
@@ -294,10 +306,11 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final group = _group;
+    final l10n = AppLocalizations.of(context);
 
     return WaveScaffold(
       appBar: AppBar(
-        title: const Text('Grup Detayı'),
+        title: Text(l10n.groupDetailTitle),
         actions: widget.canManage
             ? [
                 IconButton(
@@ -329,7 +342,7 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
                   const SizedBox(height: 8),
                   Text(group.branch),
                   const SizedBox(height: 8),
-                  Text(group.schedule),
+                  Text(localizedSchedule(l10n, group.schedule)),
                 ],
               ),
             ),
@@ -338,37 +351,37 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
           Card(
             child: ListTile(
               leading: const Icon(Icons.badge),
-              title: const Text('Grup Adı'),
+              title: Text(l10n.fieldGroupName),
               subtitle: Text(group.name),
             ),
           ),
           Card(
             child: ListTile(
               leading: const Icon(Icons.sports),
-              title: const Text('Branş'),
+              title: Text(l10n.fieldBranch),
               subtitle: Text(group.branch),
             ),
           ),
           Card(
             child: ListTile(
               leading: const Icon(Icons.person),
-              title: const Text('Antrenör'),
+              title: Text(l10n.roleCoach),
               subtitle: Text(group.coachName),
             ),
           ),
           Card(
             child: ListTile(
               leading: const Icon(Icons.schedule),
-              title: const Text('Program'),
-              subtitle: Text(group.schedule),
+              title: Text(l10n.fieldSchedule),
+              subtitle: Text(localizedSchedule(l10n, group.schedule)),
             ),
           ),
           Card(
             child: ListTile(
               leading: const Icon(Icons.people),
-              title: const Text('Kapasite'),
+              title: Text(l10n.fieldCapacity),
               subtitle: Text(
-                '${group.studentIds.length}/${group.capacity} kişi',
+                l10n.capacityPeople(group.studentIds.length, group.capacity),
               ),
             ),
           ),
@@ -384,7 +397,7 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
                       const Icon(Icons.groups_2, color: AppColors.primary),
                       const SizedBox(width: 12),
                       Text(
-                        'Üyeler (${group.studentIds.length})',
+                        l10n.membersTitle(group.studentIds.length),
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -394,9 +407,9 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
                   ),
                   const SizedBox(height: 8),
                   if (group.studentIds.isEmpty)
-                    const Text(
-                      'Henüz öğrenci atanmadı.',
-                      style: TextStyle(color: Colors.grey),
+                    Text(
+                      l10n.noMembersAssigned,
+                      style: const TextStyle(color: Colors.grey),
                     )
                   else
                     ...group.studentIds.map((studentId) {
@@ -417,7 +430,7 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
             ElevatedButton.icon(
               onPressed: _openEditGroupScreen,
               icon: const Icon(Icons.edit),
-              label: const Text('Grubu Düzenle'),
+              label: Text(l10n.editGroup),
             ),
           const SizedBox(height: 8),
           OutlinedButton.icon(
@@ -425,7 +438,7 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
               Navigator.pop(context);
             },
             icon: const Icon(Icons.arrow_back),
-            label: const Text('Grup Listesine Dön'),
+            label: Text(l10n.backToGroupList),
           ),
         ],
       ),
@@ -560,6 +573,7 @@ class _AddGroupScreenState extends State<AddGroupScreen> {
   }
 
   void _saveGroup() {
+    final l10n = AppLocalizations.of(context);
     final isFormValid = _formKey.currentState!.validate();
 
     if (!isFormValid) {
@@ -569,7 +583,7 @@ class _AddGroupScreenState extends State<AddGroupScreen> {
     final coach = _selectedCoach;
     if (coach == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Önce bir antrenör seçmelisin.')),
+        SnackBar(content: Text(l10n.selectCoachFirst)),
       );
       return;
     }
@@ -579,8 +593,7 @@ class _AddGroupScreenState extends State<AddGroupScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            'Seçilen öğrenci sayısı (${_selectedStudentIds.length}) '
-            'kapasiteyi ($capacity) aşıyor.',
+            l10n.studentsExceedCapacity(_selectedStudentIds.length, capacity),
           ),
         ),
       );
@@ -605,17 +618,18 @@ class _AddGroupScreenState extends State<AddGroupScreen> {
   @override
   Widget build(BuildContext context) {
     final isEditing = widget.group != null;
+    final l10n = AppLocalizations.of(context);
 
     return WaveScaffold(
       appBar: AppBar(
-        title: Text(isEditing ? 'Grubu Düzenle' : 'Yeni Grup Ekle'),
+        title: Text(isEditing ? l10n.editGroup : l10n.addGroup),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: widget.coaches.isEmpty
-            ? const Center(
+            ? Center(
                 child: Text(
-                  'Grup eklemek için önce en az bir antrenör eklemelisin.',
+                  l10n.groupsNeedCoach,
                   textAlign: TextAlign.center,
                 ),
               )
@@ -626,19 +640,19 @@ class _AddGroupScreenState extends State<AddGroupScreen> {
                   children: [
                     TextFormField(
                       controller: _nameController,
-                      decoration: const InputDecoration(
-                        labelText: 'Grup Adı',
-                        border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.badge),
+                      decoration: InputDecoration(
+                        labelText: l10n.fieldGroupName,
+                        border: const OutlineInputBorder(),
+                        prefixIcon: const Icon(Icons.badge),
                         hintText: 'Minikler A',
                       ),
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
-                          return 'Grup adı boş bırakılamaz.';
+                          return l10n.groupNameEmpty;
                         }
 
                         if (value.trim().length < 2) {
-                          return 'Grup adı en az 2 karakter olmalıdır.';
+                          return l10n.groupNameMinLength;
                         }
 
                         return null;
@@ -656,10 +670,10 @@ class _AddGroupScreenState extends State<AddGroupScreen> {
                     const SizedBox(height: 12),
                     DropdownButtonFormField<String>(
                       initialValue: _selectedCoachId,
-                      decoration: const InputDecoration(
-                        labelText: 'Antrenör',
-                        border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.person),
+                      decoration: InputDecoration(
+                        labelText: l10n.roleCoach,
+                        border: const OutlineInputBorder(),
+                        prefixIcon: const Icon(Icons.person),
                       ),
                       items: widget.coaches.map((coach) {
                         return DropdownMenuItem<String>(
@@ -674,7 +688,7 @@ class _AddGroupScreenState extends State<AddGroupScreen> {
                       },
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Antrenör seçmelisin.';
+                          return l10n.coachRequired;
                         }
 
                         return null;
@@ -683,15 +697,15 @@ class _AddGroupScreenState extends State<AddGroupScreen> {
                     const SizedBox(height: 12),
                     DropdownButtonFormField<String>(
                       initialValue: _selectedDay,
-                      decoration: const InputDecoration(
-                        labelText: 'Gün',
-                        border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.calendar_month),
+                      decoration: InputDecoration(
+                        labelText: l10n.fieldDay,
+                        border: const OutlineInputBorder(),
+                        prefixIcon: const Icon(Icons.calendar_month),
                       ),
                       items: _days.map((day) {
                         return DropdownMenuItem<String>(
                           value: day,
-                          child: Text(day),
+                          child: Text(localizedDay(l10n, day)),
                         );
                       }).toList(),
                       onChanged: (value) {
@@ -701,7 +715,7 @@ class _AddGroupScreenState extends State<AddGroupScreen> {
                       },
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Gün seçmelisin.';
+                          return l10n.dayRequired;
                         }
 
                         return null;
@@ -711,42 +725,42 @@ class _AddGroupScreenState extends State<AddGroupScreen> {
                     TextFormField(
                       controller: _timeController,
                       keyboardType: TextInputType.datetime,
-                      decoration: const InputDecoration(
-                        labelText: 'Saat',
-                        border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.schedule),
+                      decoration: InputDecoration(
+                        labelText: l10n.fieldTime,
+                        border: const OutlineInputBorder(),
+                        prefixIcon: const Icon(Icons.schedule),
                         hintText: '18:00',
                       ),
-                      validator: validateTime,
+                      validator: timeValidator(l10n),
                     ),
                     const SizedBox(height: 12),
                     TextFormField(
                       controller: _capacityController,
                       keyboardType: TextInputType.number,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      decoration: const InputDecoration(
-                        labelText: 'Kapasite',
-                        border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.people),
+                      decoration: InputDecoration(
+                        labelText: l10n.fieldCapacity,
+                        border: const OutlineInputBorder(),
+                        prefixIcon: const Icon(Icons.people),
                         hintText: '20',
                       ),
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
-                          return 'Kapasite boş bırakılamaz.';
+                          return l10n.capacityEmpty;
                         }
 
                         final capacity = int.tryParse(value.trim());
 
                         if (capacity == null) {
-                          return 'Kapasite sayı olmalıdır.';
+                          return l10n.capacityMustBeNumber;
                         }
 
                         if (capacity <= 0) {
-                          return 'Kapasite 0’dan büyük olmalıdır.';
+                          return l10n.capacityPositive;
                         }
 
                         if (capacity > 100) {
-                          return 'Kapasite 100’den büyük olmamalıdır.';
+                          return l10n.capacityMax;
                         }
 
                         return null;
@@ -761,11 +775,13 @@ class _AddGroupScreenState extends State<AddGroupScreen> {
                       ),
                       child: ListTile(
                         leading: const Icon(Icons.groups_2),
-                        title: const Text('Üyeler'),
+                        title: Text(l10n.membersLabel),
                         subtitle: Text(
                           _selectedStudentIds.isEmpty
-                              ? 'Öğrenci seçilmedi'
-                              : '${_selectedStudentIds.length} öğrenci seçildi',
+                              ? l10n.noStudentSelected
+                              : l10n.studentsSelected(
+                                  _selectedStudentIds.length,
+                                ),
                         ),
                         trailing: const Icon(Icons.chevron_right),
                         onTap: widget.students.isEmpty
@@ -774,20 +790,21 @@ class _AddGroupScreenState extends State<AddGroupScreen> {
                       ),
                     ),
                     if (widget.students.isEmpty)
-                      const Padding(
-                        padding: EdgeInsets.only(top: 8),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8),
                         child: Text(
-                          'Üye eklemek için önce öğrenci kaydı gerekir.',
-                          style: TextStyle(fontSize: 12, color: Colors.grey),
+                          l10n.membersNeedStudents,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey,
+                          ),
                         ),
                       ),
                     const SizedBox(height: 20),
                     ElevatedButton.icon(
                       onPressed: _saveGroup,
                       icon: const Icon(Icons.save),
-                      label: Text(
-                        isEditing ? 'Değişiklikleri Kaydet' : 'Grubu Kaydet',
-                      ),
+                      label: Text(isEditing ? l10n.saveChanges : l10n.saveGroup),
                     ),
                   ],
                 ),
@@ -828,6 +845,7 @@ class _SelectMembersScreenState extends State<_SelectMembersScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final query = _searchQuery.toLowerCase();
     final filtered = widget.students.where((student) {
       return student.name.toLowerCase().contains(query) ||
@@ -835,19 +853,19 @@ class _SelectMembersScreenState extends State<_SelectMembersScreen> {
     }).toList();
 
     final capacityText = widget.capacity == null
-        ? '${_selected.length} seçildi'
-        : '${_selected.length}/${widget.capacity} seçildi';
+        ? l10n.selectedCount(_selected.length)
+        : l10n.selectedCountOf(_selected.length, widget.capacity!);
 
     return WaveScaffold(
       appBar: AppBar(
-        title: const Text('Üye Seç'),
+        title: Text(l10n.selectMembersTitle),
         actions: [
           TextButton(
             onPressed: _overCapacity
                 ? null
                 : () => Navigator.pop(context, _selected),
             child: Text(
-              'Kaydet',
+              l10n.commonSave,
               style: TextStyle(
                 color: _overCapacity ? Colors.white54 : Colors.white,
               ),
@@ -860,10 +878,10 @@ class _SelectMembersScreenState extends State<_SelectMembersScreen> {
           Padding(
             padding: const EdgeInsets.all(16),
             child: TextField(
-              decoration: const InputDecoration(
-                labelText: 'Öğrenci ara',
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.studentsSearchHint,
+                prefixIcon: const Icon(Icons.search),
+                border: const OutlineInputBorder(),
               ),
               onChanged: (value) {
                 setState(() {
@@ -891,10 +909,10 @@ class _SelectMembersScreenState extends State<_SelectMembersScreen> {
                 ),
                 if (_overCapacity) ...[
                   const SizedBox(width: 8),
-                  const Expanded(
+                  Expanded(
                     child: Text(
-                      'Kapasite aşıldı',
-                      style: TextStyle(color: Colors.red, fontSize: 12),
+                      l10n.capacityExceeded,
+                      style: const TextStyle(color: Colors.red, fontSize: 12),
                     ),
                   ),
                 ],
@@ -904,10 +922,10 @@ class _SelectMembersScreenState extends State<_SelectMembersScreen> {
           const SizedBox(height: 8),
           Expanded(
             child: widget.students.isEmpty
-                ? const EmptyState(
+                ? EmptyState(
                     icon: Icons.people_outline,
-                    title: 'Öğrenci yok',
-                    message: 'Önce öğrenci eklenmeli.',
+                    title: l10n.noStudentsTitle,
+                    message: l10n.noStudentsBody,
                   )
                 : ListView(
                     children: filtered.map((student) {
@@ -915,7 +933,7 @@ class _SelectMembersScreenState extends State<_SelectMembersScreen> {
                         value: _selected.contains(student.id),
                         title: Text(student.name),
                         subtitle: Text(
-                          '${student.branch} • ${student.age} yaş',
+                          l10n.studentBranchAge(student.branch, student.age),
                         ),
                         onChanged: (checked) {
                           setState(() {
