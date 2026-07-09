@@ -1098,4 +1098,51 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get studentAssignHint =>
       'Öğrenci eşleştirmesi \"Öğrenci Hesapları\" ekranından yapılır.';
+
+  @override
+  String get parentsEmptyTitle => 'Henüz veli yok';
+
+  @override
+  String get parentsEmptyBody =>
+      'Veli eklemek için sağ alttaki + butonunu kullan. Velinin önce uygulamaya kayıt olması gerekir.';
+
+  @override
+  String get parentAdded => 'Veli eklendi.';
+
+  @override
+  String get parentAddError => 'Veli eklenirken bir hata oluştu.';
+
+  @override
+  String get removeParentTitle => 'Veliyi Kaldır';
+
+  @override
+  String removeParentConfirm(String email) {
+    return '$email artık veli olmayacak ve öğrenci eşleşmeleri silinecek. Devam edilsin mi?';
+  }
+
+  @override
+  String get removeAction => 'Kaldır';
+
+  @override
+  String get addParentTitle => 'Veli Ekle';
+
+  @override
+  String get addParentHint =>
+      'Velinin uygulamaya kayıtlı e-posta adresini gir. Veli önce kendisi kayıt olmalıdır.';
+
+  @override
+  String get noStudentAssigned => 'Öğrenci atanmadı';
+
+  @override
+  String studentsAssigned(String names) {
+    return 'Öğrenciler: $names';
+  }
+
+  @override
+  String get assignStudentsTitle => 'Öğrenci Ata';
+
+  @override
+  String accountAssignHeader(String label, String email) {
+    return '$label: $email';
+  }
 }

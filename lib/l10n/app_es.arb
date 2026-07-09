@@ -351,5 +351,19 @@
   "userRoleUpdated": "{email} → actualizado a {role}.",
   "changeRoleTitle": "Cambiar rol",
   "parentAssignHint": "La asignación de estudiantes se hace desde la pantalla \"Padres\".",
-  "studentAssignHint": "La vinculación de estudiantes se hace desde la pantalla \"Cuentas de estudiantes\"."
+  "studentAssignHint": "La vinculación de estudiantes se hace desde la pantalla \"Cuentas de estudiantes\".",
+
+  "parentsEmptyTitle": "Aún no hay padres",
+  "parentsEmptyBody": "Usa el botón + de abajo a la derecha para añadir un padre. El padre debe registrarse primero en la app.",
+  "parentAdded": "Padre añadido.",
+  "parentAddError": "Ocurrió un error al añadir el padre.",
+  "removeParentTitle": "Quitar padre",
+  "removeParentConfirm": "{email} dejará de ser padre y se eliminarán las asignaciones de estudiantes. ¿Continuar?",
+  "removeAction": "Quitar",
+  "addParentTitle": "Añadir padre",
+  "addParentHint": "Introduce el correo del padre registrado en la app. El padre debe registrarse primero.",
+  "noStudentAssigned": "Sin estudiante asignado",
+  "studentsAssigned": "Estudiantes: {names}",
+  "assignStudentsTitle": "Asignar estudiantes",
+  "accountAssignHeader": "{label}: {email}"
 }

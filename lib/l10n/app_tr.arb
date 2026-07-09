@@ -475,5 +475,28 @@
   },
   "changeRoleTitle": "Rol Değiştir",
   "parentAssignHint": "Öğrenci ataması \"Veliler\" ekranından yapılır.",
-  "studentAssignHint": "Öğrenci eşleştirmesi \"Öğrenci Hesapları\" ekranından yapılır."
+  "studentAssignHint": "Öğrenci eşleştirmesi \"Öğrenci Hesapları\" ekranından yapılır.",
+
+  "parentsEmptyTitle": "Henüz veli yok",
+  "parentsEmptyBody": "Veli eklemek için sağ alttaki + butonunu kullan. Velinin önce uygulamaya kayıt olması gerekir.",
+  "parentAdded": "Veli eklendi.",
+  "parentAddError": "Veli eklenirken bir hata oluştu.",
+  "removeParentTitle": "Veliyi Kaldır",
+  "removeParentConfirm": "{email} artık veli olmayacak ve öğrenci eşleşmeleri silinecek. Devam edilsin mi?",
+  "@removeParentConfirm": {
+    "placeholders": { "email": { "type": "String" } }
+  },
+  "removeAction": "Kaldır",
+  "addParentTitle": "Veli Ekle",
+  "addParentHint": "Velinin uygulamaya kayıtlı e-posta adresini gir. Veli önce kendisi kayıt olmalıdır.",
+  "noStudentAssigned": "Öğrenci atanmadı",
+  "studentsAssigned": "Öğrenciler: {names}",
+  "@studentsAssigned": {
+    "placeholders": { "names": { "type": "String" } }
+  },
+  "assignStudentsTitle": "Öğrenci Ata",
+  "accountAssignHeader": "{label}: {email}",
+  "@accountAssignHeader": {
+    "placeholders": { "label": { "type": "String" }, "email": { "type": "String" } }
+  }
 }

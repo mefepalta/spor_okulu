@@ -1116,4 +1116,52 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get studentAssignHint =>
       'L\'association des élèves se fait depuis l\'écran « Comptes élèves ».';
+
+  @override
+  String get parentsEmptyTitle => 'Aucun parent pour l\'instant';
+
+  @override
+  String get parentsEmptyBody =>
+      'Utilisez le bouton + en bas à droite pour ajouter un parent. Le parent doit d\'abord s\'inscrire dans l\'application.';
+
+  @override
+  String get parentAdded => 'Parent ajouté.';
+
+  @override
+  String get parentAddError =>
+      'Une erreur s\'est produite lors de l\'ajout du parent.';
+
+  @override
+  String get removeParentTitle => 'Retirer le parent';
+
+  @override
+  String removeParentConfirm(String email) {
+    return '$email ne sera plus parent et les affectations d\'élèves seront supprimées. Continuer ?';
+  }
+
+  @override
+  String get removeAction => 'Retirer';
+
+  @override
+  String get addParentTitle => 'Ajouter un parent';
+
+  @override
+  String get addParentHint =>
+      'Saisissez l\'adresse e-mail du parent enregistrée dans l\'application. Le parent doit d\'abord s\'inscrire.';
+
+  @override
+  String get noStudentAssigned => 'Aucun élève affecté';
+
+  @override
+  String studentsAssigned(String names) {
+    return 'Élèves : $names';
+  }
+
+  @override
+  String get assignStudentsTitle => 'Affecter des élèves';
+
+  @override
+  String accountAssignHeader(String label, String email) {
+    return '$label : $email';
+  }
 }

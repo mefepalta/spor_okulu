@@ -1108,4 +1108,51 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get studentAssignHint =>
       'Сопоставление учеников выполняется на экране «Аккаунты учеников».';
+
+  @override
+  String get parentsEmptyTitle => 'Родителей пока нет';
+
+  @override
+  String get parentsEmptyBody =>
+      'Нажмите кнопку + внизу справа, чтобы добавить родителя. Родитель должен сначала зарегистрироваться в приложении.';
+
+  @override
+  String get parentAdded => 'Родитель добавлен.';
+
+  @override
+  String get parentAddError => 'Произошла ошибка при добавлении родителя.';
+
+  @override
+  String get removeParentTitle => 'Удалить родителя';
+
+  @override
+  String removeParentConfirm(String email) {
+    return '$email больше не будет родителем, а привязки учеников будут удалены. Продолжить?';
+  }
+
+  @override
+  String get removeAction => 'Удалить';
+
+  @override
+  String get addParentTitle => 'Добавить родителя';
+
+  @override
+  String get addParentHint =>
+      'Введите адрес электронной почты родителя, зарегистрированный в приложении. Родитель должен сначала зарегистрироваться.';
+
+  @override
+  String get noStudentAssigned => 'Ученик не назначен';
+
+  @override
+  String studentsAssigned(String names) {
+    return 'Ученики: $names';
+  }
+
+  @override
+  String get assignStudentsTitle => 'Назначить учеников';
+
+  @override
+  String accountAssignHeader(String label, String email) {
+    return '$label: $email';
+  }
 }

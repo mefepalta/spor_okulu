@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../widgets/wave_background.dart';
 
+import '../l10n/app_localizations.dart';
 import '../models/app_models.dart';
 import '../theme/app_colors.dart';
 import '../widgets/empty_state.dart';
@@ -38,10 +39,11 @@ class _ParentsScreenState extends State<ParentsScreen> {
         return student.name;
       }
     }
-    return 'Bilinmeyen öğrenci';
+    return AppLocalizations.of(context).unknownStudent;
   }
 
   Future<void> _openAddParentDialog() async {
+    final l10n = AppLocalizations.of(context);
     final email = await showDialog<String>(
       context: context,
       builder: (context) => const _AddParentDialog(),
@@ -61,7 +63,7 @@ class _ParentsScreenState extends State<ParentsScreen> {
       setState(() {});
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text('Veli eklendi.')));
+      ).showSnackBar(SnackBar(content: Text(l10n.parentAdded)));
     } catch (error) {
       if (!mounted) {
         return;
@@ -69,7 +71,7 @@ class _ParentsScreenState extends State<ParentsScreen> {
 
       final message = error is StateError
           ? error.message
-          : 'Veli eklenirken bir hata oluştu.';
+          : l10n.parentAddError;
 
       ScaffoldMessenger.of(
         context,
@@ -81,8 +83,11 @@ class _ParentsScreenState extends State<ParentsScreen> {
     final selected = await Navigator.push<List<String>>(
       context,
       MaterialPageRoute(
-        builder: (context) =>
-            AssignStudentsScreen(parent: parent, students: widget.students),
+        builder: (context) => AssignStudentsScreen(
+          parent: parent,
+          students: widget.students,
+          accountLabel: AppLocalizations.of(context).roleParent,
+        ),
       ),
     );
 
@@ -100,23 +105,24 @@ class _ParentsScreenState extends State<ParentsScreen> {
   }
 
   Future<void> _confirmRemoveParent(ParentAccount parent) async {
+    final l10n = AppLocalizations.of(context);
     final shouldRemove = await showDialog<bool>(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Veliyi Kaldır'),
-          content: Text(
-            '${parent.email} artık veli olmayacak ve öğrenci eşleşmeleri '
-            'silinecek. Devam edilsin mi?',
-          ),
+          title: Text(l10n.removeParentTitle),
+          content: Text(l10n.removeParentConfirm(parent.email)),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context, false),
-              child: const Text('Vazgeç'),
+              child: Text(l10n.commonCancel),
             ),
             TextButton(
               onPressed: () => Navigator.pop(context, true),
-              child: const Text('Kaldır', style: TextStyle(color: Colors.red)),
+              child: Text(
+                l10n.removeAction,
+                style: const TextStyle(color: Colors.red),
+              ),
             ),
           ],
         );
@@ -138,15 +144,14 @@ class _ParentsScreenState extends State<ParentsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return WaveScaffold(
-      appBar: AppBar(title: const Text('Veliler')),
+      appBar: AppBar(title: Text(l10n.navParents)),
       body: widget.parents.isEmpty
-          ? const EmptyState(
+          ? EmptyState(
               icon: Icons.family_restroom,
-              title: 'Henüz veli yok',
-              message:
-                  'Veli eklemek için sağ alttaki + butonunu kullan. '
-                  'Velinin önce uygulamaya kayıt olması gerekir.',
+              title: l10n.parentsEmptyTitle,
+              message: l10n.parentsEmptyBody,
             )
           : ListView.builder(
               padding: const EdgeInsets.all(16),
@@ -169,8 +174,8 @@ class _ParentsScreenState extends State<ParentsScreen> {
                     title: Text(parent.email),
                     subtitle: Text(
                       parent.studentIds.isEmpty
-                          ? 'Öğrenci atanmadı'
-                          : 'Öğrenciler: $childNames',
+                          ? l10n.noStudentAssigned
+                          : l10n.studentsAssigned(childNames),
                     ),
                     trailing: IconButton(
                       icon: const Icon(Icons.person_remove, color: Colors.red),
@@ -219,17 +224,17 @@ class _AddParentDialogState extends State<_AddParentDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return AlertDialog(
-      title: const Text('Veli Ekle'),
+      title: Text(l10n.addParentTitle),
       content: Form(
         key: _formKey,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text(
-              'Velinin uygulamaya kayıtlı e-posta adresini gir. Veli önce '
-              'kendisi kayıt olmalıdır.',
-              style: TextStyle(fontSize: 13),
+            Text(
+              l10n.addParentHint,
+              style: const TextStyle(fontSize: 13),
             ),
             const SizedBox(height: 12),
             TextFormField(
@@ -237,17 +242,17 @@ class _AddParentDialogState extends State<_AddParentDialog> {
               keyboardType: TextInputType.emailAddress,
               autofocus: true,
               onFieldSubmitted: (_) => _submit(),
-              decoration: const InputDecoration(
-                labelText: 'E-posta',
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.email),
+              decoration: InputDecoration(
+                labelText: l10n.emailLabel,
+                border: const OutlineInputBorder(),
+                prefixIcon: const Icon(Icons.email),
               ),
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'E-posta boş bırakılamaz.';
+                  return l10n.emailEmpty;
                 }
                 if (!value.contains('@')) {
-                  return 'Geçerli bir e-posta gir.';
+                  return l10n.emailInvalid;
                 }
                 return null;
               },
@@ -258,9 +263,9 @@ class _AddParentDialogState extends State<_AddParentDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Vazgeç'),
+          child: Text(l10n.commonCancel),
         ),
-        TextButton(onPressed: _submit, child: const Text('Ekle')),
+        TextButton(onPressed: _submit, child: Text(l10n.commonAdd)),
       ],
     );
   }
@@ -320,35 +325,42 @@ class _AssignStudentsScreenState extends State<AssignStudentsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return WaveScaffold(
       appBar: AppBar(
-        title: const Text('Öğrenci Ata'),
+        title: Text(l10n.assignStudentsTitle),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, _selected.toList()),
-            child: const Text('Kaydet', style: TextStyle(color: Colors.white)),
+            child: Text(
+              l10n.commonSave,
+              style: const TextStyle(color: Colors.white),
+            ),
           ),
         ],
       ),
       body: widget.students.isEmpty
-          ? const EmptyState(
+          ? EmptyState(
               icon: Icons.people_outline,
-              title: 'Öğrenci yok',
-              message: 'Önce öğrenci eklenmeli.',
+              title: l10n.noStudentsTitle,
+              message: l10n.noStudentsBody,
             )
           : ListView(
               children: [
                 Padding(
                   padding: const EdgeInsets.all(16),
                   child: Text(
-                    '${widget.accountLabel}: ${widget.parent.email}',
+                    l10n.accountAssignHeader(
+                      widget.accountLabel,
+                      widget.parent.email,
+                    ),
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
                 ...widget.students.map((student) {
                   final selected = _selected.contains(student.id);
                   final subtitle = Text(
-                    '${student.branch} • ${student.age} yaş',
+                    l10n.studentBranchAge(student.branch, student.age),
                   );
                   if (widget.singleSelect) {
                     // Tek seçim: radyo görünümlü ListTile (deprecation'sız).

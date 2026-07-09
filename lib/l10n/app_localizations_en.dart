@@ -1101,4 +1101,51 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get studentAssignHint =>
       'Student matching is done from the \"Student Accounts\" screen.';
+
+  @override
+  String get parentsEmptyTitle => 'No parents yet';
+
+  @override
+  String get parentsEmptyBody =>
+      'Use the + button at the bottom right to add a parent. The parent must register in the app first.';
+
+  @override
+  String get parentAdded => 'Parent added.';
+
+  @override
+  String get parentAddError => 'An error occurred while adding the parent.';
+
+  @override
+  String get removeParentTitle => 'Remove Parent';
+
+  @override
+  String removeParentConfirm(String email) {
+    return '$email will no longer be a parent and student assignments will be removed. Continue?';
+  }
+
+  @override
+  String get removeAction => 'Remove';
+
+  @override
+  String get addParentTitle => 'Add Parent';
+
+  @override
+  String get addParentHint =>
+      'Enter the parent\'s email address registered in the app. The parent must register first.';
+
+  @override
+  String get noStudentAssigned => 'No student assigned';
+
+  @override
+  String studentsAssigned(String names) {
+    return 'Students: $names';
+  }
+
+  @override
+  String get assignStudentsTitle => 'Assign Students';
+
+  @override
+  String accountAssignHeader(String label, String email) {
+    return '$label: $email';
+  }
 }

@@ -2059,6 +2059,84 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Öğrenci eşleştirmesi \"Öğrenci Hesapları\" ekranından yapılır.'**
   String get studentAssignHint;
+
+  /// No description provided for @parentsEmptyTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz veli yok'**
+  String get parentsEmptyTitle;
+
+  /// No description provided for @parentsEmptyBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'Veli eklemek için sağ alttaki + butonunu kullan. Velinin önce uygulamaya kayıt olması gerekir.'**
+  String get parentsEmptyBody;
+
+  /// No description provided for @parentAdded.
+  ///
+  /// In tr, this message translates to:
+  /// **'Veli eklendi.'**
+  String get parentAdded;
+
+  /// No description provided for @parentAddError.
+  ///
+  /// In tr, this message translates to:
+  /// **'Veli eklenirken bir hata oluştu.'**
+  String get parentAddError;
+
+  /// No description provided for @removeParentTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Veliyi Kaldır'**
+  String get removeParentTitle;
+
+  /// No description provided for @removeParentConfirm.
+  ///
+  /// In tr, this message translates to:
+  /// **'{email} artık veli olmayacak ve öğrenci eşleşmeleri silinecek. Devam edilsin mi?'**
+  String removeParentConfirm(String email);
+
+  /// No description provided for @removeAction.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaldır'**
+  String get removeAction;
+
+  /// No description provided for @addParentTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Veli Ekle'**
+  String get addParentTitle;
+
+  /// No description provided for @addParentHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Velinin uygulamaya kayıtlı e-posta adresini gir. Veli önce kendisi kayıt olmalıdır.'**
+  String get addParentHint;
+
+  /// No description provided for @noStudentAssigned.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğrenci atanmadı'**
+  String get noStudentAssigned;
+
+  /// No description provided for @studentsAssigned.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğrenciler: {names}'**
+  String studentsAssigned(String names);
+
+  /// No description provided for @assignStudentsTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğrenci Ata'**
+  String get assignStudentsTitle;
+
+  /// No description provided for @accountAssignHeader.
+  ///
+  /// In tr, this message translates to:
+  /// **'{label}: {email}'**
+  String accountAssignHeader(String label, String email);
 }
 
 class _AppLocalizationsDelegate

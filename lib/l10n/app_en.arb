@@ -351,5 +351,19 @@
   "userRoleUpdated": "{email} → updated to {role}.",
   "changeRoleTitle": "Change Role",
   "parentAssignHint": "Student assignment is done from the \"Parents\" screen.",
-  "studentAssignHint": "Student matching is done from the \"Student Accounts\" screen."
+  "studentAssignHint": "Student matching is done from the \"Student Accounts\" screen.",
+
+  "parentsEmptyTitle": "No parents yet",
+  "parentsEmptyBody": "Use the + button at the bottom right to add a parent. The parent must register in the app first.",
+  "parentAdded": "Parent added.",
+  "parentAddError": "An error occurred while adding the parent.",
+  "removeParentTitle": "Remove Parent",
+  "removeParentConfirm": "{email} will no longer be a parent and student assignments will be removed. Continue?",
+  "removeAction": "Remove",
+  "addParentTitle": "Add Parent",
+  "addParentHint": "Enter the parent's email address registered in the app. The parent must register first.",
+  "noStudentAssigned": "No student assigned",
+  "studentsAssigned": "Students: {names}",
+  "assignStudentsTitle": "Assign Students",
+  "accountAssignHeader": "{label}: {email}"
 }

@@ -351,5 +351,19 @@
   "userRoleUpdated": "{email} → mis à jour en {role}.",
   "changeRoleTitle": "Changer de rôle",
   "parentAssignHint": "L'attribution des élèves se fait depuis l'écran « Parents ».",
-  "studentAssignHint": "L'association des élèves se fait depuis l'écran « Comptes élèves »."
+  "studentAssignHint": "L'association des élèves se fait depuis l'écran « Comptes élèves ».",
+
+  "parentsEmptyTitle": "Aucun parent pour l'instant",
+  "parentsEmptyBody": "Utilisez le bouton + en bas à droite pour ajouter un parent. Le parent doit d'abord s'inscrire dans l'application.",
+  "parentAdded": "Parent ajouté.",
+  "parentAddError": "Une erreur s'est produite lors de l'ajout du parent.",
+  "removeParentTitle": "Retirer le parent",
+  "removeParentConfirm": "{email} ne sera plus parent et les affectations d'élèves seront supprimées. Continuer ?",
+  "removeAction": "Retirer",
+  "addParentTitle": "Ajouter un parent",
+  "addParentHint": "Saisissez l'adresse e-mail du parent enregistrée dans l'application. Le parent doit d'abord s'inscrire.",
+  "noStudentAssigned": "Aucun élève affecté",
+  "studentsAssigned": "Élèves : {names}",
+  "assignStudentsTitle": "Affecter des élèves",
+  "accountAssignHeader": "{label} : {email}"
 }
