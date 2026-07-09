@@ -105,7 +105,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     Widget chip(String label, String? value) {
       final selected = _categoryFilter == value;
       return Padding(
-        padding: const EdgeInsets.only(right: 8),
+        padding: const EdgeInsetsDirectional.only(end: 8),
         child: FilterChip(
           label: Text(label),
           selected: selected,

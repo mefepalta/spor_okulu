@@ -53,7 +53,7 @@ class SummarySection extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Padding(
-              padding: EdgeInsets.only(right: hasAction ? 8 : 0),
+              padding: EdgeInsetsDirectional.only(end: hasAction ? 8 : 0),
               child: child,
             ),
           ],

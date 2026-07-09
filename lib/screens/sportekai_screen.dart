@@ -183,7 +183,7 @@ class _SporTekAiScreenState extends State<SporTekAiScreen> {
             child: OutlinedButton(
               onPressed: () => _send(suggestion),
               style: OutlinedButton.styleFrom(
-                alignment: Alignment.centerLeft,
+                alignment: AlignmentDirectional.centerStart,
                 padding: const EdgeInsets.symmetric(
                   horizontal: 16,
                   vertical: 14,
@@ -210,7 +210,9 @@ class _SporTekAiScreenState extends State<SporTekAiScreen> {
     final fg = isUser ? Colors.white : null;
 
     return Align(
-      alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
+      alignment: isUser
+          ? AlignmentDirectional.centerEnd
+          : AlignmentDirectional.centerStart,
       child: Container(
         margin: const EdgeInsets.only(bottom: 10),
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
@@ -241,7 +243,7 @@ class _SporTekAiScreenState extends State<SporTekAiScreen> {
 
   Widget _buildTypingBubble(BuildContext context) {
     return Align(
-      alignment: Alignment.centerLeft,
+      alignment: AlignmentDirectional.centerStart,
       child: Container(
         margin: const EdgeInsets.only(bottom: 10),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),

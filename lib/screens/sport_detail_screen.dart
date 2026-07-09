@@ -79,7 +79,7 @@ class SportDetailScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(top: 7, right: 8),
+                              padding: const EdgeInsetsDirectional.only(top: 7, end: 8),
                               child: Icon(
                                 Icons.circle,
                                 size: 6,

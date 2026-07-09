@@ -365,7 +365,7 @@ class _EventsScreenState extends State<EventsScreen> {
             ),
             const SizedBox(height: 8),
             Align(
-              alignment: Alignment.centerRight,
+              alignment: AlignmentDirectional.centerEnd,
               child: _buildSubmitButton(event),
             ),
           ],

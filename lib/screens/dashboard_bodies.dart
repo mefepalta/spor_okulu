@@ -862,7 +862,7 @@ extension _DashboardBodies on _DashboardScreenState {
             Padding(
               padding: const EdgeInsets.only(top: 6),
               child: Align(
-                alignment: Alignment.centerLeft,
+                alignment: AlignmentDirectional.centerStart,
                 child: Text(
                   l10n.moreStudents(remaining),
                   style: TextStyle(
@@ -977,7 +977,7 @@ extension _DashboardBodies on _DashboardScreenState {
 
   Widget _emptyHint(String text) {
     return Align(
-      alignment: Alignment.centerLeft,
+      alignment: AlignmentDirectional.centerStart,
       child: Text(
         text,
         style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),

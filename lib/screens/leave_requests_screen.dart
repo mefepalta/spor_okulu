@@ -258,7 +258,7 @@ class _LeaveRequestsScreenState extends State<LeaveRequestsScreen> {
     // Veli: kendi bekleyen talebini silebilir (iptal).
     if (widget.isParent && isPending) {
       return Align(
-        alignment: Alignment.centerRight,
+        alignment: AlignmentDirectional.centerEnd,
         child: TextButton.icon(
           onPressed: () => _delete(request),
           icon: const Icon(Icons.delete_outline, color: Colors.red),

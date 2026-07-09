@@ -428,7 +428,7 @@ extension _DashboardHandlers on _DashboardScreenState {
                     child: Row(
                       children: [
                         const Padding(
-                          padding: EdgeInsets.only(top: 2, right: 10),
+                          padding: EdgeInsetsDirectional.only(top: 2, end: 10),
                           child: Icon(Icons.radio_button_unchecked, size: 18),
                         ),
                         Expanded(child: Text(reminder.text)),

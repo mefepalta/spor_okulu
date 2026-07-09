@@ -227,7 +227,7 @@ class _RoleRequestsScreenState extends State<RoleRequestsScreen> {
                         const SizedBox(height: 8),
                         if (isBusy)
                           const Align(
-                            alignment: Alignment.centerRight,
+                            alignment: AlignmentDirectional.centerEnd,
                             child: Padding(
                               padding: EdgeInsets.all(8),
                               child: SizedBox(
