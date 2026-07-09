@@ -537,5 +537,20 @@
   "eventNameHint": "Partido amistoso",
   "eventNameEmpty": "El nombre del evento no puede estar vacío.",
   "fieldDescriptionOptional": "Descripción (opcional)",
-  "saveEvent": "Guardar evento"
+  "saveEvent": "Guardar evento",
+
+  "cashDeleteTitle": "Eliminar registro",
+  "cashDeleteConfirm": "¿Quieres eliminar el registro \"{title}\"?",
+  "newCashEntry": "Nuevo registro",
+  "cashEmptyTitle": "La caja está vacía",
+  "cashEmptyBody": "Aún no hay registros de ingresos/gastos. Añade el primer registro con el botón de abajo a la derecha.",
+  "currentBalance": "Saldo actual",
+  "totalIncome": "Ingresos totales",
+  "totalExpense": "Gastos totales",
+  "titleRequired": "Por favor, escribe un título.",
+  "amountInvalid": "Por favor, introduce un importe válido.",
+  "cashTitleHint": "Ej.: cuotas de marzo, alquiler de la sala...",
+  "fieldAmountCurrency": "Importe (₺)",
+  "fieldCategory": "Categoría",
+  "fieldNoteOptional": "Nota (opcional)"
 }

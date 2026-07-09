@@ -1713,4 +1713,49 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get saveEvent => 'Save Event';
+
+  @override
+  String get cashDeleteTitle => 'Delete entry';
+
+  @override
+  String cashDeleteConfirm(String title) {
+    return 'Do you want to delete the \"$title\" entry?';
+  }
+
+  @override
+  String get newCashEntry => 'New Entry';
+
+  @override
+  String get cashEmptyTitle => 'Cash box is empty';
+
+  @override
+  String get cashEmptyBody =>
+      'No income/expense records yet. Add the first entry with the button at the bottom right.';
+
+  @override
+  String get currentBalance => 'Current Balance';
+
+  @override
+  String get totalIncome => 'Total Income';
+
+  @override
+  String get totalExpense => 'Total Expense';
+
+  @override
+  String get titleRequired => 'Please write a title.';
+
+  @override
+  String get amountInvalid => 'Please enter a valid amount.';
+
+  @override
+  String get cashTitleHint => 'e.g. March dues, hall rent...';
+
+  @override
+  String get fieldAmountCurrency => 'Amount (₺)';
+
+  @override
+  String get fieldCategory => 'Category';
+
+  @override
+  String get fieldNoteOptional => 'Note (optional)';
 }

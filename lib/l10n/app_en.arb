@@ -537,5 +537,20 @@
   "eventNameHint": "Friendly match",
   "eventNameEmpty": "Event name cannot be empty.",
   "fieldDescriptionOptional": "Description (optional)",
-  "saveEvent": "Save Event"
+  "saveEvent": "Save Event",
+
+  "cashDeleteTitle": "Delete entry",
+  "cashDeleteConfirm": "Do you want to delete the \"{title}\" entry?",
+  "newCashEntry": "New Entry",
+  "cashEmptyTitle": "Cash box is empty",
+  "cashEmptyBody": "No income/expense records yet. Add the first entry with the button at the bottom right.",
+  "currentBalance": "Current Balance",
+  "totalIncome": "Total Income",
+  "totalExpense": "Total Expense",
+  "titleRequired": "Please write a title.",
+  "amountInvalid": "Please enter a valid amount.",
+  "cashTitleHint": "e.g. March dues, hall rent...",
+  "fieldAmountCurrency": "Amount (₺)",
+  "fieldCategory": "Category",
+  "fieldNoteOptional": "Note (optional)"
 }

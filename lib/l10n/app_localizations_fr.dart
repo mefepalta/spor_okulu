@@ -1735,4 +1735,49 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get saveEvent => 'Enregistrer l\'événement';
+
+  @override
+  String get cashDeleteTitle => 'Supprimer l\'entrée';
+
+  @override
+  String cashDeleteConfirm(String title) {
+    return 'Voulez-vous supprimer l\'entrée « $title » ?';
+  }
+
+  @override
+  String get newCashEntry => 'Nouvelle entrée';
+
+  @override
+  String get cashEmptyTitle => 'La caisse est vide';
+
+  @override
+  String get cashEmptyBody =>
+      'Aucun enregistrement de revenus/dépenses pour l\'instant. Ajoutez la première entrée avec le bouton en bas à droite.';
+
+  @override
+  String get currentBalance => 'Solde actuel';
+
+  @override
+  String get totalIncome => 'Revenus totaux';
+
+  @override
+  String get totalExpense => 'Dépenses totales';
+
+  @override
+  String get titleRequired => 'Veuillez saisir un titre.';
+
+  @override
+  String get amountInvalid => 'Veuillez saisir un montant valide.';
+
+  @override
+  String get cashTitleHint => 'Ex. : cotisations de mars, loyer de la salle...';
+
+  @override
+  String get fieldAmountCurrency => 'Montant (₺)';
+
+  @override
+  String get fieldCategory => 'Catégorie';
+
+  @override
+  String get fieldNoteOptional => 'Note (facultative)';
 }

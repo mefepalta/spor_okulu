@@ -1709,4 +1709,49 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get saveEvent => 'Etkinliği Kaydet';
+
+  @override
+  String get cashDeleteTitle => 'Kaydı sil';
+
+  @override
+  String cashDeleteConfirm(String title) {
+    return '\"$title\" kaydını silmek istiyor musunuz?';
+  }
+
+  @override
+  String get newCashEntry => 'Yeni Kayıt';
+
+  @override
+  String get cashEmptyTitle => 'Kasa boş';
+
+  @override
+  String get cashEmptyBody =>
+      'Henüz gelir/gider kaydı yok. Sağ alttaki butonla ilk kaydı ekleyin.';
+
+  @override
+  String get currentBalance => 'Güncel Kasa';
+
+  @override
+  String get totalIncome => 'Toplam Gelir';
+
+  @override
+  String get totalExpense => 'Toplam Gider';
+
+  @override
+  String get titleRequired => 'Lütfen bir başlık yazın.';
+
+  @override
+  String get amountInvalid => 'Lütfen geçerli bir tutar girin.';
+
+  @override
+  String get cashTitleHint => 'Örn: Mart aidatları, salon kirası...';
+
+  @override
+  String get fieldAmountCurrency => 'Tutar (₺)';
+
+  @override
+  String get fieldCategory => 'Kategori';
+
+  @override
+  String get fieldNoteOptional => 'Not (isteğe bağlı)';
 }

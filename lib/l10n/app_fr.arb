@@ -537,5 +537,20 @@
   "eventNameHint": "Match amical",
   "eventNameEmpty": "Le nom de l'événement ne peut pas être vide.",
   "fieldDescriptionOptional": "Description (facultative)",
-  "saveEvent": "Enregistrer l'événement"
+  "saveEvent": "Enregistrer l'événement",
+
+  "cashDeleteTitle": "Supprimer l'entrée",
+  "cashDeleteConfirm": "Voulez-vous supprimer l'entrée « {title} » ?",
+  "newCashEntry": "Nouvelle entrée",
+  "cashEmptyTitle": "La caisse est vide",
+  "cashEmptyBody": "Aucun enregistrement de revenus/dépenses pour l'instant. Ajoutez la première entrée avec le bouton en bas à droite.",
+  "currentBalance": "Solde actuel",
+  "totalIncome": "Revenus totaux",
+  "totalExpense": "Dépenses totales",
+  "titleRequired": "Veuillez saisir un titre.",
+  "amountInvalid": "Veuillez saisir un montant valide.",
+  "cashTitleHint": "Ex. : cotisations de mars, loyer de la salle...",
+  "fieldAmountCurrency": "Montant (₺)",
+  "fieldCategory": "Catégorie",
+  "fieldNoteOptional": "Note (facultative)"
 }

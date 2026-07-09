@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/app_localizations.dart';
 import '../models/app_models.dart';
 import '../theme/app_colors.dart';
 import '../utils/formatters.dart';
@@ -57,21 +58,20 @@ class _ClubFinanceScreenState extends State<ClubFinanceScreen> {
   }
 
   Future<void> _delete(CashTransaction transaction) async {
+    final l10n = AppLocalizations.of(context);
     final confirm = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Kaydı sil'),
-        content: Text(
-          '"${transaction.title}" kaydını silmek istiyor musunuz?',
-        ),
+        title: Text(l10n.cashDeleteTitle),
+        content: Text(l10n.cashDeleteConfirm(transaction.title)),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Vazgeç'),
+            child: Text(l10n.commonCancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Sil'),
+            child: Text(l10n.commonDelete),
           ),
         ],
       ),
@@ -88,12 +88,13 @@ class _ClubFinanceScreenState extends State<ClubFinanceScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return WaveScaffold(
-      appBar: AppBar(title: const Text('Kulüp Kasası')),
+      appBar: AppBar(title: Text(l10n.navClubCash)),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _add,
         icon: const Icon(Icons.add),
-        label: const Text('Yeni Kayıt'),
+        label: Text(l10n.newCashEntry),
       ),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 90),
@@ -101,13 +102,12 @@ class _ClubFinanceScreenState extends State<ClubFinanceScreen> {
           _buildSummaryCard(context),
           const SizedBox(height: 4),
           if (_transactions.isEmpty)
-            const Padding(
-              padding: EdgeInsets.only(top: 40),
+            Padding(
+              padding: const EdgeInsets.only(top: 40),
               child: EmptyState(
                 icon: Icons.account_balance_wallet_outlined,
-                title: 'Kasa boş',
-                message:
-                    'Henüz gelir/gider kaydı yok. Sağ alttaki butonla ilk kaydı ekleyin.',
+                title: l10n.cashEmptyTitle,
+                message: l10n.cashEmptyBody,
               ),
             )
           else
@@ -118,11 +118,12 @@ class _ClubFinanceScreenState extends State<ClubFinanceScreen> {
   }
 
   Widget _buildSummaryCard(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final balanceColor = _balance >= 0 ? Colors.green : Colors.red;
 
     return SummarySection(
       icon: Icons.account_balance_wallet,
-      title: 'Güncel Kasa',
+      title: l10n.currentBalance,
       iconColor: AppColors.primary,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -141,12 +142,12 @@ class _ClubFinanceScreenState extends State<ClubFinanceScreen> {
             metrics: [
               SummaryMetric(
                 value: formatTl(_totalIncome),
-                label: 'Toplam Gelir',
+                label: l10n.totalIncome,
                 color: Colors.green,
               ),
               SummaryMetric(
                 value: formatTl(_totalExpense),
-                label: 'Toplam Gider',
+                label: l10n.totalExpense,
                 color: Colors.red,
               ),
             ],
@@ -203,7 +204,7 @@ class _ClubFinanceScreenState extends State<ClubFinanceScreen> {
             IconButton(
               icon: const Icon(Icons.delete_outline, size: 20),
               color: Colors.red,
-              tooltip: 'Sil',
+              tooltip: AppLocalizations.of(context).commonDelete,
               onPressed: () => _delete(transaction),
             ),
           ],
@@ -255,17 +256,18 @@ class _CashFormState extends State<_CashForm> {
   }
 
   void _save() {
+    final l10n = AppLocalizations.of(context);
     final title = _titleController.text.trim();
     final amount = int.tryParse(_amountController.text.trim()) ?? 0;
     if (title.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Lütfen bir başlık yazın.')),
+        SnackBar(content: Text(l10n.titleRequired)),
       );
       return;
     }
     if (amount <= 0) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Lütfen geçerli bir tutar girin.')),
+        SnackBar(content: Text(l10n.amountInvalid)),
       );
       return;
     }
@@ -284,6 +286,7 @@ class _CashFormState extends State<_CashForm> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final categories = CashCategories.forType(_type);
 
     return Padding(
@@ -297,22 +300,22 @@ class _CashFormState extends State<_CashForm> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Text(
-            'Yeni Kayıt',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          Text(
+            l10n.newCashEntry,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),
           SegmentedButton<String>(
-            segments: const [
+            segments: [
               ButtonSegment(
                 value: CashType.income,
-                label: Text('Gelir'),
-                icon: Icon(Icons.arrow_downward),
+                label: Text(l10n.metricIncome),
+                icon: const Icon(Icons.arrow_downward),
               ),
               ButtonSegment(
                 value: CashType.expense,
-                label: Text('Gider'),
-                icon: Icon(Icons.arrow_upward),
+                label: Text(l10n.metricExpense),
+                icon: const Icon(Icons.arrow_upward),
               ),
             ],
             selected: {_type},
@@ -327,28 +330,28 @@ class _CashFormState extends State<_CashForm> {
           TextField(
             controller: _titleController,
             textCapitalization: TextCapitalization.sentences,
-            decoration: const InputDecoration(
-              labelText: 'Başlık',
-              hintText: 'Örn: Mart aidatları, salon kirası...',
-              border: OutlineInputBorder(),
+            decoration: InputDecoration(
+              labelText: l10n.fieldTitle,
+              hintText: l10n.cashTitleHint,
+              border: const OutlineInputBorder(),
             ),
           ),
           const SizedBox(height: 12),
           TextField(
             controller: _amountController,
             keyboardType: TextInputType.number,
-            decoration: const InputDecoration(
-              labelText: 'Tutar (₺)',
-              border: OutlineInputBorder(),
+            decoration: InputDecoration(
+              labelText: l10n.fieldAmountCurrency,
+              border: const OutlineInputBorder(),
             ),
           ),
           const SizedBox(height: 12),
           DropdownButtonFormField<String>(
             initialValue: _category,
             isExpanded: true,
-            decoration: const InputDecoration(
-              labelText: 'Kategori',
-              border: OutlineInputBorder(),
+            decoration: InputDecoration(
+              labelText: l10n.fieldCategory,
+              border: const OutlineInputBorder(),
             ),
             items: [
               for (final category in categories)
@@ -360,23 +363,23 @@ class _CashFormState extends State<_CashForm> {
           OutlinedButton.icon(
             onPressed: _pickDate,
             icon: const Icon(Icons.calendar_today),
-            label: Text('Tarih: ${_fmt(_date)}'),
+            label: Text(l10n.dateWithValue(_fmt(_date))),
           ),
           const SizedBox(height: 12),
           TextField(
             controller: _noteController,
             maxLines: 2,
             textCapitalization: TextCapitalization.sentences,
-            decoration: const InputDecoration(
-              labelText: 'Not (isteğe bağlı)',
-              border: OutlineInputBorder(),
+            decoration: InputDecoration(
+              labelText: l10n.fieldNoteOptional,
+              border: const OutlineInputBorder(),
             ),
           ),
           const SizedBox(height: 16),
           FilledButton.icon(
             onPressed: _save,
             icon: const Icon(Icons.check),
-            label: const Text('Kaydet'),
+            label: Text(l10n.commonSave),
           ),
         ],
       ),

@@ -742,5 +742,23 @@
   "eventNameHint": "Hazırlık Maçı",
   "eventNameEmpty": "Etkinlik adı boş bırakılamaz.",
   "fieldDescriptionOptional": "Açıklama (isteğe bağlı)",
-  "saveEvent": "Etkinliği Kaydet"
+  "saveEvent": "Etkinliği Kaydet",
+
+  "cashDeleteTitle": "Kaydı sil",
+  "cashDeleteConfirm": "\"{title}\" kaydını silmek istiyor musunuz?",
+  "@cashDeleteConfirm": {
+    "placeholders": { "title": { "type": "String" } }
+  },
+  "newCashEntry": "Yeni Kayıt",
+  "cashEmptyTitle": "Kasa boş",
+  "cashEmptyBody": "Henüz gelir/gider kaydı yok. Sağ alttaki butonla ilk kaydı ekleyin.",
+  "currentBalance": "Güncel Kasa",
+  "totalIncome": "Toplam Gelir",
+  "totalExpense": "Toplam Gider",
+  "titleRequired": "Lütfen bir başlık yazın.",
+  "amountInvalid": "Lütfen geçerli bir tutar girin.",
+  "cashTitleHint": "Örn: Mart aidatları, salon kirası...",
+  "fieldAmountCurrency": "Tutar (₺)",
+  "fieldCategory": "Kategori",
+  "fieldNoteOptional": "Not (isteğe bağlı)"
 }

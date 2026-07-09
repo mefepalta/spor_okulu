@@ -1728,4 +1728,49 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get saveEvent => 'Guardar evento';
+
+  @override
+  String get cashDeleteTitle => 'Eliminar registro';
+
+  @override
+  String cashDeleteConfirm(String title) {
+    return '¿Quieres eliminar el registro \"$title\"?';
+  }
+
+  @override
+  String get newCashEntry => 'Nuevo registro';
+
+  @override
+  String get cashEmptyTitle => 'La caja está vacía';
+
+  @override
+  String get cashEmptyBody =>
+      'Aún no hay registros de ingresos/gastos. Añade el primer registro con el botón de abajo a la derecha.';
+
+  @override
+  String get currentBalance => 'Saldo actual';
+
+  @override
+  String get totalIncome => 'Ingresos totales';
+
+  @override
+  String get totalExpense => 'Gastos totales';
+
+  @override
+  String get titleRequired => 'Por favor, escribe un título.';
+
+  @override
+  String get amountInvalid => 'Por favor, introduce un importe válido.';
+
+  @override
+  String get cashTitleHint => 'Ej.: cuotas de marzo, alquiler de la sala...';
+
+  @override
+  String get fieldAmountCurrency => 'Importe (₺)';
+
+  @override
+  String get fieldCategory => 'Categoría';
+
+  @override
+  String get fieldNoteOptional => 'Nota (opcional)';
 }

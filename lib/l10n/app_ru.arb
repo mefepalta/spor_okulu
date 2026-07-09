@@ -537,5 +537,20 @@
   "eventNameHint": "Товарищеский матч",
   "eventNameEmpty": "Название события не может быть пустым.",
   "fieldDescriptionOptional": "Описание (необязательно)",
-  "saveEvent": "Сохранить событие"
+  "saveEvent": "Сохранить событие",
+
+  "cashDeleteTitle": "Удалить запись",
+  "cashDeleteConfirm": "Вы хотите удалить запись «{title}»?",
+  "newCashEntry": "Новая запись",
+  "cashEmptyTitle": "Касса пуста",
+  "cashEmptyBody": "Записей о доходах/расходах пока нет. Добавьте первую запись кнопкой внизу справа.",
+  "currentBalance": "Текущий баланс",
+  "totalIncome": "Всего доходов",
+  "totalExpense": "Всего расходов",
+  "titleRequired": "Пожалуйста, введите название.",
+  "amountInvalid": "Пожалуйста, введите корректную сумму.",
+  "cashTitleHint": "Напр.: взносы за март, аренда зала...",
+  "fieldAmountCurrency": "Сумма (₺)",
+  "fieldCategory": "Категория",
+  "fieldNoteOptional": "Заметка (необязательно)"
 }

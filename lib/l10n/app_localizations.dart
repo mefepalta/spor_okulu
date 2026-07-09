@@ -3115,6 +3115,90 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Etkinliği Kaydet'**
   String get saveEvent;
+
+  /// No description provided for @cashDeleteTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaydı sil'**
+  String get cashDeleteTitle;
+
+  /// No description provided for @cashDeleteConfirm.
+  ///
+  /// In tr, this message translates to:
+  /// **'\"{title}\" kaydını silmek istiyor musunuz?'**
+  String cashDeleteConfirm(String title);
+
+  /// No description provided for @newCashEntry.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni Kayıt'**
+  String get newCashEntry;
+
+  /// No description provided for @cashEmptyTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kasa boş'**
+  String get cashEmptyTitle;
+
+  /// No description provided for @cashEmptyBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz gelir/gider kaydı yok. Sağ alttaki butonla ilk kaydı ekleyin.'**
+  String get cashEmptyBody;
+
+  /// No description provided for @currentBalance.
+  ///
+  /// In tr, this message translates to:
+  /// **'Güncel Kasa'**
+  String get currentBalance;
+
+  /// No description provided for @totalIncome.
+  ///
+  /// In tr, this message translates to:
+  /// **'Toplam Gelir'**
+  String get totalIncome;
+
+  /// No description provided for @totalExpense.
+  ///
+  /// In tr, this message translates to:
+  /// **'Toplam Gider'**
+  String get totalExpense;
+
+  /// No description provided for @titleRequired.
+  ///
+  /// In tr, this message translates to:
+  /// **'Lütfen bir başlık yazın.'**
+  String get titleRequired;
+
+  /// No description provided for @amountInvalid.
+  ///
+  /// In tr, this message translates to:
+  /// **'Lütfen geçerli bir tutar girin.'**
+  String get amountInvalid;
+
+  /// No description provided for @cashTitleHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Örn: Mart aidatları, salon kirası...'**
+  String get cashTitleHint;
+
+  /// No description provided for @fieldAmountCurrency.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tutar (₺)'**
+  String get fieldAmountCurrency;
+
+  /// No description provided for @fieldCategory.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kategori'**
+  String get fieldCategory;
+
+  /// No description provided for @fieldNoteOptional.
+  ///
+  /// In tr, this message translates to:
+  /// **'Not (isteğe bağlı)'**
+  String get fieldNoteOptional;
 }
 
 class _AppLocalizationsDelegate

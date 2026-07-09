@@ -1724,4 +1724,49 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get saveEvent => 'Сохранить событие';
+
+  @override
+  String get cashDeleteTitle => 'Удалить запись';
+
+  @override
+  String cashDeleteConfirm(String title) {
+    return 'Вы хотите удалить запись «$title»?';
+  }
+
+  @override
+  String get newCashEntry => 'Новая запись';
+
+  @override
+  String get cashEmptyTitle => 'Касса пуста';
+
+  @override
+  String get cashEmptyBody =>
+      'Записей о доходах/расходах пока нет. Добавьте первую запись кнопкой внизу справа.';
+
+  @override
+  String get currentBalance => 'Текущий баланс';
+
+  @override
+  String get totalIncome => 'Всего доходов';
+
+  @override
+  String get totalExpense => 'Всего расходов';
+
+  @override
+  String get titleRequired => 'Пожалуйста, введите название.';
+
+  @override
+  String get amountInvalid => 'Пожалуйста, введите корректную сумму.';
+
+  @override
+  String get cashTitleHint => 'Напр.: взносы за март, аренда зала...';
+
+  @override
+  String get fieldAmountCurrency => 'Сумма (₺)';
+
+  @override
+  String get fieldCategory => 'Категория';
+
+  @override
+  String get fieldNoteOptional => 'Заметка (необязательно)';
 }
