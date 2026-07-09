@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/app_info.dart';
+import '../data/info_pages_l10n.dart';
 import '../l10n/app_localizations.dart';
 import '../models/app_models.dart';
 import '../routes/app_routes.dart';
@@ -446,7 +447,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
             leading: const Icon(Icons.mail_outline),
             title: Text(l10n.contactUs),
             trailing: const Icon(Icons.chevron_right),
-            onTap: () => _openInfo(l10n.contactUs, InfoPages.contact),
+            onTap: () => _openInfo(
+              l10n.contactUs,
+              localizedInfoParagraphs('contact', Localizations.localeOf(context)),
+            ),
           ),
           const Divider(height: 1),
           ListTile(
@@ -460,21 +464,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
             leading: const Icon(Icons.gavel_outlined),
             title: Text(l10n.kvkkTitle),
             trailing: const Icon(Icons.chevron_right),
-            onTap: () => _openInfo(l10n.kvkkTitle, InfoPages.kvkk),
+            onTap: () => _openInfo(
+              l10n.kvkkTitle,
+              localizedInfoParagraphs('kvkk', Localizations.localeOf(context)),
+            ),
           ),
           const Divider(height: 1),
           ListTile(
             leading: const Icon(Icons.description_outlined),
             title: Text(l10n.termsTitle),
             trailing: const Icon(Icons.chevron_right),
-            onTap: () => _openInfo(l10n.termsTitle, InfoPages.terms),
+            onTap: () => _openInfo(
+              l10n.termsTitle,
+              localizedInfoParagraphs('terms', Localizations.localeOf(context)),
+            ),
           ),
           const Divider(height: 1),
           ListTile(
             leading: const Icon(Icons.privacy_tip_outlined),
             title: Text(l10n.privacyTitle),
             trailing: const Icon(Icons.chevron_right),
-            onTap: () => _openInfo(l10n.privacyTitle, InfoPages.privacy),
+            onTap: () => _openInfo(
+              l10n.privacyTitle,
+              localizedInfoParagraphs('privacy', Localizations.localeOf(context)),
+            ),
           ),
           const Divider(height: 1),
           ListTile(
