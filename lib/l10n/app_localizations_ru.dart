@@ -1195,4 +1195,32 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get accountLabelStudent => 'Аккаунт ученика';
+
+  @override
+  String photoPickError(Object error) {
+    return 'Не удалось выбрать фото: $error';
+  }
+
+  @override
+  String get profileUpdated => 'Профиль обновлён.';
+
+  @override
+  String profileSaveError(Object error) {
+    return 'Не удалось сохранить: $error';
+  }
+
+  @override
+  String get pickPhoto => 'Выбрать фото';
+
+  @override
+  String get removePhoto => 'Удалить фото';
+
+  @override
+  String get nameTooLong => 'Имя слишком длинное.';
+
+  @override
+  String get phoneTooLong => 'Номер телефона слишком длинный.';
+
+  @override
+  String get commonSaving => 'Сохранение...';
 }

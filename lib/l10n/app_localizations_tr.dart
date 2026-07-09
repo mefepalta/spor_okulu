@@ -1185,4 +1185,32 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get accountLabelStudent => 'Öğrenci hesabı';
+
+  @override
+  String photoPickError(Object error) {
+    return 'Fotoğraf seçilemedi: $error';
+  }
+
+  @override
+  String get profileUpdated => 'Profil güncellendi.';
+
+  @override
+  String profileSaveError(Object error) {
+    return 'Kaydedilemedi: $error';
+  }
+
+  @override
+  String get pickPhoto => 'Fotoğraf seç';
+
+  @override
+  String get removePhoto => 'Fotoğrafı kaldır';
+
+  @override
+  String get nameTooLong => 'Ad çok uzun.';
+
+  @override
+  String get phoneTooLong => 'Telefon çok uzun.';
+
+  @override
+  String get commonSaving => 'Kaydediliyor...';
 }

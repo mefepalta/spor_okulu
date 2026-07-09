@@ -1188,4 +1188,32 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get accountLabelStudent => 'Student account';
+
+  @override
+  String photoPickError(Object error) {
+    return 'Couldn\'t pick photo: $error';
+  }
+
+  @override
+  String get profileUpdated => 'Profile updated.';
+
+  @override
+  String profileSaveError(Object error) {
+    return 'Couldn\'t save: $error';
+  }
+
+  @override
+  String get pickPhoto => 'Choose photo';
+
+  @override
+  String get removePhoto => 'Remove photo';
+
+  @override
+  String get nameTooLong => 'Name is too long.';
+
+  @override
+  String get phoneTooLong => 'Phone number is too long.';
+
+  @override
+  String get commonSaving => 'Saving...';
 }

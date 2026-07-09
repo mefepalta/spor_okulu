@@ -377,5 +377,14 @@
   "studentLinked": "Élève : {name}",
   "addStudentAccountTitle": "Ajouter un compte élève",
   "addStudentAccountHint": "Saisissez l'adresse e-mail de l'élève enregistrée dans l'application. L'élève doit d'abord s'inscrire.",
-  "accountLabelStudent": "Compte élève"
+  "accountLabelStudent": "Compte élève",
+
+  "photoPickError": "Impossible de choisir la photo : {error}",
+  "profileUpdated": "Profil mis à jour.",
+  "profileSaveError": "Impossible d'enregistrer : {error}",
+  "pickPhoto": "Choisir une photo",
+  "removePhoto": "Supprimer la photo",
+  "nameTooLong": "Le nom est trop long.",
+  "phoneTooLong": "Le numéro de téléphone est trop long.",
+  "commonSaving": "Enregistrement..."
 }

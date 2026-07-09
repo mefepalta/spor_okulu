@@ -2203,6 +2203,54 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Öğrenci hesabı'**
   String get accountLabelStudent;
+
+  /// No description provided for @photoPickError.
+  ///
+  /// In tr, this message translates to:
+  /// **'Fotoğraf seçilemedi: {error}'**
+  String photoPickError(Object error);
+
+  /// No description provided for @profileUpdated.
+  ///
+  /// In tr, this message translates to:
+  /// **'Profil güncellendi.'**
+  String get profileUpdated;
+
+  /// No description provided for @profileSaveError.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaydedilemedi: {error}'**
+  String profileSaveError(Object error);
+
+  /// No description provided for @pickPhoto.
+  ///
+  /// In tr, this message translates to:
+  /// **'Fotoğraf seç'**
+  String get pickPhoto;
+
+  /// No description provided for @removePhoto.
+  ///
+  /// In tr, this message translates to:
+  /// **'Fotoğrafı kaldır'**
+  String get removePhoto;
+
+  /// No description provided for @nameTooLong.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ad çok uzun.'**
+  String get nameTooLong;
+
+  /// No description provided for @phoneTooLong.
+  ///
+  /// In tr, this message translates to:
+  /// **'Telefon çok uzun.'**
+  String get phoneTooLong;
+
+  /// No description provided for @commonSaving.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaydediliyor...'**
+  String get commonSaving;
 }
 
 class _AppLocalizationsDelegate

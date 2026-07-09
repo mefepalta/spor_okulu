@@ -377,5 +377,14 @@
   "studentLinked": "Student: {name}",
   "addStudentAccountTitle": "Add Student Account",
   "addStudentAccountHint": "Enter the student's email address registered in the app. The student must register first.",
-  "accountLabelStudent": "Student account"
+  "accountLabelStudent": "Student account",
+
+  "photoPickError": "Couldn't pick photo: {error}",
+  "profileUpdated": "Profile updated.",
+  "profileSaveError": "Couldn't save: {error}",
+  "pickPhoto": "Choose photo",
+  "removePhoto": "Remove photo",
+  "nameTooLong": "Name is too long.",
+  "phoneTooLong": "Phone number is too long.",
+  "commonSaving": "Saving..."
 }

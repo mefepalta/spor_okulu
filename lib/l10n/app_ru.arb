@@ -377,5 +377,14 @@
   "studentLinked": "Ученик: {name}",
   "addStudentAccountTitle": "Добавить аккаунт ученика",
   "addStudentAccountHint": "Введите адрес электронной почты ученика, зарегистрированный в приложении. Ученик должен сначала зарегистрироваться.",
-  "accountLabelStudent": "Аккаунт ученика"
+  "accountLabelStudent": "Аккаунт ученика",
+
+  "photoPickError": "Не удалось выбрать фото: {error}",
+  "profileUpdated": "Профиль обновлён.",
+  "profileSaveError": "Не удалось сохранить: {error}",
+  "pickPhoto": "Выбрать фото",
+  "removePhoto": "Удалить фото",
+  "nameTooLong": "Имя слишком длинное.",
+  "phoneTooLong": "Номер телефона слишком длинный.",
+  "commonSaving": "Сохранение..."
 }

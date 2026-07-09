@@ -516,5 +516,20 @@
   },
   "addStudentAccountTitle": "Öğrenci Hesabı Ekle",
   "addStudentAccountHint": "Öğrencinin uygulamaya kayıtlı e-posta adresini gir. Öğrenci önce kendisi kayıt olmalıdır.",
-  "accountLabelStudent": "Öğrenci hesabı"
+  "accountLabelStudent": "Öğrenci hesabı",
+
+  "photoPickError": "Fotoğraf seçilemedi: {error}",
+  "@photoPickError": {
+    "placeholders": { "error": { "type": "Object" } }
+  },
+  "profileUpdated": "Profil güncellendi.",
+  "profileSaveError": "Kaydedilemedi: {error}",
+  "@profileSaveError": {
+    "placeholders": { "error": { "type": "Object" } }
+  },
+  "pickPhoto": "Fotoğraf seç",
+  "removePhoto": "Fotoğrafı kaldır",
+  "nameTooLong": "Ad çok uzun.",
+  "phoneTooLong": "Telefon çok uzun.",
+  "commonSaving": "Kaydediliyor..."
 }

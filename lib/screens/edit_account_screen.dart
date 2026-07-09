@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../l10n/app_localizations.dart';
 import '../models/app_models.dart';
 import '../services/profile_service.dart';
 import '../theme/app_colors.dart';
@@ -76,7 +77,9 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
         return;
       }
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Fotoğraf seçilemedi: $error')),
+        SnackBar(
+          content: Text(AppLocalizations.of(context).photoPickError(error)),
+        ),
       );
     }
   }
@@ -88,6 +91,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
   }
 
   Future<void> _save() async {
+    final l10n = AppLocalizations.of(context);
     if (!_formKey.currentState!.validate()) {
       return;
     }
@@ -114,7 +118,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
       );
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Profil güncellendi.')),
+        SnackBar(content: Text(l10n.profileUpdated)),
       );
 
       Navigator.pop(context, updated);
@@ -123,7 +127,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
         return;
       }
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Kaydedilemedi: $error')),
+        SnackBar(content: Text(l10n.profileSaveError(error))),
       );
     } finally {
       if (mounted) {
@@ -136,12 +140,13 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final avatarImage = _photoBase64.isNotEmpty
         ? MemoryImage(base64Decode(_photoBase64))
         : null;
 
     return WaveScaffold(
-      appBar: AppBar(title: const Text('Hesabı Düzenle')),
+      appBar: AppBar(title: Text(l10n.editAccount)),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
@@ -188,7 +193,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
             child: TextButton.icon(
               onPressed: _pickPhoto,
               icon: const Icon(Icons.image),
-              label: const Text('Fotoğraf seç'),
+              label: Text(l10n.pickPhoto),
             ),
           ),
           if (_photoBase64.isNotEmpty)
@@ -196,9 +201,9 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
               child: TextButton.icon(
                 onPressed: _removePhoto,
                 icon: const Icon(Icons.delete_outline, color: Colors.red),
-                label: const Text(
-                  'Fotoğrafı kaldır',
-                  style: TextStyle(color: Colors.red),
+                label: Text(
+                  l10n.removePhoto,
+                  style: const TextStyle(color: Colors.red),
                 ),
               ),
             ),
@@ -210,14 +215,14 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                 TextFormField(
                   controller: _nameController,
                   textCapitalization: TextCapitalization.words,
-                  decoration: const InputDecoration(
-                    labelText: 'Ad Soyad',
-                    prefixIcon: Icon(Icons.person_outline),
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    labelText: l10n.fieldFullName,
+                    prefixIcon: const Icon(Icons.person_outline),
+                    border: const OutlineInputBorder(),
                   ),
                   validator: (value) {
                     if (value != null && value.trim().length > 60) {
-                      return 'Ad çok uzun.';
+                      return l10n.nameTooLong;
                     }
                     return null;
                   },
@@ -226,15 +231,15 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                 TextFormField(
                   controller: _phoneController,
                   keyboardType: TextInputType.phone,
-                  decoration: const InputDecoration(
-                    labelText: 'Telefon',
+                  decoration: InputDecoration(
+                    labelText: l10n.fieldPhone,
                     hintText: '(5xx) xxx xx xx',
-                    prefixIcon: Icon(Icons.phone_outlined),
-                    border: OutlineInputBorder(),
+                    prefixIcon: const Icon(Icons.phone_outlined),
+                    border: const OutlineInputBorder(),
                   ),
                   validator: (value) {
                     if (value != null && value.trim().length > 20) {
-                      return 'Telefon çok uzun.';
+                      return l10n.phoneTooLong;
                     }
                     return null;
                   },
@@ -252,7 +257,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                     child: CircularProgressIndicator(strokeWidth: 2),
                   )
                 : const Icon(Icons.save),
-            label: Text(_isSaving ? 'Kaydediliyor...' : 'Kaydet'),
+            label: Text(_isSaving ? l10n.commonSaving : l10n.commonSave),
           ),
         ],
       ),
