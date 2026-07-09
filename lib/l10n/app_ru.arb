@@ -614,5 +614,18 @@
   "watchIntroVideo": "Посмотреть вводное видео",
   "youtubeHowToPlay": "как играть",
 
-  "fullNameHint": "Иван Иванов"
+  "fullNameHint": "Иван Иванов",
+
+  "monthJanuary": "Январь",
+  "monthFebruary": "Февраль",
+  "monthMarch": "Март",
+  "monthApril": "Апрель",
+  "monthMay": "Май",
+  "monthJune": "Июнь",
+  "monthJuly": "Июль",
+  "monthAugust": "Август",
+  "monthSeptember": "Сентябрь",
+  "monthOctober": "Октябрь",
+  "monthNovember": "Ноябрь",
+  "monthDecember": "Декабрь"
 }

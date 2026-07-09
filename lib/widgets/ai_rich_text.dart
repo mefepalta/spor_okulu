@@ -31,7 +31,12 @@ class AiRichText extends StatelessWidget {
       }
 
       // Madde imi (- veya *) → •. Numaralı liste (1.) olduğu gibi kalır.
-      line = line.replaceFirst(RegExp(r'^(\s*)[-*]\s+'), r'$1• ');
+      // Not: replaceFirst string değişmezinde `$1` grup referansı olarak
+      // yorumlanmaz (literal eklenir); girintiyi korumak için Mapped kullan.
+      line = line.replaceFirstMapped(
+        RegExp(r'^(\s*)[-*]\s+'),
+        (m) => '${m[1]}• ',
+      );
 
       spans.addAll(_inlineSpans(line, lineStyle));
       if (i < lines.length - 1) {

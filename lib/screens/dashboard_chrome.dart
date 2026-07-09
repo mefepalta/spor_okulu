@@ -327,7 +327,7 @@ extension _DashboardChrome on _DashboardScreenState {
         (payment) => payment.status != 'Ödendi',
       )) {
         final parts = <String>[
-          if (payment.period.isNotEmpty) payment.period,
+          if (payment.period.isNotEmpty) localizedPeriod(l10n, payment.period),
           if (payment.amount > 0) formatTl(payment.amount),
         ];
         items.add(

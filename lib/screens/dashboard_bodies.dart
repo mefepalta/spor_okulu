@@ -897,7 +897,7 @@ extension _DashboardBodies on _DashboardScreenState {
                 ),
                 if (payment.period.isNotEmpty)
                   Text(
-                    payment.period,
+                    localizedPeriod(l10n, payment.period),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(

@@ -614,5 +614,18 @@
   "watchIntroVideo": "Ver el video de presentación",
   "youtubeHowToPlay": "cómo se juega",
 
-  "fullNameHint": "Juan Pérez"
+  "fullNameHint": "Juan Pérez",
+
+  "monthJanuary": "Enero",
+  "monthFebruary": "Febrero",
+  "monthMarch": "Marzo",
+  "monthApril": "Abril",
+  "monthMay": "Mayo",
+  "monthJune": "Junio",
+  "monthJuly": "Julio",
+  "monthAugust": "Agosto",
+  "monthSeptember": "Septiembre",
+  "monthOctober": "Octubre",
+  "monthNovember": "Noviembre",
+  "monthDecember": "Diciembre"
 }

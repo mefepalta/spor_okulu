@@ -1962,4 +1962,40 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get fullNameHint => 'Juan Pérez';
+
+  @override
+  String get monthJanuary => 'Enero';
+
+  @override
+  String get monthFebruary => 'Febrero';
+
+  @override
+  String get monthMarch => 'Marzo';
+
+  @override
+  String get monthApril => 'Abril';
+
+  @override
+  String get monthMay => 'Mayo';
+
+  @override
+  String get monthJune => 'Junio';
+
+  @override
+  String get monthJuly => 'Julio';
+
+  @override
+  String get monthAugust => 'Agosto';
+
+  @override
+  String get monthSeptember => 'Septiembre';
+
+  @override
+  String get monthOctober => 'Octubre';
+
+  @override
+  String get monthNovember => 'Noviembre';
+
+  @override
+  String get monthDecember => 'Diciembre';
 }

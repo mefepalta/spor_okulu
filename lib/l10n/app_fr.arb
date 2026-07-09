@@ -614,5 +614,18 @@
   "watchIntroVideo": "Regarder la vidéo de présentation",
   "youtubeHowToPlay": "comment jouer",
 
-  "fullNameHint": "Jean Dupont"
+  "fullNameHint": "Jean Dupont",
+
+  "monthJanuary": "Janvier",
+  "monthFebruary": "Février",
+  "monthMarch": "Mars",
+  "monthApril": "Avril",
+  "monthMay": "Mai",
+  "monthJune": "Juin",
+  "monthJuly": "Juillet",
+  "monthAugust": "Août",
+  "monthSeptember": "Septembre",
+  "monthOctober": "Octobre",
+  "monthNovember": "Novembre",
+  "monthDecember": "Décembre"
 }

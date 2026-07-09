@@ -1969,4 +1969,40 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get fullNameHint => 'Jean Dupont';
+
+  @override
+  String get monthJanuary => 'Janvier';
+
+  @override
+  String get monthFebruary => 'Février';
+
+  @override
+  String get monthMarch => 'Mars';
+
+  @override
+  String get monthApril => 'Avril';
+
+  @override
+  String get monthMay => 'Mai';
+
+  @override
+  String get monthJune => 'Juin';
+
+  @override
+  String get monthJuly => 'Juillet';
+
+  @override
+  String get monthAugust => 'Août';
+
+  @override
+  String get monthSeptember => 'Septembre';
+
+  @override
+  String get monthOctober => 'Octobre';
+
+  @override
+  String get monthNovember => 'Novembre';
+
+  @override
+  String get monthDecember => 'Décembre';
 }

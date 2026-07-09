@@ -1933,4 +1933,40 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get fullNameHint => 'محمد أحمد';
+
+  @override
+  String get monthJanuary => 'يناير';
+
+  @override
+  String get monthFebruary => 'فبراير';
+
+  @override
+  String get monthMarch => 'مارس';
+
+  @override
+  String get monthApril => 'أبريل';
+
+  @override
+  String get monthMay => 'مايو';
+
+  @override
+  String get monthJune => 'يونيو';
+
+  @override
+  String get monthJuly => 'يوليو';
+
+  @override
+  String get monthAugust => 'أغسطس';
+
+  @override
+  String get monthSeptember => 'سبتمبر';
+
+  @override
+  String get monthOctober => 'أكتوبر';
+
+  @override
+  String get monthNovember => 'نوفمبر';
+
+  @override
+  String get monthDecember => 'ديسمبر';
 }

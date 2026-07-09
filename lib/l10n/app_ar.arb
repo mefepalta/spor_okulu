@@ -614,5 +614,18 @@
   "watchIntroVideo": "شاهد الفيديو التعريفي",
   "youtubeHowToPlay": "كيفية اللعب",
 
-  "fullNameHint": "محمد أحمد"
+  "fullNameHint": "محمد أحمد",
+
+  "monthJanuary": "يناير",
+  "monthFebruary": "فبراير",
+  "monthMarch": "مارس",
+  "monthApril": "أبريل",
+  "monthMay": "مايو",
+  "monthJune": "يونيو",
+  "monthJuly": "يوليو",
+  "monthAugust": "أغسطس",
+  "monthSeptember": "سبتمبر",
+  "monthOctober": "أكتوبر",
+  "monthNovember": "نوفمبر",
+  "monthDecember": "ديسمبر"
 }

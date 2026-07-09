@@ -1955,4 +1955,40 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get fullNameHint => 'Иван Иванов';
+
+  @override
+  String get monthJanuary => 'Январь';
+
+  @override
+  String get monthFebruary => 'Февраль';
+
+  @override
+  String get monthMarch => 'Март';
+
+  @override
+  String get monthApril => 'Апрель';
+
+  @override
+  String get monthMay => 'Май';
+
+  @override
+  String get monthJune => 'Июнь';
+
+  @override
+  String get monthJuly => 'Июль';
+
+  @override
+  String get monthAugust => 'Август';
+
+  @override
+  String get monthSeptember => 'Сентябрь';
+
+  @override
+  String get monthOctober => 'Октябрь';
+
+  @override
+  String get monthNovember => 'Ноябрь';
+
+  @override
+  String get monthDecember => 'Декабрь';
 }

@@ -3544,6 +3544,78 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Mehmet Ali Yılmaz'**
   String get fullNameHint;
+
+  /// No description provided for @monthJanuary.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ocak'**
+  String get monthJanuary;
+
+  /// No description provided for @monthFebruary.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şubat'**
+  String get monthFebruary;
+
+  /// No description provided for @monthMarch.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mart'**
+  String get monthMarch;
+
+  /// No description provided for @monthApril.
+  ///
+  /// In tr, this message translates to:
+  /// **'Nisan'**
+  String get monthApril;
+
+  /// No description provided for @monthMay.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mayıs'**
+  String get monthMay;
+
+  /// No description provided for @monthJune.
+  ///
+  /// In tr, this message translates to:
+  /// **'Haziran'**
+  String get monthJune;
+
+  /// No description provided for @monthJuly.
+  ///
+  /// In tr, this message translates to:
+  /// **'Temmuz'**
+  String get monthJuly;
+
+  /// No description provided for @monthAugust.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ağustos'**
+  String get monthAugust;
+
+  /// No description provided for @monthSeptember.
+  ///
+  /// In tr, this message translates to:
+  /// **'Eylül'**
+  String get monthSeptember;
+
+  /// No description provided for @monthOctober.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ekim'**
+  String get monthOctober;
+
+  /// No description provided for @monthNovember.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kasım'**
+  String get monthNovember;
+
+  /// No description provided for @monthDecember.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aralık'**
+  String get monthDecember;
 }
 
 class _AppLocalizationsDelegate

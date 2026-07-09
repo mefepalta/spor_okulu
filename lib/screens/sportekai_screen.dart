@@ -221,11 +221,12 @@ class _SporTekAiScreenState extends State<SporTekAiScreen> {
         ),
         decoration: BoxDecoration(
           color: bg,
-          borderRadius: BorderRadius.only(
-            topLeft: const Radius.circular(14),
-            topRight: const Radius.circular(14),
-            bottomLeft: Radius.circular(isUser ? 14 : 2),
-            bottomRight: Radius.circular(isUser ? 2 : 14),
+          // Directional: köşe "kuyruğu" hizalamayla birlikte RTL'de aynalanır.
+          borderRadius: BorderRadiusDirectional.only(
+            topStart: const Radius.circular(14),
+            topEnd: const Radius.circular(14),
+            bottomStart: Radius.circular(isUser ? 14 : 2),
+            bottomEnd: Radius.circular(isUser ? 2 : 14),
           ),
         ),
         child: isUser

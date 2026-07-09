@@ -8,6 +8,7 @@ import '../models/app_models.dart';
 import '../theme/app_colors.dart';
 import '../utils/formatters.dart';
 import '../utils/launchers.dart';
+import '../utils/period_l10n.dart';
 import '../utils/status_l10n.dart';
 import '../utils/validators.dart';
 import '../widgets/empty_state.dart';
@@ -108,7 +109,10 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
         return AlertDialog(
           title: Text(l10n.paymentDeleteTitle),
           content: Text(
-            l10n.paymentDeleteConfirm(payment.studentName, payment.period),
+            l10n.paymentDeleteConfirm(
+              payment.studentName,
+              localizedPeriod(l10n, payment.period),
+            ),
           ),
           actions: [
             TextButton(
@@ -257,7 +261,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
                 for (final period in periods)
                   DropdownMenuItem<String?>(
                     value: period,
-                    child: Text(period),
+                    child: Text(localizedPeriod(l10n, period)),
                   ),
               ],
               onChanged: (value) {
@@ -368,7 +372,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
                           ),
                           title: Text(payment.studentName),
                           subtitle: Text(
-                            '${payment.period} • ${payment.amount} TL\n${localizedPaymentStatus(l10n, payment.status)} • ${payment.dateText}',
+                            '${localizedPeriod(l10n, payment.period)} • ${payment.amount} TL\n${localizedPaymentStatus(l10n, payment.status)} • ${payment.dateText}',
                           ),
                           isThreeLine: true,
                           trailing: widget.isAdmin
@@ -666,7 +670,9 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Text('${payment.period} • ${payment.amount} TL'),
+                  Text(
+                    '${localizedPeriod(l10n, payment.period)} • ${payment.amount} TL',
+                  ),
                   const SizedBox(height: 8),
                   Text(
                     localizedPaymentStatus(l10n, payment.status),
@@ -691,7 +697,7 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
             child: ListTile(
               leading: const Icon(Icons.calendar_month),
               title: Text(l10n.fieldPeriod),
-              subtitle: Text(payment.period),
+              subtitle: Text(localizedPeriod(l10n, payment.period)),
             ),
           ),
           Card(

@@ -18,6 +18,7 @@ import '../services/user_management_service.dart';
 import '../services/user_role_service.dart';
 import '../theme/app_colors.dart';
 import '../utils/formatters.dart';
+import '../utils/period_l10n.dart';
 import '../utils/role_l10n.dart';
 import '../utils/status_l10n.dart';
 import '../widgets/summary_section.dart';

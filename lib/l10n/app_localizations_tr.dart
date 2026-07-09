@@ -1940,4 +1940,40 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get fullNameHint => 'Mehmet Ali Yılmaz';
+
+  @override
+  String get monthJanuary => 'Ocak';
+
+  @override
+  String get monthFebruary => 'Şubat';
+
+  @override
+  String get monthMarch => 'Mart';
+
+  @override
+  String get monthApril => 'Nisan';
+
+  @override
+  String get monthMay => 'Mayıs';
+
+  @override
+  String get monthJune => 'Haziran';
+
+  @override
+  String get monthJuly => 'Temmuz';
+
+  @override
+  String get monthAugust => 'Ağustos';
+
+  @override
+  String get monthSeptember => 'Eylül';
+
+  @override
+  String get monthOctober => 'Ekim';
+
+  @override
+  String get monthNovember => 'Kasım';
+
+  @override
+  String get monthDecember => 'Aralık';
 }

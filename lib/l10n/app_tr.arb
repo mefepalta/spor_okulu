@@ -838,5 +838,18 @@
   "watchIntroVideo": "Tanıtım videosunu izle",
   "youtubeHowToPlay": "nasıl oynanır",
 
-  "fullNameHint": "Mehmet Ali Yılmaz"
+  "fullNameHint": "Mehmet Ali Yılmaz",
+
+  "monthJanuary": "Ocak",
+  "monthFebruary": "Şubat",
+  "monthMarch": "Mart",
+  "monthApril": "Nisan",
+  "monthMay": "Mayıs",
+  "monthJune": "Haziran",
+  "monthJuly": "Temmuz",
+  "monthAugust": "Ağustos",
+  "monthSeptember": "Eylül",
+  "monthOctober": "Ekim",
+  "monthNovember": "Kasım",
+  "monthDecember": "Aralık"
 }

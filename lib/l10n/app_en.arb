@@ -614,5 +614,18 @@
   "watchIntroVideo": "Watch the intro video",
   "youtubeHowToPlay": "how to play",
 
-  "fullNameHint": "John Smith"
+  "fullNameHint": "John Smith",
+
+  "monthJanuary": "January",
+  "monthFebruary": "February",
+  "monthMarch": "March",
+  "monthApril": "April",
+  "monthMay": "May",
+  "monthJune": "June",
+  "monthJuly": "July",
+  "monthAugust": "August",
+  "monthSeptember": "September",
+  "monthOctober": "October",
+  "monthNovember": "November",
+  "monthDecember": "December"
 }
