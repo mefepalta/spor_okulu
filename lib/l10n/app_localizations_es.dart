@@ -817,4 +817,55 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get ageTooHigh => 'La edad parece demasiado alta.';
+
+  @override
+  String get fieldPhone => 'Teléfono';
+
+  @override
+  String get branchEmpty => 'La disciplina no puede estar vacía.';
+
+  @override
+  String get coachesSearchHint => 'Buscar entrenadores';
+
+  @override
+  String get coachesEmptyTitle => 'Aún no hay entrenadores';
+
+  @override
+  String get coachesEmptyAdmin =>
+      'Usa el botón + de la esquina inferior derecha para añadir un nuevo entrenador.';
+
+  @override
+  String get coachesEmptyViewer =>
+      'Aún no hay registros de entrenadores. Aparecerán aquí cuando un administrador añada uno.';
+
+  @override
+  String coachSubtitle(String branch, String phone) {
+    return '$branch • $phone';
+  }
+
+  @override
+  String get coachDeleteTitle => 'Eliminar entrenador';
+
+  @override
+  String coachDeleteConfirm(String name) {
+    return '¿Seguro que quieres eliminar a $name';
+  }
+
+  @override
+  String get coachDeleted => 'Entrenador eliminado.';
+
+  @override
+  String get coachDetailTitle => 'Detalles del entrenador';
+
+  @override
+  String get editCoach => 'Editar entrenador';
+
+  @override
+  String get backToCoachList => 'Volver a la lista de entrenadores';
+
+  @override
+  String get addCoach => 'Añadir nuevo entrenador';
+
+  @override
+  String get saveCoach => 'Guardar entrenador';
 }

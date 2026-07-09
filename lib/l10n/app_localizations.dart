@@ -1543,6 +1543,96 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Yaş çok yüksek görünüyor.'**
   String get ageTooHigh;
+
+  /// No description provided for @fieldPhone.
+  ///
+  /// In tr, this message translates to:
+  /// **'Telefon'**
+  String get fieldPhone;
+
+  /// No description provided for @branchEmpty.
+  ///
+  /// In tr, this message translates to:
+  /// **'Branş boş bırakılamaz.'**
+  String get branchEmpty;
+
+  /// No description provided for @coachesSearchHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Antrenör ara'**
+  String get coachesSearchHint;
+
+  /// No description provided for @coachesEmptyTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz antrenör yok'**
+  String get coachesEmptyTitle;
+
+  /// No description provided for @coachesEmptyAdmin.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni antrenör eklemek için sağ alttaki + butonunu kullan.'**
+  String get coachesEmptyAdmin;
+
+  /// No description provided for @coachesEmptyViewer.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz antrenör kaydı yok. Admin antrenör eklediğinde burada görünecek.'**
+  String get coachesEmptyViewer;
+
+  /// No description provided for @coachSubtitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'{branch} • {phone}'**
+  String coachSubtitle(String branch, String phone);
+
+  /// No description provided for @coachDeleteTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Antrenörü Sil'**
+  String get coachDeleteTitle;
+
+  /// No description provided for @coachDeleteConfirm.
+  ///
+  /// In tr, this message translates to:
+  /// **'{name} adlı antrenörü silmek istediğine emin misin'**
+  String coachDeleteConfirm(String name);
+
+  /// No description provided for @coachDeleted.
+  ///
+  /// In tr, this message translates to:
+  /// **'Antrenör silindi.'**
+  String get coachDeleted;
+
+  /// No description provided for @coachDetailTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Antrenör Detayı'**
+  String get coachDetailTitle;
+
+  /// No description provided for @editCoach.
+  ///
+  /// In tr, this message translates to:
+  /// **'Antrenörü Düzenle'**
+  String get editCoach;
+
+  /// No description provided for @backToCoachList.
+  ///
+  /// In tr, this message translates to:
+  /// **'Antrenör Listesine Dön'**
+  String get backToCoachList;
+
+  /// No description provided for @addCoach.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni Antrenör Ekle'**
+  String get addCoach;
+
+  /// No description provided for @saveCoach.
+  ///
+  /// In tr, this message translates to:
+  /// **'Antrenörü Kaydet'**
+  String get saveCoach;
 }
 
 class _AppLocalizationsDelegate

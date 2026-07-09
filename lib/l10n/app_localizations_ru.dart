@@ -813,4 +813,55 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get ageTooHigh => 'Возраст выглядит слишком большим.';
+
+  @override
+  String get fieldPhone => 'Телефон';
+
+  @override
+  String get branchEmpty => 'Дисциплина не может быть пустой.';
+
+  @override
+  String get coachesSearchHint => 'Поиск тренеров';
+
+  @override
+  String get coachesEmptyTitle => 'Тренеров пока нет';
+
+  @override
+  String get coachesEmptyAdmin =>
+      'Нажмите кнопку + в правом нижнем углу, чтобы добавить тренера.';
+
+  @override
+  String get coachesEmptyViewer =>
+      'Записей о тренерах пока нет. Они появятся здесь, когда администратор добавит тренера.';
+
+  @override
+  String coachSubtitle(String branch, String phone) {
+    return '$branch • $phone';
+  }
+
+  @override
+  String get coachDeleteTitle => 'Удалить тренера';
+
+  @override
+  String coachDeleteConfirm(String name) {
+    return 'Вы уверены, что хотите удалить: $name';
+  }
+
+  @override
+  String get coachDeleted => 'Тренер удалён.';
+
+  @override
+  String get coachDetailTitle => 'Данные тренера';
+
+  @override
+  String get editCoach => 'Изменить тренера';
+
+  @override
+  String get backToCoachList => 'Назад к списку тренеров';
+
+  @override
+  String get addCoach => 'Добавить тренера';
+
+  @override
+  String get saveCoach => 'Сохранить тренера';
 }

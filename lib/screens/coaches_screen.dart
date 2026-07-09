@@ -4,6 +4,7 @@ import '../theme/app_colors.dart';
 import '../widgets/wave_background.dart';
 import 'package:flutter/services.dart';
 
+import '../l10n/app_localizations.dart';
 import '../models/app_models.dart';
 import '../utils/validators.dart';
 import '../widgets/empty_state.dart';
@@ -72,27 +73,30 @@ class _CoachesScreenState extends State<CoachesScreen> {
 
   Future<void> _confirmDeleteCoach(int index) async {
     final coach = widget.coaches[index];
+    final l10n = AppLocalizations.of(context);
 
     final shouldDelete = await showDialog<bool>(
       context: context,
       builder: (context) {
+        final l10n = AppLocalizations.of(context);
         return AlertDialog(
-          title: const Text('Antrenörü Sil'),
-          content: Text(
-            '${coach.name} adlı antrenörü silmek istediğine emin misin',
-          ),
+          title: Text(l10n.coachDeleteTitle),
+          content: Text(l10n.coachDeleteConfirm(coach.name)),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.pop(context, false);
               },
-              child: const Text('Vazgeç'),
+              child: Text(l10n.commonCancel),
             ),
             TextButton(
               onPressed: () {
                 Navigator.pop(context, true);
               },
-              child: const Text('Sil', style: TextStyle(color: Colors.red)),
+              child: Text(
+                l10n.commonDelete,
+                style: const TextStyle(color: Colors.red),
+              ),
             ),
           ],
         );
@@ -113,11 +117,12 @@ class _CoachesScreenState extends State<CoachesScreen> {
 
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(const SnackBar(content: Text('Antrenör silindi.')));
+    ).showSnackBar(SnackBar(content: Text(l10n.coachDeleted)));
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final filteredCoaches = widget.coaches.where((coach) {
       final query = _searchQuery.toLowerCase();
 
@@ -126,16 +131,16 @@ class _CoachesScreenState extends State<CoachesScreen> {
           coach.phone.toLowerCase().contains(query);
     }).toList();
     return WaveScaffold(
-      appBar: AppBar(title: const Text('Antrenörler')),
+      appBar: AppBar(title: Text(l10n.navCoaches)),
       body: Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(16),
             child: TextField(
-              decoration: const InputDecoration(
-                labelText: 'Antrenör ara',
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.coachesSearchHint,
+                prefixIcon: const Icon(Icons.search),
+                border: const OutlineInputBorder(),
               ),
               onChanged: (value) {
                 setState(() {
@@ -148,16 +153,16 @@ class _CoachesScreenState extends State<CoachesScreen> {
             child: widget.coaches.isEmpty
                 ? EmptyState(
                     icon: Icons.sports,
-                    title: 'Henüz antrenör yok',
+                    title: l10n.coachesEmptyTitle,
                     message: widget.isAdmin
-                        ? 'Yeni antrenör eklemek için sağ alttaki + butonunu kullan.'
-                        : 'Henüz antrenör kaydı yok. Admin antrenör eklediçinde burada görünecek.',
+                        ? l10n.coachesEmptyAdmin
+                        : l10n.coachesEmptyViewer,
                   )
                 : filteredCoaches.isEmpty
-                ? const EmptyState(
+                ? EmptyState(
                     icon: Icons.search_off,
-                    title: 'Sonuç bulunamadı',
-                    message: 'Arama metnini değiştirerek tekrar dene.',
+                    title: l10n.searchNoResults,
+                    message: l10n.searchNoResultsBody,
                   )
                 : ListView.builder(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -178,7 +183,9 @@ class _CoachesScreenState extends State<CoachesScreen> {
                             child: Icon(Icons.sports),
                           ),
                           title: Text(coach.name),
-                          subtitle: Text('${coach.branch} • ${coach.phone}'),
+                          subtitle: Text(
+                            l10n.coachSubtitle(coach.branch, coach.phone),
+                          ),
                           trailing: widget.isAdmin
                               ? IconButton(
                                   icon: const Icon(
@@ -250,10 +257,11 @@ class _CoachDetailScreenState extends State<CoachDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final coach = _coach;
+    final l10n = AppLocalizations.of(context);
 
     return WaveScaffold(
       appBar: AppBar(
-        title: const Text('Antrenör Detayı'),
+        title: Text(l10n.coachDetailTitle),
         actions: widget.isAdmin
             ? [
                 IconButton(
@@ -292,21 +300,21 @@ class _CoachDetailScreenState extends State<CoachDetailScreen> {
           Card(
             child: ListTile(
               leading: const Icon(Icons.person),
-              title: const Text('Ad Soyad'),
+              title: Text(l10n.fieldFullName),
               subtitle: Text(coach.name),
             ),
           ),
           Card(
             child: ListTile(
               leading: const Icon(Icons.sports_soccer),
-              title: const Text('Branş'),
+              title: Text(l10n.fieldBranch),
               subtitle: Text(coach.branch),
             ),
           ),
           Card(
             child: ListTile(
               leading: const Icon(Icons.phone),
-              title: const Text('Telefon'),
+              title: Text(l10n.fieldPhone),
               subtitle: Text(coach.phone),
             ),
           ),
@@ -315,7 +323,7 @@ class _CoachDetailScreenState extends State<CoachDetailScreen> {
             ElevatedButton.icon(
               onPressed: _openEditCoachScreen,
               icon: const Icon(Icons.edit),
-              label: const Text('Antrenörü Düzenle'),
+              label: Text(l10n.editCoach),
             ),
           const SizedBox(height: 8),
           OutlinedButton.icon(
@@ -323,7 +331,7 @@ class _CoachDetailScreenState extends State<CoachDetailScreen> {
               Navigator.pop(context);
             },
             icon: const Icon(Icons.arrow_back),
-            label: const Text('Antrenör Listesine Dön'),
+            label: Text(l10n.backToCoachList),
           ),
         ],
       ),
@@ -387,10 +395,11 @@ class _AddCoachScreenState extends State<AddCoachScreen> {
   @override
   Widget build(BuildContext context) {
     final isEditing = widget.coach != null;
+    final l10n = AppLocalizations.of(context);
 
     return WaveScaffold(
       appBar: AppBar(
-        title: Text(isEditing ? 'Antrenörü Düzenle' : 'Yeni Antrenör Ekle'),
+        title: Text(isEditing ? l10n.editCoach : l10n.addCoach),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -401,19 +410,19 @@ class _AddCoachScreenState extends State<AddCoachScreen> {
             children: [
               TextFormField(
                 controller: _nameController,
-                decoration: const InputDecoration(
-                  labelText: 'Ad Soyad',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.person),
+                decoration: InputDecoration(
+                  labelText: l10n.fieldFullName,
+                  border: const OutlineInputBorder(),
+                  prefixIcon: const Icon(Icons.person),
                   hintText: 'Ahmet Yılmaz',
                 ),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return 'Ad soyad boş bırakılamaz.';
+                    return l10n.fullNameEmpty;
                   }
 
                   if (value.trim().length < 3) {
-                    return 'Ad soyad en az 3 karakter olmalıdır.';
+                    return l10n.fullNameMinLength;
                   }
 
                   return null;
@@ -422,15 +431,15 @@ class _AddCoachScreenState extends State<AddCoachScreen> {
               const SizedBox(height: 12),
               TextFormField(
                 controller: _branchController,
-                decoration: const InputDecoration(
-                  labelText: 'Branş',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.sports_soccer),
+                decoration: InputDecoration(
+                  labelText: l10n.fieldBranch,
+                  border: const OutlineInputBorder(),
+                  prefixIcon: const Icon(Icons.sports_soccer),
                   hintText: 'Futbol',
                 ),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return 'Branş boş bırakılamaz.';
+                    return l10n.branchEmpty;
                   }
 
                   return null;
@@ -444,10 +453,10 @@ class _AddCoachScreenState extends State<AddCoachScreen> {
                   FilteringTextInputFormatter.digitsOnly,
                   LengthLimitingTextInputFormatter(11),
                 ],
-                decoration: const InputDecoration(
-                  labelText: 'Telefon',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.phone),
+                decoration: InputDecoration(
+                  labelText: l10n.fieldPhone,
+                  border: const OutlineInputBorder(),
+                  prefixIcon: const Icon(Icons.phone),
                   hintText: '05XXXXXXXXX',
                 ),
                 validator: validatePhoneNumber,
@@ -456,9 +465,7 @@ class _AddCoachScreenState extends State<AddCoachScreen> {
               ElevatedButton.icon(
                 onPressed: _saveCoach,
                 icon: const Icon(Icons.save),
-                label: Text(
-                  isEditing ? 'Değişiklikleri Kaydet' : 'Antrenörü Kaydet',
-                ),
+                label: Text(isEditing ? l10n.saveChanges : l10n.saveCoach),
               ),
             ],
           ),

@@ -261,5 +261,21 @@
   "ageEmpty": "Возраст не может быть пустым.",
   "ageMustBeNumber": "Возраст должен быть числом.",
   "agePositive": "Возраст должен быть больше 0.",
-  "ageTooHigh": "Возраст выглядит слишком большим."
+  "ageTooHigh": "Возраст выглядит слишком большим.",
+
+  "fieldPhone": "Телефон",
+  "branchEmpty": "Дисциплина не может быть пустой.",
+  "coachesSearchHint": "Поиск тренеров",
+  "coachesEmptyTitle": "Тренеров пока нет",
+  "coachesEmptyAdmin": "Нажмите кнопку + в правом нижнем углу, чтобы добавить тренера.",
+  "coachesEmptyViewer": "Записей о тренерах пока нет. Они появятся здесь, когда администратор добавит тренера.",
+  "coachSubtitle": "{branch} • {phone}",
+  "coachDeleteTitle": "Удалить тренера",
+  "coachDeleteConfirm": "Вы уверены, что хотите удалить: {name}",
+  "coachDeleted": "Тренер удалён.",
+  "coachDetailTitle": "Данные тренера",
+  "editCoach": "Изменить тренера",
+  "backToCoachList": "Назад к списку тренеров",
+  "addCoach": "Добавить тренера",
+  "saveCoach": "Сохранить тренера"
 }

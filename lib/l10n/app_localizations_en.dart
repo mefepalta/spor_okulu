@@ -807,4 +807,55 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get ageTooHigh => 'Age seems too high.';
+
+  @override
+  String get fieldPhone => 'Phone';
+
+  @override
+  String get branchEmpty => 'Branch cannot be empty.';
+
+  @override
+  String get coachesSearchHint => 'Search coaches';
+
+  @override
+  String get coachesEmptyTitle => 'No coaches yet';
+
+  @override
+  String get coachesEmptyAdmin =>
+      'Use the + button at the bottom right to add a new coach.';
+
+  @override
+  String get coachesEmptyViewer =>
+      'No coach records yet. They\'ll appear here once an admin adds a coach.';
+
+  @override
+  String coachSubtitle(String branch, String phone) {
+    return '$branch • $phone';
+  }
+
+  @override
+  String get coachDeleteTitle => 'Delete Coach';
+
+  @override
+  String coachDeleteConfirm(String name) {
+    return 'Are you sure you want to delete $name';
+  }
+
+  @override
+  String get coachDeleted => 'Coach deleted.';
+
+  @override
+  String get coachDetailTitle => 'Coach Details';
+
+  @override
+  String get editCoach => 'Edit Coach';
+
+  @override
+  String get backToCoachList => 'Back to Coach List';
+
+  @override
+  String get addCoach => 'Add New Coach';
+
+  @override
+  String get saveCoach => 'Save Coach';
 }

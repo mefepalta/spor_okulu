@@ -261,5 +261,21 @@
   "ageEmpty": "Age cannot be empty.",
   "ageMustBeNumber": "Age must be a number.",
   "agePositive": "Age must be greater than 0.",
-  "ageTooHigh": "Age seems too high."
+  "ageTooHigh": "Age seems too high.",
+
+  "fieldPhone": "Phone",
+  "branchEmpty": "Branch cannot be empty.",
+  "coachesSearchHint": "Search coaches",
+  "coachesEmptyTitle": "No coaches yet",
+  "coachesEmptyAdmin": "Use the + button at the bottom right to add a new coach.",
+  "coachesEmptyViewer": "No coach records yet. They'll appear here once an admin adds a coach.",
+  "coachSubtitle": "{branch} • {phone}",
+  "coachDeleteTitle": "Delete Coach",
+  "coachDeleteConfirm": "Are you sure you want to delete {name}",
+  "coachDeleted": "Coach deleted.",
+  "coachDetailTitle": "Coach Details",
+  "editCoach": "Edit Coach",
+  "backToCoachList": "Back to Coach List",
+  "addCoach": "Add New Coach",
+  "saveCoach": "Save Coach"
 }

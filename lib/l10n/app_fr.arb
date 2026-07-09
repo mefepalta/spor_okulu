@@ -261,5 +261,21 @@
   "ageEmpty": "L'âge ne peut pas être vide.",
   "ageMustBeNumber": "L'âge doit être un nombre.",
   "agePositive": "L'âge doit être supérieur à 0.",
-  "ageTooHigh": "L'âge semble trop élevé."
+  "ageTooHigh": "L'âge semble trop élevé.",
+
+  "fieldPhone": "Téléphone",
+  "branchEmpty": "La discipline ne peut pas être vide.",
+  "coachesSearchHint": "Rechercher des entraîneurs",
+  "coachesEmptyTitle": "Aucun entraîneur pour le moment",
+  "coachesEmptyAdmin": "Utilisez le bouton + en bas à droite pour ajouter un nouvel entraîneur.",
+  "coachesEmptyViewer": "Aucun enregistrement d'entraîneur pour le moment. Ils apparaîtront ici lorsqu'un administrateur en ajoutera un.",
+  "coachSubtitle": "{branch} • {phone}",
+  "coachDeleteTitle": "Supprimer l'entraîneur",
+  "coachDeleteConfirm": "Voulez-vous vraiment supprimer {name}",
+  "coachDeleted": "Entraîneur supprimé.",
+  "coachDetailTitle": "Détails de l'entraîneur",
+  "editCoach": "Modifier l'entraîneur",
+  "backToCoachList": "Retour à la liste des entraîneurs",
+  "addCoach": "Ajouter un nouvel entraîneur",
+  "saveCoach": "Enregistrer l'entraîneur"
 }

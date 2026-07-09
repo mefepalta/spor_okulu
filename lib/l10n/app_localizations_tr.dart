@@ -804,4 +804,55 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get ageTooHigh => 'Yaş çok yüksek görünüyor.';
+
+  @override
+  String get fieldPhone => 'Telefon';
+
+  @override
+  String get branchEmpty => 'Branş boş bırakılamaz.';
+
+  @override
+  String get coachesSearchHint => 'Antrenör ara';
+
+  @override
+  String get coachesEmptyTitle => 'Henüz antrenör yok';
+
+  @override
+  String get coachesEmptyAdmin =>
+      'Yeni antrenör eklemek için sağ alttaki + butonunu kullan.';
+
+  @override
+  String get coachesEmptyViewer =>
+      'Henüz antrenör kaydı yok. Admin antrenör eklediğinde burada görünecek.';
+
+  @override
+  String coachSubtitle(String branch, String phone) {
+    return '$branch • $phone';
+  }
+
+  @override
+  String get coachDeleteTitle => 'Antrenörü Sil';
+
+  @override
+  String coachDeleteConfirm(String name) {
+    return '$name adlı antrenörü silmek istediğine emin misin';
+  }
+
+  @override
+  String get coachDeleted => 'Antrenör silindi.';
+
+  @override
+  String get coachDetailTitle => 'Antrenör Detayı';
+
+  @override
+  String get editCoach => 'Antrenörü Düzenle';
+
+  @override
+  String get backToCoachList => 'Antrenör Listesine Dön';
+
+  @override
+  String get addCoach => 'Yeni Antrenör Ekle';
+
+  @override
+  String get saveCoach => 'Antrenörü Kaydet';
 }

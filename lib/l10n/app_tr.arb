@@ -340,5 +340,30 @@
   "ageEmpty": "Yaş boş bırakılamaz.",
   "ageMustBeNumber": "Yaş sayı olmalıdır.",
   "agePositive": "Yaş 0'dan büyük olmalıdır.",
-  "ageTooHigh": "Yaş çok yüksek görünüyor."
+  "ageTooHigh": "Yaş çok yüksek görünüyor.",
+
+  "fieldPhone": "Telefon",
+  "branchEmpty": "Branş boş bırakılamaz.",
+  "coachesSearchHint": "Antrenör ara",
+  "coachesEmptyTitle": "Henüz antrenör yok",
+  "coachesEmptyAdmin": "Yeni antrenör eklemek için sağ alttaki + butonunu kullan.",
+  "coachesEmptyViewer": "Henüz antrenör kaydı yok. Admin antrenör eklediğinde burada görünecek.",
+  "coachSubtitle": "{branch} • {phone}",
+  "@coachSubtitle": {
+    "placeholders": {
+      "branch": { "type": "String" },
+      "phone": { "type": "String" }
+    }
+  },
+  "coachDeleteTitle": "Antrenörü Sil",
+  "coachDeleteConfirm": "{name} adlı antrenörü silmek istediğine emin misin",
+  "@coachDeleteConfirm": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "coachDeleted": "Antrenör silindi.",
+  "coachDetailTitle": "Antrenör Detayı",
+  "editCoach": "Antrenörü Düzenle",
+  "backToCoachList": "Antrenör Listesine Dön",
+  "addCoach": "Yeni Antrenör Ekle",
+  "saveCoach": "Antrenörü Kaydet"
 }
