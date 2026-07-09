@@ -864,4 +864,25 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get saveCoach => 'Сохранить тренера';
+
+  @override
+  String get phoneEmpty => 'Номер телефона не может быть пустым.';
+
+  @override
+  String get phoneFormat => 'Телефон должен быть в формате 05XXXXXXXXX.';
+
+  @override
+  String get timeEmpty => 'Время не может быть пустым.';
+
+  @override
+  String get timeFormat => 'Время должно быть в формате 18:00.';
+
+  @override
+  String get dateEmpty => 'Дата не может быть пустой.';
+
+  @override
+  String get dateFormat => 'Дата должна быть в формате 24.06.2026.';
+
+  @override
+  String get branchRequired => 'Необходимо выбрать дисциплину.';
 }

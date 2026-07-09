@@ -459,7 +459,7 @@ class _AddCoachScreenState extends State<AddCoachScreen> {
                   prefixIcon: const Icon(Icons.phone),
                   hintText: '05XXXXXXXXX',
                 ),
-                validator: validatePhoneNumber,
+                validator: phoneValidator(l10n),
               ),
               const SizedBox(height: 20),
               ElevatedButton.icon(

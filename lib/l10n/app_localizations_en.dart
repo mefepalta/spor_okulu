@@ -858,4 +858,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get saveCoach => 'Save Coach';
+
+  @override
+  String get phoneEmpty => 'Phone number cannot be empty.';
+
+  @override
+  String get phoneFormat => 'Phone must be in the format 05XXXXXXXXX.';
+
+  @override
+  String get timeEmpty => 'Time cannot be empty.';
+
+  @override
+  String get timeFormat => 'Time must be in the format 18:00.';
+
+  @override
+  String get dateEmpty => 'Date cannot be empty.';
+
+  @override
+  String get dateFormat => 'Date must be in the format 24.06.2026.';
+
+  @override
+  String get branchRequired => 'A branch must be selected.';
 }

@@ -855,4 +855,25 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get saveCoach => 'Antrenörü Kaydet';
+
+  @override
+  String get phoneEmpty => 'Telefon numarası boş bırakılamaz.';
+
+  @override
+  String get phoneFormat => 'Telefon 05XXXXXXXXX formatında olmalıdır.';
+
+  @override
+  String get timeEmpty => 'Saat boş bırakılamaz.';
+
+  @override
+  String get timeFormat => 'Saat 18:00 formatında olmalıdır.';
+
+  @override
+  String get dateEmpty => 'Tarih boş bırakılamaz.';
+
+  @override
+  String get dateFormat => 'Tarih 24.06.2026 formatında olmalı.';
+
+  @override
+  String get branchRequired => 'Branş seçilmelidir.';
 }

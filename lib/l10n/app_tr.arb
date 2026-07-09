@@ -365,5 +365,13 @@
   "editCoach": "Antrenörü Düzenle",
   "backToCoachList": "Antrenör Listesine Dön",
   "addCoach": "Yeni Antrenör Ekle",
-  "saveCoach": "Antrenörü Kaydet"
+  "saveCoach": "Antrenörü Kaydet",
+
+  "phoneEmpty": "Telefon numarası boş bırakılamaz.",
+  "phoneFormat": "Telefon 05XXXXXXXXX formatında olmalıdır.",
+  "timeEmpty": "Saat boş bırakılamaz.",
+  "timeFormat": "Saat 18:00 formatında olmalıdır.",
+  "dateEmpty": "Tarih boş bırakılamaz.",
+  "dateFormat": "Tarih 24.06.2026 formatında olmalı.",
+  "branchRequired": "Branş seçilmelidir."
 }

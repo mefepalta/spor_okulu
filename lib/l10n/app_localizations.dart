@@ -1633,6 +1633,48 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Antrenörü Kaydet'**
   String get saveCoach;
+
+  /// No description provided for @phoneEmpty.
+  ///
+  /// In tr, this message translates to:
+  /// **'Telefon numarası boş bırakılamaz.'**
+  String get phoneEmpty;
+
+  /// No description provided for @phoneFormat.
+  ///
+  /// In tr, this message translates to:
+  /// **'Telefon 05XXXXXXXXX formatında olmalıdır.'**
+  String get phoneFormat;
+
+  /// No description provided for @timeEmpty.
+  ///
+  /// In tr, this message translates to:
+  /// **'Saat boş bırakılamaz.'**
+  String get timeEmpty;
+
+  /// No description provided for @timeFormat.
+  ///
+  /// In tr, this message translates to:
+  /// **'Saat 18:00 formatında olmalıdır.'**
+  String get timeFormat;
+
+  /// No description provided for @dateEmpty.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tarih boş bırakılamaz.'**
+  String get dateEmpty;
+
+  /// No description provided for @dateFormat.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tarih 24.06.2026 formatında olmalı.'**
+  String get dateFormat;
+
+  /// No description provided for @branchRequired.
+  ///
+  /// In tr, this message translates to:
+  /// **'Branş seçilmelidir.'**
+  String get branchRequired;
 }
 
 class _AppLocalizationsDelegate

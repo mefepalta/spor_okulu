@@ -277,5 +277,13 @@
   "editCoach": "Modifier l'entraîneur",
   "backToCoachList": "Retour à la liste des entraîneurs",
   "addCoach": "Ajouter un nouvel entraîneur",
-  "saveCoach": "Enregistrer l'entraîneur"
+  "saveCoach": "Enregistrer l'entraîneur",
+
+  "phoneEmpty": "Le numéro de téléphone ne peut pas être vide.",
+  "phoneFormat": "Le téléphone doit être au format 05XXXXXXXXX.",
+  "timeEmpty": "L'heure ne peut pas être vide.",
+  "timeFormat": "L'heure doit être au format 18:00.",
+  "dateEmpty": "La date ne peut pas être vide.",
+  "dateFormat": "La date doit être au format 24.06.2026.",
+  "branchRequired": "Une discipline doit être sélectionnée."
 }

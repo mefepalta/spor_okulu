@@ -508,7 +508,7 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
                   prefixIcon: const Icon(Icons.phone),
                   hintText: '05XXXXXXXXX',
                 ),
-                validator: validatePhoneNumber,
+                validator: phoneValidator(l10n),
               ),
               const SizedBox(height: 20),
               ElevatedButton.icon(

@@ -1,16 +1,46 @@
-String? validatePhoneNumber(String? value) {
-  if (value == null || value.trim().isEmpty) {
-    return 'Telefon numarası boş bırakılamaz.';
-  }
+import '../l10n/app_localizations.dart';
 
-  final phone = value.trim();
-  final phoneRegExp = RegExp(r'^05[0-9]{9}$');
+/// Telefon doğrulayıcı (dile duyarlı). Form alanlarında
+/// `validator: phoneValidator(l10n)` şeklinde kullanılır.
+String? Function(String?) phoneValidator(AppLocalizations l10n) {
+  return (value) {
+    if (value == null || value.trim().isEmpty) {
+      return l10n.phoneEmpty;
+    }
+    if (!RegExp(r'^05[0-9]{9}$').hasMatch(value.trim())) {
+      return l10n.phoneFormat;
+    }
+    return null;
+  };
+}
 
-  if (!phoneRegExp.hasMatch(phone)) {
-    return 'Telefon 05XXXXXXXXX formatında olmalıdır.';
-  }
+/// Saat doğrulayıcı (dile duyarlı).
+String? Function(String?) timeValidator(AppLocalizations l10n) {
+  return (value) {
+    if (value == null || value.trim().isEmpty) {
+      return l10n.timeEmpty;
+    }
+    if (!RegExp(r'^([01]\d|2[0-3]):[0-5]\d$').hasMatch(value.trim())) {
+      return l10n.timeFormat;
+    }
+    return null;
+  };
+}
 
-  return null;
+/// Tarih doğrulayıcı (dile duyarlı).
+String? Function(String?) dateValidator(AppLocalizations l10n) {
+  return (value) {
+    if (value == null || value.trim().isEmpty) {
+      return l10n.dateEmpty;
+    }
+    final dateRegExp = RegExp(
+      r'^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.[0-9]{4}$',
+    );
+    if (!dateRegExp.hasMatch(value.trim())) {
+      return l10n.dateFormat;
+    }
+    return null;
+  };
 }
 
 String normalizeTurkishText(String value) {

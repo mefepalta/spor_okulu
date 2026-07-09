@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../data/sports_data.dart';
+import '../l10n/app_localizations.dart';
 
 /// Branş seçimi için katalog sporlarından oluşan dropdown.
 ///
@@ -19,6 +20,7 @@ class BranchDropdownFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final current = value;
     final items = <String>[...sportNames];
 
@@ -29,17 +31,17 @@ class BranchDropdownFormField extends StatelessWidget {
     return DropdownButtonFormField<String>(
       initialValue: (current != null && current.isNotEmpty) ? current : null,
       isExpanded: true,
-      decoration: const InputDecoration(
-        labelText: 'Branş',
-        border: OutlineInputBorder(),
-        prefixIcon: Icon(Icons.sports_soccer),
+      decoration: InputDecoration(
+        labelText: l10n.fieldBranch,
+        border: const OutlineInputBorder(),
+        prefixIcon: const Icon(Icons.sports_soccer),
       ),
       items: items
           .map((s) => DropdownMenuItem<String>(value: s, child: Text(s)))
           .toList(),
       onChanged: onChanged,
       validator: (selected) =>
-          (selected == null || selected.isEmpty) ? 'Branş seçilmelidir.' : null,
+          (selected == null || selected.isEmpty) ? l10n.branchRequired : null,
     );
   }
 }

@@ -277,5 +277,13 @@
   "editCoach": "Edit Coach",
   "backToCoachList": "Back to Coach List",
   "addCoach": "Add New Coach",
-  "saveCoach": "Save Coach"
+  "saveCoach": "Save Coach",
+
+  "phoneEmpty": "Phone number cannot be empty.",
+  "phoneFormat": "Phone must be in the format 05XXXXXXXXX.",
+  "timeEmpty": "Time cannot be empty.",
+  "timeFormat": "Time must be in the format 18:00.",
+  "dateEmpty": "Date cannot be empty.",
+  "dateFormat": "Date must be in the format 24.06.2026.",
+  "branchRequired": "A branch must be selected."
 }

@@ -868,4 +868,25 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get saveCoach => 'Guardar entrenador';
+
+  @override
+  String get phoneEmpty => 'El número de teléfono no puede estar vacío.';
+
+  @override
+  String get phoneFormat => 'El teléfono debe tener el formato 05XXXXXXXXX.';
+
+  @override
+  String get timeEmpty => 'La hora no puede estar vacía.';
+
+  @override
+  String get timeFormat => 'La hora debe tener el formato 18:00.';
+
+  @override
+  String get dateEmpty => 'La fecha no puede estar vacía.';
+
+  @override
+  String get dateFormat => 'La fecha debe tener el formato 24.06.2026.';
+
+  @override
+  String get branchRequired => 'Debe seleccionarse una disciplina.';
 }
