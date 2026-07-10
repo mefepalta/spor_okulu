@@ -96,14 +96,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return l10n.roleDescViewer;
   }
 
-  IconData get roleIcon {
-    if (isAdmin) return Icons.admin_panel_settings;
-    if (isCoach) return Icons.sports;
-    if (isParent) return Icons.family_restroom;
-    if (isStudent) return Icons.school;
-    return Icons.person;
-  }
-
   IconData get roleChipIcon {
     if (isAdmin) return Icons.verified_user;
     if (isCoach) return Icons.sports;
@@ -205,6 +197,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ? displayName
         : (email.isNotEmpty ? email : l10n.profileUserFallback);
 
+    // Fotoğraf yoksa (sol menü başlığıyla tutarlı) ad-soyad baş harfi göster.
+    final initialsSource = displayName.isNotEmpty
+        ? displayName
+        : (email.isNotEmpty ? email.split('@').first : '');
+
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(24),
@@ -215,7 +212,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
               backgroundColor: AppColors.primary.withValues(alpha: 0.12),
               backgroundImage: avatarImage,
               child: avatarImage == null
-                  ? Icon(roleIcon, size: 46, color: AppColors.primary)
+                  ? Text(
+                      _initials(initialsSource),
+                      style: const TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.primary,
+                      ),
+                    )
                   : null,
             ),
             const SizedBox(height: 16),
@@ -249,6 +253,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
     );
+  }
+
+  /// Ad-soyad (ya da e-posta ön eki) baş harfleri; foto yoksa avatar yedeği.
+  String _initials(String source) {
+    final parts = source.trim().split(RegExp(r'\s+')).where((p) => p.isNotEmpty);
+    if (parts.isEmpty) {
+      return '?';
+    }
+    return parts.map((p) => p.substring(0, 1)).take(2).join().toUpperCase();
   }
 
   Widget _buildChildrenCard(AppLocalizations l10n) {
