@@ -29,14 +29,6 @@ extension _DashboardChrome on _DashboardScreenState {
           ),
           const Divider(height: 1),
           _drawerTile(
-            icon: Icons.account_circle,
-            label: l10n.profileTitle,
-            onTap: () {
-              Navigator.pop(context);
-              _openProfileScreen(context);
-            },
-          ),
-          _drawerTile(
             icon: Icons.logout,
             label: l10n.logout,
             color: Colors.red,
@@ -51,46 +43,100 @@ extension _DashboardChrome on _DashboardScreenState {
     );
   }
 
+  /// Sol menünün en üstündeki profil özeti. Kullanıcının avatarı, adı ve
+  /// rol/e-postasını gösterir; dokununca profil ekranını açar (sağ üstteki
+  /// ayrı profil kısayolu bu sayede kaldırıldı).
   Widget _buildDrawerHeader(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final roleLabel = localizedRole(l10n, _userRole);
     final email = _authService.currentUser?.email ?? '';
+    final name = _myDisplayName.trim().isNotEmpty
+        ? _myDisplayName.trim()
+        : (email.isNotEmpty ? email.split('@').first : l10n.profileUserFallback);
 
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.fromLTRB(20, 56, 20, 20),
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [AppColors.primary, AppColors.mid],
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const CircleAvatar(
-            radius: 26,
-            backgroundColor: Colors.white24,
-            child: Icon(Icons.sports_soccer, color: Colors.white, size: 28),
-          ),
-          const SizedBox(height: 12),
-          Text(
-            l10n.drawerMainPanel,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () {
+          Navigator.pop(context);
+          _openProfileScreen(context);
+        },
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.fromLTRB(20, 56, 12, 20),
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [AppColors.primary, AppColors.mid],
             ),
           ),
-          const SizedBox(height: 2),
-          Text(
-            email.isNotEmpty ? '$roleLabel • $email' : roleLabel,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(color: Colors.white70, fontSize: 13),
+          child: Row(
+            children: [
+              _drawerHeaderAvatar(name),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      name,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      email.isNotEmpty ? '$roleLabel • $email' : roleLabel,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(color: Colors.white70, fontSize: 12),
+                    ),
+                  ],
+                ),
+              ),
+              const Icon(Icons.chevron_right, color: Colors.white70),
+            ],
           ),
-        ],
+        ),
+      ),
+    );
+  }
+
+  /// Başlık avatarı: profil fotoğrafı (base64) varsa onu, yoksa ad-soyad baş
+  /// harfini gösterir.
+  Widget _drawerHeaderAvatar(String name) {
+    if (_myPhotoBase64.isNotEmpty) {
+      return CircleAvatar(
+        radius: 28,
+        backgroundImage: MemoryImage(base64Decode(_myPhotoBase64)),
+      );
+    }
+    final initials = name.trim().isEmpty
+        ? '?'
+        : name
+              .trim()
+              .split(RegExp(r'\s+'))
+              .where((p) => p.isNotEmpty)
+              .map((p) => p.substring(0, 1))
+              .take(2)
+              .join()
+              .toUpperCase();
+    return CircleAvatar(
+      radius: 28,
+      backgroundColor: Colors.white24,
+      child: Text(
+        initials,
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }

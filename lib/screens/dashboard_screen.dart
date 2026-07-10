@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
@@ -13,6 +14,7 @@ import '../services/auth_service.dart';
 import '../services/ai_summary.dart';
 import '../services/firestore_service.dart';
 import '../services/parent_service.dart';
+import '../services/profile_service.dart';
 import '../services/reminders_service.dart';
 import '../services/user_management_service.dart';
 import '../services/user_role_service.dart';
@@ -62,6 +64,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final UserRoleService _userRoleService = UserRoleService();
   final ParentService _parentService = ParentService();
   final UserManagementService _userManagementService = UserManagementService();
+  final ProfileService _profileService = ProfileService();
   final AbsenceAlertService _absenceAlertService = AbsenceAlertService();
   final RemindersService _remindersService = RemindersService();
   StreamSubscription<List<Announcement>>? _announcementSubscription;
@@ -84,6 +87,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
   List<String> _assignedStudentIds = const [];
 
   String _userRole = AppRoles.viewer;
+
+  /// Sol menü başlığındaki profil kartı için: giriş yapan kullanıcının ad-soyadı
+  /// ve base64 avatarı (yoksa boş). Tüm rollerde doldurulur.
+  String _myDisplayName = '';
+  String _myPhotoBase64 = '';
 
   /// Viewer (rolü bekleyen/belirsiz) kullanıcının karşılama panosu için: ad,
   /// talep edilen rol ve başvuru durumu. Yalnızca viewer dalında doldurulur.
@@ -201,6 +209,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
       final loadedAnnouncements = await _firestoreService.loadAnnouncements();
       final loadedEvents = await _firestoreService.loadEvents();
 
+      // Sol menü başlığındaki profil kartı için (ad + avatar) — tüm roller.
+      final myProfile = await _profileService.loadMyProfile();
+
       // Rol bazlı yükleme: her rol yalnızca yetkili olduğu veriyi çeker.
       // Böylece veli/görüntüleyici, başkalarının hassas verisini indirmez ve
       // Firestore kurallarıyla uyumlu kalır.
@@ -288,6 +299,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
       setState(() {
         _userRole = userRole;
         _assignedStudentIds = assignedStudentIds;
+        _myDisplayName = myProfile?.displayName ?? '';
+        _myPhotoBase64 = myProfile?.photoBase64 ?? '';
         _viewerName = viewerAccount?.displayName ?? '';
         _requestedRole = viewerAccount?.requestedRole ?? '';
         _requestStatus = viewerAccount?.requestStatus ?? '';
@@ -460,12 +473,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
         actions: [
           _buildNotificationsAction(context),
-          IconButton(
-            onPressed: () {
-              _openProfileScreen(context);
-            },
-            icon: const Icon(Icons.account_circle),
-          ),
           IconButton(
             onPressed: () {
               _logout(context);
