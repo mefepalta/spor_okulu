@@ -47,6 +47,12 @@ service cloud.firestore {
       return isAdmin() || isCoach();
     }
 
+    // Onaylı üye = kulüp sohbetini kullanabilenler. Viewer (onay bekleyen)
+    // HARİÇ; yalnızca rolü atanmış herkes (admin/coach/veli/ogrenci).
+    function isApprovedMember() {
+      return isSignedIn() && role() in ["admin", "coach", "veli", "ogrenci"];
+    }
+
     // Giriş yapan veliye atanmış öğrenci kimlikleri (yoksa boş liste).
     function ownStudentIds() {
       let userData =
@@ -172,6 +178,21 @@ service cloud.firestore {
     match /equipment/{document} {
       allow read: if isStaff();
       allow write: if isAdminOrCoach();
+    }
+
+    // Kulüp genel sohbeti: onaylı üyeler okur ve yazar. Gönderen kendi
+    // kimliğiyle, boş olmayan ve en çok 1000 karakter metin ekleyebilir.
+    // Mesajlar değişmez (update yok); silme yalnızca admin ya da mesaj sahibi.
+    match /chatMessages/{document} {
+      allow read: if isApprovedMember();
+      allow create: if isApprovedMember()
+        && request.resource.data.senderId == request.auth.uid
+        && request.resource.data.text is string
+        && request.resource.data.text.size() > 0
+        && request.resource.data.text.size() <= 1000;
+      allow update: if false;
+      allow delete: if isAdmin()
+        || (isSignedIn() && resource.data.senderId == request.auth.uid);
     }
 
     match /{document=**} {
