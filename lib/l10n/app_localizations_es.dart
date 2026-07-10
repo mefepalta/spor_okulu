@@ -2026,4 +2026,54 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get chatEdited => 'editado';
+
+  @override
+  String get scheduleTitle => 'Horario de clases';
+
+  @override
+  String get scheduleAddTitle => 'Añadir clase';
+
+  @override
+  String get scheduleEditTitle => 'Editar clase';
+
+  @override
+  String get scheduleEmptyTitle => 'El horario está vacío';
+
+  @override
+  String get scheduleEmptyBody => 'Aún no se han añadido clases.';
+
+  @override
+  String get scheduleEmptyBodyManage =>
+      'Añade la primera clase con el botón +.';
+
+  @override
+  String get scheduleNoLesson => 'Sin clases';
+
+  @override
+  String get scheduleDayLabel => 'Día';
+
+  @override
+  String get scheduleStartLabel => 'Inicio';
+
+  @override
+  String get scheduleEndLabel => 'Fin';
+
+  @override
+  String get scheduleGroupLabel => 'Grupo';
+
+  @override
+  String get scheduleCoachLabel => 'Entrenador';
+
+  @override
+  String get scheduleDeleteTitle => 'Eliminar clase';
+
+  @override
+  String get scheduleDeleteConfirm => '¿Eliminar esta clase?';
+
+  @override
+  String get scheduleNeedsGroupCoach =>
+      'Primero añade un grupo y un entrenador.';
+
+  @override
+  String get scheduleLoadError => 'No se pudo cargar el horario.';
 }

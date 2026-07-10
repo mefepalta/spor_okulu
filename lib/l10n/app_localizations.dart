@@ -3670,6 +3670,102 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'düzenlendi'**
   String get chatEdited;
+
+  /// Schedule: scheduleTitle
+  ///
+  /// In tr, this message translates to:
+  /// **'Ders Programı'**
+  String get scheduleTitle;
+
+  /// Schedule: scheduleAddTitle
+  ///
+  /// In tr, this message translates to:
+  /// **'Ders Ekle'**
+  String get scheduleAddTitle;
+
+  /// Schedule: scheduleEditTitle
+  ///
+  /// In tr, this message translates to:
+  /// **'Dersi Düzenle'**
+  String get scheduleEditTitle;
+
+  /// Schedule: scheduleEmptyTitle
+  ///
+  /// In tr, this message translates to:
+  /// **'Program boş'**
+  String get scheduleEmptyTitle;
+
+  /// Schedule: scheduleEmptyBody
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz ders eklenmemiş.'**
+  String get scheduleEmptyBody;
+
+  /// Schedule: scheduleEmptyBodyManage
+  ///
+  /// In tr, this message translates to:
+  /// **'Sağ alttaki + ile ilk dersi ekle.'**
+  String get scheduleEmptyBodyManage;
+
+  /// Schedule: scheduleNoLesson
+  ///
+  /// In tr, this message translates to:
+  /// **'Ders yok'**
+  String get scheduleNoLesson;
+
+  /// Schedule: scheduleDayLabel
+  ///
+  /// In tr, this message translates to:
+  /// **'Gün'**
+  String get scheduleDayLabel;
+
+  /// Schedule: scheduleStartLabel
+  ///
+  /// In tr, this message translates to:
+  /// **'Başlangıç'**
+  String get scheduleStartLabel;
+
+  /// Schedule: scheduleEndLabel
+  ///
+  /// In tr, this message translates to:
+  /// **'Bitiş'**
+  String get scheduleEndLabel;
+
+  /// Schedule: scheduleGroupLabel
+  ///
+  /// In tr, this message translates to:
+  /// **'Grup'**
+  String get scheduleGroupLabel;
+
+  /// Schedule: scheduleCoachLabel
+  ///
+  /// In tr, this message translates to:
+  /// **'Antrenör'**
+  String get scheduleCoachLabel;
+
+  /// Schedule: scheduleDeleteTitle
+  ///
+  /// In tr, this message translates to:
+  /// **'Dersi sil'**
+  String get scheduleDeleteTitle;
+
+  /// Schedule: scheduleDeleteConfirm
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu ders silinsin mi?'**
+  String get scheduleDeleteConfirm;
+
+  /// Schedule: scheduleNeedsGroupCoach
+  ///
+  /// In tr, this message translates to:
+  /// **'Önce grup ve antrenör ekleyin.'**
+  String get scheduleNeedsGroupCoach;
+
+  /// Schedule: scheduleLoadError
+  ///
+  /// In tr, this message translates to:
+  /// **'Program yüklenemedi.'**
+  String get scheduleLoadError;
 }
 
 class _AppLocalizationsDelegate

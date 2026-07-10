@@ -591,5 +591,21 @@
   "chatEditTitle": "تعديل الرسالة",
   "chatDeleteTitle": "حذف الرسالة",
   "chatDeleteConfirm": "هل تريد حذف هذه الرسالة؟",
-  "chatEdited": "مُعدَّلة"
+  "chatEdited": "مُعدَّلة",
+  "scheduleTitle": "جدول الحصص",
+  "scheduleAddTitle": "إضافة حصة",
+  "scheduleEditTitle": "تعديل الحصة",
+  "scheduleEmptyTitle": "الجدول فارغ",
+  "scheduleEmptyBody": "لم تتم إضافة حصص بعد.",
+  "scheduleEmptyBodyManage": "أضف أول حصة بزر +.",
+  "scheduleNoLesson": "لا توجد حصص",
+  "scheduleDayLabel": "اليوم",
+  "scheduleStartLabel": "البداية",
+  "scheduleEndLabel": "النهاية",
+  "scheduleGroupLabel": "المجموعة",
+  "scheduleCoachLabel": "المدرب",
+  "scheduleDeleteTitle": "حذف الحصة",
+  "scheduleDeleteConfirm": "هل تريد حذف هذه الحصة؟",
+  "scheduleNeedsGroupCoach": "أضف مجموعة ومدرباً أولاً.",
+  "scheduleLoadError": "تعذّر تحميل الجدول."
 }

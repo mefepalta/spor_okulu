@@ -591,5 +591,21 @@
   "chatEditTitle": "Редактировать сообщение",
   "chatDeleteTitle": "Удалить сообщение",
   "chatDeleteConfirm": "Удалить это сообщение?",
-  "chatEdited": "изменено"
+  "chatEdited": "изменено",
+  "scheduleTitle": "Расписание занятий",
+  "scheduleAddTitle": "Добавить занятие",
+  "scheduleEditTitle": "Изменить занятие",
+  "scheduleEmptyTitle": "Расписание пусто",
+  "scheduleEmptyBody": "Занятия ещё не добавлены.",
+  "scheduleEmptyBodyManage": "Добавьте первое занятие кнопкой +.",
+  "scheduleNoLesson": "Нет занятий",
+  "scheduleDayLabel": "День",
+  "scheduleStartLabel": "Начало",
+  "scheduleEndLabel": "Конец",
+  "scheduleGroupLabel": "Группа",
+  "scheduleCoachLabel": "Тренер",
+  "scheduleDeleteTitle": "Удалить занятие",
+  "scheduleDeleteConfirm": "Удалить это занятие?",
+  "scheduleNeedsGroupCoach": "Сначала добавьте группу и тренера.",
+  "scheduleLoadError": "Не удалось загрузить расписание."
 }

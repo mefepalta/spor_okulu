@@ -2003,4 +2003,52 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get chatEdited => 'düzenlendi';
+
+  @override
+  String get scheduleTitle => 'Ders Programı';
+
+  @override
+  String get scheduleAddTitle => 'Ders Ekle';
+
+  @override
+  String get scheduleEditTitle => 'Dersi Düzenle';
+
+  @override
+  String get scheduleEmptyTitle => 'Program boş';
+
+  @override
+  String get scheduleEmptyBody => 'Henüz ders eklenmemiş.';
+
+  @override
+  String get scheduleEmptyBodyManage => 'Sağ alttaki + ile ilk dersi ekle.';
+
+  @override
+  String get scheduleNoLesson => 'Ders yok';
+
+  @override
+  String get scheduleDayLabel => 'Gün';
+
+  @override
+  String get scheduleStartLabel => 'Başlangıç';
+
+  @override
+  String get scheduleEndLabel => 'Bitiş';
+
+  @override
+  String get scheduleGroupLabel => 'Grup';
+
+  @override
+  String get scheduleCoachLabel => 'Antrenör';
+
+  @override
+  String get scheduleDeleteTitle => 'Dersi sil';
+
+  @override
+  String get scheduleDeleteConfirm => 'Bu ders silinsin mi?';
+
+  @override
+  String get scheduleNeedsGroupCoach => 'Önce grup ve antrenör ekleyin.';
+
+  @override
+  String get scheduleLoadError => 'Program yüklenemedi.';
 }

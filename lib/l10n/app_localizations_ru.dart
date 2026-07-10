@@ -2019,4 +2019,52 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get chatEdited => 'изменено';
+
+  @override
+  String get scheduleTitle => 'Расписание занятий';
+
+  @override
+  String get scheduleAddTitle => 'Добавить занятие';
+
+  @override
+  String get scheduleEditTitle => 'Изменить занятие';
+
+  @override
+  String get scheduleEmptyTitle => 'Расписание пусто';
+
+  @override
+  String get scheduleEmptyBody => 'Занятия ещё не добавлены.';
+
+  @override
+  String get scheduleEmptyBodyManage => 'Добавьте первое занятие кнопкой +.';
+
+  @override
+  String get scheduleNoLesson => 'Нет занятий';
+
+  @override
+  String get scheduleDayLabel => 'День';
+
+  @override
+  String get scheduleStartLabel => 'Начало';
+
+  @override
+  String get scheduleEndLabel => 'Конец';
+
+  @override
+  String get scheduleGroupLabel => 'Группа';
+
+  @override
+  String get scheduleCoachLabel => 'Тренер';
+
+  @override
+  String get scheduleDeleteTitle => 'Удалить занятие';
+
+  @override
+  String get scheduleDeleteConfirm => 'Удалить это занятие?';
+
+  @override
+  String get scheduleNeedsGroupCoach => 'Сначала добавьте группу и тренера.';
+
+  @override
+  String get scheduleLoadError => 'Не удалось загрузить расписание.';
 }

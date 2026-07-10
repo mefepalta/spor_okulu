@@ -526,6 +526,87 @@ class ChatMessage {
   }
 }
 
+/// Haftalık ders programındaki tek bir oturum. Bir grup haftada birden çok
+/// oturuma sahip olabilir. [day] veritabanında ASCII Türkçe saklanır
+/// ('Pazartesi','Sali','Carsamba','Persembe','Cuma','Cumartesi','Pazar');
+/// gösterimde [localizedDay] ile çevrilir. Grup/antrenör adı ve şube, veli ve
+/// öğrencinin (personel koleksiyonlarını okumadan) görebilmesi için
+/// denormalize edilir.
+class ScheduleEntry {
+  final String id;
+  final String day;
+  final String startTime;
+  final String endTime;
+  final String groupId;
+  final String groupName;
+  final String branch;
+  final String coachId;
+  final String coachName;
+
+  const ScheduleEntry({
+    this.id = '',
+    required this.day,
+    required this.startTime,
+    required this.endTime,
+    required this.groupId,
+    required this.groupName,
+    this.branch = '',
+    required this.coachId,
+    required this.coachName,
+  });
+
+  ScheduleEntry copyWith({
+    String? id,
+    String? day,
+    String? startTime,
+    String? endTime,
+    String? groupId,
+    String? groupName,
+    String? branch,
+    String? coachId,
+    String? coachName,
+  }) {
+    return ScheduleEntry(
+      id: id ?? this.id,
+      day: day ?? this.day,
+      startTime: startTime ?? this.startTime,
+      endTime: endTime ?? this.endTime,
+      groupId: groupId ?? this.groupId,
+      groupName: groupName ?? this.groupName,
+      branch: branch ?? this.branch,
+      coachId: coachId ?? this.coachId,
+      coachName: coachName ?? this.coachName,
+    );
+  }
+
+  factory ScheduleEntry.fromJson(String id, Map<String, dynamic> json) {
+    return ScheduleEntry(
+      id: id,
+      day: json['day'] as String? ?? '',
+      startTime: json['startTime'] as String? ?? '',
+      endTime: json['endTime'] as String? ?? '',
+      groupId: json['groupId'] as String? ?? '',
+      groupName: json['groupName'] as String? ?? '',
+      branch: json['branch'] as String? ?? '',
+      coachId: json['coachId'] as String? ?? '',
+      coachName: json['coachName'] as String? ?? '',
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'day': day,
+      'startTime': startTime,
+      'endTime': endTime,
+      'groupId': groupId,
+      'groupName': groupName,
+      'branch': branch,
+      'coachId': coachId,
+      'coachName': coachName,
+    };
+  }
+}
+
 /// Antrenörün bir öğrenci için belirli bir tarihte girdiği performans puanları.
 /// [scores] anahtarları [PerformanceMetrics.all] içindeki ölçüt adlarıdır.
 class PerformanceRecord {

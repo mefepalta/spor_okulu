@@ -591,5 +591,21 @@
   "chatEditTitle": "Edit message",
   "chatDeleteTitle": "Delete message",
   "chatDeleteConfirm": "Delete this message?",
-  "chatEdited": "edited"
+  "chatEdited": "edited",
+  "scheduleTitle": "Class Schedule",
+  "scheduleAddTitle": "Add Lesson",
+  "scheduleEditTitle": "Edit Lesson",
+  "scheduleEmptyTitle": "Schedule is empty",
+  "scheduleEmptyBody": "No lessons added yet.",
+  "scheduleEmptyBodyManage": "Add the first lesson with the + button.",
+  "scheduleNoLesson": "No lessons",
+  "scheduleDayLabel": "Day",
+  "scheduleStartLabel": "Start",
+  "scheduleEndLabel": "End",
+  "scheduleGroupLabel": "Group",
+  "scheduleCoachLabel": "Coach",
+  "scheduleDeleteTitle": "Delete lesson",
+  "scheduleDeleteConfirm": "Delete this lesson?",
+  "scheduleNeedsGroupCoach": "Add a group and a coach first.",
+  "scheduleLoadError": "Couldn't load schedule."
 }

@@ -591,5 +591,21 @@
   "chatEditTitle": "Editar mensaje",
   "chatDeleteTitle": "Eliminar mensaje",
   "chatDeleteConfirm": "¿Eliminar este mensaje?",
-  "chatEdited": "editado"
+  "chatEdited": "editado",
+  "scheduleTitle": "Horario de clases",
+  "scheduleAddTitle": "Añadir clase",
+  "scheduleEditTitle": "Editar clase",
+  "scheduleEmptyTitle": "El horario está vacío",
+  "scheduleEmptyBody": "Aún no se han añadido clases.",
+  "scheduleEmptyBodyManage": "Añade la primera clase con el botón +.",
+  "scheduleNoLesson": "Sin clases",
+  "scheduleDayLabel": "Día",
+  "scheduleStartLabel": "Inicio",
+  "scheduleEndLabel": "Fin",
+  "scheduleGroupLabel": "Grupo",
+  "scheduleCoachLabel": "Entrenador",
+  "scheduleDeleteTitle": "Eliminar clase",
+  "scheduleDeleteConfirm": "¿Eliminar esta clase?",
+  "scheduleNeedsGroupCoach": "Primero añade un grupo y un entrenador.",
+  "scheduleLoadError": "No se pudo cargar el horario."
 }

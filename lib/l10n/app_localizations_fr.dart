@@ -2033,4 +2033,54 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get chatEdited => 'modifié';
+
+  @override
+  String get scheduleTitle => 'Emploi du temps';
+
+  @override
+  String get scheduleAddTitle => 'Ajouter un cours';
+
+  @override
+  String get scheduleEditTitle => 'Modifier le cours';
+
+  @override
+  String get scheduleEmptyTitle => 'Emploi du temps vide';
+
+  @override
+  String get scheduleEmptyBody => 'Aucun cours ajouté pour l\'instant.';
+
+  @override
+  String get scheduleEmptyBodyManage =>
+      'Ajoutez le premier cours avec le bouton +.';
+
+  @override
+  String get scheduleNoLesson => 'Aucun cours';
+
+  @override
+  String get scheduleDayLabel => 'Jour';
+
+  @override
+  String get scheduleStartLabel => 'Début';
+
+  @override
+  String get scheduleEndLabel => 'Fin';
+
+  @override
+  String get scheduleGroupLabel => 'Groupe';
+
+  @override
+  String get scheduleCoachLabel => 'Entraîneur';
+
+  @override
+  String get scheduleDeleteTitle => 'Supprimer le cours';
+
+  @override
+  String get scheduleDeleteConfirm => 'Supprimer ce cours ?';
+
+  @override
+  String get scheduleNeedsGroupCoach =>
+      'Ajoutez d\'abord un groupe et un entraîneur.';
+
+  @override
+  String get scheduleLoadError => 'Impossible de charger l\'emploi du temps.';
 }

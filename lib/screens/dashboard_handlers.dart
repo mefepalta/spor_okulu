@@ -532,6 +532,19 @@ extension _DashboardHandlers on _DashboardScreenState {
     );
   }
 
+  void _openScheduleScreen(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ScheduleScreen(
+          groups: _groups,
+          coaches: _coaches,
+          canManage: _isAdmin || _isCoach,
+        ),
+      ),
+    );
+  }
+
   // --- Depo / ekipman ---
 
   Future<EquipmentItem> _addEquipment(EquipmentItem item) async {

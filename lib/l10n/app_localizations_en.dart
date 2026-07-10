@@ -2007,4 +2007,53 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chatEdited => 'edited';
+
+  @override
+  String get scheduleTitle => 'Class Schedule';
+
+  @override
+  String get scheduleAddTitle => 'Add Lesson';
+
+  @override
+  String get scheduleEditTitle => 'Edit Lesson';
+
+  @override
+  String get scheduleEmptyTitle => 'Schedule is empty';
+
+  @override
+  String get scheduleEmptyBody => 'No lessons added yet.';
+
+  @override
+  String get scheduleEmptyBodyManage =>
+      'Add the first lesson with the + button.';
+
+  @override
+  String get scheduleNoLesson => 'No lessons';
+
+  @override
+  String get scheduleDayLabel => 'Day';
+
+  @override
+  String get scheduleStartLabel => 'Start';
+
+  @override
+  String get scheduleEndLabel => 'End';
+
+  @override
+  String get scheduleGroupLabel => 'Group';
+
+  @override
+  String get scheduleCoachLabel => 'Coach';
+
+  @override
+  String get scheduleDeleteTitle => 'Delete lesson';
+
+  @override
+  String get scheduleDeleteConfirm => 'Delete this lesson?';
+
+  @override
+  String get scheduleNeedsGroupCoach => 'Add a group and a coach first.';
+
+  @override
+  String get scheduleLoadError => 'Couldn\'t load schedule.';
 }

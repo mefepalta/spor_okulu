@@ -1166,5 +1166,69 @@
   "chatEdited": "düzenlendi",
   "@chatEdited": {
     "description": "Chat: chatEdited"
+  },
+  "scheduleTitle": "Ders Programı",
+  "@scheduleTitle": {
+    "description": "Schedule: scheduleTitle"
+  },
+  "scheduleAddTitle": "Ders Ekle",
+  "@scheduleAddTitle": {
+    "description": "Schedule: scheduleAddTitle"
+  },
+  "scheduleEditTitle": "Dersi Düzenle",
+  "@scheduleEditTitle": {
+    "description": "Schedule: scheduleEditTitle"
+  },
+  "scheduleEmptyTitle": "Program boş",
+  "@scheduleEmptyTitle": {
+    "description": "Schedule: scheduleEmptyTitle"
+  },
+  "scheduleEmptyBody": "Henüz ders eklenmemiş.",
+  "@scheduleEmptyBody": {
+    "description": "Schedule: scheduleEmptyBody"
+  },
+  "scheduleEmptyBodyManage": "Sağ alttaki + ile ilk dersi ekle.",
+  "@scheduleEmptyBodyManage": {
+    "description": "Schedule: scheduleEmptyBodyManage"
+  },
+  "scheduleNoLesson": "Ders yok",
+  "@scheduleNoLesson": {
+    "description": "Schedule: scheduleNoLesson"
+  },
+  "scheduleDayLabel": "Gün",
+  "@scheduleDayLabel": {
+    "description": "Schedule: scheduleDayLabel"
+  },
+  "scheduleStartLabel": "Başlangıç",
+  "@scheduleStartLabel": {
+    "description": "Schedule: scheduleStartLabel"
+  },
+  "scheduleEndLabel": "Bitiş",
+  "@scheduleEndLabel": {
+    "description": "Schedule: scheduleEndLabel"
+  },
+  "scheduleGroupLabel": "Grup",
+  "@scheduleGroupLabel": {
+    "description": "Schedule: scheduleGroupLabel"
+  },
+  "scheduleCoachLabel": "Antrenör",
+  "@scheduleCoachLabel": {
+    "description": "Schedule: scheduleCoachLabel"
+  },
+  "scheduleDeleteTitle": "Dersi sil",
+  "@scheduleDeleteTitle": {
+    "description": "Schedule: scheduleDeleteTitle"
+  },
+  "scheduleDeleteConfirm": "Bu ders silinsin mi?",
+  "@scheduleDeleteConfirm": {
+    "description": "Schedule: scheduleDeleteConfirm"
+  },
+  "scheduleNeedsGroupCoach": "Önce grup ve antrenör ekleyin.",
+  "@scheduleNeedsGroupCoach": {
+    "description": "Schedule: scheduleNeedsGroupCoach"
+  },
+  "scheduleLoadError": "Program yüklenemedi.",
+  "@scheduleLoadError": {
+    "description": "Schedule: scheduleLoadError"
   }
 }

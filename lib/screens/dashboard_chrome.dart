@@ -228,6 +228,7 @@ extension _DashboardChrome on _DashboardScreenState {
           _openStudentAccountsScreen,
         ),
       _drawerSection(l10n.sectionOperations),
+      _drawerNav(Icons.calendar_month, l10n.scheduleTitle, _openScheduleScreen),
       _drawerNav(Icons.check_circle, l10n.navAttendance, _openAttendanceScreen),
       _drawerNav(Icons.event_busy, l10n.navLeaveRequests, _openLeaveRequestsScreen),
       if (_canViewPayments)
@@ -269,6 +270,7 @@ extension _DashboardChrome on _DashboardScreenState {
       _drawerNav(Icons.query_stats, l10n.navPerformance, _openPerformanceScreen),
       _drawerNav(Icons.check_circle, l10n.navAttendance, _openChildAttendanceScreen),
       _drawerNav(Icons.event_busy, l10n.navReportAbsence, _openLeaveRequestsScreen),
+      _drawerNav(Icons.calendar_month, l10n.scheduleTitle, _openScheduleScreen),
       _drawerNav(Icons.event_available, l10n.navEvents, _openEventsScreen),
       _drawerNav(Icons.payment, l10n.navPayments, _openPaymentsScreen),
       _drawerSection(l10n.sectionClub),
@@ -300,6 +302,7 @@ extension _DashboardChrome on _DashboardScreenState {
       _drawerSection(l10n.sectionMe),
       _drawerNav(Icons.query_stats, l10n.navMyPerformance, _openPerformanceScreen),
       _drawerNav(Icons.check_circle, l10n.navMyAttendance, _openChildAttendanceScreen),
+      _drawerNav(Icons.calendar_month, l10n.scheduleTitle, _openScheduleScreen),
       _drawerNav(Icons.event_available, l10n.navEvents, _openEventsScreen),
       _drawerSection(l10n.sectionClub),
       _drawerNav(Icons.forum, l10n.chatTitle, _openClubChatScreen),

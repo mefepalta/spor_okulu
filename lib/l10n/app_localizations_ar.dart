@@ -1996,4 +1996,52 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get chatEdited => 'مُعدَّلة';
+
+  @override
+  String get scheduleTitle => 'جدول الحصص';
+
+  @override
+  String get scheduleAddTitle => 'إضافة حصة';
+
+  @override
+  String get scheduleEditTitle => 'تعديل الحصة';
+
+  @override
+  String get scheduleEmptyTitle => 'الجدول فارغ';
+
+  @override
+  String get scheduleEmptyBody => 'لم تتم إضافة حصص بعد.';
+
+  @override
+  String get scheduleEmptyBodyManage => 'أضف أول حصة بزر +.';
+
+  @override
+  String get scheduleNoLesson => 'لا توجد حصص';
+
+  @override
+  String get scheduleDayLabel => 'اليوم';
+
+  @override
+  String get scheduleStartLabel => 'البداية';
+
+  @override
+  String get scheduleEndLabel => 'النهاية';
+
+  @override
+  String get scheduleGroupLabel => 'المجموعة';
+
+  @override
+  String get scheduleCoachLabel => 'المدرب';
+
+  @override
+  String get scheduleDeleteTitle => 'حذف الحصة';
+
+  @override
+  String get scheduleDeleteConfirm => 'هل تريد حذف هذه الحصة؟';
+
+  @override
+  String get scheduleNeedsGroupCoach => 'أضف مجموعة ومدرباً أولاً.';
+
+  @override
+  String get scheduleLoadError => 'تعذّر تحميل الجدول.';
 }

@@ -1,0 +1,539 @@
+import 'package:flutter/material.dart';
+
+import '../l10n/app_localizations.dart';
+import '../models/app_models.dart';
+import '../services/schedule_service.dart';
+import '../theme/app_colors.dart';
+import '../utils/day_l10n.dart';
+import '../widgets/empty_state.dart';
+import '../widgets/wave_background.dart';
+
+/// Haftalık ders programı. Herkes (onaylı üye) görür; yalnızca admin+antrenör
+/// ([canManage]) ekler/düzenler/siler. Oturumlar gerçek zamanlı akar.
+class ScheduleScreen extends StatefulWidget {
+  final List<TrainingGroup> groups;
+  final List<Coach> coaches;
+  final bool canManage;
+
+  const ScheduleScreen({
+    super.key,
+    required this.groups,
+    required this.coaches,
+    required this.canManage,
+  });
+
+  @override
+  State<ScheduleScreen> createState() => _ScheduleScreenState();
+}
+
+/// Haftanın günleri, veritabanındaki ASCII Türkçe biçimiyle ve sırayla.
+const List<String> kScheduleDays = [
+  'Pazartesi',
+  'Sali',
+  'Carsamba',
+  'Persembe',
+  'Cuma',
+  'Cumartesi',
+  'Pazar',
+];
+
+class _ScheduleScreenState extends State<ScheduleScreen> {
+  final ScheduleService _service = ScheduleService();
+
+  Future<void> _openEditor(ScheduleEntry? existing) async {
+    final l10n = AppLocalizations.of(context);
+    if (widget.groups.isEmpty || widget.coaches.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(l10n.scheduleNeedsGroupCoach)),
+      );
+      return;
+    }
+    final result = await showModalBottomSheet<ScheduleEntry>(
+      context: context,
+      isScrollControlled: true,
+      builder: (_) => _ScheduleEntrySheet(
+        groups: widget.groups,
+        coaches: widget.coaches,
+        initial: existing,
+      ),
+    );
+    if (result == null) {
+      return;
+    }
+    if (existing == null) {
+      await _service.addEntry(result);
+    } else {
+      await _service.updateEntry(result.copyWith(id: existing.id));
+    }
+  }
+
+  Future<void> _confirmDelete(ScheduleEntry entry) async {
+    final l10n = AppLocalizations.of(context);
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(l10n.scheduleDeleteTitle),
+        content: Text(l10n.scheduleDeleteConfirm),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, false),
+            child: Text(l10n.commonCancel),
+          ),
+          FilledButton(
+            style: FilledButton.styleFrom(backgroundColor: Colors.red),
+            onPressed: () => Navigator.pop(dialogContext, true),
+            child: Text(l10n.commonDelete),
+          ),
+        ],
+      ),
+    );
+    if (confirmed == true) {
+      await _service.deleteEntry(entry.id);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return WaveScaffold(
+      appBar: AppBar(
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.calendar_month, size: 20),
+            const SizedBox(width: 8),
+            Text(l10n.scheduleTitle),
+          ],
+        ),
+      ),
+      floatingActionButton: widget.canManage
+          ? FloatingActionButton.extended(
+              onPressed: () => _openEditor(null),
+              icon: const Icon(Icons.add),
+              label: Text(l10n.scheduleAddTitle),
+            )
+          : null,
+      body: StreamBuilder<List<ScheduleEntry>>(
+        stream: _service.watchEntries(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return EmptyState(
+              icon: Icons.error_outline,
+              title: l10n.scheduleTitle,
+              message: l10n.scheduleLoadError,
+            );
+          }
+          if (snapshot.connectionState == ConnectionState.waiting &&
+              !snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          final entries = snapshot.data ?? const [];
+          if (entries.isEmpty) {
+            return EmptyState(
+              icon: Icons.calendar_month,
+              title: l10n.scheduleEmptyTitle,
+              message: widget.canManage
+                  ? l10n.scheduleEmptyBodyManage
+                  : l10n.scheduleEmptyBody,
+            );
+          }
+          return ListView(
+            padding: const EdgeInsets.fromLTRB(12, 12, 12, 88),
+            children: [
+              for (final day in kScheduleDays) _buildDaySection(l10n, day, entries),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildDaySection(
+    AppLocalizations l10n,
+    String day,
+    List<ScheduleEntry> allEntries,
+  ) {
+    final dayEntries = allEntries.where((e) => e.day == day).toList()
+      ..sort((a, b) => a.startTime.compareTo(b.startTime));
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(8, 12, 8, 6),
+          child: Text(
+            localizedDay(l10n, day).toUpperCase(),
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w700,
+              letterSpacing: 0.6,
+              color: AppColors.primary,
+            ),
+          ),
+        ),
+        if (dayEntries.isEmpty)
+          Padding(
+            padding: const EdgeInsetsDirectional.only(start: 8, bottom: 4),
+            child: Text(
+              l10n.scheduleNoLesson,
+              style: TextStyle(
+                color: Theme.of(context).textTheme.bodySmall?.color,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+          )
+        else
+          for (final entry in dayEntries) _buildEntryCard(l10n, entry),
+      ],
+    );
+  }
+
+  Widget _buildEntryCard(AppLocalizations l10n, ScheduleEntry entry) {
+    final groupLine = entry.branch.isNotEmpty
+        ? '${entry.groupName} · ${entry.branch}'
+        : entry.groupName;
+
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 4),
+      child: InkWell(
+        onTap: widget.canManage ? () => _openEditor(entry) : null,
+        borderRadius: BorderRadius.circular(12),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                decoration: BoxDecoration(
+                  color: AppColors.primary.withValues(alpha: 0.12),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Column(
+                  children: [
+                    Text(
+                      entry.startTime,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.primary,
+                      ),
+                    ),
+                    Text(
+                      entry.endTime,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Theme.of(context).textTheme.bodySmall?.color,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      groupLine,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                    const SizedBox(height: 2),
+                    Row(
+                      children: [
+                        const Icon(Icons.person, size: 14),
+                        const SizedBox(width: 4),
+                        Expanded(
+                          child: Text(
+                            entry.coachName,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: Theme.of(context).textTheme.bodySmall?.color,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              if (widget.canManage)
+                IconButton(
+                  icon: const Icon(Icons.delete_outline, color: Colors.red),
+                  onPressed: () => _confirmDelete(entry),
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Ders ekleme/düzenleme için alt sayfa (bottom sheet). Kendi durumunu yönetir;
+/// Kaydet'e basınca oluşturulan [ScheduleEntry]'yi geri döndürür.
+class _ScheduleEntrySheet extends StatefulWidget {
+  final List<TrainingGroup> groups;
+  final List<Coach> coaches;
+  final ScheduleEntry? initial;
+
+  const _ScheduleEntrySheet({
+    required this.groups,
+    required this.coaches,
+    this.initial,
+  });
+
+  @override
+  State<_ScheduleEntrySheet> createState() => _ScheduleEntrySheetState();
+}
+
+class _ScheduleEntrySheetState extends State<_ScheduleEntrySheet> {
+  late String _day;
+  late TimeOfDay _start;
+  late TimeOfDay _end;
+  late String _groupId;
+  late String _coachId;
+
+  @override
+  void initState() {
+    super.initState();
+    final initial = widget.initial;
+    _day = initial != null && kScheduleDays.contains(initial.day)
+        ? initial.day
+        : kScheduleDays.first;
+    _start = _parseTime(initial?.startTime) ?? const TimeOfDay(hour: 18, minute: 0);
+    _end = _parseTime(initial?.endTime) ?? const TimeOfDay(hour: 19, minute: 0);
+
+    final groupIds = widget.groups.map((g) => g.id).toSet();
+    _groupId = initial != null && groupIds.contains(initial.groupId)
+        ? initial.groupId
+        : widget.groups.first.id;
+
+    final coachIds = widget.coaches.map((c) => c.id).toSet();
+    if (initial != null && coachIds.contains(initial.coachId)) {
+      _coachId = initial.coachId;
+    } else {
+      // Yeni oturumda antrenörü grubun antrenörüyle başlat (varsa).
+      final group = _groupById(_groupId);
+      _coachId = group != null && coachIds.contains(group.coachId)
+          ? group.coachId
+          : widget.coaches.first.id;
+    }
+  }
+
+  TimeOfDay? _parseTime(String? value) {
+    if (value == null || !value.contains(':')) {
+      return null;
+    }
+    final parts = value.split(':');
+    final hour = int.tryParse(parts[0]);
+    final minute = int.tryParse(parts[1]);
+    if (hour == null || minute == null) {
+      return null;
+    }
+    return TimeOfDay(hour: hour, minute: minute);
+  }
+
+  String _formatTime(TimeOfDay time) {
+    String two(int n) => n.toString().padLeft(2, '0');
+    return '${two(time.hour)}:${two(time.minute)}';
+  }
+
+  TrainingGroup? _groupById(String id) {
+    for (final group in widget.groups) {
+      if (group.id == id) {
+        return group;
+      }
+    }
+    return null;
+  }
+
+  Coach? _coachById(String id) {
+    for (final coach in widget.coaches) {
+      if (coach.id == id) {
+        return coach;
+      }
+    }
+    return null;
+  }
+
+  Future<void> _pickTime(bool isStart) async {
+    final picked = await showTimePicker(
+      context: context,
+      initialTime: isStart ? _start : _end,
+    );
+    if (picked == null) {
+      return;
+    }
+    setState(() {
+      if (isStart) {
+        _start = picked;
+      } else {
+        _end = picked;
+      }
+    });
+  }
+
+  void _save() {
+    final group = _groupById(_groupId);
+    final coach = _coachById(_coachId);
+    if (group == null || coach == null) {
+      return;
+    }
+    Navigator.pop(
+      context,
+      ScheduleEntry(
+        id: widget.initial?.id ?? '',
+        day: _day,
+        startTime: _formatTime(_start),
+        endTime: _formatTime(_end),
+        groupId: group.id,
+        groupName: group.name,
+        branch: group.branch,
+        coachId: coach.id,
+        coachName: coach.name,
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return SafeArea(
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(
+          16,
+          16,
+          16,
+          16 + MediaQuery.of(context).viewInsets.bottom,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              widget.initial == null
+                  ? l10n.scheduleAddTitle
+                  : l10n.scheduleEditTitle,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 16),
+            DropdownButtonFormField<String>(
+              initialValue: _day,
+              decoration: InputDecoration(
+                labelText: l10n.scheduleDayLabel,
+                border: const OutlineInputBorder(),
+              ),
+              items: [
+                for (final day in kScheduleDays)
+                  DropdownMenuItem(value: day, child: Text(localizedDay(l10n, day))),
+              ],
+              onChanged: (value) => setState(() => _day = value ?? _day),
+            ),
+            const SizedBox(height: 12),
+            Row(
+              children: [
+                Expanded(
+                  child: _TimeField(
+                    label: l10n.scheduleStartLabel,
+                    value: _formatTime(_start),
+                    onTap: () => _pickTime(true),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: _TimeField(
+                    label: l10n.scheduleEndLabel,
+                    value: _formatTime(_end),
+                    onTap: () => _pickTime(false),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            DropdownButtonFormField<String>(
+              initialValue: _groupId,
+              isExpanded: true,
+              decoration: InputDecoration(
+                labelText: l10n.scheduleGroupLabel,
+                border: const OutlineInputBorder(),
+              ),
+              items: [
+                for (final group in widget.groups)
+                  DropdownMenuItem(value: group.id, child: Text(group.name)),
+              ],
+              onChanged: (value) {
+                if (value == null) {
+                  return;
+                }
+                setState(() {
+                  _groupId = value;
+                  // Grup değişince antrenörü grubun antrenörüne getir (varsa).
+                  final group = _groupById(value);
+                  final coachIds = widget.coaches.map((c) => c.id).toSet();
+                  if (group != null && coachIds.contains(group.coachId)) {
+                    _coachId = group.coachId;
+                  }
+                });
+              },
+            ),
+            const SizedBox(height: 12),
+            DropdownButtonFormField<String>(
+              initialValue: _coachId,
+              isExpanded: true,
+              decoration: InputDecoration(
+                labelText: l10n.scheduleCoachLabel,
+                border: const OutlineInputBorder(),
+              ),
+              items: [
+                for (final coach in widget.coaches)
+                  DropdownMenuItem(value: coach.id, child: Text(coach.name)),
+              ],
+              onChanged: (value) => setState(() => _coachId = value ?? _coachId),
+            ),
+            const SizedBox(height: 20),
+            SizedBox(
+              width: double.infinity,
+              child: FilledButton.icon(
+                onPressed: _save,
+                icon: const Icon(Icons.save),
+                label: Text(l10n.commonSave),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Saat seçici alan: dokununca [showTimePicker] açan salt-okunur bir kutu.
+class _TimeField extends StatelessWidget {
+  final String label;
+  final String value;
+  final VoidCallback onTap;
+
+  const _TimeField({
+    required this.label,
+    required this.value,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(4),
+      child: InputDecorator(
+        decoration: InputDecoration(
+          labelText: label,
+          border: const OutlineInputBorder(),
+          prefixIcon: const Icon(Icons.schedule),
+        ),
+        child: Text(value),
+      ),
+    );
+  }
+}

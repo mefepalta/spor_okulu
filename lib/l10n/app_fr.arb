@@ -591,5 +591,21 @@
   "chatEditTitle": "Modifier le message",
   "chatDeleteTitle": "Supprimer le message",
   "chatDeleteConfirm": "Supprimer ce message ?",
-  "chatEdited": "modifié"
+  "chatEdited": "modifié",
+  "scheduleTitle": "Emploi du temps",
+  "scheduleAddTitle": "Ajouter un cours",
+  "scheduleEditTitle": "Modifier le cours",
+  "scheduleEmptyTitle": "Emploi du temps vide",
+  "scheduleEmptyBody": "Aucun cours ajouté pour l'instant.",
+  "scheduleEmptyBodyManage": "Ajoutez le premier cours avec le bouton +.",
+  "scheduleNoLesson": "Aucun cours",
+  "scheduleDayLabel": "Jour",
+  "scheduleStartLabel": "Début",
+  "scheduleEndLabel": "Fin",
+  "scheduleGroupLabel": "Groupe",
+  "scheduleCoachLabel": "Entraîneur",
+  "scheduleDeleteTitle": "Supprimer le cours",
+  "scheduleDeleteConfirm": "Supprimer ce cours ?",
+  "scheduleNeedsGroupCoach": "Ajoutez d'abord un groupe et un entraîneur.",
+  "scheduleLoadError": "Impossible de charger l'emploi du temps."
 }
