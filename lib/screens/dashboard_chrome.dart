@@ -192,17 +192,16 @@ extension _DashboardChrome on _DashboardScreenState {
         _drawerNav(Icons.event_available, l10n.navEvents, _openEventsScreen),
       _drawerNav(Icons.inventory_2, l10n.navEquipment, _openEquipmentScreen),
       _drawerNav(Icons.campaign, l10n.navAnnouncements, _openAnnouncementsScreen),
-      if (_isAdmin) ...[
-        _drawerSection(l10n.sectionClub),
+      _drawerSection(l10n.sectionClub),
+      _drawerNav(Icons.forum, l10n.chatTitle, _openClubChatScreen),
+      if (_isAdmin)
         _drawerNav(
           Icons.account_balance,
           l10n.navClubCash,
           _openClubFinanceScreen,
         ),
-      ],
       _drawerSection(l10n.sectionGeneral),
       _drawerNav(Icons.auto_awesome, 'SporTekAi', _openSporTekAiScreen),
-      _drawerNav(Icons.forum, l10n.chatTitle, _openClubChatScreen),
       _drawerNav(Icons.analytics, l10n.navReports, _openReportsScreen),
       _drawerNav(Icons.sports_soccer, l10n.navSports, _openSportsScreen),
       if (_isAdmin)
@@ -226,9 +225,10 @@ extension _DashboardChrome on _DashboardScreenState {
       _drawerNav(Icons.event_busy, l10n.navReportAbsence, _openLeaveRequestsScreen),
       _drawerNav(Icons.event_available, l10n.navEvents, _openEventsScreen),
       _drawerNav(Icons.payment, l10n.navPayments, _openPaymentsScreen),
+      _drawerSection(l10n.sectionClub),
+      _drawerNav(Icons.forum, l10n.chatTitle, _openClubChatScreen),
       _drawerSection(l10n.sectionGeneral),
       _drawerNav(Icons.auto_awesome, 'SporTekAi', _openSporTekAiScreen),
-      _drawerNav(Icons.forum, l10n.chatTitle, _openClubChatScreen),
       _drawerNav(Icons.campaign, l10n.navAnnouncements, _openAnnouncementsScreen),
       _drawerNav(Icons.sports_soccer, l10n.navSports, _openSportsScreen),
     ];
@@ -255,9 +255,10 @@ extension _DashboardChrome on _DashboardScreenState {
       _drawerNav(Icons.query_stats, l10n.navMyPerformance, _openPerformanceScreen),
       _drawerNav(Icons.check_circle, l10n.navMyAttendance, _openChildAttendanceScreen),
       _drawerNav(Icons.event_available, l10n.navEvents, _openEventsScreen),
+      _drawerSection(l10n.sectionClub),
+      _drawerNav(Icons.forum, l10n.chatTitle, _openClubChatScreen),
       _drawerSection(l10n.sectionGeneral),
       _drawerNav(Icons.auto_awesome, 'SporTekAi', _openSporTekAiScreen),
-      _drawerNav(Icons.forum, l10n.chatTitle, _openClubChatScreen),
       _drawerNav(Icons.campaign, l10n.navAnnouncements, _openAnnouncementsScreen),
       _drawerNav(Icons.sports_soccer, l10n.navSports, _openSportsScreen),
     ];
