@@ -473,12 +473,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
         actions: [
           _buildNotificationsAction(context),
-          IconButton(
-            onPressed: () {
-              _logout(context);
-            },
-            icon: const Icon(Icons.logout),
-          ),
         ],
       ),
       body: _buildBody(context),
