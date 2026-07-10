@@ -65,6 +65,28 @@ class ChatService {
     });
   }
 
+  /// Mesajı siler. Kural: admin her mesajı, kullanıcı yalnızca kendi mesajını.
+  Future<void> deleteMessage(String id) async {
+    if (id.isEmpty) {
+      return;
+    }
+    await _messages.doc(id).delete();
+  }
+
+  /// Mesaj metnini günceller (yalnızca sahibi). `editedAt` damgası eklenir.
+  Future<void> editMessage({required String id, required String text}) async {
+    final trimmed = text.trim();
+    if (id.isEmpty || trimmed.isEmpty) {
+      return;
+    }
+    await _messages.doc(id).update({
+      'text': trimmed.length > maxLength
+          ? trimmed.substring(0, maxLength)
+          : trimmed,
+      'editedAt': FieldValue.serverTimestamp(),
+    });
+  }
+
   /// Bir kullanıcının avatarını (base64) döndürür; yoksa boş dizi. Çağıran
   /// taraf sonucu gönderen başına önbelleğe almalıdır.
   Future<String> fetchAvatar(String uid) async {

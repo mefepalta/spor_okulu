@@ -587,5 +587,9 @@
   "chatHint": "Escribe un mensaje…",
   "chatEmptyTitle": "Aún no hay mensajes",
   "chatEmptyBody": "Sé el primero en enviar un mensaje.",
-  "chatLoadError": "No se pudo cargar el chat. Es posible que no tengas acceso."
+  "chatLoadError": "No se pudo cargar el chat. Es posible que no tengas acceso.",
+  "chatEditTitle": "Editar mensaje",
+  "chatDeleteTitle": "Eliminar mensaje",
+  "chatDeleteConfirm": "¿Eliminar este mensaje?",
+  "chatEdited": "editado"
 }

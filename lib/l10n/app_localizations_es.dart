@@ -2014,4 +2014,16 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get chatLoadError =>
       'No se pudo cargar el chat. Es posible que no tengas acceso.';
+
+  @override
+  String get chatEditTitle => 'Editar mensaje';
+
+  @override
+  String get chatDeleteTitle => 'Eliminar mensaje';
+
+  @override
+  String get chatDeleteConfirm => '¿Eliminar este mensaje?';
+
+  @override
+  String get chatEdited => 'editado';
 }

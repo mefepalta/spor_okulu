@@ -1995,4 +1995,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chatLoadError => 'Couldn\'t load chat. You may not have access.';
+
+  @override
+  String get chatEditTitle => 'Edit message';
+
+  @override
+  String get chatDeleteTitle => 'Delete message';
+
+  @override
+  String get chatDeleteConfirm => 'Delete this message?';
+
+  @override
+  String get chatEdited => 'edited';
 }

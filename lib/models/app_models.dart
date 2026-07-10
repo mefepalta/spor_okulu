@@ -483,12 +483,16 @@ class ChatMessage {
   final String text;
   final DateTime? createdAt;
 
+  /// Mesaj düzenlendiyse son düzenleme zamanı; hiç düzenlenmediyse null.
+  final DateTime? editedAt;
+
   const ChatMessage({
     this.id = '',
     required this.senderId,
     required this.senderName,
     required this.text,
     this.createdAt,
+    this.editedAt,
   });
 
   factory ChatMessage.fromJson(String id, Map<String, dynamic> json) {
@@ -500,6 +504,7 @@ class ChatMessage {
       // Firestore Timestamp'ı bu saf modelde tip olarak import etmeden çöz:
       // Timestamp.toDate() varsa kullan; yoksa DateTime/int'i de kabul et.
       createdAt: _parseTimestamp(json['createdAt']),
+      editedAt: _parseTimestamp(json['editedAt']),
     );
   }
 

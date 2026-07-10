@@ -1984,4 +1984,16 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get chatLoadError => 'تعذّر تحميل الدردشة. قد لا تملك صلاحية الوصول.';
+
+  @override
+  String get chatEditTitle => 'تعديل الرسالة';
+
+  @override
+  String get chatDeleteTitle => 'حذف الرسالة';
+
+  @override
+  String get chatDeleteConfirm => 'هل تريد حذف هذه الرسالة؟';
+
+  @override
+  String get chatEdited => 'مُعدَّلة';
 }

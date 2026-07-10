@@ -1991,4 +1991,16 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get chatLoadError => 'Sohbet yüklenemedi. Erişim izniniz olmayabilir.';
+
+  @override
+  String get chatEditTitle => 'Mesajı düzenle';
+
+  @override
+  String get chatDeleteTitle => 'Mesajı sil';
+
+  @override
+  String get chatDeleteConfirm => 'Bu mesaj silinsin mi?';
+
+  @override
+  String get chatEdited => 'düzenlendi';
 }

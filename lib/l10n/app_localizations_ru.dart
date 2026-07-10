@@ -2007,4 +2007,16 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get chatLoadError =>
       'Не удалось загрузить чат. Возможно, у вас нет доступа.';
+
+  @override
+  String get chatEditTitle => 'Редактировать сообщение';
+
+  @override
+  String get chatDeleteTitle => 'Удалить сообщение';
+
+  @override
+  String get chatDeleteConfirm => 'Удалить это сообщение?';
+
+  @override
+  String get chatEdited => 'изменено';
 }

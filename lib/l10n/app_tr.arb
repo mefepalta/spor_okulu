@@ -1150,5 +1150,21 @@
   "chatLoadError": "Sohbet yüklenemedi. Erişim izniniz olmayabilir.",
   "@chatLoadError": {
     "description": "Chat: load error"
+  },
+  "chatEditTitle": "Mesajı düzenle",
+  "@chatEditTitle": {
+    "description": "Chat: chatEditTitle"
+  },
+  "chatDeleteTitle": "Mesajı sil",
+  "@chatDeleteTitle": {
+    "description": "Chat: chatDeleteTitle"
+  },
+  "chatDeleteConfirm": "Bu mesaj silinsin mi?",
+  "@chatDeleteConfirm": {
+    "description": "Chat: chatDeleteConfirm"
+  },
+  "chatEdited": "düzenlendi",
+  "@chatEdited": {
+    "description": "Chat: chatEdited"
   }
 }

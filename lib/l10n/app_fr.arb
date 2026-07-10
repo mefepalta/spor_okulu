@@ -587,5 +587,9 @@
   "chatHint": "Écrire un message…",
   "chatEmptyTitle": "Aucun message pour l'instant",
   "chatEmptyBody": "Soyez le premier à envoyer un message.",
-  "chatLoadError": "Impossible de charger la discussion. Vous n'avez peut-être pas accès."
+  "chatLoadError": "Impossible de charger la discussion. Vous n'avez peut-être pas accès.",
+  "chatEditTitle": "Modifier le message",
+  "chatDeleteTitle": "Supprimer le message",
+  "chatDeleteConfirm": "Supprimer ce message ?",
+  "chatEdited": "modifié"
 }

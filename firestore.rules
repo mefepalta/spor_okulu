@@ -182,7 +182,8 @@ service cloud.firestore {
 
     // Kulüp genel sohbeti: onaylı üyeler okur ve yazar. Gönderen kendi
     // kimliğiyle, boş olmayan ve en çok 1000 karakter metin ekleyebilir.
-    // Mesajlar değişmez (update yok); silme yalnızca admin ya da mesaj sahibi.
+    // Düzenleme yalnızca mesaj sahibi ve yalnızca metin (+editedAt); gönderen
+    // kimliği değişmez. Silme yalnızca admin ya da mesaj sahibi.
     match /chatMessages/{document} {
       allow read: if isApprovedMember();
       allow create: if isApprovedMember()
@@ -190,7 +191,14 @@ service cloud.firestore {
         && request.resource.data.text is string
         && request.resource.data.text.size() > 0
         && request.resource.data.text.size() <= 1000;
-      allow update: if false;
+      allow update: if isSignedIn()
+        && resource.data.senderId == request.auth.uid
+        && request.resource.data.senderId == resource.data.senderId
+        && request.resource.data.diff(resource.data).affectedKeys()
+            .hasOnly(['text', 'editedAt'])
+        && request.resource.data.text is string
+        && request.resource.data.text.size() > 0
+        && request.resource.data.text.size() <= 1000;
       allow delete: if isAdmin()
         || (isSignedIn() && resource.data.senderId == request.auth.uid);
     }

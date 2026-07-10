@@ -587,5 +587,9 @@
   "chatHint": "اكتب رسالة…",
   "chatEmptyTitle": "لا توجد رسائل بعد",
   "chatEmptyBody": "كن أول من يرسل رسالة.",
-  "chatLoadError": "تعذّر تحميل الدردشة. قد لا تملك صلاحية الوصول."
+  "chatLoadError": "تعذّر تحميل الدردشة. قد لا تملك صلاحية الوصول.",
+  "chatEditTitle": "تعديل الرسالة",
+  "chatDeleteTitle": "حذف الرسالة",
+  "chatDeleteConfirm": "هل تريد حذف هذه الرسالة؟",
+  "chatEdited": "مُعدَّلة"
 }

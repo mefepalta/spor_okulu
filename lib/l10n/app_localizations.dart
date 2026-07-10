@@ -3646,6 +3646,30 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Sohbet yüklenemedi. Erişim izniniz olmayabilir.'**
   String get chatLoadError;
+
+  /// Chat: chatEditTitle
+  ///
+  /// In tr, this message translates to:
+  /// **'Mesajı düzenle'**
+  String get chatEditTitle;
+
+  /// Chat: chatDeleteTitle
+  ///
+  /// In tr, this message translates to:
+  /// **'Mesajı sil'**
+  String get chatDeleteTitle;
+
+  /// Chat: chatDeleteConfirm
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu mesaj silinsin mi?'**
+  String get chatDeleteConfirm;
+
+  /// Chat: chatEdited
+  ///
+  /// In tr, this message translates to:
+  /// **'düzenlendi'**
+  String get chatEdited;
 }
 
 class _AppLocalizationsDelegate

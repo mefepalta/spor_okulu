@@ -36,6 +36,7 @@ class _ClubChatScreenState extends State<ClubChatScreen> {
   final Set<String> _avatarRequested = {};
 
   String _myName = '';
+  bool _isAdmin = false;
   bool _sending = false;
   int _lastCount = 0;
 
@@ -61,6 +62,7 @@ class _ClubChatScreenState extends State<ClubChatScreen> {
       _myName = profile.displayName.trim().isNotEmpty
           ? profile.displayName.trim()
           : profile.email.split('@').first;
+      _isAdmin = profile.role == 'admin';
       // Kendi avatarımızı önbelleğe ekle (ekstra okuma yok).
       final uid = _chatService.currentUid;
       if (uid != null) {
@@ -188,32 +190,36 @@ class _ClubChatScreenState extends State<ClubChatScreen> {
             padding: const EdgeInsetsDirectional.only(start: 4, end: 4, bottom: 3),
             child: Text(
               '${message.senderName.isEmpty ? '—' : message.senderName}'
-              ' · ${_formatTime(message.createdAt)}',
+              ' · ${_formatTime(message.createdAt)}'
+              '${message.editedAt != null ? ' · ${l10n.chatEdited}' : ''}',
               style: TextStyle(
                 fontSize: 11,
                 color: Theme.of(context).textTheme.bodySmall?.color,
               ),
             ),
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-            constraints: BoxConstraints(
-              maxWidth: MediaQuery.of(context).size.width * 0.68,
-            ),
-            decoration: BoxDecoration(
-              color: isMine ? AppColors.primary : Theme.of(context).cardColor,
-              borderRadius: BorderRadiusDirectional.only(
-                topStart: const Radius.circular(14),
-                topEnd: const Radius.circular(14),
-                bottomStart: Radius.circular(isMine ? 14 : 2),
-                bottomEnd: Radius.circular(isMine ? 2 : 14),
+          GestureDetector(
+            onLongPress: () => _showMessageActions(l10n, message, isMine),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+              constraints: BoxConstraints(
+                maxWidth: MediaQuery.of(context).size.width * 0.68,
               ),
-            ),
-            child: Text(
-              message.text,
-              style: TextStyle(
-                color: isMine ? Colors.white : null,
-                height: 1.35,
+              decoration: BoxDecoration(
+                color: isMine ? AppColors.primary : Theme.of(context).cardColor,
+                borderRadius: BorderRadiusDirectional.only(
+                  topStart: const Radius.circular(14),
+                  topEnd: const Radius.circular(14),
+                  bottomStart: Radius.circular(isMine ? 14 : 2),
+                  bottomEnd: Radius.circular(isMine ? 2 : 14),
+                ),
+              ),
+              child: Text(
+                message.text,
+                style: TextStyle(
+                  color: isMine ? Colors.white : null,
+                  height: 1.35,
+                ),
               ),
             ),
           ),
@@ -232,6 +238,92 @@ class _ClubChatScreenState extends State<ClubChatScreen> {
             : [avatar, const SizedBox(width: 8), bubble],
       ),
     );
+  }
+
+  /// Mesaja uzun basınca: kendi mesajında Düzenle+Sil; başkasının mesajında
+  /// yalnızca admin için Sil. Yetki yoksa menü açılmaz.
+  Future<void> _showMessageActions(
+    AppLocalizations l10n,
+    ChatMessage message,
+    bool isMine,
+  ) async {
+    final canEdit = isMine;
+    final canDelete = isMine || _isAdmin;
+    if (!canEdit && !canDelete) {
+      return;
+    }
+    await showModalBottomSheet<void>(
+      context: context,
+      builder: (sheetContext) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (canEdit)
+              ListTile(
+                leading: const Icon(Icons.edit_outlined),
+                title: Text(l10n.commonEdit),
+                onTap: () {
+                  Navigator.pop(sheetContext);
+                  _editMessage(l10n, message);
+                },
+              ),
+            if (canDelete)
+              ListTile(
+                leading: const Icon(Icons.delete_outline, color: Colors.red),
+                title: Text(
+                  l10n.commonDelete,
+                  style: const TextStyle(color: Colors.red),
+                ),
+                onTap: () {
+                  Navigator.pop(sheetContext);
+                  _confirmDelete(l10n, message);
+                },
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> _editMessage(AppLocalizations l10n, ChatMessage message) async {
+    final newText = await showDialog<String>(
+      context: context,
+      builder: (dialogContext) => _EditMessageDialog(
+        title: l10n.chatEditTitle,
+        initialText: message.text,
+        cancelLabel: l10n.commonCancel,
+        saveLabel: l10n.commonSave,
+      ),
+    );
+    if (newText == null || newText.isEmpty || newText == message.text) {
+      return;
+    }
+    await _chatService.editMessage(id: message.id, text: newText);
+  }
+
+  Future<void> _confirmDelete(AppLocalizations l10n, ChatMessage message) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(l10n.chatDeleteTitle),
+        content: Text(l10n.chatDeleteConfirm),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, false),
+            child: Text(l10n.commonCancel),
+          ),
+          FilledButton(
+            style: FilledButton.styleFrom(backgroundColor: Colors.red),
+            onPressed: () => Navigator.pop(dialogContext, true),
+            child: Text(l10n.commonDelete),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true) {
+      return;
+    }
+    await _chatService.deleteMessage(message.id);
   }
 
   Widget _buildAvatar(ChatMessage message) {
@@ -309,5 +401,62 @@ class _ClubChatScreenState extends State<ClubChatScreen> {
     }
     String two(int n) => n.toString().padLeft(2, '0');
     return '${two(dt.day)}.${two(dt.month)}.${dt.year} ${two(dt.hour)}:${two(dt.minute)}';
+  }
+}
+
+/// Mesaj düzenleme diyaloğu. Kendi [TextEditingController]'ını yönetip
+/// [dispose] içinde bırakır; controller'ı dialog kapanır kapanmaz elle
+/// dispose etmek "_dependents.isEmpty" assertion hatasına yol açtığı için
+/// yaşam döngüsü StatefulWidget'a bırakıldı.
+class _EditMessageDialog extends StatefulWidget {
+  final String title;
+  final String initialText;
+  final String cancelLabel;
+  final String saveLabel;
+
+  const _EditMessageDialog({
+    required this.title,
+    required this.initialText,
+    required this.cancelLabel,
+    required this.saveLabel,
+  });
+
+  @override
+  State<_EditMessageDialog> createState() => _EditMessageDialogState();
+}
+
+class _EditMessageDialogState extends State<_EditMessageDialog> {
+  late final TextEditingController _controller =
+      TextEditingController(text: widget.initialText);
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text(widget.title),
+      content: TextField(
+        controller: _controller,
+        autofocus: true,
+        minLines: 1,
+        maxLines: 4,
+        maxLength: ChatService.maxLength,
+        textCapitalization: TextCapitalization.sentences,
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: Text(widget.cancelLabel),
+        ),
+        FilledButton(
+          onPressed: () => Navigator.pop(context, _controller.text.trim()),
+          child: Text(widget.saveLabel),
+        ),
+      ],
+    );
   }
 }

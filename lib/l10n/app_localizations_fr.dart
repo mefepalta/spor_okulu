@@ -2021,4 +2021,16 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get chatLoadError =>
       'Impossible de charger la discussion. Vous n\'avez peut-être pas accès.';
+
+  @override
+  String get chatEditTitle => 'Modifier le message';
+
+  @override
+  String get chatDeleteTitle => 'Supprimer le message';
+
+  @override
+  String get chatDeleteConfirm => 'Supprimer ce message ?';
+
+  @override
+  String get chatEdited => 'modifié';
 }
