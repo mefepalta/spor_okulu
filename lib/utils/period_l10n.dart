@@ -18,6 +18,28 @@ const List<String> _turkishMonths = [
   'Aralık',
 ];
 
+/// Metni büyük/küçük harf ve Türkçe karakter (ı/İ/ş/ğ/ü/ö/ç) farklarına
+/// duyarsız hale getirir. Elle girilen dönemlerde "Hazıran" (noktasız ı) gibi
+/// yazımlar olabildiğinden eşleştirme bunun üzerinden yapılır. Her karakter
+/// birebir tek karaktere eşlendiğinden dizideki konum (index) korunur.
+String _normalize(String input) {
+  const map = {
+    'İ': 'i', 'I': 'i', 'ı': 'i', 'î': 'i', 'Î': 'i',
+    'Ş': 's', 'ş': 's',
+    'Ğ': 'g', 'ğ': 'g',
+    'Ü': 'u', 'ü': 'u', 'û': 'u', 'Û': 'u',
+    'Ö': 'o', 'ö': 'o',
+    'Ç': 'c', 'ç': 'c',
+    'Â': 'a', 'â': 'a',
+  };
+  final buffer = StringBuffer();
+  for (final ch in input.split('')) {
+    final mapped = map[ch];
+    buffer.write(mapped ?? ch.toLowerCase());
+  }
+  return buffer.toString();
+}
+
 String localizedPeriod(AppLocalizations l10n, String period) {
   if (period.isEmpty) {
     return period;
@@ -36,12 +58,14 @@ String localizedPeriod(AppLocalizations l10n, String period) {
     l10n.monthNovember,
     l10n.monthDecember,
   ];
-  var result = period;
+  final normalizedPeriod = _normalize(period);
   for (var i = 0; i < _turkishMonths.length; i++) {
-    if (result.contains(_turkishMonths[i])) {
-      result = result.replaceAll(_turkishMonths[i], localized[i]);
-      break; // bir dönemde tek ay adı bulunur
+    final normalizedMonth = _normalize(_turkishMonths[i]);
+    final index = normalizedPeriod.indexOf(normalizedMonth);
+    if (index >= 0) {
+      // _normalize karakter sayısını korur; aynı aralık ham metinde de geçerli.
+      return period.replaceRange(index, index + normalizedMonth.length, localized[i]);
     }
   }
-  return result;
+  return period;
 }
