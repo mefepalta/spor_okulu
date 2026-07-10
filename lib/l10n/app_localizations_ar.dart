@@ -1969,4 +1969,19 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get monthDecember => 'ديسمبر';
+
+  @override
+  String get chatTitle => 'دردشة النادي';
+
+  @override
+  String get chatHint => 'اكتب رسالة…';
+
+  @override
+  String get chatEmptyTitle => 'لا توجد رسائل بعد';
+
+  @override
+  String get chatEmptyBody => 'كن أول من يرسل رسالة.';
+
+  @override
+  String get chatLoadError => 'تعذّر تحميل الدردشة. قد لا تملك صلاحية الوصول.';
 }

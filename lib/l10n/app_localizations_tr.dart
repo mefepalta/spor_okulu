@@ -1976,4 +1976,19 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get monthDecember => 'Aralık';
+
+  @override
+  String get chatTitle => 'Kulüp Sohbeti';
+
+  @override
+  String get chatHint => 'Mesaj yaz…';
+
+  @override
+  String get chatEmptyTitle => 'Henüz mesaj yok';
+
+  @override
+  String get chatEmptyBody => 'İlk mesajı sen gönder.';
+
+  @override
+  String get chatLoadError => 'Sohbet yüklenemedi. Erişim izniniz olmayabilir.';
 }

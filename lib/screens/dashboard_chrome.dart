@@ -202,6 +202,7 @@ extension _DashboardChrome on _DashboardScreenState {
       ],
       _drawerSection(l10n.sectionGeneral),
       _drawerNav(Icons.auto_awesome, 'SporTekAi', _openSporTekAiScreen),
+      _drawerNav(Icons.forum, l10n.chatTitle, _openClubChatScreen),
       _drawerNav(Icons.analytics, l10n.navReports, _openReportsScreen),
       _drawerNav(Icons.sports_soccer, l10n.navSports, _openSportsScreen),
       if (_isAdmin)
@@ -227,6 +228,7 @@ extension _DashboardChrome on _DashboardScreenState {
       _drawerNav(Icons.payment, l10n.navPayments, _openPaymentsScreen),
       _drawerSection(l10n.sectionGeneral),
       _drawerNav(Icons.auto_awesome, 'SporTekAi', _openSporTekAiScreen),
+      _drawerNav(Icons.forum, l10n.chatTitle, _openClubChatScreen),
       _drawerNav(Icons.campaign, l10n.navAnnouncements, _openAnnouncementsScreen),
       _drawerNav(Icons.sports_soccer, l10n.navSports, _openSportsScreen),
     ];
@@ -255,6 +257,7 @@ extension _DashboardChrome on _DashboardScreenState {
       _drawerNav(Icons.event_available, l10n.navEvents, _openEventsScreen),
       _drawerSection(l10n.sectionGeneral),
       _drawerNav(Icons.auto_awesome, 'SporTekAi', _openSporTekAiScreen),
+      _drawerNav(Icons.forum, l10n.chatTitle, _openClubChatScreen),
       _drawerNav(Icons.campaign, l10n.navAnnouncements, _openAnnouncementsScreen),
       _drawerNav(Icons.sports_soccer, l10n.navSports, _openSportsScreen),
     ];

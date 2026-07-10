@@ -1,18 +1,15 @@
 {
   "@@locale": "ru",
-
   "commonCancel": "Отмена",
   "commonClose": "Закрыть",
   "commonOk": "ОК",
   "commonResend": "Отправить снова",
-
   "roleAdmin": "Администратор",
   "roleCoach": "Тренер",
   "roleParent": "Родитель",
   "roleStudent": "Ученик",
   "roleViewer": "Наблюдатель",
   "roleUnknown": "Неизвестно",
-
   "loginHeading": "Управление спортивной школой",
   "emailLabel": "Эл. почта",
   "emailHint": "example@sporokulu.com",
@@ -47,7 +44,6 @@
   "authInvalidApiKey": "Ключ API Firebase, по-видимому, недействителен.",
   "authTooManyRequests": "Слишком много попыток входа. Повторите попытку позже.",
   "authGenericWithCode": "Не удалось войти. Код ошибки: {code}",
-
   "registerTitle": "Регистрация",
   "registerHeading": "Создать новый аккаунт",
   "firstNameLabel": "Имя",
@@ -66,7 +62,6 @@
   "passwordTooWeak": "Пароль слишком слабый. Используйте не менее 6 символов.",
   "registerErrorWith": "Ошибка регистрации: {error}",
   "userNotCreated": "Не удалось создать пользователя.",
-
   "roleRequestsTitle": "Заявки на роль",
   "noPendingRequests": "Нет ожидающих заявок",
   "noPendingRequestsBody": "Заявки на роль от новых регистраций появляются здесь.",
@@ -80,7 +75,6 @@
   "rejectedSnack": "Заявка «{name}» отклонена.",
   "requestLabel": "Запрос: {role}",
   "genericOperationError": "Произошла ошибка при выполнении операции.",
-
   "profileTitle": "Профиль",
   "profileUserFallback": "Пользователь",
   "roleDescAdmin": "Может добавлять, редактировать и удалять все записи.",
@@ -110,19 +104,16 @@
   "privacyTitle": "Политика конфиденциальности",
   "appVersionLabel": "Версия приложения",
   "logout": "Выйти",
-
   "commonAll": "Все",
   "commonAdd": "Добавить",
   "commonDelete": "Удалить",
   "viewAction": "Открыть",
-
   "statusPaid": "Оплачено",
   "statusPending": "Ожидает",
   "statusOverdue": "Просрочено",
   "leaveStatusPending": "На рассмотрении",
   "leaveStatusApproved": "Одобрено",
   "leaveStatusRejected": "Отклонено",
-
   "drawerMainPanel": "Главная панель",
   "sectionRecords": "Записи",
   "sectionOperations": "Операции",
@@ -149,7 +140,6 @@
   "navReportAbsence": "Сообщить об отсутствии",
   "navMyPerformance": "Моя успеваемость",
   "navMyAttendance": "Моя посещаемость",
-
   "notificationsTooltip": "Уведомления",
   "notifCategoryAnnouncement": "Объявление",
   "notifCategoryPayment": "Платёж",
@@ -158,19 +148,16 @@
   "leaveWaitingApproval": "Ожидает одобрения",
   "notifLeaveTitle": "{name} • отсутствие",
   "notifAbsenceTitle": "{name} отсутствовал(а)",
-
   "errorLoadingData": "Произошла ошибка при загрузке данных: {error}",
   "reminderDialogTitle": "Новое напоминание",
   "reminderDialogHint": "Напр.: Заказать инвентарь во вторник",
   "newAnnouncementPublished": "Опубликовано новое объявление.",
   "newAnnouncementsPublished": "Опубликовано новых объявлений: {count}.",
-
   "remindersTitle": "Быстрые напоминания",
   "remindersEmpty": "Вы ещё не добавили ни одного напоминания.",
   "aiIntroParent": "Я знаю текущую сводку по вашему ребёнку. Выберите один из вариантов ниже или задайте свой вопрос.",
   "aiIntroStudent": "Я знаю твою текущую ситуацию. Выбери один из вариантов ниже или задай свой вопрос.",
   "aiIntroStaff": "Я знаю текущую сводку по вашему клубу. Выберите один из вариантов ниже или задайте свой вопрос.",
-
   "viewerWelcomeSubtitle": "Добро пожаловать в спортивную школу.",
   "requestPendingTitle": "Ваша заявка рассматривается",
   "requestPendingMessage": "Ваша заявка на роль «{role}» ожидает одобрения администратора. После одобрения вы получите доступ к соответствующей панели.",
@@ -178,7 +165,6 @@
   "requestApprovedMessage": "Просто выйдите и войдите снова, чтобы увидеть свою новую роль.",
   "roleNotAssignedTitle": "Вам ещё не назначена роль",
   "roleNotAssignedMessage": "Когда администратор назначит вам роль, вы получите доступ к соответствующей панели.",
-
   "greetingMorning": "Доброе утро",
   "greetingAfternoon": "Добрый день",
   "greetingEvening": "Добрый вечер",
@@ -186,7 +172,6 @@
   "parentGreetingSubtitleOne": "{name} • текущая сводка",
   "parentGreetingSubtitleMany": "Текущая сводка по вашим детям ниже.",
   "staffGreetingSubtitle": "Текущая сводка по вашему клубу ниже.",
-
   "highlightOverdueDues": "Просроченные взносы: {amount}",
   "highlightGreatAttendance": "Твоя посещаемость отличная, так держать! 🎯",
   "highlightWatchAttendance": "Давай немного последим за посещаемостью",
@@ -195,7 +180,6 @@
   "highlightPaymentsPending": "Платежей, требующих внимания: {count}",
   "highlightLeavePending": "Заявок на отсутствие, ожидающих одобрения: {count}",
   "highlightNoPending": "У вас нет незавершённых задач, отлично 👍",
-
   "statPerformance": "Успеваемость",
   "statEvent": "Мероприятие",
   "statAnnouncement": "Объявление",
@@ -205,7 +189,6 @@
   "statGroup": "Группа",
   "noteNew": "{count} новых",
   "noteWaiting": "{count} в ожидании",
-
   "attendanceSummaryTitle": "Сводка посещаемости",
   "attendanceEmpty": "Записей о посещаемости пока нет.",
   "metricLessons": "Занятия",
@@ -215,24 +198,20 @@
   "metricAttendanceRate": "Посещаемость",
   "absenceNoteOne": "1 новая запись об отсутствии",
   "absenceNoteMany": "Новых записей об отсутствии: {count}",
-
   "financeSummaryTitle": "Финансовая сводка",
   "financeEmpty": "Записей о платежах пока нет.",
   "metricCollected": "Собрано",
   "metricPending": "Ожидается",
   "metricOverdue": "Просрочено",
-
   "clubCashTitle": "Касса клуба",
   "ledgerAction": "Журнал",
   "clubCashEmpty": "Движений по кассе пока нет.",
   "metricBalance": "Касса",
   "metricIncome": "Доход",
   "metricExpense": "Расход",
-
   "unpaidDuesTitle": "Неоплаченные взносы ({count})",
   "moreStudents": "+{count} учеников ещё",
   "latestAnnouncementTitle": "Последнее объявление",
-
   "commonSave": "Сохранить",
   "commonEdit": "Изменить",
   "saveChanges": "Сохранить изменения",
@@ -242,7 +221,6 @@
   "fieldAge": "Возраст",
   "fieldBranch": "Дисциплина",
   "fieldParentPhone": "Телефон родителя",
-
   "studentsSearchHint": "Поиск учеников",
   "studentsEmptyTitle": "Учеников пока нет",
   "studentsEmptyAdmin": "Нажмите кнопку + в правом нижнем углу, чтобы добавить ученика.",
@@ -262,7 +240,6 @@
   "ageMustBeNumber": "Возраст должен быть числом.",
   "agePositive": "Возраст должен быть больше 0.",
   "ageTooHigh": "Возраст выглядит слишком большим.",
-
   "fieldPhone": "Телефон",
   "branchEmpty": "Дисциплина не может быть пустой.",
   "coachesSearchHint": "Поиск тренеров",
@@ -278,7 +255,6 @@
   "backToCoachList": "Назад к списку тренеров",
   "addCoach": "Добавить тренера",
   "saveCoach": "Сохранить тренера",
-
   "phoneEmpty": "Номер телефона не может быть пустым.",
   "phoneFormat": "Телефон должен быть в формате 05XXXXXXXXX.",
   "timeEmpty": "Время не может быть пустым.",
@@ -286,7 +262,6 @@
   "dateEmpty": "Дата не может быть пустой.",
   "dateFormat": "Дата должна быть в формате 24.06.2026.",
   "branchRequired": "Необходимо выбрать дисциплину.",
-
   "dayMonday": "Понедельник",
   "dayTuesday": "Вторник",
   "dayWednesday": "Среда",
@@ -294,7 +269,6 @@
   "dayFriday": "Пятница",
   "daySaturday": "Суббота",
   "daySunday": "Воскресенье",
-
   "groupsSearchHint": "Поиск групп",
   "groupsEmptyTitle": "Групп пока нет",
   "groupsEmptyAdd": "Нажмите кнопку + в правом нижнем углу, чтобы добавить группу.",
@@ -340,7 +314,6 @@
   "noStudentsTitle": "Нет учеников",
   "noStudentsBody": "Сначала нужно добавить учеников.",
   "studentBranchAge": "{branch} • {age} лет",
-
   "usersSearchHint": "Поиск по эл. почте",
   "usersEmptyTitle": "Нет пользователей",
   "usersEmptyBody": "Зарегистрированных пользователей пока нет.",
@@ -352,7 +325,6 @@
   "changeRoleTitle": "Изменить роль",
   "parentAssignHint": "Назначение учеников выполняется на экране «Родители».",
   "studentAssignHint": "Сопоставление учеников выполняется на экране «Аккаунты учеников».",
-
   "parentsEmptyTitle": "Родителей пока нет",
   "parentsEmptyBody": "Нажмите кнопку + внизу справа, чтобы добавить родителя. Родитель должен сначала зарегистрироваться в приложении.",
   "parentAdded": "Родитель добавлен.",
@@ -366,7 +338,6 @@
   "studentsAssigned": "Ученики: {names}",
   "assignStudentsTitle": "Назначить учеников",
   "accountAssignHeader": "{label}: {email}",
-
   "studentAccountAdded": "Аккаунт ученика добавлен.",
   "studentAccountAddError": "Произошла ошибка при добавлении аккаунта ученика.",
   "removeAccountTitle": "Удалить аккаунт",
@@ -378,7 +349,6 @@
   "addStudentAccountTitle": "Добавить аккаунт ученика",
   "addStudentAccountHint": "Введите адрес электронной почты ученика, зарегистрированный в приложении. Ученик должен сначала зарегистрироваться.",
   "accountLabelStudent": "Аккаунт ученика",
-
   "photoPickError": "Не удалось выбрать фото: {error}",
   "profileUpdated": "Профиль обновлён.",
   "profileSaveError": "Не удалось сохранить: {error}",
@@ -387,7 +357,6 @@
   "nameTooLong": "Имя слишком длинное.",
   "phoneTooLong": "Номер телефона слишком длинный.",
   "commonSaving": "Сохранение...",
-
   "attendanceDeleteTitle": "Удалить посещаемость",
   "attendanceDeleteConfirm": "Вы уверены, что хотите удалить запись посещаемости {group} - {date}",
   "attendanceDeleted": "Запись посещаемости удалена.",
@@ -413,12 +382,10 @@
   "absentStudentsTitle": "Отсутствующие ученики",
   "noAbsentStudents": "Отсутствующих учеников нет.",
   "backToAttendanceList": "Назад к списку посещаемости",
-
   "childAttendanceEmptyTitle": "Нет записей о посещаемости",
   "childAttendanceEmptyBody": "Запись посещаемости с участием вашего ребёнка ещё не создана.",
   "attendedOfLessons": "Посещено {present} из {total} занятий",
   "percentValue": "{percent}%",
-
   "paymentDeleteTitle": "Удалить платёж",
   "paymentDeleteConfirm": "Вы уверены, что хотите удалить запись о платеже {name} - {period}",
   "paymentDeleted": "Запись о платеже удалена.",
@@ -455,7 +422,6 @@
   "noteHint": "Необязательная заметка",
   "selectStudentFirst": "Сначала выберите ученика.",
   "savePayment": "Сохранить платёж",
-
   "leaveReported": "Заявка на пропуск отправлена.",
   "leaveDeleteTitle": "Удалить заявку на пропуск",
   "leaveDeleteConfirm": "Вы хотите удалить эту заявку на пропуск?",
@@ -469,7 +435,6 @@
   "fieldReason": "Причина",
   "reasonHint": "Напр.: медицинская справка, семейный визит...",
   "sendAction": "Отправить",
-
   "performanceAnalysisTitle": "Анализ результатов",
   "recordAddError": "Не удалось добавить запись: {error}",
   "recordDeleteError": "Не удалось удалить запись: {error}",
@@ -489,7 +454,6 @@
   "metricEndurance": "Выносливость",
   "metricFlexibility": "Гибкость",
   "metricBallControl": "Владение мячом",
-
   "announcementDeleteTitle": "Удалить объявление",
   "announcementDeleteConfirm": "Вы уверены, что хотите удалить объявление с заголовком {title}",
   "announcementDeleted": "Объявление удалено.",
@@ -512,7 +476,6 @@
   "audienceRequired": "Необходимо выбрать целевую аудиторию.",
   "saveAnnouncement": "Сохранить объявление",
   "audienceEveryone": "Все",
-
   "eventAddError": "Не удалось добавить событие: {error}",
   "eventDeleteError": "Не удалось удалить событие: {error}",
   "eventDeleteTitle": "Удалить событие",
@@ -538,7 +501,6 @@
   "eventNameEmpty": "Название события не может быть пустым.",
   "fieldDescriptionOptional": "Описание (необязательно)",
   "saveEvent": "Сохранить событие",
-
   "cashDeleteTitle": "Удалить запись",
   "cashDeleteConfirm": "Вы хотите удалить запись «{title}»?",
   "newCashEntry": "Новая запись",
@@ -553,7 +515,6 @@
   "fieldAmountCurrency": "Сумма (₺)",
   "fieldCategory": "Категория",
   "fieldNoteOptional": "Заметка (необязательно)",
-
   "equipmentDeleteTitle": "Удалить предмет",
   "equipmentDeleteConfirm": "Вы хотите удалить запись «{name}»?",
   "newEquipment": "Новый предмет",
@@ -578,7 +539,6 @@
   "conditionGood": "Исправно",
   "conditionMaintenance": "На обслуживании",
   "conditionWorn": "Изношено",
-
   "generalSummary": "Общая сводка",
   "paymentSummary": "Сводка по платежам",
   "paidPayments": "Оплаченные платежи",
@@ -586,12 +546,10 @@
   "statusComment": "Обзор состояния",
   "reportsNoData": "Пока недостаточно данных. По мере добавления записей об учениках, группах и платежах здесь появится общая сводка состояния.",
   "reportsSummary": "В системе {students} учеников, {coaches} тренеров и {groups} групп. Из {payments} записей о платежах {paid} оплачено, {pending} ожидают.",
-
   "notificationsEmptyTitle": "Нет уведомлений",
   "notificationsEmptyBody": "Сейчас нет уведомлений для показа.",
   "noRecordsTitle": "Нет записей",
   "noNotificationsInCategory": "В этой категории нет уведомлений.",
-
   "aiStaffSuggestion1": "Подведи итоги этого месяца",
   "aiStaffSuggestion2": "На что мне стоит обратить внимание?",
   "aiStaffSuggestion3": "Составь короткое сообщение родителю о пропуске",
@@ -609,13 +567,10 @@
   "sportekaiGreeting": "Привет! Я SporTekAi ✨",
   "sportekaiHint": "Спросите SporTekAi...",
   "aiResponseLanguage": "русском языке",
-
   "videoOpenError": "Не удалось открыть видео.",
   "watchIntroVideo": "Посмотреть вводное видео",
   "youtubeHowToPlay": "как играть",
-
   "fullNameHint": "Иван Иванов",
-
   "monthJanuary": "Январь",
   "monthFebruary": "Февраль",
   "monthMarch": "Март",
@@ -627,5 +582,10 @@
   "monthSeptember": "Сентябрь",
   "monthOctober": "Октябрь",
   "monthNovember": "Ноябрь",
-  "monthDecember": "Декабрь"
+  "monthDecember": "Декабрь",
+  "chatTitle": "Чат клуба",
+  "chatHint": "Написать сообщение…",
+  "chatEmptyTitle": "Сообщений пока нет",
+  "chatEmptyBody": "Отправьте первое сообщение.",
+  "chatLoadError": "Не удалось загрузить чат. Возможно, у вас нет доступа."
 }

@@ -1,18 +1,15 @@
 {
   "@@locale": "fr",
-
   "commonCancel": "Annuler",
   "commonClose": "Fermer",
   "commonOk": "OK",
   "commonResend": "Renvoyer",
-
   "roleAdmin": "Administrateur",
   "roleCoach": "Entraîneur",
   "roleParent": "Parent",
   "roleStudent": "Élève",
   "roleViewer": "Observateur",
   "roleUnknown": "Inconnu",
-
   "loginHeading": "Gestion d'école de sport",
   "emailLabel": "E-mail",
   "emailHint": "example@sporokulu.com",
@@ -47,7 +44,6 @@
   "authInvalidApiKey": "La clé d'API Firebase semble non valide.",
   "authTooManyRequests": "Trop de tentatives de connexion. Réessayez plus tard.",
   "authGenericWithCode": "Échec de la connexion. Code d'erreur : {code}",
-
   "registerTitle": "S'inscrire",
   "registerHeading": "Créer un nouveau compte",
   "firstNameLabel": "Prénom",
@@ -66,7 +62,6 @@
   "passwordTooWeak": "Le mot de passe est trop faible. Utilisez au moins 6 caractères.",
   "registerErrorWith": "Erreur d'inscription : {error}",
   "userNotCreated": "Impossible de créer l'utilisateur.",
-
   "roleRequestsTitle": "Demandes de rôle",
   "noPendingRequests": "Aucune demande en attente",
   "noPendingRequestsBody": "Les demandes de rôle des nouvelles inscriptions apparaissent ici.",
@@ -80,7 +75,6 @@
   "rejectedSnack": "La demande de {name} a été refusée.",
   "requestLabel": "Demande : {role}",
   "genericOperationError": "Une erreur s'est produite lors de l'opération.",
-
   "profileTitle": "Profil",
   "profileUserFallback": "Utilisateur",
   "roleDescAdmin": "Peut ajouter, modifier et supprimer tous les enregistrements.",
@@ -110,19 +104,16 @@
   "privacyTitle": "Politique de confidentialité",
   "appVersionLabel": "Version de l'application",
   "logout": "Se déconnecter",
-
   "commonAll": "Tout",
   "commonAdd": "Ajouter",
   "commonDelete": "Supprimer",
   "viewAction": "Voir",
-
   "statusPaid": "Payé",
   "statusPending": "En attente",
   "statusOverdue": "En retard",
   "leaveStatusPending": "En attente",
   "leaveStatusApproved": "Approuvé",
   "leaveStatusRejected": "Refusé",
-
   "drawerMainPanel": "Panneau principal",
   "sectionRecords": "Enregistrements",
   "sectionOperations": "Opérations",
@@ -149,7 +140,6 @@
   "navReportAbsence": "Signaler une absence",
   "navMyPerformance": "Ma performance",
   "navMyAttendance": "Ma présence",
-
   "notificationsTooltip": "Notifications",
   "notifCategoryAnnouncement": "Annonce",
   "notifCategoryPayment": "Paiement",
@@ -158,19 +148,16 @@
   "leaveWaitingApproval": "En attente d'approbation",
   "notifLeaveTitle": "{name} • absence",
   "notifAbsenceTitle": "{name} était absent(e)",
-
   "errorLoadingData": "Une erreur s'est produite lors du chargement des données : {error}",
   "reminderDialogTitle": "Nouveau rappel",
   "reminderDialogHint": "Ex. : Commander le matériel mardi",
   "newAnnouncementPublished": "Une nouvelle annonce a été publiée.",
   "newAnnouncementsPublished": "{count} nouvelles annonces ont été publiées.",
-
   "remindersTitle": "Rappels rapides",
   "remindersEmpty": "Vous n'avez pas encore ajouté de rappel.",
   "aiIntroParent": "Je connais le résumé actuel de votre enfant. Vous pouvez choisir l'une des options ci-dessous ou écrire votre propre question.",
   "aiIntroStudent": "Je connais ta situation actuelle. Tu peux choisir l'une des options ci-dessous ou écrire ta propre question.",
   "aiIntroStaff": "Je connais le résumé actuel de votre club. Vous pouvez choisir l'une des options ci-dessous ou écrire votre propre question.",
-
   "viewerWelcomeSubtitle": "Bienvenue à l'école de sport.",
   "requestPendingTitle": "Votre demande est en cours d'examen",
   "requestPendingMessage": "Votre demande pour devenir {role} est en attente d'approbation par l'administrateur. Une fois approuvée, vous pourrez accéder au panneau correspondant.",
@@ -178,7 +165,6 @@
   "requestApprovedMessage": "Il vous suffit de vous déconnecter et de vous reconnecter pour voir votre nouveau rôle.",
   "roleNotAssignedTitle": "Votre rôle n'a pas encore été attribué",
   "roleNotAssignedMessage": "Lorsqu'un administrateur vous attribuera un rôle, vous accéderez au panneau correspondant.",
-
   "greetingMorning": "Bonjour",
   "greetingAfternoon": "Bon après-midi",
   "greetingEvening": "Bonsoir",
@@ -186,7 +172,6 @@
   "parentGreetingSubtitleOne": "{name} • résumé actuel",
   "parentGreetingSubtitleMany": "Le résumé actuel de vos enfants est ci-dessous.",
   "staffGreetingSubtitle": "Le résumé actuel de votre club est ci-dessous.",
-
   "highlightOverdueDues": "Cotisations en retard : {amount}",
   "highlightGreatAttendance": "Ta présence est excellente, continue ! 🎯",
   "highlightWatchAttendance": "Surveillons un peu la présence",
@@ -195,7 +180,6 @@
   "highlightPaymentsPending": "{count} paiements en attente de suivi",
   "highlightLeavePending": "{count} demandes d'absence en attente d'approbation",
   "highlightNoPending": "Vous n'avez aucune tâche en attente, super 👍",
-
   "statPerformance": "Performance",
   "statEvent": "Événement",
   "statAnnouncement": "Annonce",
@@ -205,7 +189,6 @@
   "statGroup": "Groupe",
   "noteNew": "{count} nouveaux",
   "noteWaiting": "{count} en attente",
-
   "attendanceSummaryTitle": "Résumé de présence",
   "attendanceEmpty": "Aucun enregistrement de présence pour le moment.",
   "metricLessons": "Cours",
@@ -215,24 +198,20 @@
   "metricAttendanceRate": "Présence",
   "absenceNoteOne": "1 nouvel enregistrement d'absence",
   "absenceNoteMany": "{count} nouveaux enregistrements d'absence",
-
   "financeSummaryTitle": "Résumé financier",
   "financeEmpty": "Aucun enregistrement de paiement pour le moment.",
   "metricCollected": "Encaissé",
   "metricPending": "En attente",
   "metricOverdue": "En retard",
-
   "clubCashTitle": "Caisse du club",
   "ledgerAction": "Registre",
   "clubCashEmpty": "Aucun mouvement de caisse pour le moment.",
   "metricBalance": "Caisse",
   "metricIncome": "Revenus",
   "metricExpense": "Dépenses",
-
   "unpaidDuesTitle": "Cotisations impayées ({count})",
   "moreStudents": "+{count} élèves de plus",
   "latestAnnouncementTitle": "Dernière annonce",
-
   "commonSave": "Enregistrer",
   "commonEdit": "Modifier",
   "saveChanges": "Enregistrer les modifications",
@@ -242,7 +221,6 @@
   "fieldAge": "Âge",
   "fieldBranch": "Discipline",
   "fieldParentPhone": "Téléphone du parent",
-
   "studentsSearchHint": "Rechercher des élèves",
   "studentsEmptyTitle": "Aucun élève pour le moment",
   "studentsEmptyAdmin": "Utilisez le bouton + en bas à droite pour ajouter un nouvel élève.",
@@ -262,7 +240,6 @@
   "ageMustBeNumber": "L'âge doit être un nombre.",
   "agePositive": "L'âge doit être supérieur à 0.",
   "ageTooHigh": "L'âge semble trop élevé.",
-
   "fieldPhone": "Téléphone",
   "branchEmpty": "La discipline ne peut pas être vide.",
   "coachesSearchHint": "Rechercher des entraîneurs",
@@ -278,7 +255,6 @@
   "backToCoachList": "Retour à la liste des entraîneurs",
   "addCoach": "Ajouter un nouvel entraîneur",
   "saveCoach": "Enregistrer l'entraîneur",
-
   "phoneEmpty": "Le numéro de téléphone ne peut pas être vide.",
   "phoneFormat": "Le téléphone doit être au format 05XXXXXXXXX.",
   "timeEmpty": "L'heure ne peut pas être vide.",
@@ -286,7 +262,6 @@
   "dateEmpty": "La date ne peut pas être vide.",
   "dateFormat": "La date doit être au format 24.06.2026.",
   "branchRequired": "Une discipline doit être sélectionnée.",
-
   "dayMonday": "Lundi",
   "dayTuesday": "Mardi",
   "dayWednesday": "Mercredi",
@@ -294,7 +269,6 @@
   "dayFriday": "Vendredi",
   "daySaturday": "Samedi",
   "daySunday": "Dimanche",
-
   "groupsSearchHint": "Rechercher des groupes",
   "groupsEmptyTitle": "Aucun groupe pour le moment",
   "groupsEmptyAdd": "Utilisez le bouton + en bas à droite pour ajouter un nouveau groupe.",
@@ -340,7 +314,6 @@
   "noStudentsTitle": "Aucun élève",
   "noStudentsBody": "Des élèves doivent d'abord être ajoutés.",
   "studentBranchAge": "{branch} • {age} ans",
-
   "usersSearchHint": "Rechercher un e-mail",
   "usersEmptyTitle": "Aucun utilisateur",
   "usersEmptyBody": "Aucun utilisateur enregistré pour le moment.",
@@ -352,7 +325,6 @@
   "changeRoleTitle": "Changer de rôle",
   "parentAssignHint": "L'attribution des élèves se fait depuis l'écran « Parents ».",
   "studentAssignHint": "L'association des élèves se fait depuis l'écran « Comptes élèves ».",
-
   "parentsEmptyTitle": "Aucun parent pour l'instant",
   "parentsEmptyBody": "Utilisez le bouton + en bas à droite pour ajouter un parent. Le parent doit d'abord s'inscrire dans l'application.",
   "parentAdded": "Parent ajouté.",
@@ -366,7 +338,6 @@
   "studentsAssigned": "Élèves : {names}",
   "assignStudentsTitle": "Affecter des élèves",
   "accountAssignHeader": "{label} : {email}",
-
   "studentAccountAdded": "Compte élève ajouté.",
   "studentAccountAddError": "Une erreur s'est produite lors de l'ajout du compte élève.",
   "removeAccountTitle": "Retirer le compte",
@@ -378,7 +349,6 @@
   "addStudentAccountTitle": "Ajouter un compte élève",
   "addStudentAccountHint": "Saisissez l'adresse e-mail de l'élève enregistrée dans l'application. L'élève doit d'abord s'inscrire.",
   "accountLabelStudent": "Compte élève",
-
   "photoPickError": "Impossible de choisir la photo : {error}",
   "profileUpdated": "Profil mis à jour.",
   "profileSaveError": "Impossible d'enregistrer : {error}",
@@ -387,7 +357,6 @@
   "nameTooLong": "Le nom est trop long.",
   "phoneTooLong": "Le numéro de téléphone est trop long.",
   "commonSaving": "Enregistrement...",
-
   "attendanceDeleteTitle": "Supprimer la présence",
   "attendanceDeleteConfirm": "Voulez-vous vraiment supprimer l'enregistrement de présence {group} - {date}",
   "attendanceDeleted": "Enregistrement de présence supprimé.",
@@ -413,12 +382,10 @@
   "absentStudentsTitle": "Élèves absents",
   "noAbsentStudents": "Aucun élève absent.",
   "backToAttendanceList": "Retour à la liste de présence",
-
   "childAttendanceEmptyTitle": "Aucun enregistrement de présence",
   "childAttendanceEmptyBody": "Aucun enregistrement de présence incluant votre enfant n'a encore été créé.",
   "attendedOfLessons": "A assisté à {present} sur {total} cours",
   "percentValue": "{percent} %",
-
   "paymentDeleteTitle": "Supprimer le paiement",
   "paymentDeleteConfirm": "Voulez-vous vraiment supprimer l'enregistrement de paiement {name} - {period}",
   "paymentDeleted": "Enregistrement de paiement supprimé.",
@@ -455,7 +422,6 @@
   "noteHint": "Note facultative",
   "selectStudentFirst": "Sélectionnez d'abord un élève.",
   "savePayment": "Enregistrer le paiement",
-
   "leaveReported": "Demande d'absence envoyée.",
   "leaveDeleteTitle": "Supprimer la demande d'absence",
   "leaveDeleteConfirm": "Voulez-vous supprimer cette demande d'absence ?",
@@ -469,7 +435,6 @@
   "fieldReason": "Motif",
   "reasonHint": "Ex. : certificat médical, visite familiale...",
   "sendAction": "Envoyer",
-
   "performanceAnalysisTitle": "Analyse des performances",
   "recordAddError": "Impossible d'ajouter l'enregistrement : {error}",
   "recordDeleteError": "Impossible de supprimer l'enregistrement : {error}",
@@ -489,7 +454,6 @@
   "metricEndurance": "Endurance",
   "metricFlexibility": "Souplesse",
   "metricBallControl": "Maîtrise du ballon",
-
   "announcementDeleteTitle": "Supprimer l'annonce",
   "announcementDeleteConfirm": "Voulez-vous vraiment supprimer l'annonce intitulée {title}",
   "announcementDeleted": "Annonce supprimée.",
@@ -512,7 +476,6 @@
   "audienceRequired": "Vous devez sélectionner un public cible.",
   "saveAnnouncement": "Enregistrer l'annonce",
   "audienceEveryone": "Tout le monde",
-
   "eventAddError": "Impossible d'ajouter l'événement : {error}",
   "eventDeleteError": "Impossible de supprimer l'événement : {error}",
   "eventDeleteTitle": "Supprimer l'événement",
@@ -538,7 +501,6 @@
   "eventNameEmpty": "Le nom de l'événement ne peut pas être vide.",
   "fieldDescriptionOptional": "Description (facultative)",
   "saveEvent": "Enregistrer l'événement",
-
   "cashDeleteTitle": "Supprimer l'entrée",
   "cashDeleteConfirm": "Voulez-vous supprimer l'entrée « {title} » ?",
   "newCashEntry": "Nouvelle entrée",
@@ -553,7 +515,6 @@
   "fieldAmountCurrency": "Montant (₺)",
   "fieldCategory": "Catégorie",
   "fieldNoteOptional": "Note (facultative)",
-
   "equipmentDeleteTitle": "Supprimer l'article",
   "equipmentDeleteConfirm": "Voulez-vous supprimer l'enregistrement « {name} » ?",
   "newEquipment": "Nouvel article",
@@ -578,7 +539,6 @@
   "conditionGood": "Bon état",
   "conditionMaintenance": "En maintenance",
   "conditionWorn": "Usé",
-
   "generalSummary": "Résumé général",
   "paymentSummary": "Résumé des paiements",
   "paidPayments": "Paiements effectués",
@@ -586,12 +546,10 @@
   "statusComment": "Aperçu de la situation",
   "reportsNoData": "Pas encore assez de données. À mesure que des enregistrements d'élèves, de groupes et de paiements sont ajoutés, un résumé général de la situation apparaîtra ici.",
   "reportsSummary": "Le système compte {students} élèves, {coaches} entraîneurs et {groups} groupes. Sur {payments} enregistrements de paiement au total, {paid} sont payés et {pending} en attente.",
-
   "notificationsEmptyTitle": "Aucune notification",
   "notificationsEmptyBody": "Aucune notification à afficher pour le moment.",
   "noRecordsTitle": "Aucun enregistrement",
   "noNotificationsInCategory": "Aucune notification dans cette catégorie.",
-
   "aiStaffSuggestion1": "Résume ce mois-ci",
   "aiStaffSuggestion2": "À quoi dois-je faire attention ?",
   "aiStaffSuggestion3": "Rédige un court message à un parent au sujet d'une absence",
@@ -609,13 +567,10 @@
   "sportekaiGreeting": "Bonjour ! Je suis SporTekAi ✨",
   "sportekaiHint": "Demandez à SporTekAi...",
   "aiResponseLanguage": "français",
-
   "videoOpenError": "Impossible d'ouvrir la vidéo.",
   "watchIntroVideo": "Regarder la vidéo de présentation",
   "youtubeHowToPlay": "comment jouer",
-
   "fullNameHint": "Jean Dupont",
-
   "monthJanuary": "Janvier",
   "monthFebruary": "Février",
   "monthMarch": "Mars",
@@ -627,5 +582,10 @@
   "monthSeptember": "Septembre",
   "monthOctober": "Octobre",
   "monthNovember": "Novembre",
-  "monthDecember": "Décembre"
+  "monthDecember": "Décembre",
+  "chatTitle": "Discussion du club",
+  "chatHint": "Écrire un message…",
+  "chatEmptyTitle": "Aucun message pour l'instant",
+  "chatEmptyBody": "Soyez le premier à envoyer un message.",
+  "chatLoadError": "Impossible de charger la discussion. Vous n'avez peut-être pas accès."
 }

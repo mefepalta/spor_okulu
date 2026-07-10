@@ -1980,4 +1980,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get monthDecember => 'December';
+
+  @override
+  String get chatTitle => 'Club Chat';
+
+  @override
+  String get chatHint => 'Write a message…';
+
+  @override
+  String get chatEmptyTitle => 'No messages yet';
+
+  @override
+  String get chatEmptyBody => 'Be the first to send a message.';
+
+  @override
+  String get chatLoadError => 'Couldn\'t load chat. You may not have access.';
 }

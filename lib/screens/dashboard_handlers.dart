@@ -525,6 +525,13 @@ extension _DashboardHandlers on _DashboardScreenState {
     );
   }
 
+  void _openClubChatScreen(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const ClubChatScreen()),
+    );
+  }
+
   // --- Depo / ekipman ---
 
   Future<EquipmentItem> _addEquipment(EquipmentItem item) async {

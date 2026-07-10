@@ -1,18 +1,15 @@
 {
   "@@locale": "tr",
-
   "commonCancel": "Vazgeç",
   "commonClose": "Kapat",
   "commonOk": "Tamam",
   "commonResend": "Tekrar Gönder",
-
   "roleAdmin": "Yönetici",
   "roleCoach": "Antrenör",
   "roleParent": "Veli",
   "roleStudent": "Öğrenci",
   "roleViewer": "Görüntüleyici",
   "roleUnknown": "Bilinmeyen",
-
   "loginHeading": "Spor Okulu Yönetimi",
   "emailLabel": "E-posta",
   "emailHint": "example@sporokulu.com",
@@ -38,7 +35,11 @@
   "userNotFound": "Kullanıcı bulunamadı.",
   "loginCheckError": "Giriş kontrolü sırasında bir hata oluştu: {error}",
   "@loginCheckError": {
-    "placeholders": { "error": { "type": "Object" } }
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
   },
   "authInvalidEmail": "E-posta adresi geçersiz.",
   "authUserDisabled": "Bu kullanıcı hesabı pasif durumda.",
@@ -51,9 +52,12 @@
   "authTooManyRequests": "Çok fazla giriş denemesi yapıldı. Bir süre sonra tekrar dene.",
   "authGenericWithCode": "Giriş yapılamadı. Hata kodu: {code}",
   "@authGenericWithCode": {
-    "placeholders": { "code": { "type": "String" } }
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
   },
-
   "registerTitle": "Kayıt Ol",
   "registerHeading": "Yeni Hesap Oluştur",
   "firstNameLabel": "Ad",
@@ -67,7 +71,11 @@
   "registerLoading": "Kaydediliyor...",
   "requiredField": "{label} boş bırakılamaz.",
   "@requiredField": {
-    "placeholders": { "label": { "type": "String" } }
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
   },
   "registerSuccess": "Kayıt oluşturuldu. Lütfen e-postana gelen doğrulama linkine tıkla. Rol başvurun yönetici onayına gönderildi.",
   "registerGenericError": "Kayıt sırasında bir hata oluştu.",
@@ -75,39 +83,67 @@
   "passwordTooWeak": "Şifre çok zayıf. En az 6 karakter kullan.",
   "registerErrorWith": "Kayıt hatası: {error}",
   "@registerErrorWith": {
-    "placeholders": { "error": { "type": "Object" } }
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
   },
   "userNotCreated": "Kullanıcı oluşturulamadı.",
-
   "roleRequestsTitle": "Rol Başvuruları",
   "noPendingRequests": "Bekleyen başvuru yok",
   "noPendingRequestsBody": "Yeni kayıtların rol başvuruları burada görünür.",
   "approveTitle": "Başvuruyu onayla",
   "approveConfirm": "{name} → {role} olarak yükseltilecek. Onaylıyor musun?",
   "@approveConfirm": {
-    "placeholders": { "name": { "type": "String" }, "role": { "type": "String" } }
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "role": {
+        "type": "String"
+      }
+    }
   },
   "approveAction": "Onayla",
   "approvedSnack": "{name} {role} oldu.",
   "@approvedSnack": {
-    "placeholders": { "name": { "type": "String" }, "role": { "type": "String" } }
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "role": {
+        "type": "String"
+      }
+    }
   },
   "rejectTitle": "Başvuruyu reddet",
   "rejectConfirm": "{name} başvurusu reddedilecek ve hesabı silinecek. Bu işlem geri alınamaz. Devam edilsin mi?",
   "@rejectConfirm": {
-    "placeholders": { "name": { "type": "String" } }
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "rejectAction": "Reddet",
   "rejectedSnack": "{name} başvurusu reddedildi.",
   "@rejectedSnack": {
-    "placeholders": { "name": { "type": "String" } }
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "requestLabel": "Talep: {role}",
   "@requestLabel": {
-    "placeholders": { "role": { "type": "String" } }
+    "placeholders": {
+      "role": {
+        "type": "String"
+      }
+    }
   },
   "genericOperationError": "İşlem sırasında bir hata oluştu.",
-
   "profileTitle": "Profil",
   "profileUserFallback": "Kullanıcı",
   "roleDescAdmin": "Tüm kayıtları ekleyebilir, düzenleyebilir ve silebilir.",
@@ -137,19 +173,16 @@
   "privacyTitle": "Gizlilik Politikası",
   "appVersionLabel": "Uygulama Sürümü",
   "logout": "Çıkış Yap",
-
   "commonAll": "Tümü",
   "commonAdd": "Ekle",
   "commonDelete": "Sil",
   "viewAction": "Görüntüle",
-
   "statusPaid": "Ödendi",
   "statusPending": "Bekliyor",
   "statusOverdue": "Gecikti",
   "leaveStatusPending": "Beklemede",
   "leaveStatusApproved": "Onaylandı",
   "leaveStatusRejected": "Reddedildi",
-
   "drawerMainPanel": "Ana Panel",
   "sectionRecords": "Kayıtlar",
   "sectionOperations": "Operasyon",
@@ -176,7 +209,6 @@
   "navReportAbsence": "Mazeret Bildir",
   "navMyPerformance": "Performansım",
   "navMyAttendance": "Yoklamam",
-
   "notificationsTooltip": "Bildirimler",
   "notifCategoryAnnouncement": "Duyuru",
   "notifCategoryPayment": "Ödeme",
@@ -185,56 +217,79 @@
   "leaveWaitingApproval": "Onay bekliyor",
   "notifLeaveTitle": "{name} • mazeret",
   "@notifLeaveTitle": {
-    "placeholders": { "name": { "type": "String" } }
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "notifAbsenceTitle": "{name} gelmedi",
   "@notifAbsenceTitle": {
-    "placeholders": { "name": { "type": "String" } }
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
-
   "errorLoadingData": "Veriler yüklenirken bir hata oluştu: {error}",
   "@errorLoadingData": {
-    "placeholders": { "error": { "type": "Object" } }
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
   },
   "reminderDialogTitle": "Yeni Hatırlatıcı",
   "reminderDialogHint": "Örn: Salı günü malzeme siparişi ver",
   "newAnnouncementPublished": "Yeni bir duyuru yayınlandı.",
   "newAnnouncementsPublished": "{count} yeni duyuru yayınlandı.",
   "@newAnnouncementsPublished": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
-
   "remindersTitle": "Hızlı Hatırlatıcılar",
   "remindersEmpty": "Henüz bir hatırlatıcı eklemediniz.",
   "aiIntroParent": "Çocuğunuzun güncel özetini biliyorum. Aşağıdakilerden birini seçebilir ya da kendi sorunuzu yazabilirsiniz.",
   "aiIntroStudent": "Güncel durumunu biliyorum. Aşağıdakilerden birini seçebilir ya da kendi sorunu yazabilirsin.",
   "aiIntroStaff": "Kulübünüzün güncel özetini biliyorum. Aşağıdakilerden birini seçebilir ya da kendi sorunu yazabilirsin.",
-
   "viewerWelcomeSubtitle": "Spor okuluna hoş geldin.",
   "requestPendingTitle": "Başvurun inceleniyor",
   "requestPendingMessage": "{role} olma başvurun yönetici onayında. Onaylandığında ilgili panoya erişebileceksin.",
   "@requestPendingMessage": {
-    "placeholders": { "role": { "type": "String" } }
+    "placeholders": {
+      "role": {
+        "type": "String"
+      }
+    }
   },
   "requestApprovedTitle": "Başvurun onaylandı",
   "requestApprovedMessage": "Yeni rolünü görmek için çıkış yapıp tekrar giriş yapman yeterli.",
   "roleNotAssignedTitle": "Rolün henüz atanmadı",
   "roleNotAssignedMessage": "Yönetici sana bir rol atadığında ilgili panoya erişeceksin.",
-
   "greetingMorning": "Günaydın",
   "greetingAfternoon": "İyi günler",
   "greetingEvening": "İyi akşamlar",
   "studentGreetingSubtitle": "Güncel durumun aşağıda.",
   "parentGreetingSubtitleOne": "{name} • güncel özet",
   "@parentGreetingSubtitleOne": {
-    "placeholders": { "name": { "type": "String" } }
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "parentGreetingSubtitleMany": "Çocuklarınızın güncel özeti aşağıda.",
   "staffGreetingSubtitle": "Kulübünüzün güncel özeti aşağıda.",
-
   "highlightOverdueDues": "Geciken aidat: {amount}",
   "@highlightOverdueDues": {
-    "placeholders": { "amount": { "type": "String" } }
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
   },
   "highlightGreatAttendance": "Katılımın çok iyi, böyle devam! 🎯",
   "highlightWatchAttendance": "Katılıma biraz dikkat edelim",
@@ -242,14 +297,21 @@
   "highlightAllGood": "Her şey yolunda görünüyor 👍",
   "highlightPaymentsPending": "{count} ödeme takip bekliyor",
   "@highlightPaymentsPending": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "highlightLeavePending": "{count} mazeret onay bekliyor",
   "@highlightLeavePending": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "highlightNoPending": "Bekleyen bir işin yok, harika 👍",
-
   "statPerformance": "Performans",
   "statEvent": "Etkinlik",
   "statAnnouncement": "Duyuru",
@@ -259,13 +321,20 @@
   "statGroup": "Grup",
   "noteNew": "{count} yeni",
   "@noteNew": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "noteWaiting": "{count} bekliyor",
   "@noteWaiting": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
-
   "attendanceSummaryTitle": "Yoklama Özeti",
   "attendanceEmpty": "Henüz yoklama kaydı yok.",
   "metricLessons": "Ders",
@@ -276,32 +345,40 @@
   "absenceNoteOne": "1 yeni devamsızlık kaydı",
   "absenceNoteMany": "{count} yeni devamsızlık kaydı",
   "@absenceNoteMany": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
-
   "financeSummaryTitle": "Finansal Özet",
   "financeEmpty": "Henüz ödeme kaydı yok.",
   "metricCollected": "Tahsil",
   "metricPending": "Bekleyen",
   "metricOverdue": "Geciken",
-
   "clubCashTitle": "Kulüp Kasası",
   "ledgerAction": "Defter",
   "clubCashEmpty": "Henüz kasa hareketi yok.",
   "metricBalance": "Kasa",
   "metricIncome": "Gelir",
   "metricExpense": "Gider",
-
   "unpaidDuesTitle": "Ödenmemiş Aidatlar ({count})",
   "@unpaidDuesTitle": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "moreStudents": "+{count} öğrenci daha",
   "@moreStudents": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "latestAnnouncementTitle": "Son Duyuru",
-
   "commonSave": "Kaydet",
   "commonEdit": "Düzenle",
   "saveChanges": "Değişiklikleri Kaydet",
@@ -311,7 +388,6 @@
   "fieldAge": "Yaş",
   "fieldBranch": "Branş",
   "fieldParentPhone": "Veli Telefonu",
-
   "studentsSearchHint": "Öğrenci ara",
   "studentsEmptyTitle": "Henüz öğrenci yok",
   "studentsEmptyAdmin": "Yeni öğrenci eklemek için sağ alttaki + butonunu kullan.",
@@ -319,15 +395,25 @@
   "studentSubtitle": "{branch} • {age} yaş\nVeli: {phone}",
   "@studentSubtitle": {
     "placeholders": {
-      "branch": { "type": "String" },
-      "age": { "type": "int" },
-      "phone": { "type": "String" }
+      "branch": {
+        "type": "String"
+      },
+      "age": {
+        "type": "int"
+      },
+      "phone": {
+        "type": "String"
+      }
     }
   },
   "studentDeleteTitle": "Öğrenciyi Sil",
   "studentDeleteConfirm": "{name} adlı öğrenciyi silmek istediğine emin misin",
   "@studentDeleteConfirm": {
-    "placeholders": { "name": { "type": "String" } }
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "studentDeleted": "Öğrenci silindi.",
   "studentDetailTitle": "Öğrenci Detayı",
@@ -341,7 +427,6 @@
   "ageMustBeNumber": "Yaş sayı olmalıdır.",
   "agePositive": "Yaş 0'dan büyük olmalıdır.",
   "ageTooHigh": "Yaş çok yüksek görünüyor.",
-
   "fieldPhone": "Telefon",
   "branchEmpty": "Branş boş bırakılamaz.",
   "coachesSearchHint": "Antrenör ara",
@@ -351,14 +436,22 @@
   "coachSubtitle": "{branch} • {phone}",
   "@coachSubtitle": {
     "placeholders": {
-      "branch": { "type": "String" },
-      "phone": { "type": "String" }
+      "branch": {
+        "type": "String"
+      },
+      "phone": {
+        "type": "String"
+      }
     }
   },
   "coachDeleteTitle": "Antrenörü Sil",
   "coachDeleteConfirm": "{name} adlı antrenörü silmek istediğine emin misin",
   "@coachDeleteConfirm": {
-    "placeholders": { "name": { "type": "String" } }
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "coachDeleted": "Antrenör silindi.",
   "coachDetailTitle": "Antrenör Detayı",
@@ -366,7 +459,6 @@
   "backToCoachList": "Antrenör Listesine Dön",
   "addCoach": "Yeni Antrenör Ekle",
   "saveCoach": "Antrenörü Kaydet",
-
   "phoneEmpty": "Telefon numarası boş bırakılamaz.",
   "phoneFormat": "Telefon 05XXXXXXXXX formatında olmalıdır.",
   "timeEmpty": "Saat boş bırakılamaz.",
@@ -374,7 +466,6 @@
   "dateEmpty": "Tarih boş bırakılamaz.",
   "dateFormat": "Tarih 24.06.2026 formatında olmalı.",
   "branchRequired": "Branş seçilmelidir.",
-
   "dayMonday": "Pazartesi",
   "dayTuesday": "Salı",
   "dayWednesday": "Çarşamba",
@@ -382,7 +473,6 @@
   "dayFriday": "Cuma",
   "daySaturday": "Cumartesi",
   "daySunday": "Pazar",
-
   "groupsSearchHint": "Grup ara",
   "groupsEmptyTitle": "Henüz grup yok",
   "groupsEmptyAdd": "Yeni grup eklemek için sağ alttaki + butonunu kullan.",
@@ -391,17 +481,31 @@
   "groupSubtitle": "{branch} • {schedule}\nAntrenör: {coach} • {count}/{capacity} öğrenci",
   "@groupSubtitle": {
     "placeholders": {
-      "branch": { "type": "String" },
-      "schedule": { "type": "String" },
-      "coach": { "type": "String" },
-      "count": { "type": "int" },
-      "capacity": { "type": "int" }
+      "branch": {
+        "type": "String"
+      },
+      "schedule": {
+        "type": "String"
+      },
+      "coach": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      },
+      "capacity": {
+        "type": "int"
+      }
     }
   },
   "groupDeleteTitle": "Grubu Sil",
   "groupDeleteConfirm": "{name} grubunu silmek istediğine emin misin",
   "@groupDeleteConfirm": {
-    "placeholders": { "name": { "type": "String" } }
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "groupDeleted": "Grup silindi.",
   "groupDetailTitle": "Grup Detayı",
@@ -413,11 +517,22 @@
   "fieldTime": "Saat",
   "capacityPeople": "{count}/{capacity} kişi",
   "@capacityPeople": {
-    "placeholders": { "count": { "type": "int" }, "capacity": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "capacity": {
+        "type": "int"
+      }
+    }
   },
   "membersTitle": "Üyeler ({count})",
   "@membersTitle": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "noMembersAssigned": "Henüz öğrenci atanmadı.",
   "editGroup": "Grubu Düzenle",
@@ -437,31 +552,59 @@
   "noStudentSelected": "Öğrenci seçilmedi",
   "studentsSelected": "{count} öğrenci seçildi",
   "@studentsSelected": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "membersNeedStudents": "Üye eklemek için önce öğrenci kaydı gerekir.",
   "selectCoachFirst": "Önce bir antrenör seçmelisin.",
   "studentsExceedCapacity": "Seçilen öğrenci sayısı ({count}) kapasiteyi ({capacity}) aşıyor.",
   "@studentsExceedCapacity": {
-    "placeholders": { "count": { "type": "int" }, "capacity": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "capacity": {
+        "type": "int"
+      }
+    }
   },
   "selectMembersTitle": "Üye Seç",
   "selectedCount": "{count} seçildi",
   "@selectedCount": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "selectedCountOf": "{count}/{capacity} seçildi",
   "@selectedCountOf": {
-    "placeholders": { "count": { "type": "int" }, "capacity": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "capacity": {
+        "type": "int"
+      }
+    }
   },
   "capacityExceeded": "Kapasite aşıldı",
   "noStudentsTitle": "Öğrenci yok",
   "noStudentsBody": "Önce öğrenci eklenmeli.",
   "studentBranchAge": "{branch} • {age} yaş",
   "@studentBranchAge": {
-    "placeholders": { "branch": { "type": "String" }, "age": { "type": "int" } }
+    "placeholders": {
+      "branch": {
+        "type": "String"
+      },
+      "age": {
+        "type": "int"
+      }
+    }
   },
-
   "usersSearchHint": "E-posta ara",
   "usersEmptyTitle": "Kullanıcı yok",
   "usersEmptyBody": "Henüz kayıtlı kullanıcı bulunmuyor.",
@@ -471,12 +614,18 @@
   "roleUpdateError": "Rol güncellenirken bir hata oluştu.",
   "userRoleUpdated": "{email} → {role} olarak güncellendi.",
   "@userRoleUpdated": {
-    "placeholders": { "email": { "type": "String" }, "role": { "type": "String" } }
+    "placeholders": {
+      "email": {
+        "type": "String"
+      },
+      "role": {
+        "type": "String"
+      }
+    }
   },
   "changeRoleTitle": "Rol Değiştir",
   "parentAssignHint": "Öğrenci ataması \"Veliler\" ekranından yapılır.",
   "studentAssignHint": "Öğrenci eşleştirmesi \"Öğrenci Hesapları\" ekranından yapılır.",
-
   "parentsEmptyTitle": "Henüz veli yok",
   "parentsEmptyBody": "Veli eklemek için sağ alttaki + butonunu kullan. Velinin önce uygulamaya kayıt olması gerekir.",
   "parentAdded": "Veli eklendi.",
@@ -484,7 +633,11 @@
   "removeParentTitle": "Veliyi Kaldır",
   "removeParentConfirm": "{email} artık veli olmayacak ve öğrenci eşleşmeleri silinecek. Devam edilsin mi?",
   "@removeParentConfirm": {
-    "placeholders": { "email": { "type": "String" } }
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
   },
   "removeAction": "Kaldır",
   "addParentTitle": "Veli Ekle",
@@ -492,51 +645,82 @@
   "noStudentAssigned": "Öğrenci atanmadı",
   "studentsAssigned": "Öğrenciler: {names}",
   "@studentsAssigned": {
-    "placeholders": { "names": { "type": "String" } }
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
   },
   "assignStudentsTitle": "Öğrenci Ata",
   "accountAssignHeader": "{label}: {email}",
   "@accountAssignHeader": {
-    "placeholders": { "label": { "type": "String" }, "email": { "type": "String" } }
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "email": {
+        "type": "String"
+      }
+    }
   },
-
   "studentAccountAdded": "Öğrenci hesabı eklendi.",
   "studentAccountAddError": "Öğrenci hesabı eklenirken bir hata oluştu.",
   "removeAccountTitle": "Hesabı Kaldır",
   "removeAccountConfirm": "{email} artık öğrenci olmayacak ve öğrenci eşleşmesi silinecek. Devam edilsin mi?",
   "@removeAccountConfirm": {
-    "placeholders": { "email": { "type": "String" } }
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
   },
   "studentAccountsEmptyTitle": "Henüz öğrenci hesabı yok",
   "studentAccountsEmptyBody": "Öğrenci hesabı eklemek için sağ alttaki + butonunu kullan. Öğrencinin önce uygulamaya kayıt olması gerekir.",
   "studentNotLinked": "Öğrenci eşleşmedi",
   "studentLinked": "Öğrenci: {name}",
   "@studentLinked": {
-    "placeholders": { "name": { "type": "String" } }
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "addStudentAccountTitle": "Öğrenci Hesabı Ekle",
   "addStudentAccountHint": "Öğrencinin uygulamaya kayıtlı e-posta adresini gir. Öğrenci önce kendisi kayıt olmalıdır.",
   "accountLabelStudent": "Öğrenci hesabı",
-
   "photoPickError": "Fotoğraf seçilemedi: {error}",
   "@photoPickError": {
-    "placeholders": { "error": { "type": "Object" } }
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
   },
   "profileUpdated": "Profil güncellendi.",
   "profileSaveError": "Kaydedilemedi: {error}",
   "@profileSaveError": {
-    "placeholders": { "error": { "type": "Object" } }
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
   },
   "pickPhoto": "Fotoğraf seç",
   "removePhoto": "Fotoğrafı kaldır",
   "nameTooLong": "Ad çok uzun.",
   "phoneTooLong": "Telefon çok uzun.",
   "commonSaving": "Kaydediliyor...",
-
   "attendanceDeleteTitle": "Yoklamayı Sil",
   "attendanceDeleteConfirm": "{group} - {date} yoklama kaydını silmek istediğine emin misin",
   "@attendanceDeleteConfirm": {
-    "placeholders": { "group": { "type": "String" }, "date": { "type": "String" } }
+    "placeholders": {
+      "group": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
   },
   "attendanceDeleted": "Yoklama kaydı silindi.",
   "attendanceEmptyTitle": "Henüz yoklama kaydı yok",
@@ -545,7 +729,14 @@
   "attendanceEmptyViewer": "Henüz yoklama kaydı yok. Admin yoklama eklediğinde burada görünecek.",
   "attendanceCountLine": "Geldi: {present} • Gelmedi: {absent}",
   "@attendanceCountLine": {
-    "placeholders": { "present": { "type": "int" }, "absent": { "type": "int" } }
+    "placeholders": {
+      "present": {
+        "type": "int"
+      },
+      "absent": {
+        "type": "int"
+      }
+    }
   },
   "takeAttendanceTitle": "Yoklama Al",
   "editAttendanceTitle": "Yoklamayı Düzenle",
@@ -555,7 +746,11 @@
   "fieldDate": "Tarih",
   "studentsCountTitle": "Öğrenciler ({count})",
   "@studentsCountTitle": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "groupNoStudentsTitle": "Bu grupta öğrenci yok.",
   "groupNoStudentsBody": "Grup detayından öğrenci ekleyebilirsin.",
@@ -567,22 +762,38 @@
   "absentStudentsTitle": "Gelmeyen Öğrenciler",
   "noAbsentStudents": "Gelmeyen öğrenci yok.",
   "backToAttendanceList": "Yoklama Listesine Dön",
-
   "childAttendanceEmptyTitle": "Yoklama kaydı yok",
   "childAttendanceEmptyBody": "Çocuğunuzun bulunduğu bir yoklama kaydı henüz oluşturulmadı.",
   "attendedOfLessons": "{total} dersin {present} tanesine geldi",
   "@attendedOfLessons": {
-    "placeholders": { "total": { "type": "int" }, "present": { "type": "int" } }
+    "placeholders": {
+      "total": {
+        "type": "int"
+      },
+      "present": {
+        "type": "int"
+      }
+    }
   },
   "percentValue": "%{percent}",
   "@percentValue": {
-    "placeholders": { "percent": { "type": "int" } }
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
   },
-
   "paymentDeleteTitle": "Ödemeyi Sil",
   "paymentDeleteConfirm": "{name} - {period} ödeme kaydını silmek istediğine emin misin",
   "@paymentDeleteConfirm": {
-    "placeholders": { "name": { "type": "String" }, "period": { "type": "String" } }
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "period": {
+        "type": "String"
+      }
+    }
   },
   "paymentDeleted": "Ödeme kaydı silindi.",
   "periodLabel": "Dönem:",
@@ -594,14 +805,22 @@
   "paymentsEmptyViewer": "Henüz ödeme kaydı yok. Admin ödeme eklediğinde burada görünecek.",
   "paymentsNoStatusResults": "\"{status}\" durumunda kayıt yok. Farklı bir filtre veya \"Tümü\" seç.",
   "@paymentsNoStatusResults": {
-    "placeholders": { "status": { "type": "String" } }
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
   },
   "remindTooltip": "Hatırlatma gönder",
   "noParentPhone": "Öğrencinin veli telefonu kayıtlı değil.",
   "paymentCollectedLabel": "Tahsil edilen",
   "recordCount": "{count, plural, =1{1 kayıt} other{{count} kayıt}}",
   "@recordCount": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "paymentDetailTitle": "Ödeme Detayı",
   "fieldPeriod": "Ay / Dönem",
@@ -624,7 +843,6 @@
   "noteHint": "İsteğe bağlı not",
   "selectStudentFirst": "Önce bir öğrenci seçmelisin.",
   "savePayment": "Ödemeyi Kaydet",
-
   "leaveReported": "Mazeret bildirildi.",
   "leaveDeleteTitle": "Mazereti sil",
   "leaveDeleteConfirm": "Bu mazeret talebini silmek istiyor musunuz?",
@@ -636,25 +854,40 @@
   "reasonRequired": "Lütfen bir gerekçe yazın.",
   "dateWithValue": "Tarih: {date}",
   "@dateWithValue": {
-    "placeholders": { "date": { "type": "String" } }
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
   },
   "fieldReason": "Gerekçe",
   "reasonHint": "Örn: Sağlık raporu, aile ziyareti...",
   "sendAction": "Gönder",
-
   "performanceAnalysisTitle": "Performans Analizi",
   "recordAddError": "Kayıt eklenemedi: {error}",
   "@recordAddError": {
-    "placeholders": { "error": { "type": "Object" } }
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
   },
   "recordDeleteError": "Kayıt silinemedi: {error}",
   "@recordDeleteError": {
-    "placeholders": { "error": { "type": "Object" } }
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
   },
   "recordDeleteTitle": "Kaydı Sil",
   "performanceDeleteConfirm": "{date} tarihli performans kaydını silmek istediğine emin misin?",
   "@performanceDeleteConfirm": {
-    "placeholders": { "date": { "type": "String" } }
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
   },
   "noStudentFound": "Öğrenci bulunamadı",
   "performanceEmptyManage": "Performans girmek için önce öğrenci eklenmeli.",
@@ -670,11 +903,14 @@
   "metricEndurance": "Dayanıklılık",
   "metricFlexibility": "Esneklik",
   "metricBallControl": "Top Hakimiyeti",
-
   "announcementDeleteTitle": "Duyuruyu Sil",
   "announcementDeleteConfirm": "{title} başlıklı duyuruyu silmek istediğine emin misin",
   "@announcementDeleteConfirm": {
-    "placeholders": { "title": { "type": "String" } }
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
   },
   "announcementDeleted": "Duyuru silindi.",
   "announcementsEmptyTitle": "Henüz duyuru yok",
@@ -696,19 +932,30 @@
   "audienceRequired": "Hedef kitle seçmelisin.",
   "saveAnnouncement": "Duyuruyu Kaydet",
   "audienceEveryone": "Herkes",
-
   "eventAddError": "Etkinlik eklenemedi: {error}",
   "@eventAddError": {
-    "placeholders": { "error": { "type": "Object" } }
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
   },
   "eventDeleteError": "Etkinlik silinemedi: {error}",
   "@eventDeleteError": {
-    "placeholders": { "error": { "type": "Object" } }
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
   },
   "eventDeleteTitle": "Etkinliği Sil",
   "eventDeleteConfirm": "{title} etkinliğini silmek istiyor musun?",
   "@eventDeleteConfirm": {
-    "placeholders": { "title": { "type": "String" } }
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
   },
   "eventsEmptyTitle": "Planlanan etkinlik yok",
   "eventsEmptyManage": "Yeni etkinlik eklemek için sağ alttaki + butonunu kullan.",
@@ -718,20 +965,36 @@
   "responseAlreadySaved": "Cevabın zaten kayıtlı.",
   "responseSendError": "Cevap gönderilemedi: {error}",
   "@responseSendError": {
-    "placeholders": { "error": { "type": "Object" } }
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
   },
   "responseSent": "Cevabın gönderildi.",
   "attendingCount": "Katılacak: {count}",
   "@attendingCount": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "notAttendingCount": "Katılmayacak: {count}",
   "@notAttendingCount": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "eventDateLabel": "Etkinlik Tarihi: {date}",
   "@eventDateLabel": {
-    "placeholders": { "date": { "type": "String" } }
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
   },
   "willAttend": "Katılacak",
   "willNotAttend": "Katılmayacak",
@@ -743,11 +1006,14 @@
   "eventNameEmpty": "Etkinlik adı boş bırakılamaz.",
   "fieldDescriptionOptional": "Açıklama (isteğe bağlı)",
   "saveEvent": "Etkinliği Kaydet",
-
   "cashDeleteTitle": "Kaydı sil",
   "cashDeleteConfirm": "\"{title}\" kaydını silmek istiyor musunuz?",
   "@cashDeleteConfirm": {
-    "placeholders": { "title": { "type": "String" } }
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
   },
   "newCashEntry": "Yeni Kayıt",
   "cashEmptyTitle": "Kasa boş",
@@ -761,11 +1027,14 @@
   "fieldAmountCurrency": "Tutar (₺)",
   "fieldCategory": "Kategori",
   "fieldNoteOptional": "Not (isteğe bağlı)",
-
   "equipmentDeleteTitle": "Malzemeyi sil",
   "equipmentDeleteConfirm": "\"{name}\" kaydını silmek istiyor musunuz?",
   "@equipmentDeleteConfirm": {
-    "placeholders": { "name": { "type": "String" } }
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "newEquipment": "Yeni Malzeme",
   "equipmentEmptyTitle": "Depo boş",
@@ -779,7 +1048,11 @@
   "metricAttention": "Dikkat",
   "assignedPrefix": "Zimmet: {who}",
   "@assignedPrefix": {
-    "placeholders": { "who": { "type": "String" } }
+    "placeholders": {
+      "who": {
+        "type": "String"
+      }
+    }
   },
   "editEquipment": "Malzemeyi Düzenle",
   "fieldEquipmentName": "Malzeme adı",
@@ -792,7 +1065,6 @@
   "conditionGood": "Sağlam",
   "conditionMaintenance": "Bakımda",
   "conditionWorn": "Yıpranmış",
-
   "generalSummary": "Genel Özet",
   "paymentSummary": "Ödeme Özeti",
   "paidPayments": "Ödenmiş ödemeler",
@@ -802,20 +1074,30 @@
   "reportsSummary": "Sistemde {students} öğrenci, {coaches} antrenör ve {groups} grup bulunuyor. Toplam {payments} ödeme kaydının {paid} tanesi ödenmiş, {pending} tanesi bekleyen durumda.",
   "@reportsSummary": {
     "placeholders": {
-      "students": { "type": "int" },
-      "coaches": { "type": "int" },
-      "groups": { "type": "int" },
-      "payments": { "type": "int" },
-      "paid": { "type": "int" },
-      "pending": { "type": "int" }
+      "students": {
+        "type": "int"
+      },
+      "coaches": {
+        "type": "int"
+      },
+      "groups": {
+        "type": "int"
+      },
+      "payments": {
+        "type": "int"
+      },
+      "paid": {
+        "type": "int"
+      },
+      "pending": {
+        "type": "int"
+      }
     }
   },
-
   "notificationsEmptyTitle": "Bildirim yok",
   "notificationsEmptyBody": "Şu an gösterilecek bir bildirim bulunmuyor.",
   "noRecordsTitle": "Kayıt yok",
   "noNotificationsInCategory": "Bu kategoride bildirim bulunmuyor.",
-
   "aiStaffSuggestion1": "Bu ayı özetle",
   "aiStaffSuggestion2": "Nelere dikkat etmeliyim?",
   "aiStaffSuggestion3": "Devamsızlık için veliye kısa bir mesaj taslağı yaz",
@@ -833,13 +1115,10 @@
   "sportekaiGreeting": "Merhaba! Ben SporTekAi ✨",
   "sportekaiHint": "SporTekAi'ye sor...",
   "aiResponseLanguage": "Türkçe",
-
   "videoOpenError": "Video açılamadı.",
   "watchIntroVideo": "Tanıtım videosunu izle",
   "youtubeHowToPlay": "nasıl oynanır",
-
   "fullNameHint": "Mehmet Ali Yılmaz",
-
   "monthJanuary": "Ocak",
   "monthFebruary": "Şubat",
   "monthMarch": "Mart",
@@ -851,5 +1130,25 @@
   "monthSeptember": "Eylül",
   "monthOctober": "Ekim",
   "monthNovember": "Kasım",
-  "monthDecember": "Aralık"
+  "monthDecember": "Aralık",
+  "chatTitle": "Kulüp Sohbeti",
+  "@chatTitle": {
+    "description": "Chat: chatTitle"
+  },
+  "chatHint": "Mesaj yaz…",
+  "@chatHint": {
+    "description": "Chat: chatHint"
+  },
+  "chatEmptyTitle": "Henüz mesaj yok",
+  "@chatEmptyTitle": {
+    "description": "Chat: chatEmptyTitle"
+  },
+  "chatEmptyBody": "İlk mesajı sen gönder.",
+  "@chatEmptyBody": {
+    "description": "Chat: chatEmptyBody"
+  },
+  "chatLoadError": "Sohbet yüklenemedi. Erişim izniniz olmayabilir.",
+  "@chatLoadError": {
+    "description": "Chat: load error"
+  }
 }

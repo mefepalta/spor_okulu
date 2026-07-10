@@ -2005,4 +2005,20 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get monthDecember => 'Décembre';
+
+  @override
+  String get chatTitle => 'Discussion du club';
+
+  @override
+  String get chatHint => 'Écrire un message…';
+
+  @override
+  String get chatEmptyTitle => 'Aucun message pour l\'instant';
+
+  @override
+  String get chatEmptyBody => 'Soyez le premier à envoyer un message.';
+
+  @override
+  String get chatLoadError =>
+      'Impossible de charger la discussion. Vous n\'avez peut-être pas accès.';
 }

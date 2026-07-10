@@ -1,18 +1,15 @@
 {
   "@@locale": "ar",
-
   "commonCancel": "إلغاء",
   "commonClose": "إغلاق",
   "commonOk": "حسناً",
   "commonResend": "إعادة الإرسال",
-
   "roleAdmin": "المدير",
   "roleCoach": "المدرب",
   "roleParent": "ولي الأمر",
   "roleStudent": "الطالب",
   "roleViewer": "مشاهد",
   "roleUnknown": "غير معروف",
-
   "loginHeading": "إدارة مدرسة الرياضة",
   "emailLabel": "البريد الإلكتروني",
   "emailHint": "example@sporokulu.com",
@@ -47,7 +44,6 @@
   "authInvalidApiKey": "يبدو أن مفتاح Firebase API غير صالح.",
   "authTooManyRequests": "عدد كبير من محاولات تسجيل الدخول. حاول مرة أخرى لاحقاً.",
   "authGenericWithCode": "فشل تسجيل الدخول. رمز الخطأ: {code}",
-
   "registerTitle": "التسجيل",
   "registerHeading": "إنشاء حساب جديد",
   "firstNameLabel": "الاسم",
@@ -66,7 +62,6 @@
   "passwordTooWeak": "كلمة المرور ضعيفة جداً. استخدم 6 أحرف على الأقل.",
   "registerErrorWith": "خطأ في التسجيل: {error}",
   "userNotCreated": "تعذّر إنشاء المستخدم.",
-
   "roleRequestsTitle": "طلبات الأدوار",
   "noPendingRequests": "لا توجد طلبات معلّقة",
   "noPendingRequestsBody": "تظهر هنا طلبات الأدوار من التسجيلات الجديدة.",
@@ -80,7 +75,6 @@
   "rejectedSnack": "تم رفض طلب {name}.",
   "requestLabel": "الطلب: {role}",
   "genericOperationError": "حدث خطأ أثناء العملية.",
-
   "profileTitle": "الملف الشخصي",
   "profileUserFallback": "المستخدم",
   "roleDescAdmin": "يمكنه إضافة جميع السجلات وتعديلها وحذفها.",
@@ -110,19 +104,16 @@
   "privacyTitle": "سياسة الخصوصية",
   "appVersionLabel": "إصدار التطبيق",
   "logout": "تسجيل الخروج",
-
   "commonAll": "الكل",
   "commonAdd": "إضافة",
   "commonDelete": "حذف",
   "viewAction": "عرض",
-
   "statusPaid": "مدفوع",
   "statusPending": "قيد الانتظار",
   "statusOverdue": "متأخر",
   "leaveStatusPending": "قيد الانتظار",
   "leaveStatusApproved": "مقبول",
   "leaveStatusRejected": "مرفوض",
-
   "drawerMainPanel": "اللوحة الرئيسية",
   "sectionRecords": "السجلات",
   "sectionOperations": "العمليات",
@@ -149,7 +140,6 @@
   "navReportAbsence": "الإبلاغ عن غياب",
   "navMyPerformance": "أدائي",
   "navMyAttendance": "حضوري",
-
   "notificationsTooltip": "الإشعارات",
   "notifCategoryAnnouncement": "إعلان",
   "notifCategoryPayment": "دفعة",
@@ -158,19 +148,16 @@
   "leaveWaitingApproval": "بانتظار الموافقة",
   "notifLeaveTitle": "{name} • غياب",
   "notifAbsenceTitle": "{name} لم يحضر",
-
   "errorLoadingData": "حدث خطأ أثناء تحميل البيانات: {error}",
   "reminderDialogTitle": "تذكير جديد",
   "reminderDialogHint": "مثال: اطلب المستلزمات يوم الثلاثاء",
   "newAnnouncementPublished": "تم نشر إعلان جديد.",
   "newAnnouncementsPublished": "تم نشر {count} إعلانات جديدة.",
-
   "remindersTitle": "تذكيرات سريعة",
   "remindersEmpty": "لم تُضِف أي تذكير بعد.",
   "aiIntroParent": "أعرف الملخص الحالي لطفلك. يمكنك اختيار أحد الخيارات أدناه أو كتابة سؤالك الخاص.",
   "aiIntroStudent": "أعرف وضعك الحالي. يمكنك اختيار أحد الخيارات أدناه أو كتابة سؤالك الخاص.",
   "aiIntroStaff": "أعرف الملخص الحالي لناديك. يمكنك اختيار أحد الخيارات أدناه أو كتابة سؤالك الخاص.",
-
   "viewerWelcomeSubtitle": "مرحباً بك في مدرسة الرياضة.",
   "requestPendingTitle": "طلبك قيد المراجعة",
   "requestPendingMessage": "طلبك لتصبح {role} بانتظار موافقة المدير. بمجرد الموافقة، ستتمكن من الوصول إلى اللوحة المعنية.",
@@ -178,7 +165,6 @@
   "requestApprovedMessage": "فقط سجّل الخروج ثم عُد لتسجيل الدخول لرؤية دورك الجديد.",
   "roleNotAssignedTitle": "لم يتم تعيين دورك بعد",
   "roleNotAssignedMessage": "عندما يعيّن لك المدير دوراً، ستصل إلى اللوحة المعنية.",
-
   "greetingMorning": "صباح الخير",
   "greetingAfternoon": "طاب يومك",
   "greetingEvening": "مساء الخير",
@@ -186,7 +172,6 @@
   "parentGreetingSubtitleOne": "{name} • ملخص حالي",
   "parentGreetingSubtitleMany": "الملخص الحالي لأطفالك في الأسفل.",
   "staffGreetingSubtitle": "الملخص الحالي لناديك في الأسفل.",
-
   "highlightOverdueDues": "رسوم متأخرة: {amount}",
   "highlightGreatAttendance": "حضورك ممتاز، واصل هكذا! 🎯",
   "highlightWatchAttendance": "لننتبه قليلاً للحضور",
@@ -195,7 +180,6 @@
   "highlightPaymentsPending": "{count} مدفوعات بانتظار المتابعة",
   "highlightLeavePending": "{count} طلبات غياب بانتظار الموافقة",
   "highlightNoPending": "لا توجد مهام معلّقة لديك، رائع 👍",
-
   "statPerformance": "الأداء",
   "statEvent": "فعالية",
   "statAnnouncement": "إعلان",
@@ -205,7 +189,6 @@
   "statGroup": "مجموعة",
   "noteNew": "{count} جديد",
   "noteWaiting": "{count} قيد الانتظار",
-
   "attendanceSummaryTitle": "ملخص الحضور",
   "attendanceEmpty": "لا توجد سجلات حضور بعد.",
   "metricLessons": "حصص",
@@ -215,24 +198,20 @@
   "metricAttendanceRate": "الحضور",
   "absenceNoteOne": "سجل غياب جديد واحد",
   "absenceNoteMany": "{count} سجلات غياب جديدة",
-
   "financeSummaryTitle": "الملخص المالي",
   "financeEmpty": "لا توجد سجلات مدفوعات بعد.",
   "metricCollected": "محصَّل",
   "metricPending": "معلّق",
   "metricOverdue": "متأخر",
-
   "clubCashTitle": "صندوق النادي",
   "ledgerAction": "الدفتر",
   "clubCashEmpty": "لا توجد حركات صندوق بعد.",
   "metricBalance": "الرصيد",
   "metricIncome": "الدخل",
   "metricExpense": "المصروف",
-
   "unpaidDuesTitle": "رسوم غير مدفوعة ({count})",
   "moreStudents": "+{count} طلاب آخرون",
   "latestAnnouncementTitle": "أحدث إعلان",
-
   "commonSave": "حفظ",
   "commonEdit": "تعديل",
   "saveChanges": "حفظ التغييرات",
@@ -242,7 +221,6 @@
   "fieldAge": "العمر",
   "fieldBranch": "الفرع",
   "fieldParentPhone": "هاتف ولي الأمر",
-
   "studentsSearchHint": "ابحث عن طالب",
   "studentsEmptyTitle": "لا يوجد طلاب بعد",
   "studentsEmptyAdmin": "استخدم زر + في أسفل اليمين لإضافة طالب جديد.",
@@ -262,7 +240,6 @@
   "ageMustBeNumber": "يجب أن يكون العمر رقماً.",
   "agePositive": "يجب أن يكون العمر أكبر من 0.",
   "ageTooHigh": "يبدو العمر مرتفعاً جداً.",
-
   "fieldPhone": "الهاتف",
   "branchEmpty": "لا يمكن ترك الفرع فارغاً.",
   "coachesSearchHint": "ابحث عن مدرب",
@@ -278,7 +255,6 @@
   "backToCoachList": "العودة إلى قائمة المدربين",
   "addCoach": "إضافة مدرب جديد",
   "saveCoach": "حفظ المدرب",
-
   "phoneEmpty": "لا يمكن ترك رقم الهاتف فارغاً.",
   "phoneFormat": "يجب أن يكون الهاتف بصيغة 05XXXXXXXXX.",
   "timeEmpty": "لا يمكن ترك الوقت فارغاً.",
@@ -286,7 +262,6 @@
   "dateEmpty": "لا يمكن ترك التاريخ فارغاً.",
   "dateFormat": "يجب أن يكون التاريخ بصيغة 24.06.2026.",
   "branchRequired": "يجب اختيار فرع.",
-
   "dayMonday": "الاثنين",
   "dayTuesday": "الثلاثاء",
   "dayWednesday": "الأربعاء",
@@ -294,7 +269,6 @@
   "dayFriday": "الجمعة",
   "daySaturday": "السبت",
   "daySunday": "الأحد",
-
   "groupsSearchHint": "ابحث عن مجموعة",
   "groupsEmptyTitle": "لا توجد مجموعات بعد",
   "groupsEmptyAdd": "استخدم زر + في أسفل اليمين لإضافة مجموعة جديدة.",
@@ -340,7 +314,6 @@
   "noStudentsTitle": "لا يوجد طلاب",
   "noStudentsBody": "يجب إضافة طلاب أولاً.",
   "studentBranchAge": "{branch} • {age} سنة",
-
   "usersSearchHint": "ابحث بالبريد الإلكتروني",
   "usersEmptyTitle": "لا يوجد مستخدمون",
   "usersEmptyBody": "لا يوجد مستخدمون مسجَّلون بعد.",
@@ -352,7 +325,6 @@
   "changeRoleTitle": "تغيير الدور",
   "parentAssignHint": "يتم تعيين الطلاب من شاشة \"أولياء الأمور\".",
   "studentAssignHint": "يتم ربط الطلاب من شاشة \"حسابات الطلاب\".",
-
   "parentsEmptyTitle": "لا يوجد أولياء أمور بعد",
   "parentsEmptyBody": "استخدم زر + في أسفل اليمين لإضافة ولي أمر. يجب أن يسجّل ولي الأمر في التطبيق أولاً.",
   "parentAdded": "تمت إضافة ولي الأمر.",
@@ -366,7 +338,6 @@
   "studentsAssigned": "الطلاب: {names}",
   "assignStudentsTitle": "تعيين الطلاب",
   "accountAssignHeader": "{label}: {email}",
-
   "studentAccountAdded": "تمت إضافة حساب الطالب.",
   "studentAccountAddError": "حدث خطأ أثناء إضافة حساب الطالب.",
   "removeAccountTitle": "إزالة الحساب",
@@ -378,7 +349,6 @@
   "addStudentAccountTitle": "إضافة حساب طالب",
   "addStudentAccountHint": "أدخل عنوان البريد الإلكتروني للطالب المسجَّل في التطبيق. يجب أن يسجّل الطالب أولاً.",
   "accountLabelStudent": "حساب الطالب",
-
   "photoPickError": "تعذّر اختيار الصورة: {error}",
   "profileUpdated": "تم تحديث الملف الشخصي.",
   "profileSaveError": "تعذّر الحفظ: {error}",
@@ -387,7 +357,6 @@
   "nameTooLong": "الاسم طويل جداً.",
   "phoneTooLong": "رقم الهاتف طويل جداً.",
   "commonSaving": "جارٍ الحفظ...",
-
   "attendanceDeleteTitle": "حذف الحضور",
   "attendanceDeleteConfirm": "هل أنت متأكد من حذف سجل حضور {group} - {date}",
   "attendanceDeleted": "تم حذف سجل الحضور.",
@@ -413,12 +382,10 @@
   "absentStudentsTitle": "الطلاب الغائبون",
   "noAbsentStudents": "لا يوجد طلاب غائبون.",
   "backToAttendanceList": "العودة إلى قائمة الحضور",
-
   "childAttendanceEmptyTitle": "لا توجد سجلات حضور",
   "childAttendanceEmptyBody": "لم يتم إنشاء أي سجل حضور يتضمن طفلك بعد.",
   "attendedOfLessons": "حضر {present} من {total} حصص",
   "percentValue": "{percent}%",
-
   "paymentDeleteTitle": "حذف الدفعة",
   "paymentDeleteConfirm": "هل أنت متأكد من حذف سجل دفعة {name} - {period}",
   "paymentDeleted": "تم حذف سجل الدفعة.",
@@ -455,7 +422,6 @@
   "noteHint": "ملاحظة اختيارية",
   "selectStudentFirst": "اختر طالباً أولاً.",
   "savePayment": "حفظ الدفعة",
-
   "leaveReported": "تم إرسال طلب الغياب.",
   "leaveDeleteTitle": "حذف طلب الغياب",
   "leaveDeleteConfirm": "هل تريد حذف طلب الغياب هذا؟",
@@ -469,7 +435,6 @@
   "fieldReason": "السبب",
   "reasonHint": "مثال: تقرير طبي، زيارة عائلية...",
   "sendAction": "إرسال",
-
   "performanceAnalysisTitle": "تحليل الأداء",
   "recordAddError": "تعذّرت إضافة السجل: {error}",
   "recordDeleteError": "تعذّر حذف السجل: {error}",
@@ -489,7 +454,6 @@
   "metricEndurance": "التحمل",
   "metricFlexibility": "المرونة",
   "metricBallControl": "التحكم بالكرة",
-
   "announcementDeleteTitle": "حذف الإعلان",
   "announcementDeleteConfirm": "هل أنت متأكد من حذف الإعلان بعنوان {title}",
   "announcementDeleted": "تم حذف الإعلان.",
@@ -512,7 +476,6 @@
   "audienceRequired": "يجب اختيار جمهور مستهدف.",
   "saveAnnouncement": "حفظ الإعلان",
   "audienceEveryone": "الجميع",
-
   "eventAddError": "تعذّرت إضافة الفعالية: {error}",
   "eventDeleteError": "تعذّر حذف الفعالية: {error}",
   "eventDeleteTitle": "حذف الفعالية",
@@ -538,7 +501,6 @@
   "eventNameEmpty": "لا يمكن ترك اسم الفعالية فارغاً.",
   "fieldDescriptionOptional": "الوصف (اختياري)",
   "saveEvent": "حفظ الفعالية",
-
   "cashDeleteTitle": "حذف السجل",
   "cashDeleteConfirm": "هل تريد حذف السجل \"{title}\"؟",
   "newCashEntry": "سجل جديد",
@@ -553,7 +515,6 @@
   "fieldAmountCurrency": "المبلغ (₺)",
   "fieldCategory": "الفئة",
   "fieldNoteOptional": "ملاحظة (اختياري)",
-
   "equipmentDeleteTitle": "حذف العنصر",
   "equipmentDeleteConfirm": "هل تريد حذف السجل \"{name}\"؟",
   "newEquipment": "عنصر جديد",
@@ -578,7 +539,6 @@
   "conditionGood": "سليم",
   "conditionMaintenance": "قيد الصيانة",
   "conditionWorn": "مُهترئ",
-
   "generalSummary": "ملخص عام",
   "paymentSummary": "ملخص المدفوعات",
   "paidPayments": "المدفوعات المسدَّدة",
@@ -586,12 +546,10 @@
   "statusComment": "نظرة عامة على الحالة",
   "reportsNoData": "لا توجد بيانات كافية بعد. مع إضافة سجلات الطلاب والمجموعات والمدفوعات، سيظهر هنا ملخص عام للحالة.",
   "reportsSummary": "يضم النظام {students} طلاب و{coaches} مدربين و{groups} مجموعات. من إجمالي {payments} سجل مدفوعات، {paid} مسدَّدة و{pending} معلّقة.",
-
   "notificationsEmptyTitle": "لا توجد إشعارات",
   "notificationsEmptyBody": "لا توجد إشعارات لعرضها الآن.",
   "noRecordsTitle": "لا توجد سجلات",
   "noNotificationsInCategory": "لا توجد إشعارات في هذه الفئة.",
-
   "aiStaffSuggestion1": "لخّص هذا الشهر",
   "aiStaffSuggestion2": "على ماذا يجب أن أنتبه؟",
   "aiStaffSuggestion3": "اكتب مسودة رسالة قصيرة لولي أمر بشأن الغياب",
@@ -609,13 +567,10 @@
   "sportekaiGreeting": "مرحباً! أنا SporTekAi ✨",
   "sportekaiHint": "اسأل SporTekAi...",
   "aiResponseLanguage": "العربية",
-
   "videoOpenError": "تعذّر فتح الفيديو.",
   "watchIntroVideo": "شاهد الفيديو التعريفي",
   "youtubeHowToPlay": "كيفية اللعب",
-
   "fullNameHint": "محمد أحمد",
-
   "monthJanuary": "يناير",
   "monthFebruary": "فبراير",
   "monthMarch": "مارس",
@@ -627,5 +582,10 @@
   "monthSeptember": "سبتمبر",
   "monthOctober": "أكتوبر",
   "monthNovember": "نوفمبر",
-  "monthDecember": "ديسمبر"
+  "monthDecember": "ديسمبر",
+  "chatTitle": "دردشة النادي",
+  "chatHint": "اكتب رسالة…",
+  "chatEmptyTitle": "لا توجد رسائل بعد",
+  "chatEmptyBody": "كن أول من يرسل رسالة.",
+  "chatLoadError": "تعذّر تحميل الدردشة. قد لا تملك صلاحية الوصول."
 }

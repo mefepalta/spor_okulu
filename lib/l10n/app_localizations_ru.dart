@@ -1991,4 +1991,20 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get monthDecember => 'Декабрь';
+
+  @override
+  String get chatTitle => 'Чат клуба';
+
+  @override
+  String get chatHint => 'Написать сообщение…';
+
+  @override
+  String get chatEmptyTitle => 'Сообщений пока нет';
+
+  @override
+  String get chatEmptyBody => 'Отправьте первое сообщение.';
+
+  @override
+  String get chatLoadError =>
+      'Не удалось загрузить чат. Возможно, у вас нет доступа.';
 }

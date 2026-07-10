@@ -3616,6 +3616,36 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Aralık'**
   String get monthDecember;
+
+  /// Chat: chatTitle
+  ///
+  /// In tr, this message translates to:
+  /// **'Kulüp Sohbeti'**
+  String get chatTitle;
+
+  /// Chat: chatHint
+  ///
+  /// In tr, this message translates to:
+  /// **'Mesaj yaz…'**
+  String get chatHint;
+
+  /// Chat: chatEmptyTitle
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz mesaj yok'**
+  String get chatEmptyTitle;
+
+  /// Chat: chatEmptyBody
+  ///
+  /// In tr, this message translates to:
+  /// **'İlk mesajı sen gönder.'**
+  String get chatEmptyBody;
+
+  /// Chat: load error
+  ///
+  /// In tr, this message translates to:
+  /// **'Sohbet yüklenemedi. Erişim izniniz olmayabilir.'**
+  String get chatLoadError;
 }
 
 class _AppLocalizationsDelegate

@@ -470,6 +470,57 @@ class UserProfile {
   }
 }
 
+/// Kulüp genel sohbetindeki tek bir mesaj.
+///
+/// [senderName] gönderildiği andaki ad-soyad (denormalize; her mesajda okuma
+/// yapmamak için). Avatar mesajda tutulmaz — `users/{senderId}.photoBase64`'ten
+/// gönderen başına bir kez okunup önbelleğe alınır (ücretsiz kotayı korur).
+/// [createdAt] sunucu zaman damgası; yeni yazılan mesajda bir an için null olur.
+class ChatMessage {
+  final String id;
+  final String senderId;
+  final String senderName;
+  final String text;
+  final DateTime? createdAt;
+
+  const ChatMessage({
+    this.id = '',
+    required this.senderId,
+    required this.senderName,
+    required this.text,
+    this.createdAt,
+  });
+
+  factory ChatMessage.fromJson(String id, Map<String, dynamic> json) {
+    return ChatMessage(
+      id: id,
+      senderId: json['senderId'] as String? ?? '',
+      senderName: json['senderName'] as String? ?? '',
+      text: json['text'] as String? ?? '',
+      // Firestore Timestamp'ı bu saf modelde tip olarak import etmeden çöz:
+      // Timestamp.toDate() varsa kullan; yoksa DateTime/int'i de kabul et.
+      createdAt: _parseTimestamp(json['createdAt']),
+    );
+  }
+
+  static DateTime? _parseTimestamp(dynamic raw) {
+    if (raw == null) {
+      return null;
+    }
+    if (raw is DateTime) {
+      return raw;
+    }
+    if (raw is int) {
+      return DateTime.fromMillisecondsSinceEpoch(raw);
+    }
+    try {
+      return (raw as dynamic).toDate() as DateTime;
+    } catch (_) {
+      return null;
+    }
+  }
+}
+
 /// Antrenörün bir öğrenci için belirli bir tarihte girdiği performans puanları.
 /// [scores] anahtarları [PerformanceMetrics.all] içindeki ölçüt adlarıdır.
 class PerformanceRecord {

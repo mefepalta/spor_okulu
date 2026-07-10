@@ -25,6 +25,7 @@ import '../widgets/summary_section.dart';
 import 'announcements_screen.dart';
 import 'attendance_screen.dart';
 import 'child_attendance_screen.dart';
+import 'club_chat_screen.dart';
 import 'club_finance_screen.dart';
 import 'coaches_screen.dart';
 import 'equipment_screen.dart';

@@ -1,18 +1,15 @@
 {
   "@@locale": "es",
-
   "commonCancel": "Cancelar",
   "commonClose": "Cerrar",
   "commonOk": "Aceptar",
   "commonResend": "Reenviar",
-
   "roleAdmin": "Administrador",
   "roleCoach": "Entrenador",
   "roleParent": "Padre/Madre",
   "roleStudent": "Estudiante",
   "roleViewer": "Espectador",
   "roleUnknown": "Desconocido",
-
   "loginHeading": "Gestión de Escuela Deportiva",
   "emailLabel": "Correo electrónico",
   "emailHint": "example@sporokulu.com",
@@ -47,7 +44,6 @@
   "authInvalidApiKey": "La clave de API de Firebase parece no ser válida.",
   "authTooManyRequests": "Demasiados intentos de inicio de sesión. Inténtalo de nuevo más tarde.",
   "authGenericWithCode": "No se pudo iniciar sesión. Código de error: {code}",
-
   "registerTitle": "Registrarse",
   "registerHeading": "Crear una cuenta nueva",
   "firstNameLabel": "Nombre",
@@ -66,7 +62,6 @@
   "passwordTooWeak": "La contraseña es demasiado débil. Usa al menos 6 caracteres.",
   "registerErrorWith": "Error de registro: {error}",
   "userNotCreated": "No se pudo crear el usuario.",
-
   "roleRequestsTitle": "Solicitudes de rol",
   "noPendingRequests": "No hay solicitudes pendientes",
   "noPendingRequestsBody": "Las solicitudes de rol de los nuevos registros aparecen aquí.",
@@ -80,7 +75,6 @@
   "rejectedSnack": "La solicitud de {name} fue rechazada.",
   "requestLabel": "Solicitud: {role}",
   "genericOperationError": "Se produjo un error durante la operación.",
-
   "profileTitle": "Perfil",
   "profileUserFallback": "Usuario",
   "roleDescAdmin": "Puede añadir, editar y eliminar todos los registros.",
@@ -110,19 +104,16 @@
   "privacyTitle": "Política de privacidad",
   "appVersionLabel": "Versión de la app",
   "logout": "Cerrar sesión",
-
   "commonAll": "Todos",
   "commonAdd": "Añadir",
   "commonDelete": "Eliminar",
   "viewAction": "Ver",
-
   "statusPaid": "Pagado",
   "statusPending": "Pendiente",
   "statusOverdue": "Vencido",
   "leaveStatusPending": "Pendiente",
   "leaveStatusApproved": "Aprobado",
   "leaveStatusRejected": "Rechazado",
-
   "drawerMainPanel": "Panel principal",
   "sectionRecords": "Registros",
   "sectionOperations": "Operaciones",
@@ -149,7 +140,6 @@
   "navReportAbsence": "Notificar ausencia",
   "navMyPerformance": "Mi rendimiento",
   "navMyAttendance": "Mi asistencia",
-
   "notificationsTooltip": "Notificaciones",
   "notifCategoryAnnouncement": "Anuncio",
   "notifCategoryPayment": "Pago",
@@ -158,19 +148,16 @@
   "leaveWaitingApproval": "En espera de aprobación",
   "notifLeaveTitle": "{name} • justificante",
   "notifAbsenceTitle": "{name} estuvo ausente",
-
   "errorLoadingData": "Se produjo un error al cargar los datos: {error}",
   "reminderDialogTitle": "Nuevo recordatorio",
   "reminderDialogHint": "Ej.: Pedir material el martes",
   "newAnnouncementPublished": "Se publicó un nuevo anuncio.",
   "newAnnouncementsPublished": "Se publicaron {count} nuevos anuncios.",
-
   "remindersTitle": "Recordatorios rápidos",
   "remindersEmpty": "Aún no has añadido ningún recordatorio.",
   "aiIntroParent": "Conozco el resumen actual de tu hijo/a. Puedes elegir una de las opciones de abajo o escribir tu propia pregunta.",
   "aiIntroStudent": "Conozco tu estado actual. Puedes elegir una de las opciones de abajo o escribir tu propia pregunta.",
   "aiIntroStaff": "Conozco el resumen actual de tu club. Puedes elegir una de las opciones de abajo o escribir tu propia pregunta.",
-
   "viewerWelcomeSubtitle": "Bienvenido/a a la escuela deportiva.",
   "requestPendingTitle": "Tu solicitud está en revisión",
   "requestPendingMessage": "Tu solicitud para ser {role} está pendiente de la aprobación del administrador. Una vez aprobada, podrás acceder al panel correspondiente.",
@@ -178,7 +165,6 @@
   "requestApprovedMessage": "Solo tienes que cerrar sesión y volver a iniciarla para ver tu nuevo rol.",
   "roleNotAssignedTitle": "Tu rol aún no ha sido asignado",
   "roleNotAssignedMessage": "Cuando un administrador te asigne un rol, accederás al panel correspondiente.",
-
   "greetingMorning": "Buenos días",
   "greetingAfternoon": "Buenas tardes",
   "greetingEvening": "Buenas noches",
@@ -186,7 +172,6 @@
   "parentGreetingSubtitleOne": "{name} • resumen actual",
   "parentGreetingSubtitleMany": "El resumen actual de tus hijos está abajo.",
   "staffGreetingSubtitle": "El resumen actual de tu club está abajo.",
-
   "highlightOverdueDues": "Cuotas vencidas: {amount}",
   "highlightGreatAttendance": "¡Tu asistencia es excelente, sigue así! 🎯",
   "highlightWatchAttendance": "Vigilemos un poco la asistencia",
@@ -195,7 +180,6 @@
   "highlightPaymentsPending": "{count} pagos en espera de seguimiento",
   "highlightLeavePending": "{count} justificantes en espera de aprobación",
   "highlightNoPending": "No tienes tareas pendientes, ¡genial! 👍",
-
   "statPerformance": "Rendimiento",
   "statEvent": "Evento",
   "statAnnouncement": "Anuncio",
@@ -205,7 +189,6 @@
   "statGroup": "Grupo",
   "noteNew": "{count} nuevos",
   "noteWaiting": "{count} pendientes",
-
   "attendanceSummaryTitle": "Resumen de asistencia",
   "attendanceEmpty": "Aún no hay registros de asistencia.",
   "metricLessons": "Clases",
@@ -215,24 +198,20 @@
   "metricAttendanceRate": "Asistencia",
   "absenceNoteOne": "1 nuevo registro de ausencia",
   "absenceNoteMany": "{count} nuevos registros de ausencia",
-
   "financeSummaryTitle": "Resumen financiero",
   "financeEmpty": "Aún no hay registros de pago.",
   "metricCollected": "Cobrado",
   "metricPending": "Pendiente",
   "metricOverdue": "Vencido",
-
   "clubCashTitle": "Caja del club",
   "ledgerAction": "Libro",
   "clubCashEmpty": "Aún no hay movimientos de caja.",
   "metricBalance": "Caja",
   "metricIncome": "Ingresos",
   "metricExpense": "Gastos",
-
   "unpaidDuesTitle": "Cuotas impagadas ({count})",
   "moreStudents": "+{count} estudiantes más",
   "latestAnnouncementTitle": "Último anuncio",
-
   "commonSave": "Guardar",
   "commonEdit": "Editar",
   "saveChanges": "Guardar cambios",
@@ -242,7 +221,6 @@
   "fieldAge": "Edad",
   "fieldBranch": "Disciplina",
   "fieldParentPhone": "Teléfono del padre/madre",
-
   "studentsSearchHint": "Buscar estudiantes",
   "studentsEmptyTitle": "Aún no hay estudiantes",
   "studentsEmptyAdmin": "Usa el botón + de la esquina inferior derecha para añadir un nuevo estudiante.",
@@ -262,7 +240,6 @@
   "ageMustBeNumber": "La edad debe ser un número.",
   "agePositive": "La edad debe ser mayor que 0.",
   "ageTooHigh": "La edad parece demasiado alta.",
-
   "fieldPhone": "Teléfono",
   "branchEmpty": "La disciplina no puede estar vacía.",
   "coachesSearchHint": "Buscar entrenadores",
@@ -278,7 +255,6 @@
   "backToCoachList": "Volver a la lista de entrenadores",
   "addCoach": "Añadir nuevo entrenador",
   "saveCoach": "Guardar entrenador",
-
   "phoneEmpty": "El número de teléfono no puede estar vacío.",
   "phoneFormat": "El teléfono debe tener el formato 05XXXXXXXXX.",
   "timeEmpty": "La hora no puede estar vacía.",
@@ -286,7 +262,6 @@
   "dateEmpty": "La fecha no puede estar vacía.",
   "dateFormat": "La fecha debe tener el formato 24.06.2026.",
   "branchRequired": "Debe seleccionarse una disciplina.",
-
   "dayMonday": "Lunes",
   "dayTuesday": "Martes",
   "dayWednesday": "Miércoles",
@@ -294,7 +269,6 @@
   "dayFriday": "Viernes",
   "daySaturday": "Sábado",
   "daySunday": "Domingo",
-
   "groupsSearchHint": "Buscar grupos",
   "groupsEmptyTitle": "Aún no hay grupos",
   "groupsEmptyAdd": "Usa el botón + de la esquina inferior derecha para añadir un nuevo grupo.",
@@ -340,7 +314,6 @@
   "noStudentsTitle": "Sin estudiantes",
   "noStudentsBody": "Primero deben añadirse estudiantes.",
   "studentBranchAge": "{branch} • {age} años",
-
   "usersSearchHint": "Buscar correo",
   "usersEmptyTitle": "Sin usuarios",
   "usersEmptyBody": "Aún no hay usuarios registrados.",
@@ -352,7 +325,6 @@
   "changeRoleTitle": "Cambiar rol",
   "parentAssignHint": "La asignación de estudiantes se hace desde la pantalla \"Padres\".",
   "studentAssignHint": "La vinculación de estudiantes se hace desde la pantalla \"Cuentas de estudiantes\".",
-
   "parentsEmptyTitle": "Aún no hay padres",
   "parentsEmptyBody": "Usa el botón + de abajo a la derecha para añadir un padre. El padre debe registrarse primero en la app.",
   "parentAdded": "Padre añadido.",
@@ -366,7 +338,6 @@
   "studentsAssigned": "Estudiantes: {names}",
   "assignStudentsTitle": "Asignar estudiantes",
   "accountAssignHeader": "{label}: {email}",
-
   "studentAccountAdded": "Cuenta de estudiante añadida.",
   "studentAccountAddError": "Ocurrió un error al añadir la cuenta de estudiante.",
   "removeAccountTitle": "Quitar cuenta",
@@ -378,7 +349,6 @@
   "addStudentAccountTitle": "Añadir cuenta de estudiante",
   "addStudentAccountHint": "Introduce el correo del estudiante registrado en la app. El estudiante debe registrarse primero.",
   "accountLabelStudent": "Cuenta de estudiante",
-
   "photoPickError": "No se pudo elegir la foto: {error}",
   "profileUpdated": "Perfil actualizado.",
   "profileSaveError": "No se pudo guardar: {error}",
@@ -387,7 +357,6 @@
   "nameTooLong": "El nombre es demasiado largo.",
   "phoneTooLong": "El teléfono es demasiado largo.",
   "commonSaving": "Guardando...",
-
   "attendanceDeleteTitle": "Eliminar asistencia",
   "attendanceDeleteConfirm": "¿Seguro que quieres eliminar el registro de asistencia de {group} - {date}",
   "attendanceDeleted": "Registro de asistencia eliminado.",
@@ -413,12 +382,10 @@
   "absentStudentsTitle": "Estudiantes ausentes",
   "noAbsentStudents": "No hay estudiantes ausentes.",
   "backToAttendanceList": "Volver a la lista de asistencia",
-
   "childAttendanceEmptyTitle": "No hay registros de asistencia",
   "childAttendanceEmptyBody": "Aún no se ha creado ningún registro de asistencia que incluya a su hijo.",
   "attendedOfLessons": "Asistió a {present} de {total} clases",
   "percentValue": "{percent} %",
-
   "paymentDeleteTitle": "Eliminar pago",
   "paymentDeleteConfirm": "¿Seguro que quieres eliminar el registro de pago de {name} - {period}",
   "paymentDeleted": "Registro de pago eliminado.",
@@ -455,7 +422,6 @@
   "noteHint": "Nota opcional",
   "selectStudentFirst": "Primero selecciona un estudiante.",
   "savePayment": "Guardar pago",
-
   "leaveReported": "Solicitud de ausencia enviada.",
   "leaveDeleteTitle": "Eliminar solicitud de ausencia",
   "leaveDeleteConfirm": "¿Quieres eliminar esta solicitud de ausencia?",
@@ -469,7 +435,6 @@
   "fieldReason": "Motivo",
   "reasonHint": "Ej.: Informe médico, visita familiar...",
   "sendAction": "Enviar",
-
   "performanceAnalysisTitle": "Análisis de rendimiento",
   "recordAddError": "No se pudo añadir el registro: {error}",
   "recordDeleteError": "No se pudo eliminar el registro: {error}",
@@ -489,7 +454,6 @@
   "metricEndurance": "Resistencia",
   "metricFlexibility": "Flexibilidad",
   "metricBallControl": "Control del balón",
-
   "announcementDeleteTitle": "Eliminar anuncio",
   "announcementDeleteConfirm": "¿Seguro que quieres eliminar el anuncio titulado {title}",
   "announcementDeleted": "Anuncio eliminado.",
@@ -512,7 +476,6 @@
   "audienceRequired": "Debes seleccionar un público objetivo.",
   "saveAnnouncement": "Guardar anuncio",
   "audienceEveryone": "Todos",
-
   "eventAddError": "No se pudo añadir el evento: {error}",
   "eventDeleteError": "No se pudo eliminar el evento: {error}",
   "eventDeleteTitle": "Eliminar evento",
@@ -538,7 +501,6 @@
   "eventNameEmpty": "El nombre del evento no puede estar vacío.",
   "fieldDescriptionOptional": "Descripción (opcional)",
   "saveEvent": "Guardar evento",
-
   "cashDeleteTitle": "Eliminar registro",
   "cashDeleteConfirm": "¿Quieres eliminar el registro \"{title}\"?",
   "newCashEntry": "Nuevo registro",
@@ -553,7 +515,6 @@
   "fieldAmountCurrency": "Importe (₺)",
   "fieldCategory": "Categoría",
   "fieldNoteOptional": "Nota (opcional)",
-
   "equipmentDeleteTitle": "Eliminar artículo",
   "equipmentDeleteConfirm": "¿Quieres eliminar el registro \"{name}\"?",
   "newEquipment": "Nuevo artículo",
@@ -578,7 +539,6 @@
   "conditionGood": "En buen estado",
   "conditionMaintenance": "En mantenimiento",
   "conditionWorn": "Desgastado",
-
   "generalSummary": "Resumen general",
   "paymentSummary": "Resumen de pagos",
   "paidPayments": "Pagos realizados",
@@ -586,12 +546,10 @@
   "statusComment": "Resumen del estado",
   "reportsNoData": "Aún no hay suficientes datos. A medida que se añadan registros de estudiantes, grupos y pagos, aquí aparecerá un resumen general del estado.",
   "reportsSummary": "El sistema tiene {students} estudiantes, {coaches} entrenadores y {groups} grupos. De {payments} registros de pago en total, {paid} están pagados y {pending} pendientes.",
-
   "notificationsEmptyTitle": "No hay notificaciones",
   "notificationsEmptyBody": "No hay notificaciones para mostrar en este momento.",
   "noRecordsTitle": "Sin registros",
   "noNotificationsInCategory": "No hay notificaciones en esta categoría.",
-
   "aiStaffSuggestion1": "Resume este mes",
   "aiStaffSuggestion2": "¿A qué debo prestar atención?",
   "aiStaffSuggestion3": "Redacta un mensaje breve para un padre sobre una ausencia",
@@ -609,13 +567,10 @@
   "sportekaiGreeting": "¡Hola! Soy SporTekAi ✨",
   "sportekaiHint": "Pregunta a SporTekAi...",
   "aiResponseLanguage": "español",
-
   "videoOpenError": "No se pudo abrir el video.",
   "watchIntroVideo": "Ver el video de presentación",
   "youtubeHowToPlay": "cómo se juega",
-
   "fullNameHint": "Juan Pérez",
-
   "monthJanuary": "Enero",
   "monthFebruary": "Febrero",
   "monthMarch": "Marzo",
@@ -627,5 +582,10 @@
   "monthSeptember": "Septiembre",
   "monthOctober": "Octubre",
   "monthNovember": "Noviembre",
-  "monthDecember": "Diciembre"
+  "monthDecember": "Diciembre",
+  "chatTitle": "Chat del club",
+  "chatHint": "Escribe un mensaje…",
+  "chatEmptyTitle": "Aún no hay mensajes",
+  "chatEmptyBody": "Sé el primero en enviar un mensaje.",
+  "chatLoadError": "No se pudo cargar el chat. Es posible que no tengas acceso."
 }
