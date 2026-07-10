@@ -19,6 +19,15 @@ import '../widgets/wave_background.dart';
 import 'edit_account_screen.dart';
 import 'info_text_screen.dart';
 
+/// Ayar seçicileri (tema / arka plan) için ortak stil. İç dolguyu ve yazı
+/// boyutunu küçülterek ikon + uzun etiketlerin (ör. Rusça "Высокий") tek
+/// satıra sığmasını ve taşmamasını sağlar.
+final ButtonStyle _segmentedStyle = SegmentedButton.styleFrom(
+  visualDensity: VisualDensity.compact,
+  padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 10),
+  textStyle: const TextStyle(fontSize: 13),
+);
+
 class ProfileScreen extends StatefulWidget {
   final String userRole;
 
@@ -310,6 +319,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   width: double.infinity,
                   child: SegmentedButton<ThemeMode>(
                     showSelectedIcon: false,
+                    style: _segmentedStyle,
                     segments: [
                       ButtonSegment(
                         value: ThemeMode.system,
@@ -362,6 +372,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   width: double.infinity,
                   child: SegmentedButton<BackgroundLevel>(
                     showSelectedIcon: false,
+                    style: _segmentedStyle,
                     segments: [
                       ButtonSegment(
                         value: BackgroundLevel.full,

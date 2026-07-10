@@ -171,11 +171,15 @@ class SummaryMetricsRow extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 2),
-              Text(
-                metric.label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontSize: 12, color: labelColor),
+              // Dar sütunda uzun etiketlerin (ör. Rusça "Присутствовал")
+              // kesilmemesi için değer gibi ölçekleyerek küçült.
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  metric.label,
+                  maxLines: 1,
+                  style: TextStyle(fontSize: 12, color: labelColor),
+                ),
               ),
             ],
           ),
