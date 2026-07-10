@@ -472,6 +472,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
           overflow: TextOverflow.ellipsis,
         ),
         actions: [
+          // SporTekAi kısayolu (menüde gömülü kalmasın diye). Viewer'da yok —
+          // erişim sol menüyle aynı.
+          if (!_isViewer)
+            IconButton(
+              tooltip: 'SporTekAi',
+              onPressed: () => _openSporTekAiScreen(context),
+              icon: const Icon(Icons.auto_awesome),
+            ),
           _buildNotificationsAction(context),
         ],
       ),
