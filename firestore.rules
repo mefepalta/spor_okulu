@@ -203,6 +203,13 @@ service cloud.firestore {
         || (isSignedIn() && resource.data.senderId == request.auth.uid);
     }
 
+    // Haftalık ders programı: onaylı üyeler (veli/öğrenci dahil) görür;
+    // yalnızca admin ve antrenör ekler/düzenler/siler.
+    match /scheduleEntries/{document} {
+      allow read: if isApprovedMember();
+      allow create, update, delete: if isAdminOrCoach();
+    }
+
     match /{document=**} {
       allow read, write: if false;
     }
