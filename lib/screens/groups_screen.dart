@@ -6,8 +6,6 @@ import 'package:flutter/services.dart';
 
 import '../l10n/app_localizations.dart';
 import '../models/app_models.dart';
-import '../utils/day_l10n.dart';
-import '../utils/validators.dart';
 import '../widgets/branch_dropdown.dart';
 import '../widgets/empty_state.dart';
 
@@ -208,7 +206,6 @@ class _GroupsScreenState extends State<GroupsScreen> {
                           subtitle: Text(
                             l10n.groupSubtitle(
                               group.branch,
-                              localizedSchedule(l10n, group.schedule),
                               group.coachName,
                               group.studentIds.length,
                               group.capacity,
@@ -341,8 +338,6 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
                   ),
                   const SizedBox(height: 8),
                   Text(group.branch),
-                  const SizedBox(height: 8),
-                  Text(localizedSchedule(l10n, group.schedule)),
                 ],
               ),
             ),
@@ -367,13 +362,6 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
               leading: const Icon(Icons.person),
               title: Text(l10n.roleCoach),
               subtitle: Text(group.coachName),
-            ),
-          ),
-          Card(
-            child: ListTile(
-              leading: const Icon(Icons.schedule),
-              title: Text(l10n.fieldSchedule),
-              subtitle: Text(localizedSchedule(l10n, group.schedule)),
             ),
           ),
           Card(
@@ -466,30 +454,16 @@ class _AddGroupScreenState extends State<AddGroupScreen> {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _timeController = TextEditingController();
   final TextEditingController _capacityController = TextEditingController();
 
   String? _selectedBranch;
 
-  final List<String> _days = const [
-    'Pazartesi',
-    'Sali',
-    'Carsamba',
-    'Persembe',
-    'Cuma',
-    'Cumartesi',
-    'Pazar',
-  ];
-
   String? _selectedCoachId;
-  String? _selectedDay;
   final Set<String> _selectedStudentIds = {};
 
   @override
   void initState() {
     super.initState();
-
-    _selectedDay = _days.first;
 
     if (widget.coaches.isNotEmpty) {
       _selectedCoachId = widget.coaches.first.id;
@@ -502,16 +476,6 @@ class _AddGroupScreenState extends State<AddGroupScreen> {
       _selectedBranch = group.branch;
       _capacityController.text = group.capacity.toString();
       _selectedStudentIds.addAll(group.studentIds);
-
-      final scheduleParts = group.schedule.trim().split(' ');
-
-      if (scheduleParts.isNotEmpty) {
-        _selectedDay = dropdownDayFromText(scheduleParts.first);
-      }
-
-      if (scheduleParts.length >= 2) {
-        _timeController.text = scheduleParts[1];
-      }
 
       // Önce id ile, eski kayıtlar için ada göre eşleştir.
       final coachById = widget.coaches.any(
@@ -567,7 +531,6 @@ class _AddGroupScreenState extends State<AddGroupScreen> {
   @override
   void dispose() {
     _nameController.dispose();
-    _timeController.dispose();
     _capacityController.dispose();
     super.dispose();
   }
@@ -600,14 +563,11 @@ class _AddGroupScreenState extends State<AddGroupScreen> {
       return;
     }
 
-    final normalizedTime = normalizeTime(_timeController.text.trim());
-
     final group = TrainingGroup(
       name: _nameController.text.trim(),
       branch: (_selectedBranch ?? '').trim(),
       coachId: coach.id,
       coachName: coach.name,
-      schedule: '$_selectedDay $normalizedTime',
       capacity: capacity,
       studentIds: _selectedStudentIds.toList(),
     );
@@ -693,45 +653,6 @@ class _AddGroupScreenState extends State<AddGroupScreen> {
 
                         return null;
                       },
-                    ),
-                    const SizedBox(height: 12),
-                    DropdownButtonFormField<String>(
-                      initialValue: _selectedDay,
-                      decoration: InputDecoration(
-                        labelText: l10n.fieldDay,
-                        border: const OutlineInputBorder(),
-                        prefixIcon: const Icon(Icons.calendar_month),
-                      ),
-                      items: _days.map((day) {
-                        return DropdownMenuItem<String>(
-                          value: day,
-                          child: Text(localizedDay(l10n, day)),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedDay = value;
-                        });
-                      },
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return l10n.dayRequired;
-                        }
-
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 12),
-                    TextFormField(
-                      controller: _timeController,
-                      keyboardType: TextInputType.datetime,
-                      decoration: InputDecoration(
-                        labelText: l10n.fieldTime,
-                        border: const OutlineInputBorder(),
-                        prefixIcon: const Icon(Icons.schedule),
-                        hintText: '18:00',
-                      ),
-                      validator: timeValidator(l10n),
                     ),
                     const SizedBox(height: 12),
                     TextFormField(

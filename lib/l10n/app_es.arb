@@ -281,7 +281,7 @@
   "groupsEmptyAdd": "Usa el botón + de la esquina inferior derecha para añadir un nuevo grupo.",
   "groupsEmptyNoCoach": "Añade primero al menos un entrenador para crear un grupo.",
   "groupsEmptyViewer": "Aún no hay registros de grupos. Aparecerán aquí cuando un administrador añada uno.",
-  "groupSubtitle": "{branch} • {schedule}\nEntrenador: {coach} • {count}/{capacity} estudiantes",
+  "groupSubtitle": "{branch}\nEntrenador: {coach} • {count}/{capacity} estudiantes",
   "groupDeleteTitle": "Eliminar grupo",
   "groupDeleteConfirm": "¿Seguro que quieres eliminar el grupo {name}",
   "groupDeleted": "Grupo eliminado.",

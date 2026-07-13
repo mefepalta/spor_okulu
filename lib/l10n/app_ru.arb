@@ -281,7 +281,7 @@
   "groupsEmptyAdd": "Нажмите кнопку + в правом нижнем углу, чтобы добавить группу.",
   "groupsEmptyNoCoach": "Сначала добавьте хотя бы одного тренера, чтобы создать группу.",
   "groupsEmptyViewer": "Записей о группах пока нет. Они появятся здесь, когда администратор добавит группу.",
-  "groupSubtitle": "{branch} • {schedule}\nТренер: {coach} • {count}/{capacity} учеников",
+  "groupSubtitle": "{branch}\nТренер: {coach} • {count}/{capacity} учеников",
   "groupDeleteTitle": "Удалить группу",
   "groupDeleteConfirm": "Вы уверены, что хотите удалить группу {name}",
   "groupDeleted": "Группа удалена.",

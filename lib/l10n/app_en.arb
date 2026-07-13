@@ -281,7 +281,7 @@
   "groupsEmptyAdd": "Use the + button at the bottom right to add a new group.",
   "groupsEmptyNoCoach": "Add at least one coach first to create a group.",
   "groupsEmptyViewer": "No group records yet. They'll appear here once an admin adds a group.",
-  "groupSubtitle": "{branch} • {schedule}\nCoach: {coach} • {count}/{capacity} students",
+  "groupSubtitle": "{branch}\nCoach: {coach} • {count}/{capacity} students",
   "groupDeleteTitle": "Delete Group",
   "groupDeleteConfirm": "Are you sure you want to delete the group {name}",
   "groupDeleted": "Group deleted.",

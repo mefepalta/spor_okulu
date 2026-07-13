@@ -1,6 +1,6 @@
 import '../l10n/app_localizations.dart';
 
-/// Haftanın günü ([TrainingGroup.schedule] içinde) veritabanında Türkçe (ASCII)
+/// Haftanın günü ([ScheduleEntry.day] içinde) veritabanında Türkçe (ASCII)
 /// saklanır: 'Pazartesi','Sali','Carsamba','Persembe','Cuma','Cumartesi',
 /// 'Pazar'. Bu yardımcılar yalnızca **gösterim** için o anki dile çevirir;
 /// saklanan/karşılaştırılan değerler değişmez.
@@ -46,20 +46,4 @@ String localizedDayShort(AppLocalizations l10n, String day) {
     default:
       return day;
   }
-}
-
-/// "Pazartesi 18:00" gibi bir program metnindeki gün kısmını çevirir; saat
-/// kısmı olduğu gibi kalır.
-String localizedSchedule(AppLocalizations l10n, String schedule) {
-  final trimmed = schedule.trim();
-  if (trimmed.isEmpty) {
-    return trimmed;
-  }
-  final spaceIndex = trimmed.indexOf(' ');
-  if (spaceIndex < 0) {
-    return localizedDay(l10n, trimmed);
-  }
-  final day = trimmed.substring(0, spaceIndex);
-  final rest = trimmed.substring(spaceIndex);
-  return '${localizedDay(l10n, day)}$rest';
 }

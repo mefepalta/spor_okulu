@@ -1795,14 +1795,8 @@ abstract class AppLocalizations {
   /// No description provided for @groupSubtitle.
   ///
   /// In tr, this message translates to:
-  /// **'{branch} • {schedule}\nAntrenör: {coach} • {count}/{capacity} öğrenci'**
-  String groupSubtitle(
-    String branch,
-    String schedule,
-    String coach,
-    int count,
-    int capacity,
-  );
+  /// **'{branch}\nAntrenör: {coach} • {count}/{capacity} öğrenci'**
+  String groupSubtitle(String branch, String coach, int count, int capacity);
 
   /// No description provided for @groupDeleteTitle.
   ///

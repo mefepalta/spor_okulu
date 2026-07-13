@@ -938,14 +938,8 @@ class AppLocalizationsTr extends AppLocalizations {
       'Henüz grup kaydı yok. Admin grup eklediğinde burada görünecek.';
 
   @override
-  String groupSubtitle(
-    String branch,
-    String schedule,
-    String coach,
-    int count,
-    int capacity,
-  ) {
-    return '$branch • $schedule\nAntrenör: $coach • $count/$capacity öğrenci';
+  String groupSubtitle(String branch, String coach, int count, int capacity) {
+    return '$branch\nAntrenör: $coach • $count/$capacity öğrenci';
   }
 
   @override

@@ -54,29 +54,6 @@ String normalizeTurkishText(String value) {
       .replaceAll('ç', 'c');
 }
 
-String dropdownDayFromText(String value) {
-  final normalizedDay = normalizeTurkishText(value.trim());
-
-  switch (normalizedDay) {
-    case 'pazartesi':
-      return 'Pazartesi';
-    case 'sali':
-      return 'Sali';
-    case 'carsamba':
-      return 'Carsamba';
-    case 'persembe':
-      return 'Persembe';
-    case 'cuma':
-      return 'Cuma';
-    case 'cumartesi':
-      return 'Cumartesi';
-    case 'pazar':
-      return 'Pazar';
-    default:
-      return 'Pazartesi';
-  }
-}
-
 String normalizeTime(String value) {
   final parts = value.trim().split(':');
 

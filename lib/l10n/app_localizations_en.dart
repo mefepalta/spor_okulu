@@ -941,14 +941,8 @@ class AppLocalizationsEn extends AppLocalizations {
       'No group records yet. They\'ll appear here once an admin adds a group.';
 
   @override
-  String groupSubtitle(
-    String branch,
-    String schedule,
-    String coach,
-    int count,
-    int capacity,
-  ) {
-    return '$branch • $schedule\nCoach: $coach • $count/$capacity students';
+  String groupSubtitle(String branch, String coach, int count, int capacity) {
+    return '$branch\nCoach: $coach • $count/$capacity students';
   }
 
   @override

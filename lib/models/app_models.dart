@@ -95,6 +95,10 @@ class TrainingGroup {
   /// Eski kayıtlarda [coachId] boş olabilir; o durumda ada göre çalışılır.
   final String coachId;
   final String coachName;
+
+  /// Eski tek-satır gün/saat alanı. Artık form bu alanı yazmaz; haftalık ders
+  /// programı ([ScheduleEntry]) tek kaynaktır. Yalnızca eski kayıtların geriye
+  /// dönük okunması için modelde tutulur.
   final String schedule;
   final int capacity;
 
@@ -107,7 +111,7 @@ class TrainingGroup {
     required this.branch,
     this.coachId = '',
     required this.coachName,
-    required this.schedule,
+    this.schedule = '',
     required this.capacity,
     this.studentIds = const [],
   });
@@ -155,7 +159,7 @@ class TrainingGroup {
       branch: json['branch'],
       coachId: json['coachId'] ?? '',
       coachName: json['coachName'],
-      schedule: json['schedule'] ?? json['dayTime'],
+      schedule: json['schedule'] ?? json['dayTime'] ?? '',
       capacity: (json['capacity'] as num).toInt(),
       studentIds: List<String>.from(json['studentIds'] ?? const []),
     );

@@ -281,7 +281,7 @@
   "groupsEmptyAdd": "استخدم زر + في أسفل اليمين لإضافة مجموعة جديدة.",
   "groupsEmptyNoCoach": "أضف مدرباً واحداً على الأقل أولاً لإنشاء مجموعة.",
   "groupsEmptyViewer": "لا توجد سجلات مجموعات بعد. ستظهر هنا عندما يضيف المدير مجموعة.",
-  "groupSubtitle": "{branch} • {schedule}\nالمدرب: {coach} • {count}/{capacity} طلاب",
+  "groupSubtitle": "{branch}\nالمدرب: {coach} • {count}/{capacity} طلاب",
   "groupDeleteTitle": "حذف المجموعة",
   "groupDeleteConfirm": "هل أنت متأكد من حذف المجموعة {name}",
   "groupDeleted": "تم حذف المجموعة.",

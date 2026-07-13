@@ -485,13 +485,10 @@
   "groupsEmptyAdd": "Yeni grup eklemek için sağ alttaki + butonunu kullan.",
   "groupsEmptyNoCoach": "Grup eklemek için önce en az bir antrenör ekle.",
   "groupsEmptyViewer": "Henüz grup kaydı yok. Admin grup eklediğinde burada görünecek.",
-  "groupSubtitle": "{branch} • {schedule}\nAntrenör: {coach} • {count}/{capacity} öğrenci",
+  "groupSubtitle": "{branch}\nAntrenör: {coach} • {count}/{capacity} öğrenci",
   "@groupSubtitle": {
     "placeholders": {
       "branch": {
-        "type": "String"
-      },
-      "schedule": {
         "type": "String"
       },
       "coach": {

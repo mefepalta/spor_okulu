@@ -938,14 +938,8 @@ class AppLocalizationsAr extends AppLocalizations {
       'لا توجد سجلات مجموعات بعد. ستظهر هنا عندما يضيف المدير مجموعة.';
 
   @override
-  String groupSubtitle(
-    String branch,
-    String schedule,
-    String coach,
-    int count,
-    int capacity,
-  ) {
-    return '$branch • $schedule\nالمدرب: $coach • $count/$capacity طلاب';
+  String groupSubtitle(String branch, String coach, int count, int capacity) {
+    return '$branch\nالمدرب: $coach • $count/$capacity طلاب';
   }
 
   @override

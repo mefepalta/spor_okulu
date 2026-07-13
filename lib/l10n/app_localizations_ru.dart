@@ -947,14 +947,8 @@ class AppLocalizationsRu extends AppLocalizations {
       'Записей о группах пока нет. Они появятся здесь, когда администратор добавит группу.';
 
   @override
-  String groupSubtitle(
-    String branch,
-    String schedule,
-    String coach,
-    int count,
-    int capacity,
-  ) {
-    return '$branch • $schedule\nТренер: $coach • $count/$capacity учеников';
+  String groupSubtitle(String branch, String coach, int count, int capacity) {
+    return '$branch\nТренер: $coach • $count/$capacity учеников';
   }
 
   @override
