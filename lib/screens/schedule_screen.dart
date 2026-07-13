@@ -636,10 +636,12 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     required double minBlockHeight,
     required int gridStartMinutes,
   }) {
+    // Blok, saat çizgisine yapışmasın diye üstten/alttan küçük boşluk bırakılır.
+    const blockGap = 4.0;
     final start = _timeToMinutes(entry.startTime) ?? gridStartMinutes;
     final end = _timeToMinutes(entry.endTime) ?? (start + 60);
-    final top = (start - gridStartMinutes) / 60 * pxPerHour;
-    final rawHeight = (end - start) / 60 * pxPerHour;
+    final top = (start - gridStartMinutes) / 60 * pxPerHour + blockGap;
+    final rawHeight = (end - start) / 60 * pxPerHour - blockGap * 2;
     final height = rawHeight < minBlockHeight ? minBlockHeight : rawHeight;
     final groupLine = entry.branch.isNotEmpty
         ? '${entry.groupName} · ${entry.branch}'
