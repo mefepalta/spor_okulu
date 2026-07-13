@@ -26,6 +26,14 @@ class ScheduleService {
     });
   }
 
+  /// Tek seferlik okuma (ör. ana ekrandaki "Bugünün Dersleri" kartı için).
+  Future<List<ScheduleEntry>> loadEntries() async {
+    final snapshot = await _entries.get();
+    return snapshot.docs
+        .map((doc) => ScheduleEntry.fromJson(doc.id, doc.data()))
+        .toList();
+  }
+
   Future<void> addEntry(ScheduleEntry entry) async {
     await _entries.add(entry.toJson());
   }

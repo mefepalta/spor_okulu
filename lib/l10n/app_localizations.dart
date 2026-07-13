@@ -3737,6 +3737,18 @@ abstract class AppLocalizations {
   /// **'Bugün'**
   String get scheduleTodayLabel;
 
+  /// No description provided for @todayLessonsTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bugünün Dersleri'**
+  String get todayLessonsTitle;
+
+  /// No description provided for @todayNoLessons.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bugün ders yok.'**
+  String get todayNoLessons;
+
   /// No description provided for @scheduleConflictTitle.
   ///
   /// In tr, this message translates to:

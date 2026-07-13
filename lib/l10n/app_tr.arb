@@ -1181,6 +1181,8 @@
   "scheduleViewDay": "Günlük",
   "scheduleViewWeek": "Haftalık",
   "scheduleTodayLabel": "Bugün",
+  "todayLessonsTitle": "Bugünün Dersleri",
+  "todayNoLessons": "Bugün ders yok.",
   "scheduleConflictTitle": "Çakışma var",
   "scheduleConflictBody": "Bu saatte çakışan ders var:",
   "scheduleSaveAnyway": "Yine de kaydet",

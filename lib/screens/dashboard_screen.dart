@@ -16,6 +16,7 @@ import '../services/firestore_service.dart';
 import '../services/parent_service.dart';
 import '../services/profile_service.dart';
 import '../services/reminders_service.dart';
+import '../services/schedule_service.dart';
 import '../services/user_management_service.dart';
 import '../services/user_role_service.dart';
 import '../theme/app_colors.dart';
@@ -66,6 +67,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final ParentService _parentService = ParentService();
   final UserManagementService _userManagementService = UserManagementService();
   final ProfileService _profileService = ProfileService();
+  final ScheduleService _scheduleService = ScheduleService();
   final AbsenceAlertService _absenceAlertService = AbsenceAlertService();
   final RemindersService _remindersService = RemindersService();
   StreamSubscription<List<Announcement>>? _announcementSubscription;
@@ -84,6 +86,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final List<LeaveRequest> _leaveRequests = [];
   final List<CashTransaction> _cashTransactions = [];
   final List<EquipmentItem> _equipment = [];
+  final List<ScheduleEntry> _scheduleEntries = [];
   final List<ParentAccount> _studentAccounts = [];
   List<String> _assignedStudentIds = const [];
 
@@ -230,6 +233,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       var loadedLeaveRequests = const <LeaveRequest>[];
       var loadedCashTransactions = const <CashTransaction>[];
       var loadedEquipment = const <EquipmentItem>[];
+      var loadedSchedule = const <ScheduleEntry>[];
       UserAccount? viewerAccount;
 
       if (isParent) {
@@ -273,6 +277,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         loadedResponses = await _firestoreService.loadEventResponses();
         loadedLeaveRequests = await _firestoreService.loadLeaveRequests();
         loadedEquipment = await _firestoreService.loadEquipment();
+        loadedSchedule = await _scheduleService.loadEntries();
 
         // Ödemeleri yalnızca admin ve antrenör okuyabilir.
         if (isAdmin || isCoach) {
@@ -365,6 +370,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
         _equipment
           ..clear()
           ..addAll(loadedEquipment);
+
+        _scheduleEntries
+          ..clear()
+          ..addAll(loadedSchedule);
 
         _knownAnnouncementCount = _visibleAnnouncements(
           loadedAnnouncements,

@@ -2038,6 +2038,12 @@ class AppLocalizationsTr extends AppLocalizations {
   String get scheduleTodayLabel => 'Bugün';
 
   @override
+  String get todayLessonsTitle => 'Bugünün Dersleri';
+
+  @override
+  String get todayNoLessons => 'Bugün ders yok.';
+
+  @override
   String get scheduleConflictTitle => 'Çakışma var';
 
   @override

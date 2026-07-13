@@ -2031,6 +2031,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get scheduleTodayLabel => 'اليوم';
 
   @override
+  String get todayLessonsTitle => 'حصص اليوم';
+
+  @override
+  String get todayNoLessons => 'لا حصص اليوم.';
+
+  @override
   String get scheduleConflictTitle => 'تعارض';
 
   @override

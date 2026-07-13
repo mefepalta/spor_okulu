@@ -2068,6 +2068,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get scheduleTodayLabel => 'Aujourd\'hui';
 
   @override
+  String get todayLessonsTitle => 'Cours du jour';
+
+  @override
+  String get todayNoLessons => 'Aucun cours aujourd\'hui.';
+
+  @override
   String get scheduleConflictTitle => 'Conflit';
 
   @override

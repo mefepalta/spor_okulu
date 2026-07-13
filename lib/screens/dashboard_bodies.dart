@@ -509,6 +509,7 @@ extension _DashboardBodies on _DashboardScreenState {
       const SizedBox(height: 16),
       _buildStatTilesRow(context),
       const SizedBox(height: 12),
+      _buildTodayLessonsSection(context),
       _buildAttendanceSummarySection(context),
     ];
 
@@ -533,6 +534,84 @@ extension _DashboardBodies on _DashboardScreenState {
     }
 
     return ListView(padding: const EdgeInsets.all(16), children: sections);
+  }
+
+  /// Bugüne ait ders programı girişlerini gösteren özet kart. Tıklayınca tam
+  /// Ders Programı ekranı açılır. Denormalize alanlar (grup/şube/antrenör)
+  /// sayesinde ek okuma gerekmez.
+  Widget _buildTodayLessonsSection(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final todayIndex = (DateTime.now().weekday - 1).clamp(0, 6);
+    final today = kScheduleDays[todayIndex];
+    final todayEntries =
+        _scheduleEntries.where((e) => e.day == today).toList()
+          ..sort((a, b) => a.startTime.compareTo(b.startTime));
+
+    return SummarySection(
+      icon: Icons.calendar_month,
+      title: l10n.todayLessonsTitle,
+      iconColor: AppColors.primary,
+      actionLabel: l10n.commonAll,
+      onAction: () => _openScheduleScreen(context),
+      child: todayEntries.isEmpty
+          ? _emptyHint(l10n.todayNoLessons)
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                for (final entry in todayEntries) _todayLessonRow(context, entry),
+              ],
+            ),
+    );
+  }
+
+  Widget _todayLessonRow(BuildContext context, ScheduleEntry entry) {
+    final groupLine = entry.branch.isNotEmpty
+        ? '${entry.groupName} · ${entry.branch}'
+        : entry.groupName;
+    final mutedColor = Theme.of(context).textTheme.bodySmall?.color;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            decoration: BoxDecoration(
+              color: AppColors.primary.withValues(alpha: 0.12),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Text(
+              entry.startTime,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 13,
+                color: AppColors.primary,
+              ),
+            ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  groupLine,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontWeight: FontWeight.w600),
+                ),
+                Text(
+                  entry.coachName,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontSize: 12, color: mutedColor),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _buildGreeting() {

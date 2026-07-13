@@ -603,6 +603,8 @@
   "scheduleViewDay": "Día",
   "scheduleViewWeek": "Semana",
   "scheduleTodayLabel": "Hoy",
+  "todayLessonsTitle": "Clases de hoy",
+  "todayNoLessons": "Hoy no hay clases.",
   "scheduleConflictTitle": "Conflicto",
   "scheduleConflictBody": "Hay una clase que se solapa a esta hora:",
   "scheduleSaveAnyway": "Guardar igualmente",

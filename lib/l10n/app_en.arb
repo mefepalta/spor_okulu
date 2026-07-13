@@ -603,6 +603,8 @@
   "scheduleViewDay": "Day",
   "scheduleViewWeek": "Week",
   "scheduleTodayLabel": "Today",
+  "todayLessonsTitle": "Today's Lessons",
+  "todayNoLessons": "No lessons today.",
   "scheduleConflictTitle": "Conflict",
   "scheduleConflictBody": "There's a conflicting lesson at this time:",
   "scheduleSaveAnyway": "Save anyway",

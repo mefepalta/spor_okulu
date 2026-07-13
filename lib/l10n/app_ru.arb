@@ -603,6 +603,8 @@
   "scheduleViewDay": "День",
   "scheduleViewWeek": "Неделя",
   "scheduleTodayLabel": "Сегодня",
+  "todayLessonsTitle": "Занятия сегодня",
+  "todayNoLessons": "Сегодня занятий нет.",
   "scheduleConflictTitle": "Конфликт",
   "scheduleConflictBody": "В это время есть пересекающееся занятие:",
   "scheduleSaveAnyway": "Всё равно сохранить",

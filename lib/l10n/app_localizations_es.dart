@@ -2061,6 +2061,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get scheduleTodayLabel => 'Hoy';
 
   @override
+  String get todayLessonsTitle => 'Clases de hoy';
+
+  @override
+  String get todayNoLessons => 'Hoy no hay clases.';
+
+  @override
   String get scheduleConflictTitle => 'Conflicto';
 
   @override
