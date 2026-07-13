@@ -227,20 +227,19 @@ extension _DashboardHandlers on _DashboardScreenState {
     );
   }
 
-  Future<void> _addAnnouncement(Announcement announcement) async {
+  Future<Announcement> _addAnnouncement(Announcement announcement) async {
     final savedAnnouncement = await _firestoreService.addAnnouncement(
       announcement,
     );
 
-    setState(() {
-      _announcements.add(savedAnnouncement);
-    });
-
-    // Yalnızca "Herkes" hedefli duyurular için push gönder ("all" konusu). Role
-    // özel duyurular yalnızca uygulama içinde görünür (yanlış kitleye push
-    // gitmesin diye). Push en iyi çaba: beklenmez (Worker yavaş/kapalıysa duyuru
-    // kaydı gecikmesin) ve başarısız olsa da duyuru kaydedilmiş kalır.
+    // Liste, realtime stream (watchAnnouncements) ile güncellenir; tek gerçek
+    // kaynak odur. Burada _announcements'a elle EKLEME yapılmaz: aksi halde
+    // stream'in clear+addAll'i ile yarışıp aynı duyuru iki kez görünürdü.
+    // Kaydı ekleyen ekran, dönen (id'li) kaydı kendi listesine yansıtır.
     if (savedAnnouncement.targetAudience == AnnouncementAudience.everyone) {
+      // Yalnızca "Herkes" hedefli duyurular push gönderir ("all" konusu); role
+      // özel duyurular yalnızca uygulama içinde görünür. Push en iyi çaba:
+      // beklenmez, başarısız olsa da duyuru kaydedilmiş kalır.
       unawaited(
         _notificationSender.sendAnnouncement(
           title: savedAnnouncement.title,
@@ -248,28 +247,18 @@ extension _DashboardHandlers on _DashboardScreenState {
         ),
       );
     }
+    return savedAnnouncement;
   }
 
-  Future<void> _deleteAnnouncement(int index) async {
-    await _firestoreService.deleteAnnouncement(_announcements[index].id);
-
-    setState(() {
-      _announcements.removeAt(index);
-    });
+  Future<void> _deleteAnnouncement(Announcement announcement) async {
+    // id ile sil: stream sıralaması (createdAt) ilk yüklemeden farklı olabildiği
+    // için index güvenilmez. Liste güncellemesi çağıran ekrana + stream'e kalır.
+    await _firestoreService.deleteAnnouncement(announcement.id);
   }
 
-  Future<void> _updateAnnouncement(
-    int index,
-    Announcement updatedAnnouncement,
-  ) async {
-    final announcementWithId = updatedAnnouncement.copyWith(
-      id: _announcements[index].id,
-    );
-    await _firestoreService.updateAnnouncement(announcementWithId);
-
-    setState(() {
-      _announcements[index] = announcementWithId;
-    });
+  Future<void> _updateAnnouncement(Announcement updatedAnnouncement) async {
+    // updatedAnnouncement id'yi zaten taşır (detay ekranı enjekte eder).
+    await _firestoreService.updateAnnouncement(updatedAnnouncement);
   }
 
   void _openAnnouncementsScreen(BuildContext context) {

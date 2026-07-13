@@ -13,9 +13,10 @@ import '../widgets/empty_state.dart';
 class AnnouncementsScreen extends StatefulWidget {
   final List<Announcement> announcements;
   final bool isAdmin;
-  final Future<void> Function(Announcement announcement) onAddAnnouncement;
-  final Future<void> Function(int index) onDeleteAnnouncement;
-  final Future<void> Function(int index, Announcement updatedAnnouncement)
+  final Future<Announcement> Function(Announcement announcement)
+  onAddAnnouncement;
+  final Future<void> Function(Announcement announcement) onDeleteAnnouncement;
+  final Future<void> Function(Announcement updatedAnnouncement)
   onUpdateAnnouncement;
 
   const AnnouncementsScreen({
@@ -32,6 +33,12 @@ class AnnouncementsScreen extends StatefulWidget {
 }
 
 class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
+  // Ekran, kendi görüntüleme listesini tutar (tek gerçek kaynak burada değil;
+  // ekle/sil bu listeye id ile yansır). Böylece panonun realtime stream'i ile
+  // paylaşılan mutable liste üzerinden oluşan çift-görünme/boşalma yarışları
+  // olmaz. Başlangıç, panonun o anki görünür listesinin kopyasıdır.
+  late final List<Announcement> _items = List.of(widget.announcements);
+
   Future<void> _openAddAnnouncementScreen() async {
     final newAnnouncement = await Navigator.push<Announcement>(
       context,
@@ -42,38 +49,48 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
       return;
     }
 
-    await widget.onAddAnnouncement(newAnnouncement);
+    final saved = await widget.onAddAnnouncement(newAnnouncement);
 
     if (!mounted) {
       return;
     }
 
-    setState(() {});
+    setState(() {
+      // id ile tekilleştir (çift ekleme olmaz); en yeni üstte (stream sırasıyla).
+      if (!_items.any((a) => a.id == saved.id)) {
+        _items.insert(0, saved);
+      }
+    });
   }
 
   Future<void> _openAnnouncementDetailScreen(int index) async {
+    final announcement = _items[index];
     await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => AnnouncementDetailScreen(
-          announcements: widget.announcements,
-          index: index,
+          announcement: announcement,
           isAdmin: widget.isAdmin,
-          onUpdateAnnouncement: widget.onUpdateAnnouncement,
+          onUpdateAnnouncement: (updated) async {
+            await widget.onUpdateAnnouncement(updated);
+            if (!mounted) {
+              return;
+            }
+            setState(() {
+              final i = _items.indexWhere((a) => a.id == updated.id);
+              if (i >= 0) {
+                _items[i] = updated;
+              }
+            });
+          },
         ),
       ),
     );
-
-    if (!mounted) {
-      return;
-    }
-
-    setState(() {});
   }
 
   Future<void> _confirmDeleteAnnouncement(int index) async {
     final l10n = AppLocalizations.of(context);
-    final announcement = widget.announcements[index];
+    final announcement = _items[index];
 
     final shouldDelete = await showDialog<bool>(
       context: context,
@@ -103,13 +120,15 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
       return;
     }
 
-    await widget.onDeleteAnnouncement(index);
+    await widget.onDeleteAnnouncement(announcement);
 
     if (!mounted) {
       return;
     }
 
-    setState(() {});
+    setState(() {
+      _items.removeWhere((a) => a.id == announcement.id);
+    });
 
     ScaffoldMessenger.of(
       context,
@@ -121,7 +140,7 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
     final l10n = AppLocalizations.of(context);
     return WaveScaffold(
       appBar: AppBar(title: Text(l10n.navAnnouncements)),
-      body: widget.announcements.isEmpty
+      body: _items.isEmpty
           ? EmptyState(
               icon: Icons.campaign,
               title: l10n.announcementsEmptyTitle,
@@ -131,9 +150,9 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
             )
           : ListView.builder(
               padding: const EdgeInsets.all(16),
-              itemCount: widget.announcements.length,
+              itemCount: _items.length,
               itemBuilder: (context, index) {
-                final announcement = widget.announcements[index];
+                final announcement = _items[index];
 
                 return Card(
                   margin: const EdgeInsets.only(bottom: 12),
@@ -176,16 +195,14 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
 }
 
 class AnnouncementDetailScreen extends StatefulWidget {
-  final List<Announcement> announcements;
-  final int index;
+  final Announcement announcement;
   final bool isAdmin;
-  final Future<void> Function(int index, Announcement updatedAnnouncement)
+  final Future<void> Function(Announcement updatedAnnouncement)
   onUpdateAnnouncement;
 
   const AnnouncementDetailScreen({
     super.key,
-    required this.announcements,
-    required this.index,
+    required this.announcement,
     required this.isAdmin,
     required this.onUpdateAnnouncement,
   });
@@ -196,10 +213,10 @@ class AnnouncementDetailScreen extends StatefulWidget {
 }
 
 class _AnnouncementDetailScreenState extends State<AnnouncementDetailScreen> {
-  Announcement get _announcement => widget.announcements[widget.index];
+  late Announcement _announcement = widget.announcement;
 
   Future<void> _openEditAnnouncementScreen() async {
-    final updatedAnnouncement = await Navigator.push<Announcement>(
+    final edited = await Navigator.push<Announcement>(
       context,
       MaterialPageRoute(
         builder: (context) =>
@@ -207,17 +224,21 @@ class _AnnouncementDetailScreenState extends State<AnnouncementDetailScreen> {
       ),
     );
 
-    if (updatedAnnouncement == null) {
+    if (edited == null) {
       return;
     }
 
-    await widget.onUpdateAnnouncement(widget.index, updatedAnnouncement);
+    // Düzenleme formu id taşımaz; mevcut kaydın id'sini enjekte et.
+    final updated = edited.copyWith(id: _announcement.id);
+    await widget.onUpdateAnnouncement(updated);
 
     if (!mounted) {
       return;
     }
 
-    setState(() {});
+    setState(() {
+      _announcement = updated;
+    });
   }
 
   @override
