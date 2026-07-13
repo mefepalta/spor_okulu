@@ -108,9 +108,14 @@ export default {
       return withCors(json({ error: 'title veya body zorunludur.' }, 400));
     }
 
+    // Not: android.notification.channel_id BILEREK verilmiyor. Ozel bir bildirim
+    // kanali olusturmadigimiz icin (lean; flutter_local_notifications yok),
+    // var olmayan bir kanal kimligi verilirse Android 8+ bildirimi SESSIZCE
+    // dusurur. Kanal belirtilmeyince firebase_messaging kendi varsayilan
+    // (fallback) kanalini olusturup gosterir.
     const message = {
       notification: { title: title || 'Spor Okulu', body: text },
-      android: { priority: 'high', notification: { channel_id: 'sporokulu_default' } },
+      android: { priority: 'high' },
     };
     if (body.data && typeof body.data === 'object') {
       // FCM data alani yalnizca string degerler kabul eder.
