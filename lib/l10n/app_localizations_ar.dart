@@ -2028,6 +2028,18 @@ class AppLocalizationsAr extends AppLocalizations {
   String get scheduleViewWeek => 'أسبوعي';
 
   @override
+  String get scheduleTodayLabel => 'اليوم';
+
+  @override
+  String get scheduleConflictTitle => 'تعارض';
+
+  @override
+  String get scheduleConflictBody => 'توجد حصة متداخلة في هذا الوقت:';
+
+  @override
+  String get scheduleSaveAnyway => 'احفظ على أي حال';
+
+  @override
   String get scheduleAddTitle => 'إضافة حصة';
 
   @override

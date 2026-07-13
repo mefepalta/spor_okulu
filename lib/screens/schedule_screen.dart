@@ -45,8 +45,12 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   final ScheduleService _service = ScheduleService();
 
   _ScheduleView _view = _ScheduleView.week;
-  // Günlük ızgarada seçili gün (bugünle başlar). DateTime.weekday 1..7 → 0..6.
-  late int _selectedDayIndex = (DateTime.now().weekday - 1).clamp(0, 6);
+  // Bugünün gün indeksi (DateTime.weekday 1..7 → 0..6). Vurgulamada kullanılır.
+  final int _todayIndex = (DateTime.now().weekday - 1).clamp(0, 6);
+  // Günlük ızgarada seçili gün (bugünle başlar).
+  late int _selectedDayIndex = _todayIndex;
+  // Akıştaki en son giriş listesi (çakışma denetimi için editörden erişilir).
+  List<ScheduleEntry> _entries = const [];
 
   Future<void> _openEditor(ScheduleEntry? existing) async {
     final l10n = AppLocalizations.of(context);
@@ -68,11 +72,83 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     if (result == null) {
       return;
     }
+    // Çakışma denetimi: aynı gün, kesişen saat ve aynı antrenör ya da aynı grup.
+    final conflicts = _findConflicts(result, excludeId: existing?.id);
+    if (conflicts.isNotEmpty && mounted) {
+      final proceed = await _confirmConflict(conflicts);
+      if (proceed != true) {
+        return;
+      }
+    }
     if (existing == null) {
       await _service.addEntry(result);
     } else {
       await _service.updateEntry(result.copyWith(id: existing.id));
     }
+  }
+
+  /// [candidate] ile aynı gün + kesişen saat aralığında olup aynı antrenörü ya
+  /// da aynı grubu paylaşan mevcut dersleri döndürür ([excludeId] hariç).
+  List<ScheduleEntry> _findConflicts(
+    ScheduleEntry candidate, {
+    String? excludeId,
+  }) {
+    final start = _timeToMinutes(candidate.startTime);
+    final end = _timeToMinutes(candidate.endTime);
+    if (start == null || end == null) {
+      return const [];
+    }
+    return _entries.where((e) {
+      if (e.id == excludeId || e.day != candidate.day) {
+        return false;
+      }
+      if (e.coachId != candidate.coachId && e.groupId != candidate.groupId) {
+        return false;
+      }
+      final s = _timeToMinutes(e.startTime);
+      final en = _timeToMinutes(e.endTime);
+      if (s == null || en == null) {
+        return false;
+      }
+      return start < en && s < end; // aralıklar kesişiyor mu
+    }).toList();
+  }
+
+  Future<bool?> _confirmConflict(List<ScheduleEntry> conflicts) {
+    final l10n = AppLocalizations.of(context);
+    return showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(l10n.scheduleConflictTitle),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(l10n.scheduleConflictBody),
+            const SizedBox(height: 8),
+            for (final e in conflicts)
+              Padding(
+                padding: const EdgeInsets.only(top: 4),
+                child: Text(
+                  '• ${localizedDay(l10n, e.day)} ${e.startTime}–${e.endTime} · '
+                  '${e.groupName} · ${e.coachName}',
+                  style: const TextStyle(fontWeight: FontWeight.w600),
+                ),
+              ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, false),
+            child: Text(l10n.commonCancel),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(dialogContext, true),
+            child: Text(l10n.scheduleSaveAnyway),
+          ),
+        ],
+      ),
+    );
   }
 
   Future<void> _confirmDelete(ScheduleEntry entry) async {
@@ -140,6 +216,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                   return const Center(child: CircularProgressIndicator());
                 }
                 final entries = snapshot.data ?? const [];
+                _entries = entries; // çakışma denetimi için önbelleğe al
                 if (entries.isEmpty) {
                   return EmptyState(
                     icon: Icons.calendar_month,
@@ -203,19 +280,29 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     final dayEntries = allEntries.where((e) => e.day == day).toList()
       ..sort((a, b) => a.startTime.compareTo(b.startTime));
 
+    final isToday = kScheduleDays.indexOf(day) == _todayIndex;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
           padding: const EdgeInsets.fromLTRB(8, 12, 8, 6),
-          child: Text(
-            localizedDay(l10n, day).toUpperCase(),
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w700,
-              letterSpacing: 0.6,
-              color: AppColors.primary,
-            ),
+          child: Row(
+            children: [
+              Text(
+                localizedDay(l10n, day).toUpperCase(),
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 0.6,
+                  color: AppColors.primary,
+                ),
+              ),
+              if (isToday) ...[
+                const SizedBox(width: 8),
+                _todayBadge(l10n),
+              ],
+            ],
           ),
         ),
         if (dayEntries.isEmpty)
@@ -318,6 +405,26 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     );
   }
 
+  /// "Bugün" rozeti — bugünün gün başlığının yanında gösterilir.
+  Widget _todayBadge(AppLocalizations l10n) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+      decoration: BoxDecoration(
+        color: AppColors.primary,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Text(
+        l10n.scheduleTodayLabel,
+        style: const TextStyle(
+          fontSize: 10,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 0.4,
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
+
   // ---- Günlük ızgara görünümü ----
 
   /// "HH:MM" biçimini gün içi dakika sayısına çevirir (geçersizse null).
@@ -387,6 +494,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     required bool hasLesson,
   }) {
     final mutedColor = Theme.of(context).textTheme.bodySmall?.color;
+    final isToday = index == _todayIndex;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 2),
       child: Material(
@@ -407,8 +515,10 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontSize: 12,
-                    fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
-                    color: selected ? AppColors.primary : mutedColor,
+                    fontWeight:
+                        (selected || isToday) ? FontWeight.w700 : FontWeight.w500,
+                    // Bugün, seçili olmasa da vurgulanır.
+                    color: (selected || isToday) ? AppColors.primary : mutedColor,
                   ),
                 ),
                 const SizedBox(height: 4),

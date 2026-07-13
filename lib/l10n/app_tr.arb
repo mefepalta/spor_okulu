@@ -1180,6 +1180,10 @@
   },
   "scheduleViewDay": "Günlük",
   "scheduleViewWeek": "Haftalık",
+  "scheduleTodayLabel": "Bugün",
+  "scheduleConflictTitle": "Çakışma var",
+  "scheduleConflictBody": "Bu saatte çakışan ders var:",
+  "scheduleSaveAnyway": "Yine de kaydet",
   "scheduleAddTitle": "Ders Ekle",
   "@scheduleAddTitle": {
     "description": "Schedule: scheduleAddTitle"

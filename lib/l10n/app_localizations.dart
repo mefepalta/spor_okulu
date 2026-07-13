@@ -3731,6 +3731,30 @@ abstract class AppLocalizations {
   /// **'Haftalık'**
   String get scheduleViewWeek;
 
+  /// No description provided for @scheduleTodayLabel.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bugün'**
+  String get scheduleTodayLabel;
+
+  /// No description provided for @scheduleConflictTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çakışma var'**
+  String get scheduleConflictTitle;
+
+  /// No description provided for @scheduleConflictBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu saatte çakışan ders var:'**
+  String get scheduleConflictBody;
+
+  /// No description provided for @scheduleSaveAnyway.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yine de kaydet'**
+  String get scheduleSaveAnyway;
+
   /// Schedule: scheduleAddTitle
   ///
   /// In tr, this message translates to:

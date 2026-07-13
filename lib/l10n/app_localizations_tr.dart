@@ -2035,6 +2035,18 @@ class AppLocalizationsTr extends AppLocalizations {
   String get scheduleViewWeek => 'Haftalık';
 
   @override
+  String get scheduleTodayLabel => 'Bugün';
+
+  @override
+  String get scheduleConflictTitle => 'Çakışma var';
+
+  @override
+  String get scheduleConflictBody => 'Bu saatte çakışan ders var:';
+
+  @override
+  String get scheduleSaveAnyway => 'Yine de kaydet';
+
+  @override
   String get scheduleAddTitle => 'Ders Ekle';
 
   @override

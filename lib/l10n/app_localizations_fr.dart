@@ -2065,6 +2065,18 @@ class AppLocalizationsFr extends AppLocalizations {
   String get scheduleViewWeek => 'Semaine';
 
   @override
+  String get scheduleTodayLabel => 'Aujourd\'hui';
+
+  @override
+  String get scheduleConflictTitle => 'Conflit';
+
+  @override
+  String get scheduleConflictBody => 'Un cours chevauche cet horaire :';
+
+  @override
+  String get scheduleSaveAnyway => 'Enregistrer quand même';
+
+  @override
   String get scheduleAddTitle => 'Ajouter un cours';
 
   @override

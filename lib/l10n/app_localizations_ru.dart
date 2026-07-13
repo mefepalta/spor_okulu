@@ -2051,6 +2051,18 @@ class AppLocalizationsRu extends AppLocalizations {
   String get scheduleViewWeek => 'Неделя';
 
   @override
+  String get scheduleTodayLabel => 'Сегодня';
+
+  @override
+  String get scheduleConflictTitle => 'Конфликт';
+
+  @override
+  String get scheduleConflictBody => 'В это время есть пересекающееся занятие:';
+
+  @override
+  String get scheduleSaveAnyway => 'Всё равно сохранить';
+
+  @override
   String get scheduleAddTitle => 'Добавить занятие';
 
   @override

@@ -2058,6 +2058,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get scheduleViewWeek => 'Semana';
 
   @override
+  String get scheduleTodayLabel => 'Hoy';
+
+  @override
+  String get scheduleConflictTitle => 'Conflicto';
+
+  @override
+  String get scheduleConflictBody => 'Hay una clase que se solapa a esta hora:';
+
+  @override
+  String get scheduleSaveAnyway => 'Guardar igualmente';
+
+  @override
   String get scheduleAddTitle => 'Añadir clase';
 
   @override

@@ -2039,6 +2039,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get scheduleViewWeek => 'Week';
 
   @override
+  String get scheduleTodayLabel => 'Today';
+
+  @override
+  String get scheduleConflictTitle => 'Conflict';
+
+  @override
+  String get scheduleConflictBody =>
+      'There\'s a conflicting lesson at this time:';
+
+  @override
+  String get scheduleSaveAnyway => 'Save anyway';
+
+  @override
   String get scheduleAddTitle => 'Add Lesson';
 
   @override
