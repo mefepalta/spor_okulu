@@ -1720,6 +1720,48 @@ abstract class AppLocalizations {
   /// **'Pazar'**
   String get daySunday;
 
+  /// No description provided for @dayShortMon.
+  ///
+  /// In tr, this message translates to:
+  /// **'Pzt'**
+  String get dayShortMon;
+
+  /// No description provided for @dayShortTue.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sal'**
+  String get dayShortTue;
+
+  /// No description provided for @dayShortWed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çar'**
+  String get dayShortWed;
+
+  /// No description provided for @dayShortThu.
+  ///
+  /// In tr, this message translates to:
+  /// **'Per'**
+  String get dayShortThu;
+
+  /// No description provided for @dayShortFri.
+  ///
+  /// In tr, this message translates to:
+  /// **'Cum'**
+  String get dayShortFri;
+
+  /// No description provided for @dayShortSat.
+  ///
+  /// In tr, this message translates to:
+  /// **'Cmt'**
+  String get dayShortSat;
+
+  /// No description provided for @dayShortSun.
+  ///
+  /// In tr, this message translates to:
+  /// **'Paz'**
+  String get dayShortSun;
+
   /// No description provided for @groupsSearchHint.
   ///
   /// In tr, this message translates to:
@@ -3676,6 +3718,18 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Ders Programı'**
   String get scheduleTitle;
+
+  /// No description provided for @scheduleViewDay.
+  ///
+  /// In tr, this message translates to:
+  /// **'Günlük'**
+  String get scheduleViewDay;
+
+  /// No description provided for @scheduleViewWeek.
+  ///
+  /// In tr, this message translates to:
+  /// **'Haftalık'**
+  String get scheduleViewWeek;
 
   /// Schedule: scheduleAddTitle
   ///

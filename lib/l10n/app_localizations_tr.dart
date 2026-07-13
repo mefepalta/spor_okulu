@@ -899,6 +899,27 @@ class AppLocalizationsTr extends AppLocalizations {
   String get daySunday => 'Pazar';
 
   @override
+  String get dayShortMon => 'Pzt';
+
+  @override
+  String get dayShortTue => 'Sal';
+
+  @override
+  String get dayShortWed => 'Çar';
+
+  @override
+  String get dayShortThu => 'Per';
+
+  @override
+  String get dayShortFri => 'Cum';
+
+  @override
+  String get dayShortSat => 'Cmt';
+
+  @override
+  String get dayShortSun => 'Paz';
+
+  @override
   String get groupsSearchHint => 'Grup ara';
 
   @override
@@ -2006,6 +2027,12 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get scheduleTitle => 'Ders Programı';
+
+  @override
+  String get scheduleViewDay => 'Günlük';
+
+  @override
+  String get scheduleViewWeek => 'Haftalık';
 
   @override
   String get scheduleAddTitle => 'Ders Ekle';

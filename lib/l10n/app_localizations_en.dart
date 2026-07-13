@@ -902,6 +902,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get daySunday => 'Sunday';
 
   @override
+  String get dayShortMon => 'Mon';
+
+  @override
+  String get dayShortTue => 'Tue';
+
+  @override
+  String get dayShortWed => 'Wed';
+
+  @override
+  String get dayShortThu => 'Thu';
+
+  @override
+  String get dayShortFri => 'Fri';
+
+  @override
+  String get dayShortSat => 'Sat';
+
+  @override
+  String get dayShortSun => 'Sun';
+
+  @override
   String get groupsSearchHint => 'Search groups';
 
   @override
@@ -2010,6 +2031,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get scheduleTitle => 'Class Schedule';
+
+  @override
+  String get scheduleViewDay => 'Day';
+
+  @override
+  String get scheduleViewWeek => 'Week';
 
   @override
   String get scheduleAddTitle => 'Add Lesson';

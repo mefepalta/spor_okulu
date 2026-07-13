@@ -473,6 +473,13 @@
   "dayFriday": "Cuma",
   "daySaturday": "Cumartesi",
   "daySunday": "Pazar",
+  "dayShortMon": "Pzt",
+  "dayShortTue": "Sal",
+  "dayShortWed": "Çar",
+  "dayShortThu": "Per",
+  "dayShortFri": "Cum",
+  "dayShortSat": "Cmt",
+  "dayShortSun": "Paz",
   "groupsSearchHint": "Grup ara",
   "groupsEmptyTitle": "Henüz grup yok",
   "groupsEmptyAdd": "Yeni grup eklemek için sağ alttaki + butonunu kullan.",
@@ -1171,6 +1178,8 @@
   "@scheduleTitle": {
     "description": "Schedule: scheduleTitle"
   },
+  "scheduleViewDay": "Günlük",
+  "scheduleViewWeek": "Haftalık",
   "scheduleAddTitle": "Ders Ekle",
   "@scheduleAddTitle": {
     "description": "Schedule: scheduleAddTitle"

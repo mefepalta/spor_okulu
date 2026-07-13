@@ -25,6 +25,29 @@ String localizedDay(AppLocalizations l10n, String day) {
   }
 }
 
+/// Günün kısa (3 harflik) etiketi — günlük ızgara görünümündeki gün şeridi
+/// gibi dar yerlerde kullanılır (7 gün yan yana sığsın diye).
+String localizedDayShort(AppLocalizations l10n, String day) {
+  switch (day) {
+    case 'Pazartesi':
+      return l10n.dayShortMon;
+    case 'Sali':
+      return l10n.dayShortTue;
+    case 'Carsamba':
+      return l10n.dayShortWed;
+    case 'Persembe':
+      return l10n.dayShortThu;
+    case 'Cuma':
+      return l10n.dayShortFri;
+    case 'Cumartesi':
+      return l10n.dayShortSat;
+    case 'Pazar':
+      return l10n.dayShortSun;
+    default:
+      return day;
+  }
+}
+
 /// "Pazartesi 18:00" gibi bir program metnindeki gün kısmını çevirir; saat
 /// kısmı olduğu gibi kalır.
 String localizedSchedule(AppLocalizations l10n, String schedule) {

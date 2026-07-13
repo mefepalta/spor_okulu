@@ -899,6 +899,27 @@ class AppLocalizationsAr extends AppLocalizations {
   String get daySunday => 'الأحد';
 
   @override
+  String get dayShortMon => 'إثن';
+
+  @override
+  String get dayShortTue => 'ثلا';
+
+  @override
+  String get dayShortWed => 'أرب';
+
+  @override
+  String get dayShortThu => 'خمي';
+
+  @override
+  String get dayShortFri => 'جمع';
+
+  @override
+  String get dayShortSat => 'سبت';
+
+  @override
+  String get dayShortSun => 'أحد';
+
+  @override
   String get groupsSearchHint => 'ابحث عن مجموعة';
 
   @override
@@ -1999,6 +2020,12 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get scheduleTitle => 'جدول الحصص';
+
+  @override
+  String get scheduleViewDay => 'يومي';
+
+  @override
+  String get scheduleViewWeek => 'أسبوعي';
 
   @override
   String get scheduleAddTitle => 'إضافة حصة';

@@ -37,8 +37,16 @@ const List<String> kScheduleDays = [
   'Pazar',
 ];
 
+/// Program görünümü: haftalık liste (tüm günler alt alta) ya da günlük zaman
+/// ızgarası (tek gün, saatlere göre bloklar).
+enum _ScheduleView { week, day }
+
 class _ScheduleScreenState extends State<ScheduleScreen> {
   final ScheduleService _service = ScheduleService();
+
+  _ScheduleView _view = _ScheduleView.week;
+  // Günlük ızgarada seçili gün (bugünle başlar). DateTime.weekday 1..7 → 0..6.
+  late int _selectedDayIndex = (DateTime.now().weekday - 1).clamp(0, 6);
 
   Future<void> _openEditor(ScheduleEntry? existing) async {
     final l10n = AppLocalizations.of(context);
@@ -113,36 +121,75 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
               label: Text(l10n.scheduleAddTitle),
             )
           : null,
-      body: StreamBuilder<List<ScheduleEntry>>(
-        stream: _service.watchEntries(),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return EmptyState(
-              icon: Icons.error_outline,
-              title: l10n.scheduleTitle,
-              message: l10n.scheduleLoadError,
-            );
-          }
-          if (snapshot.connectionState == ConnectionState.waiting &&
-              !snapshot.hasData) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          final entries = snapshot.data ?? const [];
-          if (entries.isEmpty) {
-            return EmptyState(
-              icon: Icons.calendar_month,
-              title: l10n.scheduleEmptyTitle,
-              message: widget.canManage
-                  ? l10n.scheduleEmptyBodyManage
-                  : l10n.scheduleEmptyBody,
-            );
-          }
-          return ListView(
-            padding: const EdgeInsets.fromLTRB(12, 12, 12, 88),
-            children: [
-              for (final day in kScheduleDays) _buildDaySection(l10n, day, entries),
-            ],
-          );
+      body: Column(
+        children: [
+          _buildViewToggle(l10n),
+          Expanded(
+            child: StreamBuilder<List<ScheduleEntry>>(
+              stream: _service.watchEntries(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return EmptyState(
+                    icon: Icons.error_outline,
+                    title: l10n.scheduleTitle,
+                    message: l10n.scheduleLoadError,
+                  );
+                }
+                if (snapshot.connectionState == ConnectionState.waiting &&
+                    !snapshot.hasData) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                final entries = snapshot.data ?? const [];
+                if (entries.isEmpty) {
+                  return EmptyState(
+                    icon: Icons.calendar_month,
+                    title: l10n.scheduleEmptyTitle,
+                    message: widget.canManage
+                        ? l10n.scheduleEmptyBodyManage
+                        : l10n.scheduleEmptyBody,
+                  );
+                }
+                if (_view == _ScheduleView.day) {
+                  return _buildDayView(l10n, entries);
+                }
+                return ListView(
+                  padding: const EdgeInsets.fromLTRB(12, 12, 12, 88),
+                  children: [
+                    for (final day in kScheduleDays)
+                      _buildDaySection(l10n, day, entries),
+                  ],
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildViewToggle(AppLocalizations l10n) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(12, 8, 12, 4),
+      child: SegmentedButton<_ScheduleView>(
+        showSelectedIcon: false,
+        style: SegmentedButton.styleFrom(
+          visualDensity: VisualDensity.compact,
+        ),
+        segments: [
+          ButtonSegment(
+            value: _ScheduleView.week,
+            icon: const Icon(Icons.view_week, size: 18),
+            label: Text(l10n.scheduleViewWeek),
+          ),
+          ButtonSegment(
+            value: _ScheduleView.day,
+            icon: const Icon(Icons.view_day, size: 18),
+            label: Text(l10n.scheduleViewDay),
+          ),
+        ],
+        selected: {_view},
+        onSelectionChanged: (selection) {
+          setState(() => _view = selection.first);
         },
       ),
     );
@@ -265,6 +312,282 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                   onPressed: () => _confirmDelete(entry),
                 ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // ---- Günlük ızgara görünümü ----
+
+  /// "HH:MM" biçimini gün içi dakika sayısına çevirir (geçersizse null).
+  int? _timeToMinutes(String value) {
+    if (!value.contains(':')) {
+      return null;
+    }
+    final parts = value.split(':');
+    final hour = int.tryParse(parts[0]);
+    final minute = int.tryParse(parts[1]);
+    if (hour == null || minute == null) {
+      return null;
+    }
+    return hour * 60 + minute;
+  }
+
+  Widget _buildDayView(AppLocalizations l10n, List<ScheduleEntry> allEntries) {
+    final day = kScheduleDays[_selectedDayIndex];
+    final dayEntries = allEntries.where((e) => e.day == day).toList()
+      ..sort((a, b) => a.startTime.compareTo(b.startTime));
+    return Column(
+      children: [
+        _buildDayStrip(l10n, allEntries),
+        Expanded(
+          child: dayEntries.isEmpty
+              ? Center(
+                  child: Text(
+                    l10n.scheduleNoLesson,
+                    style: TextStyle(
+                      color: Theme.of(context).textTheme.bodySmall?.color,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                )
+              : _buildDayGrid(l10n, dayEntries),
+        ),
+      ],
+    );
+  }
+
+  /// Üstteki gün seçici şerit: 7 gün yan yana, seçili gün vurgulu, o gün ders
+  /// varsa altında küçük bir nokta.
+  Widget _buildDayStrip(AppLocalizations l10n, List<ScheduleEntry> allEntries) {
+    final busyDays = allEntries.map((e) => e.day).toSet();
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
+      child: Row(
+        children: [
+          for (var i = 0; i < kScheduleDays.length; i++)
+            Expanded(
+              child: _dayStripCell(
+                l10n,
+                index: i,
+                selected: i == _selectedDayIndex,
+                hasLesson: busyDays.contains(kScheduleDays[i]),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _dayStripCell(
+    AppLocalizations l10n, {
+    required int index,
+    required bool selected,
+    required bool hasLesson,
+  }) {
+    final mutedColor = Theme.of(context).textTheme.bodySmall?.color;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 2),
+      child: Material(
+        color: selected
+            ? AppColors.primary.withValues(alpha: 0.14)
+            : Colors.transparent,
+        borderRadius: BorderRadius.circular(10),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(10),
+          onTap: () => setState(() => _selectedDayIndex = index),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: Column(
+              children: [
+                Text(
+                  localizedDayShort(l10n, kScheduleDays[index]),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+                    color: selected ? AppColors.primary : mutedColor,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Container(
+                  width: 5,
+                  height: 5,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: hasLesson
+                        ? (selected ? AppColors.primary : mutedColor)
+                        : Colors.transparent,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// Seçili günün dikey zaman ızgarası: solda saat çizgileri, dersler süreye
+  /// orantılı yükseklikte bloklar. Kaydırılabilir.
+  Widget _buildDayGrid(AppLocalizations l10n, List<ScheduleEntry> dayEntries) {
+    const gutter = 52.0;
+    const pxPerHour = 72.0;
+    const minBlockHeight = 48.0;
+
+    // Izgara aralığını günün derslerine göre belirle (kenarlarda birer saat pay).
+    var minStart = 24 * 60;
+    var maxEnd = 0;
+    for (final e in dayEntries) {
+      final s = _timeToMinutes(e.startTime);
+      final en = _timeToMinutes(e.endTime);
+      if (s != null) {
+        minStart = s < minStart ? s : minStart;
+      }
+      if (en != null) {
+        maxEnd = en > maxEnd ? en : maxEnd;
+      }
+    }
+    if (minStart >= maxEnd) {
+      // Ayrıştırılamayan saatler için makul varsayılan.
+      minStart = 8 * 60;
+      maxEnd = 20 * 60;
+    }
+    final startHour = (minStart ~/ 60);
+    final endHour = ((maxEnd + 59) ~/ 60);
+    final totalHours = (endHour - startHour).clamp(1, 24);
+    final gridStartMinutes = startHour * 60;
+    final totalHeight = totalHours * pxPerHour;
+    final muted = Theme.of(context).textTheme.bodySmall?.color;
+    final lineColor = Theme.of(context).dividerColor;
+
+    return SingleChildScrollView(
+      padding: const EdgeInsets.fromLTRB(8, 4, 8, 88),
+      child: SizedBox(
+        // Son saat etiketi taban çizgisinin altına düştüğü için biraz pay bırak.
+        height: totalHeight + 20,
+        child: Stack(
+          children: [
+            // Saat çizgileri + etiketleri.
+            for (var h = startHour; h <= endHour; h++)
+              Positioned(
+                top: (h - startHour) * pxPerHour,
+                left: 0,
+                right: 0,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: gutter,
+                      child: Text(
+                        '${h.toString().padLeft(2, '0')}:00',
+                        style: TextStyle(fontSize: 11, color: muted),
+                      ),
+                    ),
+                    Expanded(child: Container(height: 0.5, color: lineColor)),
+                  ],
+                ),
+              ),
+            // Ders blokları.
+            for (final entry in dayEntries)
+              _buildGridBlock(
+                l10n,
+                entry,
+                gutter: gutter,
+                pxPerHour: pxPerHour,
+                minBlockHeight: minBlockHeight,
+                gridStartMinutes: gridStartMinutes,
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildGridBlock(
+    AppLocalizations l10n,
+    ScheduleEntry entry, {
+    required double gutter,
+    required double pxPerHour,
+    required double minBlockHeight,
+    required int gridStartMinutes,
+  }) {
+    final start = _timeToMinutes(entry.startTime) ?? gridStartMinutes;
+    final end = _timeToMinutes(entry.endTime) ?? (start + 60);
+    final top = (start - gridStartMinutes) / 60 * pxPerHour;
+    final rawHeight = (end - start) / 60 * pxPerHour;
+    final height = rawHeight < minBlockHeight ? minBlockHeight : rawHeight;
+    final groupLine = entry.branch.isNotEmpty
+        ? '${entry.groupName} · ${entry.branch}'
+        : entry.groupName;
+    final compact = height < 60;
+
+    return Positioned(
+      top: top,
+      left: gutter + 4,
+      right: 4,
+      height: height,
+      child: Material(
+        color: AppColors.primary.withValues(alpha: 0.14),
+        borderRadius: BorderRadius.circular(10),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(10),
+          onTap: widget.canManage ? () => _openEditor(entry) : null,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        '${entry.startTime} – ${entry.endTime}',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                      Text(
+                        groupLine,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      if (!compact)
+                        Text(
+                          entry.coachName,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Theme.of(context).textTheme.bodySmall?.color,
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+                if (widget.canManage)
+                  SizedBox(
+                    width: 28,
+                    height: 28,
+                    child: IconButton(
+                      padding: EdgeInsets.zero,
+                      iconSize: 18,
+                      icon: const Icon(Icons.delete_outline, color: Colors.red),
+                      onPressed: () => _confirmDelete(entry),
+                    ),
+                  ),
+              ],
+            ),
           ),
         ),
       ),

@@ -908,6 +908,27 @@ class AppLocalizationsRu extends AppLocalizations {
   String get daySunday => 'Воскресенье';
 
   @override
+  String get dayShortMon => 'Пн';
+
+  @override
+  String get dayShortTue => 'Вт';
+
+  @override
+  String get dayShortWed => 'Ср';
+
+  @override
+  String get dayShortThu => 'Чт';
+
+  @override
+  String get dayShortFri => 'Пт';
+
+  @override
+  String get dayShortSat => 'Сб';
+
+  @override
+  String get dayShortSun => 'Вс';
+
+  @override
   String get groupsSearchHint => 'Поиск групп';
 
   @override
@@ -2022,6 +2043,12 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get scheduleTitle => 'Расписание занятий';
+
+  @override
+  String get scheduleViewDay => 'День';
+
+  @override
+  String get scheduleViewWeek => 'Неделя';
 
   @override
   String get scheduleAddTitle => 'Добавить занятие';
