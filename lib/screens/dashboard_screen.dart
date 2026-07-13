@@ -16,6 +16,7 @@ import '../services/firestore_service.dart';
 import '../services/parent_service.dart';
 import '../services/profile_service.dart';
 import '../services/reminders_service.dart';
+import '../services/notification_sender.dart';
 import '../services/notification_service.dart';
 import '../services/schedule_service.dart';
 import '../services/streak_service.dart';
@@ -73,6 +74,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final ProfileService _profileService = ProfileService();
   final ScheduleService _scheduleService = ScheduleService();
   final StreakService _streakService = StreakService();
+  final NotificationSender _notificationSender = NotificationSender();
   final AbsenceAlertService _absenceAlertService = AbsenceAlertService();
   final RemindersService _remindersService = RemindersService();
   StreamSubscription<List<Announcement>>? _announcementSubscription;

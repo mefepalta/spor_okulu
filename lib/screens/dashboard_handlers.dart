@@ -235,6 +235,19 @@ extension _DashboardHandlers on _DashboardScreenState {
     setState(() {
       _announcements.add(savedAnnouncement);
     });
+
+    // Yalnızca "Herkes" hedefli duyurular için push gönder ("all" konusu). Role
+    // özel duyurular yalnızca uygulama içinde görünür (yanlış kitleye push
+    // gitmesin diye). Push en iyi çaba: beklenmez (Worker yavaş/kapalıysa duyuru
+    // kaydı gecikmesin) ve başarısız olsa da duyuru kaydedilmiş kalır.
+    if (savedAnnouncement.targetAudience == AnnouncementAudience.everyone) {
+      unawaited(
+        _notificationSender.sendAnnouncement(
+          title: savedAnnouncement.title,
+          body: savedAnnouncement.content,
+        ),
+      );
+    }
   }
 
   Future<void> _deleteAnnouncement(int index) async {
