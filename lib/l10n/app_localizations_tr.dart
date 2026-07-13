@@ -789,6 +789,24 @@ class AppLocalizationsTr extends AppLocalizations {
   String get fieldParentPhone => 'Veli Telefonu';
 
   @override
+  String get fieldParentName => 'Veli Adı';
+
+  @override
+  String get studentSafetySection => 'Güvenlik & Sağlık';
+
+  @override
+  String get fieldEmergencyContact => 'Acil Durum Kişisi';
+
+  @override
+  String get fieldEmergencyPhone => 'Acil Durum Telefonu';
+
+  @override
+  String get fieldMedicalNote => 'Sağlık Notu';
+
+  @override
+  String get medicalNoteHint => 'Alerji, rahatsızlık, ilaç vb. (isteğe bağlı)';
+
+  @override
   String get studentsSearchHint => 'Öğrenci ara';
 
   @override

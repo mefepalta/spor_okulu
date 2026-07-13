@@ -335,6 +335,68 @@ class _StudentDetailScreenState extends State<StudentDetailScreen> {
               subtitle: Text(student.parentPhone),
             ),
           ),
+          if (student.monthlyFee > 0)
+            Card(
+              child: ListTile(
+                leading: const Icon(Icons.attach_money),
+                title: Text(l10n.fieldMonthlyFee),
+                subtitle: Text('${student.monthlyFee} TL'),
+              ),
+            ),
+          if (student.parentName.isNotEmpty ||
+              student.emergencyContact.isNotEmpty ||
+              student.emergencyPhone.isNotEmpty ||
+              student.medicalNote.isNotEmpty) ...[
+            const SizedBox(height: 12),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(4, 4, 4, 4),
+              child: Row(
+                children: [
+                  const Icon(Icons.health_and_safety_outlined, size: 20),
+                  const SizedBox(width: 8),
+                  Text(
+                    l10n.studentSafetySection,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            if (student.parentName.isNotEmpty)
+              Card(
+                child: ListTile(
+                  leading: const Icon(Icons.badge_outlined),
+                  title: Text(l10n.fieldParentName),
+                  subtitle: Text(student.parentName),
+                ),
+              ),
+            if (student.emergencyContact.isNotEmpty)
+              Card(
+                child: ListTile(
+                  leading: const Icon(Icons.contact_emergency_outlined),
+                  title: Text(l10n.fieldEmergencyContact),
+                  subtitle: Text(student.emergencyContact),
+                ),
+              ),
+            if (student.emergencyPhone.isNotEmpty)
+              Card(
+                child: ListTile(
+                  leading: const Icon(Icons.phone_in_talk_outlined),
+                  title: Text(l10n.fieldEmergencyPhone),
+                  subtitle: Text(student.emergencyPhone),
+                ),
+              ),
+            if (student.medicalNote.isNotEmpty)
+              Card(
+                child: ListTile(
+                  leading: const Icon(Icons.medical_information_outlined),
+                  title: Text(l10n.fieldMedicalNote),
+                  subtitle: Text(student.medicalNote),
+                ),
+              ),
+          ],
           const SizedBox(height: 20),
           if (widget.isAdmin)
             ElevatedButton.icon(
@@ -372,6 +434,12 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
   final TextEditingController _ageController = TextEditingController();
   final TextEditingController _parentPhoneController = TextEditingController();
   final TextEditingController _monthlyFeeController = TextEditingController();
+  final TextEditingController _parentNameController = TextEditingController();
+  final TextEditingController _emergencyContactController =
+      TextEditingController();
+  final TextEditingController _emergencyPhoneController =
+      TextEditingController();
+  final TextEditingController _medicalNoteController = TextEditingController();
 
   String? _selectedBranch;
 
@@ -389,6 +457,10 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
       if (student.monthlyFee > 0) {
         _monthlyFeeController.text = student.monthlyFee.toString();
       }
+      _parentNameController.text = student.parentName;
+      _emergencyContactController.text = student.emergencyContact;
+      _emergencyPhoneController.text = student.emergencyPhone;
+      _medicalNoteController.text = student.medicalNote;
     }
   }
 
@@ -398,6 +470,10 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
     _ageController.dispose();
     _parentPhoneController.dispose();
     _monthlyFeeController.dispose();
+    _parentNameController.dispose();
+    _emergencyContactController.dispose();
+    _emergencyPhoneController.dispose();
+    _medicalNoteController.dispose();
     super.dispose();
   }
 
@@ -414,6 +490,10 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
       branch: (_selectedBranch ?? '').trim(),
       parentPhone: _parentPhoneController.text.trim(),
       monthlyFee: int.tryParse(_monthlyFeeController.text.trim()) ?? 0,
+      parentName: _parentNameController.text.trim(),
+      emergencyContact: _emergencyContactController.text.trim(),
+      emergencyPhone: _emergencyPhoneController.text.trim(),
+      medicalNote: _medicalNoteController.text.trim(),
     );
 
     Navigator.pop(context, student);
@@ -531,6 +611,67 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
                   hintText: '1500',
                   suffixText: 'TL',
                   helperText: l10n.monthlyFeeHelper,
+                ),
+              ),
+              const SizedBox(height: 24),
+              Row(
+                children: [
+                  const Icon(Icons.health_and_safety_outlined, size: 20),
+                  const SizedBox(width: 8),
+                  Text(
+                    l10n.studentSafetySection,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              TextFormField(
+                controller: _parentNameController,
+                textCapitalization: TextCapitalization.words,
+                decoration: InputDecoration(
+                  labelText: l10n.fieldParentName,
+                  border: const OutlineInputBorder(),
+                  prefixIcon: const Icon(Icons.badge_outlined),
+                ),
+              ),
+              const SizedBox(height: 12),
+              TextFormField(
+                controller: _emergencyContactController,
+                textCapitalization: TextCapitalization.words,
+                decoration: InputDecoration(
+                  labelText: l10n.fieldEmergencyContact,
+                  border: const OutlineInputBorder(),
+                  prefixIcon: const Icon(Icons.contact_emergency_outlined),
+                ),
+              ),
+              const SizedBox(height: 12),
+              TextFormField(
+                controller: _emergencyPhoneController,
+                keyboardType: TextInputType.phone,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                  LengthLimitingTextInputFormatter(11),
+                ],
+                decoration: InputDecoration(
+                  labelText: l10n.fieldEmergencyPhone,
+                  border: const OutlineInputBorder(),
+                  prefixIcon: const Icon(Icons.phone_in_talk_outlined),
+                  hintText: '05XXXXXXXXX',
+                ),
+              ),
+              const SizedBox(height: 12),
+              TextFormField(
+                controller: _medicalNoteController,
+                maxLines: 3,
+                textCapitalization: TextCapitalization.sentences,
+                decoration: InputDecoration(
+                  labelText: l10n.fieldMedicalNote,
+                  border: const OutlineInputBorder(),
+                  prefixIcon: const Icon(Icons.medical_information_outlined),
+                  hintText: l10n.medicalNoteHint,
                 ),
               ),
               const SizedBox(height: 20),

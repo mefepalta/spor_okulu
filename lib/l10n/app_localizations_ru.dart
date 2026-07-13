@@ -796,6 +796,25 @@ class AppLocalizationsRu extends AppLocalizations {
   String get fieldParentPhone => 'Телефон родителя';
 
   @override
+  String get fieldParentName => 'Имя родителя';
+
+  @override
+  String get studentSafetySection => 'Безопасность и здоровье';
+
+  @override
+  String get fieldEmergencyContact => 'Экстренный контакт';
+
+  @override
+  String get fieldEmergencyPhone => 'Экстренный телефон';
+
+  @override
+  String get fieldMedicalNote => 'Медицинская заметка';
+
+  @override
+  String get medicalNoteHint =>
+      'Аллергии, заболевания, лекарства и т. д. (необязательно)';
+
+  @override
   String get studentsSearchHint => 'Поиск учеников';
 
   @override

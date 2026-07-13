@@ -801,6 +801,25 @@ class AppLocalizationsEs extends AppLocalizations {
   String get fieldParentPhone => 'Teléfono del padre/madre';
 
   @override
+  String get fieldParentName => 'Nombre del padre/madre';
+
+  @override
+  String get studentSafetySection => 'Seguridad y salud';
+
+  @override
+  String get fieldEmergencyContact => 'Contacto de emergencia';
+
+  @override
+  String get fieldEmergencyPhone => 'Teléfono de emergencia';
+
+  @override
+  String get fieldMedicalNote => 'Nota médica';
+
+  @override
+  String get medicalNoteHint =>
+      'Alergias, afecciones, medicación, etc. (opcional)';
+
+  @override
   String get studentsSearchHint => 'Buscar estudiantes';
 
   @override

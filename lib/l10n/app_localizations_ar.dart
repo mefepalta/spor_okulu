@@ -786,6 +786,24 @@ class AppLocalizationsAr extends AppLocalizations {
   String get fieldParentPhone => 'هاتف ولي الأمر';
 
   @override
+  String get fieldParentName => 'اسم ولي الأمر';
+
+  @override
+  String get studentSafetySection => 'السلامة والصحة';
+
+  @override
+  String get fieldEmergencyContact => 'جهة اتصال للطوارئ';
+
+  @override
+  String get fieldEmergencyPhone => 'هاتف الطوارئ';
+
+  @override
+  String get fieldMedicalNote => 'ملاحظة طبية';
+
+  @override
+  String get medicalNoteHint => 'حساسية، أمراض، أدوية، إلخ (اختياري)';
+
+  @override
   String get studentsSearchHint => 'ابحث عن طالب';
 
   @override

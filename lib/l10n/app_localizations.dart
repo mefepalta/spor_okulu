@@ -1516,6 +1516,42 @@ abstract class AppLocalizations {
   /// **'Veli Telefonu'**
   String get fieldParentPhone;
 
+  /// No description provided for @fieldParentName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Veli Adı'**
+  String get fieldParentName;
+
+  /// No description provided for @studentSafetySection.
+  ///
+  /// In tr, this message translates to:
+  /// **'Güvenlik & Sağlık'**
+  String get studentSafetySection;
+
+  /// No description provided for @fieldEmergencyContact.
+  ///
+  /// In tr, this message translates to:
+  /// **'Acil Durum Kişisi'**
+  String get fieldEmergencyContact;
+
+  /// No description provided for @fieldEmergencyPhone.
+  ///
+  /// In tr, this message translates to:
+  /// **'Acil Durum Telefonu'**
+  String get fieldEmergencyPhone;
+
+  /// No description provided for @fieldMedicalNote.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sağlık Notu'**
+  String get fieldMedicalNote;
+
+  /// No description provided for @medicalNoteHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Alerji, rahatsızlık, ilaç vb. (isteğe bağlı)'**
+  String get medicalNoteHint;
+
   /// No description provided for @studentsSearchHint.
   ///
   /// In tr, this message translates to:

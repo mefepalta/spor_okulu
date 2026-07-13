@@ -9,6 +9,13 @@ class Student {
   /// 0 ise öğrenci toplu oluşturmaya dahil edilmez (ücretsiz/burslu vb.).
   final int monthlyFee;
 
+  /// Güvenlik/sağlık bilgileri (reşit olmayanlar için sorumluluk gereği).
+  /// Hepsi isteğe bağlı; eski kayıtlarda boş olur.
+  final String parentName;
+  final String emergencyContact;
+  final String emergencyPhone;
+  final String medicalNote;
+
   const Student({
     this.id = '',
     required this.name,
@@ -16,6 +23,10 @@ class Student {
     required this.branch,
     required this.parentPhone,
     this.monthlyFee = 0,
+    this.parentName = '',
+    this.emergencyContact = '',
+    this.emergencyPhone = '',
+    this.medicalNote = '',
   });
 
   Student copyWith({
@@ -25,6 +36,10 @@ class Student {
     String? branch,
     String? parentPhone,
     int? monthlyFee,
+    String? parentName,
+    String? emergencyContact,
+    String? emergencyPhone,
+    String? medicalNote,
   }) {
     return Student(
       id: id ?? this.id,
@@ -33,6 +48,10 @@ class Student {
       branch: branch ?? this.branch,
       parentPhone: parentPhone ?? this.parentPhone,
       monthlyFee: monthlyFee ?? this.monthlyFee,
+      parentName: parentName ?? this.parentName,
+      emergencyContact: emergencyContact ?? this.emergencyContact,
+      emergencyPhone: emergencyPhone ?? this.emergencyPhone,
+      medicalNote: medicalNote ?? this.medicalNote,
     );
   }
 
@@ -44,6 +63,10 @@ class Student {
       'branch': branch,
       'parentPhone': parentPhone,
       'monthlyFee': monthlyFee,
+      'parentName': parentName,
+      'emergencyContact': emergencyContact,
+      'emergencyPhone': emergencyPhone,
+      'medicalNote': medicalNote,
     };
   }
 
@@ -55,6 +78,10 @@ class Student {
       branch: json['branch'],
       parentPhone: json['parentPhone'],
       monthlyFee: (json['monthlyFee'] as num?)?.toInt() ?? 0,
+      parentName: json['parentName'] as String? ?? '',
+      emergencyContact: json['emergencyContact'] as String? ?? '',
+      emergencyPhone: json['emergencyPhone'] as String? ?? '',
+      medicalNote: json['medicalNote'] as String? ?? '',
     );
   }
 }

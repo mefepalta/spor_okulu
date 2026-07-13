@@ -791,6 +791,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get fieldParentPhone => 'Parent Phone';
 
   @override
+  String get fieldParentName => 'Parent Name';
+
+  @override
+  String get studentSafetySection => 'Safety & Health';
+
+  @override
+  String get fieldEmergencyContact => 'Emergency Contact';
+
+  @override
+  String get fieldEmergencyPhone => 'Emergency Phone';
+
+  @override
+  String get fieldMedicalNote => 'Medical Note';
+
+  @override
+  String get medicalNoteHint =>
+      'Allergies, conditions, medication, etc. (optional)';
+
+  @override
   String get studentsSearchHint => 'Search students';
 
   @override
