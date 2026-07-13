@@ -1514,6 +1514,42 @@ class AppLocalizationsRu extends AppLocalizations {
   String get savePayment => 'Сохранить платёж';
 
   @override
+  String get fieldMonthlyFee => 'Ежемесячный взнос';
+
+  @override
+  String get monthlyFeeHelper =>
+      'Используется для массового создания взносов (0 = не включается).';
+
+  @override
+  String get generateDuesButton => 'Массовые взносы';
+
+  @override
+  String get generateDuesTitle => 'Создать месячные взносы';
+
+  @override
+  String get generateDuesConfirm => 'Создать';
+
+  @override
+  String get generateDuesMonth => 'Месяц';
+
+  @override
+  String get generateDuesYear => 'Год';
+
+  @override
+  String generateDuesPreview(int count) {
+    return 'Взносы будут созданы для $count учеников.';
+  }
+
+  @override
+  String get generateDuesNoEligible =>
+      'Нет подходящих учеников за этот период. (Нужен взнос и отсутствие записи за этот период.)';
+
+  @override
+  String generateDuesCreated(int count) {
+    return 'Создано взносов: $count.';
+  }
+
+  @override
   String get leaveReported => 'Заявка на пропуск отправлена.';
 
   @override

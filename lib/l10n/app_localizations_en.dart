@@ -1506,6 +1506,42 @@ class AppLocalizationsEn extends AppLocalizations {
   String get savePayment => 'Save Payment';
 
   @override
+  String get fieldMonthlyFee => 'Monthly Fee';
+
+  @override
+  String get monthlyFeeHelper =>
+      'Used for bulk dues generation (0 = excluded).';
+
+  @override
+  String get generateDuesButton => 'Bulk Dues';
+
+  @override
+  String get generateDuesTitle => 'Generate Monthly Dues';
+
+  @override
+  String get generateDuesConfirm => 'Generate';
+
+  @override
+  String get generateDuesMonth => 'Month';
+
+  @override
+  String get generateDuesYear => 'Year';
+
+  @override
+  String generateDuesPreview(int count) {
+    return 'Dues will be created for $count students.';
+  }
+
+  @override
+  String get generateDuesNoEligible =>
+      'No eligible students for this period. (Needs a monthly fee and no existing record for this period.)';
+
+  @override
+  String generateDuesCreated(int count) {
+    return '$count dues created.';
+  }
+
+  @override
   String get leaveReported => 'Leave request submitted.';
 
   @override

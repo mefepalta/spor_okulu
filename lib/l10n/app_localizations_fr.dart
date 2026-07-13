@@ -1525,6 +1525,42 @@ class AppLocalizationsFr extends AppLocalizations {
   String get savePayment => 'Enregistrer le paiement';
 
   @override
+  String get fieldMonthlyFee => 'Cotisation mensuelle';
+
+  @override
+  String get monthlyFeeHelper =>
+      'Utilisé pour générer les cotisations en lot (0 = exclu).';
+
+  @override
+  String get generateDuesButton => 'Cotisations en lot';
+
+  @override
+  String get generateDuesTitle => 'Générer les cotisations mensuelles';
+
+  @override
+  String get generateDuesConfirm => 'Générer';
+
+  @override
+  String get generateDuesMonth => 'Mois';
+
+  @override
+  String get generateDuesYear => 'Année';
+
+  @override
+  String generateDuesPreview(int count) {
+    return 'Des cotisations seront créées pour $count élèves.';
+  }
+
+  @override
+  String get generateDuesNoEligible =>
+      'Aucun élève éligible pour cette période. (Cotisation requise et aucun enregistrement pour cette période.)';
+
+  @override
+  String generateDuesCreated(int count) {
+    return '$count cotisations créées.';
+  }
+
+  @override
   String get leaveReported => 'Demande d\'absence envoyée.';
 
   @override

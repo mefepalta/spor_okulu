@@ -1497,6 +1497,41 @@ class AppLocalizationsAr extends AppLocalizations {
   String get savePayment => 'حفظ الدفعة';
 
   @override
+  String get fieldMonthlyFee => 'الرسوم الشهرية';
+
+  @override
+  String get monthlyFeeHelper => 'تُستخدم لإنشاء الرسوم بالجملة (0 = مستثنى).';
+
+  @override
+  String get generateDuesButton => 'رسوم جماعية';
+
+  @override
+  String get generateDuesTitle => 'إنشاء الرسوم الشهرية';
+
+  @override
+  String get generateDuesConfirm => 'إنشاء';
+
+  @override
+  String get generateDuesMonth => 'الشهر';
+
+  @override
+  String get generateDuesYear => 'السنة';
+
+  @override
+  String generateDuesPreview(int count) {
+    return 'سيتم إنشاء رسوم لـ $count طالبًا.';
+  }
+
+  @override
+  String get generateDuesNoEligible =>
+      'لا طلاب مؤهلون لهذه الفترة. (يلزم رسم شهري وعدم وجود سجل لهذه الفترة.)';
+
+  @override
+  String generateDuesCreated(int count) {
+    return 'تم إنشاء $count رسوم.';
+  }
+
+  @override
   String get leaveReported => 'تم إرسال طلب الغياب.';
 
   @override

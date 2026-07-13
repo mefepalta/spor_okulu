@@ -40,6 +40,30 @@ String _normalize(String input) {
   return buffer.toString();
 }
 
+/// [month] 1..12, [year] → Firestore'da saklanacak kanonik dönem metni
+/// ("Haziran 2026"). Toplu aidat oluşturmada kullanılır.
+String turkishPeriod(int month, int year) {
+  return '${_turkishMonths[month - 1]} $year';
+}
+
+/// Dönem seçici (dropdown) için o anki dile çevrilmiş ay adları; sıra 0=Ocak.
+List<String> localizedMonthNames(AppLocalizations l10n) {
+  return [
+    l10n.monthJanuary,
+    l10n.monthFebruary,
+    l10n.monthMarch,
+    l10n.monthApril,
+    l10n.monthMay,
+    l10n.monthJune,
+    l10n.monthJuly,
+    l10n.monthAugust,
+    l10n.monthSeptember,
+    l10n.monthOctober,
+    l10n.monthNovember,
+    l10n.monthDecember,
+  ];
+}
+
 String localizedPeriod(AppLocalizations l10n, String period) {
   if (period.isEmpty) {
     return period;

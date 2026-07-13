@@ -18,6 +18,7 @@ class PaymentsScreen extends StatefulWidget {
   final List<PaymentRecord> payments;
   final bool isAdmin;
   final Future<void> Function(PaymentRecord payment) onAddPayment;
+  final Future<void> Function(List<PaymentRecord> payments) onAddPayments;
   final Future<void> Function(int index) onDeletePayment;
   final Future<void> Function(int index, PaymentRecord updatedPayment)
   onUpdatePayment;
@@ -28,6 +29,7 @@ class PaymentsScreen extends StatefulWidget {
     required this.payments,
     required this.isAdmin,
     required this.onAddPayment,
+    required this.onAddPayments,
     required this.onDeletePayment,
     required this.onUpdatePayment,
   });
@@ -282,6 +284,30 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
     );
   }
 
+  /// Toplu aidat: seçilen dönem için, aylık aidatı tanımlı ve o dönemde henüz
+  /// kaydı olmayan öğrencilere "Bekliyor" ödeme oluşturur.
+  Future<void> _openGenerateDues() async {
+    final l10n = AppLocalizations.of(context);
+    final toCreate = await showDialog<List<PaymentRecord>>(
+      context: context,
+      builder: (_) => _GenerateDuesDialog(
+        students: widget.students,
+        payments: widget.payments,
+      ),
+    );
+    if (toCreate == null || toCreate.isEmpty) {
+      return;
+    }
+    await widget.onAddPayments(toCreate);
+    if (!mounted) {
+      return;
+    }
+    setState(() {});
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(l10n.generateDuesCreated(toCreate.length))),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
@@ -309,7 +335,17 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
     final canAddPayment = widget.isAdmin && widget.students.isNotEmpty;
 
     return WaveScaffold(
-      appBar: AppBar(title: Text(l10n.navPayments)),
+      appBar: AppBar(
+        title: Text(l10n.navPayments),
+        actions: [
+          if (canAddPayment)
+            IconButton(
+              tooltip: l10n.generateDuesButton,
+              icon: const Icon(Icons.playlist_add_check),
+              onPressed: _openGenerateDues,
+            ),
+        ],
+      ),
       body: Column(
         children: [
           if (widget.payments.isNotEmpty)
@@ -413,6 +449,127 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
               child: const Icon(Icons.add),
             )
           : null,
+    );
+  }
+}
+
+/// Toplu aidat oluşturma diyaloğu: ay + yıl seçilir, uygun öğrenci sayısı canlı
+/// gösterilir, "Oluştur"da eklenecek [PaymentRecord] listesini döndürür.
+class _GenerateDuesDialog extends StatefulWidget {
+  final List<Student> students;
+  final List<PaymentRecord> payments;
+
+  const _GenerateDuesDialog({required this.students, required this.payments});
+
+  @override
+  State<_GenerateDuesDialog> createState() => _GenerateDuesDialogState();
+}
+
+class _GenerateDuesDialogState extends State<_GenerateDuesDialog> {
+  late int _month;
+  late int _year;
+
+  @override
+  void initState() {
+    super.initState();
+    final now = DateTime.now();
+    _month = now.month;
+    _year = now.year;
+  }
+
+  /// Seçili dönem için uygun (aidatı tanımlı + o dönemde kaydı olmayan)
+  /// öğrenciler için oluşturulacak ödemeler.
+  List<PaymentRecord> _eligibleDues() {
+    final period = turkishPeriod(_month, _year);
+    final existing = <String>{
+      for (final p in widget.payments)
+        if (p.period.trim() == period) (p.studentId.isNotEmpty ? p.studentId : p.studentName),
+    };
+    final now = DateTime.now();
+    String two(int n) => n.toString().padLeft(2, '0');
+    final dateText = '${two(now.day)}.${two(now.month)}.${now.year}';
+
+    return [
+      for (final s in widget.students)
+        if (s.monthlyFee > 0 &&
+            !existing.contains(s.id.isNotEmpty ? s.id : s.name))
+          PaymentRecord(
+            studentId: s.id,
+            studentName: s.name,
+            period: period,
+            amount: s.monthlyFee,
+            status: 'Bekliyor',
+            dateText: dateText,
+            note: '',
+          ),
+    ];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final months = localizedMonthNames(l10n);
+    final eligible = _eligibleDues();
+    final currentYear = DateTime.now().year;
+    final years = [currentYear - 1, currentYear, currentYear + 1];
+
+    return AlertDialog(
+      title: Text(l10n.generateDuesTitle),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          DropdownButtonFormField<int>(
+            initialValue: _month,
+            decoration: InputDecoration(
+              labelText: l10n.generateDuesMonth,
+              border: const OutlineInputBorder(),
+            ),
+            items: [
+              for (var i = 0; i < months.length; i++)
+                DropdownMenuItem(value: i + 1, child: Text(months[i])),
+            ],
+            onChanged: (v) => setState(() => _month = v ?? _month),
+          ),
+          const SizedBox(height: 12),
+          DropdownButtonFormField<int>(
+            initialValue: _year,
+            decoration: InputDecoration(
+              labelText: l10n.generateDuesYear,
+              border: const OutlineInputBorder(),
+            ),
+            items: [
+              for (final y in years)
+                DropdownMenuItem(value: y, child: Text('$y')),
+            ],
+            onChanged: (v) => setState(() => _year = v ?? _year),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            eligible.isEmpty
+                ? l10n.generateDuesNoEligible
+                : l10n.generateDuesPreview(eligible.length),
+            style: TextStyle(
+              color: eligible.isEmpty
+                  ? Theme.of(context).textTheme.bodySmall?.color
+                  : AppColors.primary,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: Text(l10n.commonCancel),
+        ),
+        FilledButton(
+          onPressed: eligible.isEmpty
+              ? null
+              : () => Navigator.pop(context, eligible),
+          child: Text(l10n.generateDuesConfirm),
+        ),
+      ],
     );
   }
 }
@@ -817,7 +974,12 @@ class _AddPaymentScreenState extends State<AddPaymentScreen> {
       }
     } else {
       if (widget.students.isNotEmpty) {
-        _selectedStudentId = widget.students.first.id;
+        final first = widget.students.first;
+        _selectedStudentId = first.id;
+        // Aylık aidatı tanımlıysa tutarı öndolgu (elle değiştirilebilir).
+        if (first.monthlyFee > 0) {
+          _amountController.text = first.monthlyFee.toString();
+        }
       }
 
       final now = DateTime.now();
@@ -914,6 +1076,14 @@ class _AddPaymentScreenState extends State<AddPaymentScreen> {
                       onChanged: (value) {
                         setState(() {
                           _selectedStudentId = value;
+                          // Yeni eklemede tutar boşsa öğrencinin aidatıyla doldur.
+                          if (widget.payment == null &&
+                              _amountController.text.trim().isEmpty) {
+                            final fee = _selectedStudent?.monthlyFee ?? 0;
+                            if (fee > 0) {
+                              _amountController.text = fee.toString();
+                            }
+                          }
                         });
                       },
                       validator: (value) {

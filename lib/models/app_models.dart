@@ -5,12 +5,17 @@ class Student {
   final String branch;
   final String parentPhone;
 
+  /// Öğrencinin aylık aidat tutarı (TL). Toplu aidat oluşturmada kullanılır;
+  /// 0 ise öğrenci toplu oluşturmaya dahil edilmez (ücretsiz/burslu vb.).
+  final int monthlyFee;
+
   const Student({
     this.id = '',
     required this.name,
     required this.age,
     required this.branch,
     required this.parentPhone,
+    this.monthlyFee = 0,
   });
 
   Student copyWith({
@@ -19,6 +24,7 @@ class Student {
     int? age,
     String? branch,
     String? parentPhone,
+    int? monthlyFee,
   }) {
     return Student(
       id: id ?? this.id,
@@ -26,6 +32,7 @@ class Student {
       age: age ?? this.age,
       branch: branch ?? this.branch,
       parentPhone: parentPhone ?? this.parentPhone,
+      monthlyFee: monthlyFee ?? this.monthlyFee,
     );
   }
 
@@ -36,6 +43,7 @@ class Student {
       'age': age,
       'branch': branch,
       'parentPhone': parentPhone,
+      'monthlyFee': monthlyFee,
     };
   }
 
@@ -46,6 +54,7 @@ class Student {
       age: (json['age'] as num).toInt(),
       branch: json['branch'],
       parentPhone: json['parentPhone'],
+      monthlyFee: (json['monthlyFee'] as num?)?.toInt() ?? 0,
     );
   }
 }

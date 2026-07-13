@@ -1518,6 +1518,42 @@ class AppLocalizationsEs extends AppLocalizations {
   String get savePayment => 'Guardar pago';
 
   @override
+  String get fieldMonthlyFee => 'Cuota mensual';
+
+  @override
+  String get monthlyFeeHelper =>
+      'Se usa para generar cuotas en lote (0 = excluido).';
+
+  @override
+  String get generateDuesButton => 'Cuotas en lote';
+
+  @override
+  String get generateDuesTitle => 'Generar cuotas mensuales';
+
+  @override
+  String get generateDuesConfirm => 'Generar';
+
+  @override
+  String get generateDuesMonth => 'Mes';
+
+  @override
+  String get generateDuesYear => 'Año';
+
+  @override
+  String generateDuesPreview(int count) {
+    return 'Se crearán cuotas para $count estudiantes.';
+  }
+
+  @override
+  String get generateDuesNoEligible =>
+      'No hay estudiantes elegibles para este período. (Requiere cuota mensual y sin registro para este período.)';
+
+  @override
+  String generateDuesCreated(int count) {
+    return '$count cuotas creadas.';
+  }
+
+  @override
   String get leaveReported => 'Solicitud de ausencia enviada.';
 
   @override

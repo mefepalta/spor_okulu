@@ -371,6 +371,7 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
   final TextEditingController _parentPhoneController = TextEditingController();
+  final TextEditingController _monthlyFeeController = TextEditingController();
 
   String? _selectedBranch;
 
@@ -385,6 +386,9 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
       _ageController.text = student.age.toString();
       _selectedBranch = student.branch;
       _parentPhoneController.text = student.parentPhone;
+      if (student.monthlyFee > 0) {
+        _monthlyFeeController.text = student.monthlyFee.toString();
+      }
     }
   }
 
@@ -393,6 +397,7 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
     _nameController.dispose();
     _ageController.dispose();
     _parentPhoneController.dispose();
+    _monthlyFeeController.dispose();
     super.dispose();
   }
 
@@ -408,6 +413,7 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
       age: int.parse(_ageController.text.trim()),
       branch: (_selectedBranch ?? '').trim(),
       parentPhone: _parentPhoneController.text.trim(),
+      monthlyFee: int.tryParse(_monthlyFeeController.text.trim()) ?? 0,
     );
 
     Navigator.pop(context, student);
@@ -509,6 +515,23 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
                   hintText: '05XXXXXXXXX',
                 ),
                 validator: phoneValidator(l10n),
+              ),
+              const SizedBox(height: 12),
+              TextFormField(
+                controller: _monthlyFeeController,
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                  LengthLimitingTextInputFormatter(6),
+                ],
+                decoration: InputDecoration(
+                  labelText: l10n.fieldMonthlyFee,
+                  border: const OutlineInputBorder(),
+                  prefixIcon: const Icon(Icons.attach_money),
+                  hintText: '1500',
+                  suffixText: 'TL',
+                  helperText: l10n.monthlyFeeHelper,
+                ),
               ),
               const SizedBox(height: 20),
               ElevatedButton.icon(

@@ -2764,6 +2764,66 @@ abstract class AppLocalizations {
   /// **'Ödemeyi Kaydet'**
   String get savePayment;
 
+  /// No description provided for @fieldMonthlyFee.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aylık Aidat'**
+  String get fieldMonthlyFee;
+
+  /// No description provided for @monthlyFeeHelper.
+  ///
+  /// In tr, this message translates to:
+  /// **'Toplu aidat oluşturmada kullanılır (0 = dahil edilmez).'**
+  String get monthlyFeeHelper;
+
+  /// No description provided for @generateDuesButton.
+  ///
+  /// In tr, this message translates to:
+  /// **'Toplu Aidat'**
+  String get generateDuesButton;
+
+  /// No description provided for @generateDuesTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Toplu Aidat Oluştur'**
+  String get generateDuesTitle;
+
+  /// No description provided for @generateDuesConfirm.
+  ///
+  /// In tr, this message translates to:
+  /// **'Oluştur'**
+  String get generateDuesConfirm;
+
+  /// No description provided for @generateDuesMonth.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ay'**
+  String get generateDuesMonth;
+
+  /// No description provided for @generateDuesYear.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yıl'**
+  String get generateDuesYear;
+
+  /// No description provided for @generateDuesPreview.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count} öğrenci için aidat oluşturulacak.'**
+  String generateDuesPreview(int count);
+
+  /// No description provided for @generateDuesNoEligible.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu dönem için uygun öğrenci yok. (Aylık aidatı tanımlı ve bu dönemde kaydı olmayan öğrenci gerekir.)'**
+  String get generateDuesNoEligible;
+
+  /// No description provided for @generateDuesCreated.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count} aidat oluşturuldu.'**
+  String generateDuesCreated(int count);
+
   /// No description provided for @leaveReported.
   ///
   /// In tr, this message translates to:

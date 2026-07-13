@@ -1502,6 +1502,42 @@ class AppLocalizationsTr extends AppLocalizations {
   String get savePayment => 'Ödemeyi Kaydet';
 
   @override
+  String get fieldMonthlyFee => 'Aylık Aidat';
+
+  @override
+  String get monthlyFeeHelper =>
+      'Toplu aidat oluşturmada kullanılır (0 = dahil edilmez).';
+
+  @override
+  String get generateDuesButton => 'Toplu Aidat';
+
+  @override
+  String get generateDuesTitle => 'Toplu Aidat Oluştur';
+
+  @override
+  String get generateDuesConfirm => 'Oluştur';
+
+  @override
+  String get generateDuesMonth => 'Ay';
+
+  @override
+  String get generateDuesYear => 'Yıl';
+
+  @override
+  String generateDuesPreview(int count) {
+    return '$count öğrenci için aidat oluşturulacak.';
+  }
+
+  @override
+  String get generateDuesNoEligible =>
+      'Bu dönem için uygun öğrenci yok. (Aylık aidatı tanımlı ve bu dönemde kaydı olmayan öğrenci gerekir.)';
+
+  @override
+  String generateDuesCreated(int count) {
+    return '$count aidat oluşturuldu.';
+  }
+
+  @override
   String get leaveReported => 'Mazeret bildirildi.';
 
   @override

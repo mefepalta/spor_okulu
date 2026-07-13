@@ -322,6 +322,28 @@ class FirestoreService {
     );
   }
 
+  /// Birden çok ödemeyi tek batch ile yazar (toplu aidat oluşturma). Kaydedilen
+  /// (id atanmış) kayıtları döndürür. Boş listede hiçbir şey yapmaz.
+  Future<List<PaymentRecord>> addPayments(List<PaymentRecord> payments) async {
+    if (payments.isEmpty) {
+      return const [];
+    }
+    final batch = _firestore.batch();
+    final saved = <PaymentRecord>[];
+    for (final payment in payments) {
+      final doc = _payments.doc();
+      final withId = payment.copyWith(id: doc.id);
+      batch.set(doc, {
+        ...withId.toJson(),
+        'createdAt': FieldValue.serverTimestamp(),
+        'updatedAt': FieldValue.serverTimestamp(),
+      });
+      saved.add(withId);
+    }
+    await batch.commit();
+    return saved;
+  }
+
   Future<void> updatePayment(PaymentRecord payment) {
     return _updateDocument(
       collection: _payments,

@@ -868,6 +868,26 @@
   "noteHint": "İsteğe bağlı not",
   "selectStudentFirst": "Önce bir öğrenci seçmelisin.",
   "savePayment": "Ödemeyi Kaydet",
+  "fieldMonthlyFee": "Aylık Aidat",
+  "monthlyFeeHelper": "Toplu aidat oluşturmada kullanılır (0 = dahil edilmez).",
+  "generateDuesButton": "Toplu Aidat",
+  "generateDuesTitle": "Toplu Aidat Oluştur",
+  "generateDuesConfirm": "Oluştur",
+  "generateDuesMonth": "Ay",
+  "generateDuesYear": "Yıl",
+  "generateDuesPreview": "{count} öğrenci için aidat oluşturulacak.",
+  "@generateDuesPreview": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "generateDuesNoEligible": "Bu dönem için uygun öğrenci yok. (Aylık aidatı tanımlı ve bu dönemde kaydı olmayan öğrenci gerekir.)",
+  "generateDuesCreated": "{count} aidat oluşturuldu.",
+  "@generateDuesCreated": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
   "leaveReported": "Mazeret bildirildi.",
   "leaveDeleteTitle": "Mazereti sil",
   "leaveDeleteConfirm": "Bu mazeret talebini silmek istiyor musunuz?",

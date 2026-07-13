@@ -185,6 +185,14 @@ extension _DashboardHandlers on _DashboardScreenState {
     });
   }
 
+  Future<void> _addPayments(List<PaymentRecord> payments) async {
+    final saved = await _firestoreService.addPayments(payments);
+
+    setState(() {
+      _payments.addAll(saved);
+    });
+  }
+
   Future<void> _deletePayment(int index) async {
     await _firestoreService.deletePayment(_payments[index].id);
 
@@ -211,6 +219,7 @@ extension _DashboardHandlers on _DashboardScreenState {
           payments: _payments,
           isAdmin: _canManageCore,
           onAddPayment: _addPayment,
+          onAddPayments: _addPayments,
           onDeletePayment: _deletePayment,
           onUpdatePayment: _updatePayment,
         ),
