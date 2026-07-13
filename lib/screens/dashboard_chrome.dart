@@ -240,7 +240,12 @@ extension _DashboardChrome on _DashboardScreenState {
       _drawerNav(Icons.inventory_2, l10n.navEquipment, _openEquipmentScreen),
       _drawerNav(Icons.campaign, l10n.navAnnouncements, _openAnnouncementsScreen),
       _drawerSection(l10n.sectionClub),
-      _drawerNav(Icons.forum, l10n.chatTitle, _openClubChatScreen),
+      _drawerNavBadge(
+        Icons.forum,
+        l10n.chatTitle,
+        _openClubChatScreen,
+        _unreadChatCount,
+      ),
       _drawerNav(Icons.share, l10n.socialTitle, _openSocialShareScreen),
       if (_isAdmin)
         _drawerNav(
@@ -275,7 +280,12 @@ extension _DashboardChrome on _DashboardScreenState {
       _drawerNav(Icons.event_available, l10n.navEvents, _openEventsScreen),
       _drawerNav(Icons.payment, l10n.navPayments, _openPaymentsScreen),
       _drawerSection(l10n.sectionClub),
-      _drawerNav(Icons.forum, l10n.chatTitle, _openClubChatScreen),
+      _drawerNavBadge(
+        Icons.forum,
+        l10n.chatTitle,
+        _openClubChatScreen,
+        _unreadChatCount,
+      ),
       _drawerNav(Icons.share, l10n.socialTitle, _openSocialShareScreen),
       _drawerSection(l10n.sectionGeneral),
       _drawerNav(Icons.auto_awesome, 'SporTekAi', _openSporTekAiScreen),
@@ -307,7 +317,12 @@ extension _DashboardChrome on _DashboardScreenState {
       _drawerNav(Icons.calendar_month, l10n.scheduleTitle, _openScheduleScreen),
       _drawerNav(Icons.event_available, l10n.navEvents, _openEventsScreen),
       _drawerSection(l10n.sectionClub),
-      _drawerNav(Icons.forum, l10n.chatTitle, _openClubChatScreen),
+      _drawerNavBadge(
+        Icons.forum,
+        l10n.chatTitle,
+        _openClubChatScreen,
+        _unreadChatCount,
+      ),
       _drawerNav(Icons.share, l10n.socialTitle, _openSocialShareScreen),
       _drawerSection(l10n.sectionGeneral),
       _drawerNav(Icons.auto_awesome, 'SporTekAi', _openSporTekAiScreen),

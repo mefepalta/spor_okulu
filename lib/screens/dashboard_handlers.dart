@@ -236,18 +236,37 @@ extension _DashboardHandlers on _DashboardScreenState {
     // kaynak odur. Burada _announcements'a elle EKLEME yapılmaz: aksi halde
     // stream'in clear+addAll'i ile yarışıp aynı duyuru iki kez görünürdü.
     // Kaydı ekleyen ekran, dönen (id'li) kaydı kendi listesine yansıtır.
-    if (savedAnnouncement.targetAudience == AnnouncementAudience.everyone) {
-      // Yalnızca "Herkes" hedefli duyurular push gönderir ("all" konusu); role
-      // özel duyurular yalnızca uygulama içinde görünür. Push en iyi çaba:
-      // beklenmez, başarısız olsa da duyuru kaydedilmiş kalır.
+    //
+    // Push: hedef kitleye karşılık gelen konuya gönderilir (Herkes→all, aksi
+    // halde 'role_<rol>' — yalnızca o role abone cihazlar alır). Push en iyi
+    // çaba: beklenmez, başarısız olsa da duyuru kaydedilmiş kalır.
+    final topic = _topicForAudience(savedAnnouncement.targetAudience);
+    if (topic != null) {
       unawaited(
         _notificationSender.sendAnnouncement(
           title: savedAnnouncement.title,
           body: savedAnnouncement.content,
+          topic: topic,
         ),
       );
     }
     return savedAnnouncement;
+  }
+
+  /// Duyuru hedef kitlesini FCM konu adına eşler (bilinmeyen kitle → null).
+  String? _topicForAudience(String audience) {
+    switch (audience) {
+      case AnnouncementAudience.everyone:
+        return 'all';
+      case AnnouncementAudience.parents:
+        return 'role_veli';
+      case AnnouncementAudience.students:
+        return 'role_ogrenci';
+      case AnnouncementAudience.coaches:
+        return 'role_coach';
+      default:
+        return null;
+    }
   }
 
   Future<void> _deleteAnnouncement(Announcement announcement) async {
@@ -537,6 +556,12 @@ extension _DashboardHandlers on _DashboardScreenState {
   }
 
   void _openClubChatScreen(BuildContext context) {
+    // Sohbet açıldı: okunmamış rozetini sıfırla ve "görüldü" çizgisini akıştaki
+    // en yeni mesaja çek (yeni gelenler tekrar sayılsın diye).
+    setState(() {
+      _unreadChatCount = 0;
+      _lastSeenChatAt = _latestChatAt;
+    });
     Navigator.push(
       context,
       MaterialPageRoute(

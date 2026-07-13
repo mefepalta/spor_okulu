@@ -12,6 +12,7 @@ import '../routes/app_routes.dart';
 import '../services/absence_alert_service.dart';
 import '../services/auth_service.dart';
 import '../services/ai_summary.dart';
+import '../services/chat_service.dart';
 import '../services/firestore_service.dart';
 import '../services/parent_service.dart';
 import '../services/profile_service.dart';
@@ -116,6 +117,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
   int _knownAnnouncementCount = 0;
   int _unreadAnnouncementCount = 0;
 
+  /// Kulüp sohbetinde bu cihazda henüz görülmemiş (başkalarına ait) mesaj sayısı.
+  final ChatService _chatService = ChatService();
+  StreamSubscription<List<ChatMessage>>? _chatSubscription;
+  int _unreadChatCount = 0;
+  bool _hasStartedChatListener = false;
+  bool _hasChatBaseline = false;
+  DateTime? _lastSeenChatAt; // Sohbet en son açıldığında görülen son mesaj zamanı.
+  DateTime? _latestChatAt; // Akıştaki en yeni mesajın zamanı (rozet sıfırlaması için).
+
   /// Velinin bu cihazda henüz görmediği devamsızlık ("Gelmedi") sayısı.
   int _unreadAbsenceCount = 0;
 
@@ -212,6 +222,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void dispose() {
     _announcementSubscription?.cancel();
+    _chatSubscription?.cancel();
     super.dispose();
   }
 
@@ -226,6 +237,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
       // Viewer artık personel değil: yalnızca genel içerik (duyuru/etkinlik)
       // görür, özel kulüp verisini yüklemez.
       final isStaff = isAdmin || isCoach;
+
+      // Rol bazlı hedefli duyuru push'u için rol konusuna abone ol (viewer hariç,
+      // no-op). 'all' aboneliği NotificationService.initialize'da yapılır.
+      unawaited(NotificationService.instance.subscribeToRoleTopic(userRole));
 
       // Herkesin (veliler dahil) okuyabildiği koleksiyonlar.
       final loadedAnnouncements = await _firestoreService.loadAnnouncements();
@@ -405,6 +420,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
       });
 
       _startAnnouncementListener();
+      // Kulüp sohbetini yalnızca onaylı üyeler okuyabilir (viewer hariç); sol
+      // menüdeki okunmamış mesaj rozeti için dinleyiciyi orada başlat.
+      if (!isViewer) {
+        _startChatListener();
+      }
       _refreshAbsenceAlerts();
       _loadReminders();
     } catch (error) {
@@ -486,6 +506,60 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ..addAll(announcements);
       });
     });
+  }
+
+  /// Kulüp sohbetini dinler ve sol menüdeki okunmamış mesaj rozetini besler.
+  /// İlk anlık görüntüde mevcut en yeni mesaj "görülmüş" sayılır (baz alınır);
+  /// sonrasında başkalarına ait ve bazdan yeni mesajlar okunmamış sayılır.
+  /// Sohbet açıldığında [_openClubChatScreen] baz çizgisini günceller.
+  void _startChatListener() {
+    if (_hasStartedChatListener) {
+      return;
+    }
+    _hasStartedChatListener = true;
+
+    _chatSubscription = _chatService.watchMessages().listen((messages) {
+      if (!mounted) {
+        return;
+      }
+
+      _latestChatAt = _latestCreatedAt(messages) ?? _latestChatAt;
+
+      // İlk anlık görüntü: mevcut mesajları "görülmüş" say, rozeti artırma.
+      if (!_hasChatBaseline) {
+        _hasChatBaseline = true;
+        _lastSeenChatAt = _latestChatAt;
+        return;
+      }
+
+      final baseline = _lastSeenChatAt;
+      final myUid = _chatService.currentUid;
+      final unread = messages.where((message) {
+        final createdAt = message.createdAt;
+        return message.senderId != myUid &&
+            createdAt != null &&
+            (baseline == null || createdAt.isAfter(baseline));
+      }).length;
+
+      if (unread != _unreadChatCount) {
+        setState(() {
+          _unreadChatCount = unread;
+        });
+      }
+    });
+  }
+
+  /// Mesaj listesindeki en yeni [ChatMessage.createdAt] değerini döndürür
+  /// (hiçbiri yoksa null).
+  DateTime? _latestCreatedAt(List<ChatMessage> messages) {
+    DateTime? latest;
+    for (final message in messages) {
+      final createdAt = message.createdAt;
+      if (createdAt != null && (latest == null || createdAt.isAfter(latest))) {
+        latest = createdAt;
+      }
+    }
+    return latest;
   }
 
   @override

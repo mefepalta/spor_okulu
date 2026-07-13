@@ -18,14 +18,16 @@ class NotificationSender {
   NotificationSender({http.Client? client})
     : _client = client ?? http.Client();
 
-  /// Herkese açık duyuruyu "all" konusuna gönderir.
+  /// Duyuruyu bir konuya gönderir. Varsayılan "all" (herkes); rol hedefli
+  /// duyurular için ilgili `role_<rol>` konusu geçilir.
   Future<bool> sendAnnouncement({
     required String title,
     required String body,
+    String topic = FcmConfig.broadcastTopic,
   }) {
     return _send({
       'mode': 'topic',
-      'topic': FcmConfig.broadcastTopic,
+      'topic': topic,
       'title': title,
       'body': body,
       'data': {'type': 'announcement'},
