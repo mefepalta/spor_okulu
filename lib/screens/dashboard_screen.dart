@@ -16,6 +16,7 @@ import '../services/firestore_service.dart';
 import '../services/parent_service.dart';
 import '../services/profile_service.dart';
 import '../services/reminders_service.dart';
+import '../services/notification_service.dart';
 import '../services/schedule_service.dart';
 import '../services/streak_service.dart';
 import '../services/user_management_service.dart';
@@ -196,6 +197,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
   void initState() {
     super.initState();
     _loadAllData();
+    // Bildirim izni + genel konu aboneliği + cihaz jetonunu kaydet. Bloklamadan
+    // (fire-and-forget) çalışır; başarısız olsa da pano yüklenmesini engellemez.
+    _setupNotifications();
+  }
+
+  Future<void> _setupNotifications() async {
+    await NotificationService.instance.initialize();
+    await NotificationService.instance.registerTokenForCurrentUser();
   }
 
   @override

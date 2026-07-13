@@ -74,15 +74,17 @@ service cloud.firestore {
       // Admin her alanı güncelleyebilir. Kullanıcı ise yalnızca KENDİ belgesinde
       // ve yalnızca profil alanlarını (ad/telefon/foto) değiştirebilir; rol veya
       // studentIds gibi yetki alanlarına dokunamaz (ayrıcalık yükseltmesi engeli).
-      // Kullanıcı kendi belgesinde profil alanlarını ve günlük giriş serisi
-      // (streak) alanlarını güncelleyebilir; rol/studentIds gibi yetki
-      // alanlarına dokunamaz. Streak yalnızca kozmetiktir (chat rengi/rozet).
+      // Kullanıcı kendi belgesinde profil alanlarını, günlük giriş serisi
+      // (streak) alanlarını ve bildirim cihaz jetonunu (fcmToken) güncelleyebilir;
+      // rol/studentIds gibi yetki alanlarına dokunamaz. Streak yalnızca
+      // kozmetiktir (chat rengi/rozet); fcmToken push bildirim gönderimi içindir.
       allow update: if isAdmin()
         || (isSignedIn()
             && request.auth.uid == userId
             && request.resource.data.diff(resource.data).affectedKeys()
                 .hasOnly(['displayName', 'phone', 'photoBase64', 'updatedAt',
-                          'currentStreak', 'longestStreak', 'lastActiveDate']));
+                          'currentStreak', 'longestStreak', 'lastActiveDate',
+                          'fcmToken', 'fcmUpdatedAt']));
       // Silme: admin ya da kullanıcının kendisi (reddedilen hesabın giriş
       // sırasında kendini temizlemesi için).
       allow delete: if isAdmin() || request.auth.uid == userId;
