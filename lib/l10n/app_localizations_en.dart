@@ -497,6 +497,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navReports => 'Reports';
 
   @override
+  String get exportSectionTitle => 'Export';
+
+  @override
+  String get exportStudentsCsv => 'Export Students (CSV)';
+
+  @override
+  String get exportPaymentsCsv => 'Export Dues (CSV)';
+
+  @override
   String get navSports => 'Sports';
 
   @override

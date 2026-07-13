@@ -501,6 +501,15 @@ class AppLocalizationsRu extends AppLocalizations {
   String get navReports => 'Отчёты';
 
   @override
+  String get exportSectionTitle => 'Экспорт';
+
+  @override
+  String get exportStudentsCsv => 'Экспорт учеников (CSV)';
+
+  @override
+  String get exportPaymentsCsv => 'Экспорт взносов (CSV)';
+
+  @override
   String get navSports => 'Виды спорта';
 
   @override

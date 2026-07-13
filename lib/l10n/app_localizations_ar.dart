@@ -495,6 +495,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navReports => 'التقارير';
 
   @override
+  String get exportSectionTitle => 'تصدير';
+
+  @override
+  String get exportStudentsCsv => 'تصدير الطلاب (CSV)';
+
+  @override
+  String get exportPaymentsCsv => 'تصدير الرسوم (CSV)';
+
+  @override
   String get navSports => 'الرياضات';
 
   @override

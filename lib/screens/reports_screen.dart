@@ -5,6 +5,9 @@ import '../widgets/wave_background.dart';
 
 import '../l10n/app_localizations.dart';
 import '../models/app_models.dart';
+import '../utils/csv_export.dart';
+import '../utils/period_l10n.dart';
+import '../utils/status_l10n.dart';
 
 class ReportsScreen extends StatelessWidget {
   final List<Student> students;
@@ -150,9 +153,84 @@ class ReportsScreen extends StatelessWidget {
               ),
             ),
           ),
+          const SizedBox(height: 24),
+          Text(
+            l10n.exportSectionTitle,
+            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 12),
+          SizedBox(
+            width: double.infinity,
+            child: FilledButton.icon(
+              onPressed: students.isEmpty ? null : () => _exportStudents(l10n),
+              icon: const Icon(Icons.download),
+              label: Text(l10n.exportStudentsCsv),
+            ),
+          ),
+          const SizedBox(height: 8),
+          SizedBox(
+            width: double.infinity,
+            child: FilledButton.tonalIcon(
+              onPressed: payments.isEmpty ? null : () => _exportPayments(l10n),
+              icon: const Icon(Icons.download),
+              label: Text(l10n.exportPaymentsCsv),
+            ),
+          ),
         ],
       ),
     );
+  }
+
+  Future<void> _exportStudents(AppLocalizations l10n) async {
+    final headers = [
+      l10n.fieldFullName,
+      l10n.fieldAge,
+      l10n.fieldBranch,
+      l10n.fieldParentName,
+      l10n.fieldParentPhone,
+      l10n.fieldEmergencyContact,
+      l10n.fieldEmergencyPhone,
+      l10n.fieldMonthlyFee,
+      l10n.fieldMedicalNote,
+    ];
+    final rows = [
+      for (final s in students)
+        [
+          s.name,
+          '${s.age}',
+          s.branch,
+          s.parentName,
+          s.parentPhone,
+          s.emergencyContact,
+          s.emergencyPhone,
+          s.monthlyFee > 0 ? '${s.monthlyFee}' : '',
+          s.medicalNote,
+        ],
+    ];
+    await shareCsv('ogrenciler.csv', buildCsv(headers, rows));
+  }
+
+  Future<void> _exportPayments(AppLocalizations l10n) async {
+    final headers = [
+      l10n.roleStudent,
+      l10n.fieldPeriod,
+      l10n.fieldAmount,
+      l10n.fieldStatus,
+      l10n.fieldDate,
+      l10n.fieldNote,
+    ];
+    final rows = [
+      for (final p in payments)
+        [
+          p.studentName,
+          localizedPeriod(l10n, p.period),
+          '${p.amount}',
+          localizedPaymentStatus(l10n, p.status),
+          p.dateText,
+          p.note,
+        ],
+    ];
+    await shareCsv('aidatlar.csv', buildCsv(headers, rows));
   }
 
   String _buildSummaryText(AppLocalizations l10n) {

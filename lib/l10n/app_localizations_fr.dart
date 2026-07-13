@@ -504,6 +504,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get navReports => 'Rapports';
 
   @override
+  String get exportSectionTitle => 'Exporter';
+
+  @override
+  String get exportStudentsCsv => 'Exporter les élèves (CSV)';
+
+  @override
+  String get exportPaymentsCsv => 'Exporter les cotisations (CSV)';
+
+  @override
   String get navSports => 'Sports';
 
   @override

@@ -497,6 +497,15 @@ class AppLocalizationsTr extends AppLocalizations {
   String get navReports => 'Raporlar';
 
   @override
+  String get exportSectionTitle => 'Dışa Aktar';
+
+  @override
+  String get exportStudentsCsv => 'Öğrencileri Dışa Aktar (CSV)';
+
+  @override
+  String get exportPaymentsCsv => 'Aidatları Dışa Aktar (CSV)';
+
+  @override
   String get navSports => 'Sporlar';
 
   @override

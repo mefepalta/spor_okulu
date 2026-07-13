@@ -1000,6 +1000,24 @@ abstract class AppLocalizations {
   /// **'Raporlar'**
   String get navReports;
 
+  /// No description provided for @exportSectionTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Dışa Aktar'**
+  String get exportSectionTitle;
+
+  /// No description provided for @exportStudentsCsv.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğrencileri Dışa Aktar (CSV)'**
+  String get exportStudentsCsv;
+
+  /// No description provided for @exportPaymentsCsv.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aidatları Dışa Aktar (CSV)'**
+  String get exportPaymentsCsv;
+
   /// No description provided for @navSports.
   ///
   /// In tr, this message translates to:
