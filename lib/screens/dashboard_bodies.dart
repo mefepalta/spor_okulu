@@ -209,10 +209,42 @@ extension _DashboardBodies on _DashboardScreenState {
               ),
             ],
           ),
+          if (_currentStreak >= 1) ...[
+            const SizedBox(height: 12),
+            _streakChip(AppLocalizations.of(context)),
+          ],
           if (highlight != null) ...[
             const SizedBox(height: 14),
             _highlightPill(highlight),
           ],
+        ],
+      ),
+    );
+  }
+
+  /// Günlük giriş serisi göstergesi: alev + "X günlük seri". Renk, seri
+  /// tier'ına göre ([streakStyle]); global chat rozetiyle tutarlıdır.
+  Widget _streakChip(AppLocalizations l10n) {
+    final style = streakStyle(_currentStreak);
+    final color = style.color ??
+        Theme.of(context).textTheme.bodyMedium?.color ??
+        Colors.grey;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.12),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: color.withValues(alpha: 0.35)),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.local_fire_department, color: color, size: 18),
+          const SizedBox(width: 8),
+          Text(
+            l10n.streakLabel(_currentStreak),
+            style: TextStyle(color: color, fontWeight: FontWeight.w600),
+          ),
         ],
       ),
     );

@@ -64,6 +64,7 @@
   "socialShareButton": "Share",
   "socialRemovePhoto": "Remove photo",
   "socialEmptyWarning": "Add some text or a photo to share.",
+  "streakLabel": "{count}-day streak",
   "accountType": "Your account type",
   "selectionSentToAdmin": "Your selection will be sent for administrator approval.",
   "registerButton": "Sign Up",

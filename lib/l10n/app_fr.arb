@@ -64,6 +64,7 @@
   "socialShareButton": "Partager",
   "socialRemovePhoto": "Retirer la photo",
   "socialEmptyWarning": "Ajoute un texte ou une photo à partager.",
+  "streakLabel": "Série de {count} jours",
   "accountType": "Votre type de compte",
   "selectionSentToAdmin": "Votre sélection sera envoyée pour approbation à l'administrateur.",
   "registerButton": "S'inscrire",

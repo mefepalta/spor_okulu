@@ -221,6 +221,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get socialEmptyWarning => 'Ajoute un texte ou une photo à partager.';
 
   @override
+  String streakLabel(int count) {
+    return 'Série de $count jours';
+  }
+
+  @override
   String get accountType => 'Votre type de compte';
 
   @override

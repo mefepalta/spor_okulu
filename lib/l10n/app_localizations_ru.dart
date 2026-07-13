@@ -219,6 +219,11 @@ class AppLocalizationsRu extends AppLocalizations {
   String get socialEmptyWarning => 'Добавьте текст или фото для публикации.';
 
   @override
+  String streakLabel(int count) {
+    return 'Серия $count дн.';
+  }
+
+  @override
   String get accountType => 'Тип вашего аккаунта';
 
   @override

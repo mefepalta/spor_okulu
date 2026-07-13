@@ -78,6 +78,14 @@
   "socialShareButton": "Paylaş",
   "socialRemovePhoto": "Fotoğrafı kaldır",
   "socialEmptyWarning": "Paylaşmak için bir metin ya da fotoğraf ekle.",
+  "streakLabel": "{count} günlük seri",
+  "@streakLabel": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "accountType": "Hesap türün",
   "selectionSentToAdmin": "Seçimin yönetici onayına gönderilir.",
   "registerButton": "Kayıt Ol",

@@ -45,10 +45,13 @@ class ChatService {
         });
   }
 
-  /// Yeni mesaj gönderir. [senderName] gönderenin o anki ad-soyadı.
+  /// Yeni mesaj gönderir. [senderName] gönderenin o anki ad-soyadı;
+  /// [senderStreak] o anki günlük giriş serisi (isim rengi/rozeti için
+  /// denormalize edilir).
   Future<void> sendMessage({
     required String senderName,
     required String text,
+    int senderStreak = 0,
   }) async {
     final uid = currentUid;
     final trimmed = text.trim();
@@ -61,6 +64,7 @@ class ChatService {
       'text': trimmed.length > maxLength
           ? trimmed.substring(0, maxLength)
           : trimmed,
+      'senderStreak': senderStreak,
       'createdAt': FieldValue.serverTimestamp(),
     });
   }

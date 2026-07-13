@@ -490,6 +490,12 @@ abstract class AppLocalizations {
   /// **'Paylaşmak için bir metin ya da fotoğraf ekle.'**
   String get socialEmptyWarning;
 
+  /// No description provided for @streakLabel.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count} günlük seri'**
+  String streakLabel(int count);
+
   /// No description provided for @accountType.
   ///
   /// In tr, this message translates to:

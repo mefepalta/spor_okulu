@@ -490,6 +490,10 @@ class ChatMessage {
   /// Mesaj düzenlendiyse son düzenleme zamanı; hiç düzenlenmediyse null.
   final DateTime? editedAt;
 
+  /// Gönderenin o andaki günlük giriş serisi (denormalize; isim rengi/rozeti
+  /// için). Eski mesajlarda 0. Kozmetik — kimlik/yetki alanı değildir.
+  final int senderStreak;
+
   const ChatMessage({
     this.id = '',
     required this.senderId,
@@ -497,6 +501,7 @@ class ChatMessage {
     required this.text,
     this.createdAt,
     this.editedAt,
+    this.senderStreak = 0,
   });
 
   factory ChatMessage.fromJson(String id, Map<String, dynamic> json) {
@@ -509,6 +514,7 @@ class ChatMessage {
       // Timestamp.toDate() varsa kullan; yoksa DateTime/int'i de kabul et.
       createdAt: _parseTimestamp(json['createdAt']),
       editedAt: _parseTimestamp(json['editedAt']),
+      senderStreak: (json['senderStreak'] as num?)?.toInt() ?? 0,
     );
   }
 

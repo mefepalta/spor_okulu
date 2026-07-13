@@ -64,6 +64,7 @@
   "socialShareButton": "Compartir",
   "socialRemovePhoto": "Quitar foto",
   "socialEmptyWarning": "Añade un texto o una foto para compartir.",
+  "streakLabel": "Racha de {count} días",
   "accountType": "Tu tipo de cuenta",
   "selectionSentToAdmin": "Tu selección se enviará para la aprobación del administrador.",
   "registerButton": "Registrarse",

@@ -64,6 +64,7 @@
   "socialShareButton": "Поделиться",
   "socialRemovePhoto": "Удалить фото",
   "socialEmptyWarning": "Добавьте текст или фото для публикации.",
+  "streakLabel": "Серия {count} дн.",
   "accountType": "Тип вашего аккаунта",
   "selectionSentToAdmin": "Ваш выбор будет отправлен на утверждение администратору.",
   "registerButton": "Зарегистрироваться",

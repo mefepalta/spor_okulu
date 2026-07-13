@@ -528,7 +528,9 @@ extension _DashboardHandlers on _DashboardScreenState {
   void _openClubChatScreen(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const ClubChatScreen()),
+      MaterialPageRoute(
+        builder: (context) => ClubChatScreen(currentUserStreak: _currentStreak),
+      ),
     );
   }
 

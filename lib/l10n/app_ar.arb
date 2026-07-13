@@ -64,6 +64,7 @@
   "socialShareButton": "مشاركة",
   "socialRemovePhoto": "إزالة الصورة",
   "socialEmptyWarning": "أضف نصًا أو صورة للمشاركة.",
+  "streakLabel": "سلسلة {count} يوم",
   "accountType": "نوع حسابك",
   "selectionSentToAdmin": "سيُرسَل اختيارك لموافقة المدير.",
   "registerButton": "التسجيل",

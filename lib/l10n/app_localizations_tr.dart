@@ -218,6 +218,11 @@ class AppLocalizationsTr extends AppLocalizations {
       'Paylaşmak için bir metin ya da fotoğraf ekle.';
 
   @override
+  String streakLabel(int count) {
+    return '$count günlük seri';
+  }
+
+  @override
   String get accountType => 'Hesap türün';
 
   @override

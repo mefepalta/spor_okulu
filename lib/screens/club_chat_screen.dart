@@ -7,6 +7,7 @@ import '../models/app_models.dart';
 import '../services/chat_service.dart';
 import '../services/profile_service.dart';
 import '../theme/app_colors.dart';
+import '../utils/streak.dart';
 import '../widgets/empty_state.dart';
 import '../widgets/wave_background.dart';
 
@@ -17,7 +18,11 @@ import '../widgets/wave_background.dart';
 /// `users/{uid}.photoBase64`'ten gönderen başına bir kez okunup önbelleğe
 /// alınır ([_avatarCache]); bu ücretsiz Firestore kotasını korur.
 class ClubChatScreen extends StatefulWidget {
-  const ClubChatScreen({super.key});
+  /// Giriş yapan kullanıcının güncel günlük giriş serisi — gönderilen mesaja
+  /// denormalize edilir (isim rengi/rozeti için).
+  final int currentUserStreak;
+
+  const ClubChatScreen({super.key, this.currentUserStreak = 0});
 
   @override
   State<ClubChatScreen> createState() => _ClubChatScreenState();
@@ -95,7 +100,11 @@ class _ClubChatScreenState extends State<ClubChatScreen> {
     setState(() => _sending = true);
     _inputController.clear();
     try {
-      await _chatService.sendMessage(senderName: _myName, text: text);
+      await _chatService.sendMessage(
+        senderName: _myName,
+        text: text,
+        senderStreak: widget.currentUserStreak,
+      );
     } finally {
       if (mounted) {
         setState(() => _sending = false);
@@ -188,15 +197,7 @@ class _ClubChatScreenState extends State<ClubChatScreen> {
         children: [
           Padding(
             padding: const EdgeInsetsDirectional.only(start: 4, end: 4, bottom: 3),
-            child: Text(
-              '${message.senderName.isEmpty ? '—' : message.senderName}'
-              ' · ${_formatTime(message.createdAt)}'
-              '${message.editedAt != null ? ' · ${l10n.chatEdited}' : ''}',
-              style: TextStyle(
-                fontSize: 11,
-                color: Theme.of(context).textTheme.bodySmall?.color,
-              ),
-            ),
+            child: _buildMessageHeader(context, l10n, message),
           ),
           GestureDetector(
             onLongPress: () => _showMessageActions(l10n, message, isMine),
@@ -237,6 +238,47 @@ class _ClubChatScreenState extends State<ClubChatScreen> {
             ? [bubble, const SizedBox(width: 8), avatar]
             : [avatar, const SizedBox(width: 8), bubble],
       ),
+    );
+  }
+
+  /// Mesaj üst bilgisi: gönderen adı (streak tier'ına göre renkli + alev
+  /// rozeti) · tarih-saat · düzenlendi. Ad muted renk yerine tier rengiyle
+  /// gösterilir; böylece ödül (seri) chat'te de görünür.
+  Widget _buildMessageHeader(
+    BuildContext context,
+    AppLocalizations l10n,
+    ChatMessage message,
+  ) {
+    final muted = Theme.of(context).textTheme.bodySmall?.color;
+    final style = streakStyle(message.senderStreak);
+    final nameColor = style.color ?? muted;
+    final meta = ' · ${_formatTime(message.createdAt)}'
+        '${message.editedAt != null ? ' · ${l10n.chatEdited}' : ''}';
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (style.showBadge) ...[
+          Icon(Icons.local_fire_department, size: 12, color: nameColor),
+          const SizedBox(width: 3),
+        ],
+        Flexible(
+          child: Text(
+            message.senderName.isEmpty ? '—' : message.senderName,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontSize: 11,
+              fontWeight: style.showBadge ? FontWeight.w700 : FontWeight.w600,
+              color: nameColor,
+            ),
+          ),
+        ),
+        Text(
+          meta,
+          style: TextStyle(fontSize: 11, color: muted),
+        ),
+      ],
     );
   }
 

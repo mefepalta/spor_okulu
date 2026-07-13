@@ -17,6 +17,7 @@ import '../services/parent_service.dart';
 import '../services/profile_service.dart';
 import '../services/reminders_service.dart';
 import '../services/schedule_service.dart';
+import '../services/streak_service.dart';
 import '../services/user_management_service.dart';
 import '../services/user_role_service.dart';
 import '../theme/app_colors.dart';
@@ -24,6 +25,7 @@ import '../utils/formatters.dart';
 import '../utils/period_l10n.dart';
 import '../utils/role_l10n.dart';
 import '../utils/status_l10n.dart';
+import '../utils/streak.dart';
 import '../widgets/summary_section.dart';
 import 'announcements_screen.dart';
 import 'attendance_screen.dart';
@@ -69,6 +71,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final UserManagementService _userManagementService = UserManagementService();
   final ProfileService _profileService = ProfileService();
   final ScheduleService _scheduleService = ScheduleService();
+  final StreakService _streakService = StreakService();
   final AbsenceAlertService _absenceAlertService = AbsenceAlertService();
   final RemindersService _remindersService = RemindersService();
   StreamSubscription<List<Announcement>>? _announcementSubscription;
@@ -103,6 +106,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
   String _viewerName = '';
   String _requestedRole = '';
   String _requestStatus = '';
+
+  /// Kullanıcının güncel günlük giriş serisi (0 = seri yok / kaydedilmedi).
+  int _currentStreak = 0;
 
   int _knownAnnouncementCount = 0;
   int _unreadAnnouncementCount = 0;
@@ -217,6 +223,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
       // Sol menü başlığındaki profil kartı için (ad + avatar) — tüm roller.
       final myProfile = await _profileService.loadMyProfile();
 
+      // Günlük giriş serisi (streak): viewer hariç onaylı üyelerde işlenir.
+      final streak = isViewer ? 0 : await _streakService.recordVisit();
+
       // Rol bazlı yükleme: her rol yalnızca yetkili olduğu veriyi çeker.
       // Böylece veli/görüntüleyici, başkalarının hassas verisini indirmez ve
       // Firestore kurallarıyla uyumlu kalır.
@@ -308,6 +317,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         _assignedStudentIds = assignedStudentIds;
         _myDisplayName = myProfile?.displayName ?? '';
         _myPhotoBase64 = myProfile?.photoBase64 ?? '';
+        _currentStreak = streak;
         _viewerName = viewerAccount?.displayName ?? '';
         _requestedRole = viewerAccount?.requestedRole ?? '';
         _requestStatus = viewerAccount?.requestStatus ?? '';
