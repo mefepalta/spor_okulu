@@ -533,6 +533,7 @@ extension _DashboardHandlers on _DashboardScreenState {
   }
 
   void _openScheduleScreen(BuildContext context) {
+    final canManageAttendance = _isAdmin || _isCoach;
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -540,9 +541,34 @@ extension _DashboardHandlers on _DashboardScreenState {
           groups: _groups,
           coaches: _coaches,
           canManage: _isAdmin || _isCoach,
+          onTakeAttendance: canManageAttendance
+              ? (groupId) => _openTakeAttendanceForGroup(context, groupId)
+              : null,
         ),
       ),
     );
+  }
+
+  /// Ders programındaki/ana ekrandaki bir dersten hızlı yoklama: o dersin grubu
+  /// baştan seçili gelecek şekilde yoklama alma ekranını açar, kaydeder.
+  Future<void> _openTakeAttendanceForGroup(
+    BuildContext context,
+    String groupId,
+  ) async {
+    final newRecord = await Navigator.push<AttendanceRecord>(
+      context,
+      MaterialPageRoute(
+        builder: (context) => TakeAttendanceScreen(
+          groups: _groups,
+          students: _students,
+          initialGroupId: groupId,
+        ),
+      ),
+    );
+    if (newRecord == null) {
+      return;
+    }
+    await _addAttendanceRecord(newRecord);
   }
 
   // --- Depo / ekipman ---

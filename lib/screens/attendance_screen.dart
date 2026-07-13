@@ -195,11 +195,16 @@ class TakeAttendanceScreen extends StatefulWidget {
   final List<Student> students;
   final AttendanceRecord? record;
 
+  /// Yeni yoklamada (record == null) baştan seçili gelecek grup. Ders
+  /// programından "yoklama al" ile açıldığında o dersin grubu geçilir.
+  final String? initialGroupId;
+
   const TakeAttendanceScreen({
     super.key,
     required this.groups,
     required this.students,
     this.record,
+    this.initialGroupId,
   });
 
   @override
@@ -223,6 +228,13 @@ class _TakeAttendanceScreenState extends State<TakeAttendanceScreen> {
 
     if (widget.groups.isNotEmpty) {
       _selectedGroupId = widget.groups.first.id;
+    }
+
+    // Ders programından geçilen grup baştan seçili gelsin (yeni yoklamada).
+    if (record == null &&
+        widget.initialGroupId != null &&
+        widget.groups.any((g) => g.id == widget.initialGroupId)) {
+      _selectedGroupId = widget.initialGroupId;
     }
 
     if (record != null) {

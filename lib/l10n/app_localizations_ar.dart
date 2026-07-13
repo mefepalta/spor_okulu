@@ -2037,6 +2037,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get todayNoLessons => 'لا حصص اليوم.';
 
   @override
+  String get scheduleTakeAttendance => 'أخذ الحضور';
+
+  @override
   String get scheduleConflictTitle => 'تعارض';
 
   @override

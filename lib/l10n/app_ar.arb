@@ -605,6 +605,7 @@
   "scheduleTodayLabel": "اليوم",
   "todayLessonsTitle": "حصص اليوم",
   "todayNoLessons": "لا حصص اليوم.",
+  "scheduleTakeAttendance": "أخذ الحضور",
   "scheduleConflictTitle": "تعارض",
   "scheduleConflictBody": "توجد حصة متداخلة في هذا الوقت:",
   "scheduleSaveAnyway": "احفظ على أي حال",

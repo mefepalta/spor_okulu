@@ -605,6 +605,7 @@
   "scheduleTodayLabel": "Today",
   "todayLessonsTitle": "Today's Lessons",
   "todayNoLessons": "No lessons today.",
+  "scheduleTakeAttendance": "Take attendance",
   "scheduleConflictTitle": "Conflict",
   "scheduleConflictBody": "There's a conflicting lesson at this time:",
   "scheduleSaveAnyway": "Save anyway",

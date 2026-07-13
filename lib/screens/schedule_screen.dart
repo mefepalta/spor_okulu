@@ -15,11 +15,16 @@ class ScheduleScreen extends StatefulWidget {
   final List<Coach> coaches;
   final bool canManage;
 
+  /// Bir dersten hızlı yoklama almak için (yalnızca yetkili personelde dolu).
+  /// Dersin grup kimliği geçilir; null ise yoklama kısayolu gösterilmez.
+  final void Function(String groupId)? onTakeAttendance;
+
   const ScheduleScreen({
     super.key,
     required this.groups,
     required this.coaches,
     required this.canManage,
+    this.onTakeAttendance,
   });
 
   @override
@@ -393,6 +398,13 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                   ],
                 ),
               ),
+              if (widget.onTakeAttendance != null)
+                IconButton(
+                  tooltip: l10n.scheduleTakeAttendance,
+                  icon: const Icon(Icons.fact_check_outlined),
+                  color: AppColors.primary,
+                  onPressed: () => widget.onTakeAttendance!(entry.groupId),
+                ),
               if (widget.canManage)
                 IconButton(
                   icon: const Icon(Icons.delete_outline, color: Colors.red),
@@ -685,6 +697,19 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                     ],
                   ),
                 ),
+                if (widget.onTakeAttendance != null)
+                  SizedBox(
+                    width: 28,
+                    height: 28,
+                    child: IconButton(
+                      padding: EdgeInsets.zero,
+                      iconSize: 18,
+                      tooltip: l10n.scheduleTakeAttendance,
+                      icon: const Icon(Icons.fact_check_outlined),
+                      color: AppColors.primary,
+                      onPressed: () => widget.onTakeAttendance!(entry.groupId),
+                    ),
+                  ),
                 if (widget.canManage)
                   SizedBox(
                     width: 28,

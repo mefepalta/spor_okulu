@@ -1183,6 +1183,7 @@
   "scheduleTodayLabel": "Bugün",
   "todayLessonsTitle": "Bugünün Dersleri",
   "todayNoLessons": "Bugün ders yok.",
+  "scheduleTakeAttendance": "Yoklama al",
   "scheduleConflictTitle": "Çakışma var",
   "scheduleConflictBody": "Bu saatte çakışan ders var:",
   "scheduleSaveAnyway": "Yine de kaydet",

@@ -2074,6 +2074,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get todayNoLessons => 'Aucun cours aujourd\'hui.';
 
   @override
+  String get scheduleTakeAttendance => 'Faire l\'appel';
+
+  @override
   String get scheduleConflictTitle => 'Conflit';
 
   @override

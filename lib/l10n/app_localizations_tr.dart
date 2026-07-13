@@ -2044,6 +2044,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String get todayNoLessons => 'Bugün ders yok.';
 
   @override
+  String get scheduleTakeAttendance => 'Yoklama al';
+
+  @override
   String get scheduleConflictTitle => 'Çakışma var';
 
   @override

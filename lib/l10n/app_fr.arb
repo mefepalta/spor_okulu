@@ -605,6 +605,7 @@
   "scheduleTodayLabel": "Aujourd'hui",
   "todayLessonsTitle": "Cours du jour",
   "todayNoLessons": "Aucun cours aujourd'hui.",
+  "scheduleTakeAttendance": "Faire l'appel",
   "scheduleConflictTitle": "Conflit",
   "scheduleConflictBody": "Un cours chevauche cet horaire :",
   "scheduleSaveAnyway": "Enregistrer quand même",

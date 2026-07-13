@@ -2060,6 +2060,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get todayNoLessons => 'Сегодня занятий нет.';
 
   @override
+  String get scheduleTakeAttendance => 'Отметить посещаемость';
+
+  @override
   String get scheduleConflictTitle => 'Конфликт';
 
   @override

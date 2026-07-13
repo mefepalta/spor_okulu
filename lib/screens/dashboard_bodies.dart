@@ -609,6 +609,15 @@ extension _DashboardBodies on _DashboardScreenState {
               ],
             ),
           ),
+          if (_canManageAttendance)
+            IconButton(
+              tooltip: AppLocalizations.of(context).scheduleTakeAttendance,
+              icon: const Icon(Icons.fact_check_outlined),
+              color: AppColors.primary,
+              visualDensity: VisualDensity.compact,
+              onPressed: () =>
+                  _openTakeAttendanceForGroup(context, entry.groupId),
+            ),
         ],
       ),
     );

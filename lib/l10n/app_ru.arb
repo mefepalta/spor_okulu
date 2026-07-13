@@ -605,6 +605,7 @@
   "scheduleTodayLabel": "Сегодня",
   "todayLessonsTitle": "Занятия сегодня",
   "todayNoLessons": "Сегодня занятий нет.",
+  "scheduleTakeAttendance": "Отметить посещаемость",
   "scheduleConflictTitle": "Конфликт",
   "scheduleConflictBody": "В это время есть пересекающееся занятие:",
   "scheduleSaveAnyway": "Всё равно сохранить",

@@ -3749,6 +3749,12 @@ abstract class AppLocalizations {
   /// **'Bugün ders yok.'**
   String get todayNoLessons;
 
+  /// No description provided for @scheduleTakeAttendance.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yoklama al'**
+  String get scheduleTakeAttendance;
+
   /// No description provided for @scheduleConflictTitle.
   ///
   /// In tr, this message translates to:

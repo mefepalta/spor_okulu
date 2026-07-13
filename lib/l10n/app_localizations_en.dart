@@ -2048,6 +2048,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get todayNoLessons => 'No lessons today.';
 
   @override
+  String get scheduleTakeAttendance => 'Take attendance';
+
+  @override
   String get scheduleConflictTitle => 'Conflict';
 
   @override
