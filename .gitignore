@@ -48,5 +48,6 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-# Cloudflare Wrangler yerel cache/durum (hesap bilgisi icerir)
-/cloudflare/.wrangler/
+# Cloudflare Wrangler yerel cache/durum (hesap bilgisi icerir).
+# Konumdan bagimsiz: hem depo kokunde hem cloudflare/ altinda olusabilir.
+.wrangler/
