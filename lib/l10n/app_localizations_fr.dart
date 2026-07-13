@@ -180,6 +180,26 @@ class AppLocalizationsFr extends AppLocalizations {
   String get passwordsDontMatch => 'Les mots de passe ne correspondent pas.';
 
   @override
+  String get changePasswordTitle => 'Changer le mot de passe';
+
+  @override
+  String get currentPasswordLabel => 'Mot de passe actuel';
+
+  @override
+  String get newPasswordLabel => 'Nouveau mot de passe';
+
+  @override
+  String get passwordChangeSuccess => 'Votre mot de passe a été mis à jour.';
+
+  @override
+  String get passwordChangeWrongCurrent =>
+      'Le mot de passe actuel est incorrect.';
+
+  @override
+  String get passwordChangeError =>
+      'Impossible de changer le mot de passe. Réessayez.';
+
+  @override
   String get accountType => 'Votre type de compte';
 
   @override

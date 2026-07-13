@@ -8,6 +8,7 @@ import '../data/info_pages_l10n.dart';
 import '../l10n/app_localizations.dart';
 import '../models/app_models.dart';
 import '../routes/app_routes.dart';
+import '../services/auth_service.dart';
 import '../services/profile_service.dart';
 import '../theme/app_colors.dart';
 import '../theme/background_controller.dart';
@@ -114,6 +115,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
       AppRoutes.login,
       (route) => false,
     );
+  }
+
+  Future<void> _changePassword() async {
+    final changed = await showDialog<bool>(
+      context: context,
+      builder: (_) => const _ChangePasswordDialog(),
+    );
+    if (changed == true && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(AppLocalizations.of(context).passwordChangeSuccess),
+        ),
+      );
+    }
   }
 
   Future<void> _openEditAccount() async {
@@ -468,6 +483,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           const Divider(height: 1),
           ListTile(
+            leading: const Icon(Icons.lock_outline),
+            title: Text(l10n.changePasswordTitle),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: _changePassword,
+          ),
+          const Divider(height: 1),
+          ListTile(
             leading: const Icon(Icons.mail_outline),
             title: Text(l10n.contactUs),
             trailing: const Icon(Icons.chevron_right),
@@ -535,6 +557,158 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ],
       ),
+    );
+  }
+}
+
+/// Şifre değiştirme diyaloğu. Kendi denetleyicilerini yönetir (dispose eder).
+/// Başarılıysa `true` döndürerek kapanır; hatada açık kalıp mesaj gösterir.
+class _ChangePasswordDialog extends StatefulWidget {
+  const _ChangePasswordDialog();
+
+  @override
+  State<_ChangePasswordDialog> createState() => _ChangePasswordDialogState();
+}
+
+class _ChangePasswordDialogState extends State<_ChangePasswordDialog> {
+  final AuthService _authService = AuthService();
+  final TextEditingController _currentController = TextEditingController();
+  final TextEditingController _newController = TextEditingController();
+  final TextEditingController _confirmController = TextEditingController();
+
+  bool _obscure = true;
+  bool _saving = false;
+  String? _error;
+
+  @override
+  void dispose() {
+    _currentController.dispose();
+    _newController.dispose();
+    _confirmController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _submit() async {
+    final l10n = AppLocalizations.of(context);
+    final current = _currentController.text;
+    final newPass = _newController.text;
+    final confirm = _confirmController.text;
+
+    if (current.isEmpty || newPass.isEmpty) {
+      setState(() => _error = l10n.passwordEmpty);
+      return;
+    }
+    if (newPass.length < 6) {
+      setState(() => _error = l10n.passwordMinLength);
+      return;
+    }
+    if (newPass != confirm) {
+      setState(() => _error = l10n.passwordsDontMatch);
+      return;
+    }
+
+    setState(() {
+      _saving = true;
+      _error = null;
+    });
+
+    try {
+      await _authService.changePassword(
+        currentPassword: current,
+        newPassword: newPass,
+      );
+      if (mounted) {
+        Navigator.pop(context, true);
+      }
+    } on FirebaseAuthException catch (e) {
+      if (!mounted) {
+        return;
+      }
+      final isWrongCurrent =
+          e.code == 'wrong-password' ||
+          e.code == 'invalid-credential' ||
+          e.code == 'invalid-login-credentials';
+      setState(() {
+        _saving = false;
+        _error = isWrongCurrent
+            ? l10n.passwordChangeWrongCurrent
+            : l10n.passwordChangeError;
+      });
+    } catch (_) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _saving = false;
+        _error = l10n.passwordChangeError;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return AlertDialog(
+      title: Text(l10n.changePasswordTitle),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TextField(
+            controller: _currentController,
+            obscureText: _obscure,
+            decoration: InputDecoration(
+              labelText: l10n.currentPasswordLabel,
+              prefixIcon: const Icon(Icons.lock_outline),
+              suffixIcon: IconButton(
+                icon: Icon(_obscure ? Icons.visibility : Icons.visibility_off),
+                onPressed: () => setState(() => _obscure = !_obscure),
+              ),
+            ),
+          ),
+          const SizedBox(height: 12),
+          TextField(
+            controller: _newController,
+            obscureText: _obscure,
+            decoration: InputDecoration(
+              labelText: l10n.newPasswordLabel,
+              prefixIcon: const Icon(Icons.lock_reset),
+            ),
+          ),
+          const SizedBox(height: 12),
+          TextField(
+            controller: _confirmController,
+            obscureText: _obscure,
+            decoration: InputDecoration(
+              labelText: l10n.passwordAgainLabel,
+              prefixIcon: const Icon(Icons.lock_reset),
+            ),
+            onSubmitted: (_) => _submit(),
+          ),
+          if (_error != null) ...[
+            const SizedBox(height: 12),
+            Text(
+              _error!,
+              style: const TextStyle(color: Colors.red, fontSize: 13),
+            ),
+          ],
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: _saving ? null : () => Navigator.pop(context),
+          child: Text(l10n.commonCancel),
+        ),
+        FilledButton(
+          onPressed: _saving ? null : _submit,
+          child: _saving
+              ? const SizedBox(
+                  width: 18,
+                  height: 18,
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                )
+              : Text(l10n.commonSave),
+        ),
+      ],
     );
   }
 }

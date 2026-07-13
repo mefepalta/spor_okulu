@@ -178,6 +178,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get passwordsDontMatch => 'Passwords do not match.';
 
   @override
+  String get changePasswordTitle => 'Change Password';
+
+  @override
+  String get currentPasswordLabel => 'Current password';
+
+  @override
+  String get newPasswordLabel => 'New password';
+
+  @override
+  String get passwordChangeSuccess => 'Your password has been updated.';
+
+  @override
+  String get passwordChangeWrongCurrent => 'Current password is incorrect.';
+
+  @override
+  String get passwordChangeError =>
+      'Couldn\'t change password. Please try again.';
+
+  @override
   String get accountType => 'Your account type';
 
   @override

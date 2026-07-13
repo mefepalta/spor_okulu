@@ -412,6 +412,42 @@ abstract class AppLocalizations {
   /// **'Şifreler eşleşmiyor.'**
   String get passwordsDontMatch;
 
+  /// No description provided for @changePasswordTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şifre Değiştir'**
+  String get changePasswordTitle;
+
+  /// No description provided for @currentPasswordLabel.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mevcut şifre'**
+  String get currentPasswordLabel;
+
+  /// No description provided for @newPasswordLabel.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni şifre'**
+  String get newPasswordLabel;
+
+  /// No description provided for @passwordChangeSuccess.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şifren güncellendi.'**
+  String get passwordChangeSuccess;
+
+  /// No description provided for @passwordChangeWrongCurrent.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mevcut şifre hatalı.'**
+  String get passwordChangeWrongCurrent;
+
+  /// No description provided for @passwordChangeError.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şifre değiştirilemedi. Lütfen tekrar dene.'**
+  String get passwordChangeError;
+
   /// No description provided for @accountType.
   ///
   /// In tr, this message translates to:

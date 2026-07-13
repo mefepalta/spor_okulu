@@ -179,6 +179,24 @@ class AppLocalizationsAr extends AppLocalizations {
   String get passwordsDontMatch => 'كلمتا المرور غير متطابقتين.';
 
   @override
+  String get changePasswordTitle => 'تغيير كلمة المرور';
+
+  @override
+  String get currentPasswordLabel => 'كلمة المرور الحالية';
+
+  @override
+  String get newPasswordLabel => 'كلمة المرور الجديدة';
+
+  @override
+  String get passwordChangeSuccess => 'تم تحديث كلمة المرور.';
+
+  @override
+  String get passwordChangeWrongCurrent => 'كلمة المرور الحالية غير صحيحة.';
+
+  @override
+  String get passwordChangeError => 'تعذّر تغيير كلمة المرور. حاول مرة أخرى.';
+
+  @override
   String get accountType => 'نوع حسابك';
 
   @override

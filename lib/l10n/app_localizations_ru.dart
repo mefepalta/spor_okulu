@@ -179,6 +179,25 @@ class AppLocalizationsRu extends AppLocalizations {
   String get passwordsDontMatch => 'Пароли не совпадают.';
 
   @override
+  String get changePasswordTitle => 'Сменить пароль';
+
+  @override
+  String get currentPasswordLabel => 'Текущий пароль';
+
+  @override
+  String get newPasswordLabel => 'Новый пароль';
+
+  @override
+  String get passwordChangeSuccess => 'Ваш пароль обновлён.';
+
+  @override
+  String get passwordChangeWrongCurrent => 'Текущий пароль неверен.';
+
+  @override
+  String get passwordChangeError =>
+      'Не удалось изменить пароль. Попробуйте снова.';
+
+  @override
   String get accountType => 'Тип вашего аккаунта';
 
   @override

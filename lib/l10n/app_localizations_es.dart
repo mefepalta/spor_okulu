@@ -183,6 +183,26 @@ class AppLocalizationsEs extends AppLocalizations {
   String get passwordsDontMatch => 'Las contraseñas no coinciden.';
 
   @override
+  String get changePasswordTitle => 'Cambiar contraseña';
+
+  @override
+  String get currentPasswordLabel => 'Contraseña actual';
+
+  @override
+  String get newPasswordLabel => 'Nueva contraseña';
+
+  @override
+  String get passwordChangeSuccess => 'Tu contraseña se ha actualizado.';
+
+  @override
+  String get passwordChangeWrongCurrent =>
+      'La contraseña actual es incorrecta.';
+
+  @override
+  String get passwordChangeError =>
+      'No se pudo cambiar la contraseña. Inténtalo de nuevo.';
+
+  @override
   String get accountType => 'Tu tipo de cuenta';
 
   @override

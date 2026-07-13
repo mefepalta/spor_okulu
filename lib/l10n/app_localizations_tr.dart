@@ -177,6 +177,25 @@ class AppLocalizationsTr extends AppLocalizations {
   String get passwordsDontMatch => 'Şifreler eşleşmiyor.';
 
   @override
+  String get changePasswordTitle => 'Şifre Değiştir';
+
+  @override
+  String get currentPasswordLabel => 'Mevcut şifre';
+
+  @override
+  String get newPasswordLabel => 'Yeni şifre';
+
+  @override
+  String get passwordChangeSuccess => 'Şifren güncellendi.';
+
+  @override
+  String get passwordChangeWrongCurrent => 'Mevcut şifre hatalı.';
+
+  @override
+  String get passwordChangeError =>
+      'Şifre değiştirilemedi. Lütfen tekrar dene.';
+
+  @override
   String get accountType => 'Hesap türün';
 
   @override
