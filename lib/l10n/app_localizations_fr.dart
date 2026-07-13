@@ -200,6 +200,27 @@ class AppLocalizationsFr extends AppLocalizations {
       'Impossible de changer le mot de passe. Réessayez.';
 
   @override
+  String get socialTitle => 'Réseaux sociaux';
+
+  @override
+  String get socialCreatePost => 'Créer une publication';
+
+  @override
+  String get socialAddPhoto => 'Ajouter une photo';
+
+  @override
+  String get socialHint => 'Partage quelque chose sur ton équipe...';
+
+  @override
+  String get socialShareButton => 'Partager';
+
+  @override
+  String get socialRemovePhoto => 'Retirer la photo';
+
+  @override
+  String get socialEmptyWarning => 'Ajoute un texte ou une photo à partager.';
+
+  @override
   String get accountType => 'Votre type de compte';
 
   @override

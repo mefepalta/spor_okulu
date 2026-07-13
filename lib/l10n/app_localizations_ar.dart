@@ -197,6 +197,27 @@ class AppLocalizationsAr extends AppLocalizations {
   String get passwordChangeError => 'تعذّر تغيير كلمة المرور. حاول مرة أخرى.';
 
   @override
+  String get socialTitle => 'وسائل التواصل';
+
+  @override
+  String get socialCreatePost => 'إنشاء منشور جديد';
+
+  @override
+  String get socialAddPhoto => 'إضافة صورة';
+
+  @override
+  String get socialHint => 'شارك شيئًا عن فريقك...';
+
+  @override
+  String get socialShareButton => 'مشاركة';
+
+  @override
+  String get socialRemovePhoto => 'إزالة الصورة';
+
+  @override
+  String get socialEmptyWarning => 'أضف نصًا أو صورة للمشاركة.';
+
+  @override
   String get accountType => 'نوع حسابك';
 
   @override

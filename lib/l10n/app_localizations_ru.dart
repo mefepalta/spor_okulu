@@ -198,6 +198,27 @@ class AppLocalizationsRu extends AppLocalizations {
       'Не удалось изменить пароль. Попробуйте снова.';
 
   @override
+  String get socialTitle => 'Соцсети';
+
+  @override
+  String get socialCreatePost => 'Новая публикация';
+
+  @override
+  String get socialAddPhoto => 'Добавить фото';
+
+  @override
+  String get socialHint => 'Поделись чем-нибудь о своей команде...';
+
+  @override
+  String get socialShareButton => 'Поделиться';
+
+  @override
+  String get socialRemovePhoto => 'Удалить фото';
+
+  @override
+  String get socialEmptyWarning => 'Добавьте текст или фото для публикации.';
+
+  @override
   String get accountType => 'Тип вашего аккаунта';
 
   @override

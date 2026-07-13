@@ -203,6 +203,27 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se pudo cambiar la contraseña. Inténtalo de nuevo.';
 
   @override
+  String get socialTitle => 'Redes sociales';
+
+  @override
+  String get socialCreatePost => 'Crear nueva publicación';
+
+  @override
+  String get socialAddPhoto => 'Añadir foto';
+
+  @override
+  String get socialHint => 'Comparte algo sobre tu equipo...';
+
+  @override
+  String get socialShareButton => 'Compartir';
+
+  @override
+  String get socialRemovePhoto => 'Quitar foto';
+
+  @override
+  String get socialEmptyWarning => 'Añade un texto o una foto para compartir.';
+
+  @override
   String get accountType => 'Tu tipo de cuenta';
 
   @override

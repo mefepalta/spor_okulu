@@ -196,6 +196,28 @@ class AppLocalizationsTr extends AppLocalizations {
       'Şifre değiştirilemedi. Lütfen tekrar dene.';
 
   @override
+  String get socialTitle => 'Sosyal Medya';
+
+  @override
+  String get socialCreatePost => 'Yeni Gönderi Oluştur';
+
+  @override
+  String get socialAddPhoto => 'Fotoğraf Ekle';
+
+  @override
+  String get socialHint => 'Takımınla ilgili bir şeyler paylaş...';
+
+  @override
+  String get socialShareButton => 'Paylaş';
+
+  @override
+  String get socialRemovePhoto => 'Fotoğrafı kaldır';
+
+  @override
+  String get socialEmptyWarning =>
+      'Paylaşmak için bir metin ya da fotoğraf ekle.';
+
+  @override
   String get accountType => 'Hesap türün';
 
   @override

@@ -532,6 +532,13 @@ extension _DashboardHandlers on _DashboardScreenState {
     );
   }
 
+  void _openSocialShareScreen(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const SocialShareScreen()),
+    );
+  }
+
   void _openScheduleScreen(BuildContext context) {
     final canManageAttendance = _isAdmin || _isCoach;
     Navigator.push(

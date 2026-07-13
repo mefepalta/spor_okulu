@@ -42,6 +42,7 @@ import 'performance_screen.dart';
 import 'profile_screen.dart';
 import 'reports_screen.dart';
 import 'schedule_screen.dart';
+import 'social_share_screen.dart';
 import 'role_requests_screen.dart';
 import 'sports_screen.dart';
 import 'sportekai_screen.dart';

@@ -448,6 +448,48 @@ abstract class AppLocalizations {
   /// **'Şifre değiştirilemedi. Lütfen tekrar dene.'**
   String get passwordChangeError;
 
+  /// No description provided for @socialTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sosyal Medya'**
+  String get socialTitle;
+
+  /// No description provided for @socialCreatePost.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni Gönderi Oluştur'**
+  String get socialCreatePost;
+
+  /// No description provided for @socialAddPhoto.
+  ///
+  /// In tr, this message translates to:
+  /// **'Fotoğraf Ekle'**
+  String get socialAddPhoto;
+
+  /// No description provided for @socialHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Takımınla ilgili bir şeyler paylaş...'**
+  String get socialHint;
+
+  /// No description provided for @socialShareButton.
+  ///
+  /// In tr, this message translates to:
+  /// **'Paylaş'**
+  String get socialShareButton;
+
+  /// No description provided for @socialRemovePhoto.
+  ///
+  /// In tr, this message translates to:
+  /// **'Fotoğrafı kaldır'**
+  String get socialRemovePhoto;
+
+  /// No description provided for @socialEmptyWarning.
+  ///
+  /// In tr, this message translates to:
+  /// **'Paylaşmak için bir metin ya da fotoğraf ekle.'**
+  String get socialEmptyWarning;
+
   /// No description provided for @accountType.
   ///
   /// In tr, this message translates to:

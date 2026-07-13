@@ -197,6 +197,27 @@ class AppLocalizationsEn extends AppLocalizations {
       'Couldn\'t change password. Please try again.';
 
   @override
+  String get socialTitle => 'Social Media';
+
+  @override
+  String get socialCreatePost => 'Create New Post';
+
+  @override
+  String get socialAddPhoto => 'Add Photo';
+
+  @override
+  String get socialHint => 'Share something about your team...';
+
+  @override
+  String get socialShareButton => 'Share';
+
+  @override
+  String get socialRemovePhoto => 'Remove photo';
+
+  @override
+  String get socialEmptyWarning => 'Add some text or a photo to share.';
+
+  @override
   String get accountType => 'Your account type';
 
   @override
