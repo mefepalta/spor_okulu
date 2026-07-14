@@ -9,6 +9,7 @@ import '../l10n/app_localizations.dart';
 import '../models/app_models.dart';
 import '../routes/app_routes.dart';
 import '../services/auth_service.dart';
+import '../services/notification_service.dart';
 import '../services/profile_service.dart';
 import '../theme/app_colors.dart';
 import '../theme/background_controller.dart';
@@ -106,6 +107,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> _logout() async {
+    // signOut'tan ÖNCE: cihaz jetonunu ve konu aboneliklerini temizle ki
+    // paylaşılan cihazda çıkmış kullanıcıya push gitmesin.
+    await NotificationService.instance.clearOnLogout();
     await FirebaseAuth.instance.signOut();
     if (!mounted) {
       return;

@@ -30,6 +30,7 @@ class NotificationService {
   final FlutterLocalNotificationsPlugin _localNotifications =
       FlutterLocalNotificationsPlugin();
   bool _initialized = false;
+  bool _refreshHookAttached = false;
 
   /// Ön plan bildirimleri ve (manifest'teki varsayılan kanal üzerinden) arka
   /// plan bildirimleri için yüksek önemli kanal. Kimliği AndroidManifest'teki
@@ -70,16 +71,40 @@ class NotificationService {
 
       await _messaging.requestPermission();
 
-      // Genel duyurular için konu aboneliği (web'de topic desteklenmez).
-      if (!kIsWeb) {
-        await _messaging.subscribeToTopic('all');
-      }
-
       // Ön planda gelen bildirimler otomatik gösterilmez; yerel bildirimle
       // göster. Arka plan/kapalı durumu sistem tepsisi kendisi gösterir.
       FirebaseMessaging.onMessage.listen(_showForegroundNotification);
     } catch (error) {
       debugPrint('Bildirim başlatma hatası: $error');
+    }
+  }
+
+  /// Çıkışta çağrılır (signOut'tan ÖNCE, yetki hâlâ varken): cihaz jetonunu
+  /// kullanıcının belgesinden siler ve tüm konu aboneliklerini kaldırır.
+  /// Böylece paylaşılan bir cihazda çıkış yapmış kullanıcıya push gitmez.
+  /// Abonelikler bir sonraki girişte yeniden kurulur.
+  Future<void> clearOnLogout() async {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    try {
+      if (uid != null) {
+        await FirebaseFirestore.instance.collection('users').doc(uid).set({
+          'fcmToken': FieldValue.delete(),
+          'fcmUpdatedAt': FieldValue.serverTimestamp(),
+        }, SetOptions(merge: true));
+      }
+      if (!kIsWeb) {
+        await _messaging.unsubscribeFromTopic('all');
+        for (final topic in const [
+          'role_admin',
+          'role_coach',
+          'role_veli',
+          'role_ogrenci',
+        ]) {
+          await _messaging.unsubscribeFromTopic(topic);
+        }
+      }
+    } catch (error) {
+      debugPrint('Bildirim çıkış temizliği hatası: $error');
     }
   }
 
@@ -133,8 +158,9 @@ class NotificationService {
     }
   }
 
-  /// Giriş yapmış kullanıcının cihaz jetonunu Firestore'a yazar ve jeton
-  /// yenilendiğinde günceller. Giriş sonrası çağrılmalıdır.
+  /// Giriş yapmış kullanıcının cihaz jetonunu Firestore'a yazar ve genel
+  /// ("all") konu aboneliğini kurar. Giriş sonrası (her pano açılışında)
+  /// çağrılmalıdır; çıkış+giriş döngüsünde abonelik böylece yenilenir.
   Future<void> registerTokenForCurrentUser() async {
     final uid = FirebaseAuth.instance.currentUser?.uid;
     if (uid == null) return;
@@ -144,7 +170,24 @@ class NotificationService {
       if (token != null) {
         await _saveToken(uid, token);
       }
-      _messaging.onTokenRefresh.listen((refreshed) => _saveToken(uid, refreshed));
+
+      // Genel duyurular için konu aboneliği (web'de topic desteklenmez).
+      if (!kIsWeb) {
+        await _messaging.subscribeToTopic('all');
+      }
+
+      // Jeton yenilenme dinleyicisi BİR KEZ kurulur ve uid'yi olay anında
+      // çözer. (uid'yi burada yakalamak, çıkış+farklı hesapla giriş sonrası
+      // eski kullanıcının belgesine yeni jeton yazılmasına yol açıyordu.)
+      if (!_refreshHookAttached) {
+        _refreshHookAttached = true;
+        _messaging.onTokenRefresh.listen((refreshed) {
+          final currentUid = FirebaseAuth.instance.currentUser?.uid;
+          if (currentUid != null) {
+            _saveToken(currentUid, refreshed);
+          }
+        });
+      }
     } catch (error) {
       debugPrint('FCM jetonu kaydedilemedi: $error');
     }

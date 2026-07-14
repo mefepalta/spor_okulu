@@ -555,19 +555,28 @@ extension _DashboardHandlers on _DashboardScreenState {
     );
   }
 
-  void _openClubChatScreen(BuildContext context) {
+  Future<void> _openClubChatScreen(BuildContext context) async {
     // Sohbet açıldı: okunmamış rozetini sıfırla ve "görüldü" çizgisini akıştaki
     // en yeni mesaja çek (yeni gelenler tekrar sayılsın diye).
     setState(() {
       _unreadChatCount = 0;
       _lastSeenChatAt = _latestChatAt;
     });
-    Navigator.push(
+    await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => ClubChatScreen(currentUserStreak: _currentStreak),
       ),
     );
+    // Sohbetten dönüldü: ekran açıkken gelen mesajlar zaten görüldü; rozeti
+    // tekrar sıfırla, çizgiyi en yeniye çek (yoksa okunanlar okunmamış sayılır).
+    if (!mounted) {
+      return;
+    }
+    setState(() {
+      _unreadChatCount = 0;
+      _lastSeenChatAt = _latestChatAt;
+    });
   }
 
   void _openSocialShareScreen(BuildContext context) {
@@ -982,6 +991,9 @@ extension _DashboardHandlers on _DashboardScreenState {
   }
 
   Future<void> _logout(BuildContext context) async {
+    // signOut'tan ÖNCE: cihaz jetonunu ve konu aboneliklerini temizle ki
+    // paylaşılan cihazda çıkmış kullanıcıya push gitmesin.
+    await NotificationService.instance.clearOnLogout();
     await _authService.signOut();
 
     if (!context.mounted) {
