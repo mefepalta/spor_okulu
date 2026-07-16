@@ -80,22 +80,39 @@ Firebase Setup
 To run this project with your own Firebase project:
 
 Create a new project in Firebase Console.
+
 Enable Email/Password sign-in under Authentication > Sign-in method.
+
 Create a Cloud Firestore database.
+
 Android app package name:
+
 com.mefepalta.sporokulu
+
 iOS bundle id:
+
 com.mefepalta.sporokulu
+
 Generate Firebase configuration using FlutterFire CLI:
+
 flutterfire configure
+
 Deploy Firestore security rules:
+
 firebase deploy --only firestore:rules
+
 Running the Project
+
 flutter pub get
+
 flutter analyze
+
 flutter run
+
 Android Release Build
+
 flutter build apk --release
+
 
 APK output:
 
