@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 
 import '../constants/ai_config.dart';
@@ -47,12 +48,32 @@ class AiService {
       );
     }
 
+    // K-2: Worker artık kimlik doğrulaması ister. Giriş yapmış kullanıcının
+    // Firebase ID token'ını Authorization başlığında iletiriz; böylece Groq
+    // anahtarını yalnızca bu projede oturum açmış kullanıcılar kullanabilir.
+    final String? idToken;
+    try {
+      idToken = await FirebaseAuth.instance.currentUser?.getIdToken();
+    } catch (_) {
+      throw const AiException(
+        'SporTekAi için kimlik doğrulanamadı. Lütfen tekrar giriş yap.',
+      );
+    }
+    if (idToken == null) {
+      throw const AiException(
+        'SporTekAi için oturum gerekli. Lütfen giriş yap.',
+      );
+    }
+
     late final http.Response response;
     try {
       response = await _client
           .post(
             Uri.parse(AiConfig.endpoint),
-            headers: {'Content-Type': 'application/json'},
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer $idToken',
+            },
             body: jsonEncode({
               'model': AiConfig.model,
               'temperature': 0.4,
