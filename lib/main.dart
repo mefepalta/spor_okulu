@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'theme/app_colors.dart';
 
 import 'constants/app_constants.dart';
+import 'constants/app_info.dart';
 import 'firebase_options.dart';
 import 'l10n/app_localizations.dart';
 import 'routes/app_routes.dart';
@@ -15,6 +16,9 @@ import 'widgets/app_splash_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Sürüm numarasını paketten yükle (pubspec ile elle senkron yerine tek kaynak).
+  await AppInfo.load();
 
   runApp(const SporOkuluApp());
 }
