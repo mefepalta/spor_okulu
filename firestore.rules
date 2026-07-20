@@ -84,7 +84,14 @@ service cloud.firestore {
             && request.resource.data.diff(resource.data).affectedKeys()
                 .hasOnly(['displayName', 'phone', 'photoBase64', 'updatedAt',
                           'currentStreak', 'longestStreak', 'lastActiveDate',
-                          'fcmToken', 'fcmUpdatedAt']));
+                          'fcmToken', 'fcmUpdatedAt'])
+            // Profil fotoğrafı (base64) için üst sınır: istemci 256x256/%60'a
+            // indirir (~10-20KB) ama istemciyi baypas eden biri belge sınırına
+            // kadar veri yazamasın. Alan yoksa kural atlanır (O-1).
+            && ('photoBase64' in request.resource.data
+                ? (request.resource.data.photoBase64 is string
+                   && request.resource.data.photoBase64.size() < 200000)
+                : true));
       // Silme: admin ya da kullanıcının kendisi (reddedilen hesabın giriş
       // sırasında kendini temizlemesi için).
       allow delete: if isAdmin() || request.auth.uid == userId;

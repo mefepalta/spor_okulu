@@ -55,13 +55,36 @@ android {
 
     buildTypes {
         release {
-            // key.properties varsa release anahtarıyla, yoksa debug ile imzala
-            // (böylece keystore hazır olmadan da release derlemesi çalışır).
+            // key.properties varsa release anahtarıyla imzala. Yoksa yerel
+            // geliştirme kolaylığı için debug'a düşülür AMA aşağıdaki koruma
+            // gerçek release PAKETLEMESİNİ engeller; böylece debug imzalı bir
+            // "release" fark edilmeden dağıtılamaz (K-1).
             signingConfig = if (keystorePropertiesFile.exists()) {
                 signingConfigs.getByName("release")
             } else {
                 signingConfigs.getByName("debug")
             }
+        }
+    }
+}
+
+// K-1 koruması: key.properties yoksa release paketi (assemble/bundle/package
+// *Release) üretimini durdur. Debug derlemeleri ve `flutter run` etkilenmez;
+// yalnızca dağıtım çıktısı engellenir. Keystore hazır olduğunda otomatik geçer.
+if (!keystorePropertiesFile.exists()) {
+    gradle.taskGraph.whenReady {
+        val packagingRelease = allTasks.any {
+            val n = it.name.lowercase()
+            (n.contains("assemble") || n.contains("bundle") || n.contains("package")) &&
+                n.contains("release")
+        }
+        if (packagingRelease) {
+            throw GradleException(
+                "Release paketi imzalanamaz: android/key.properties bulunamadi. " +
+                    "Dagitim anahtari (keystore) olusturup key.properties ekleyin " +
+                    "(bkz. YAYIN.md). Aksi halde paket debug sertifikasiyla " +
+                    "imzalanir ve magaza reddeder."
+            )
         }
     }
 }
