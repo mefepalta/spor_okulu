@@ -1,5 +1,10 @@
 {
   "@@locale": "ru",
+  "deleteAccountTitle": "Удалить аккаунт",
+  "deleteAccountWarning": "Ваш аккаунт и данные профиля будут удалены безвозвратно. Это действие нельзя отменить.",
+  "deleteAccountRetentionNote": "Клубные записи, такие как ученики и платежи, сохраняются у администратора.",
+  "deleteAccountConfirm": "Удалить мой аккаунт навсегда",
+  "deleteAccountError": "Не удалось удалить аккаунт. Попробуйте ещё раз.",
   "commonCancel": "Отмена",
   "commonClose": "Закрыть",
   "commonOk": "ОК",

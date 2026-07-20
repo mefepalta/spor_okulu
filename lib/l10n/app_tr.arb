@@ -1,5 +1,10 @@
 {
   "@@locale": "tr",
+  "deleteAccountTitle": "Hesabı Sil",
+  "deleteAccountWarning": "Hesabın ve profil bilgilerin kalıcı olarak silinecek. Bu işlem geri alınamaz.",
+  "deleteAccountRetentionNote": "Kulübe ait öğrenci ve ödeme kayıtları yöneticide saklanır.",
+  "deleteAccountConfirm": "Hesabımı kalıcı olarak sil",
+  "deleteAccountError": "Hesap silinemedi. Lütfen tekrar dene.",
   "commonCancel": "Vazgeç",
   "commonClose": "Kapat",
   "commonOk": "Tamam",

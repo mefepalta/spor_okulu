@@ -9,6 +9,23 @@ class AppLocalizationsTr extends AppLocalizations {
   AppLocalizationsTr([String locale = 'tr']) : super(locale);
 
   @override
+  String get deleteAccountTitle => 'Hesabı Sil';
+
+  @override
+  String get deleteAccountWarning =>
+      'Hesabın ve profil bilgilerin kalıcı olarak silinecek. Bu işlem geri alınamaz.';
+
+  @override
+  String get deleteAccountRetentionNote =>
+      'Kulübe ait öğrenci ve ödeme kayıtları yöneticide saklanır.';
+
+  @override
+  String get deleteAccountConfirm => 'Hesabımı kalıcı olarak sil';
+
+  @override
+  String get deleteAccountError => 'Hesap silinemedi. Lütfen tekrar dene.';
+
+  @override
   String get commonCancel => 'Vazgeç';
 
   @override

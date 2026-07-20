@@ -9,6 +9,24 @@ class AppLocalizationsFr extends AppLocalizations {
   AppLocalizationsFr([String locale = 'fr']) : super(locale);
 
   @override
+  String get deleteAccountTitle => 'Supprimer le compte';
+
+  @override
+  String get deleteAccountWarning =>
+      'Votre compte et les informations de votre profil seront définitivement supprimés. Cette action est irréversible.';
+
+  @override
+  String get deleteAccountRetentionNote =>
+      'Les données du club, comme les élèves et les paiements, sont conservées par l\'administrateur.';
+
+  @override
+  String get deleteAccountConfirm => 'Supprimer définitivement mon compte';
+
+  @override
+  String get deleteAccountError =>
+      'Le compte n\'a pas pu être supprimé. Réessayez.';
+
+  @override
   String get commonCancel => 'Annuler';
 
   @override

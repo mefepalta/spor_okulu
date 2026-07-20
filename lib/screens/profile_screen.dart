@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -119,6 +120,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
       AppRoutes.login,
       (route) => false,
     );
+  }
+
+  /// Mağaza zorunluluğu (Google Play / Apple): kullanıcı hesabını uygulama
+  /// içinden kalıcı silebilmeli. Diyalog reauth + belge + jeton + Auth kaydını
+  /// temizler; başarılıysa `true` döner ve giriş ekranına yönlendiririz.
+  Future<void> _deleteAccount() async {
+    final deleted = await showDialog<bool>(
+      context: context,
+      builder: (_) => const _DeleteAccountDialog(),
+    );
+    if (deleted == true && mounted) {
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        AppRoutes.login,
+        (route) => false,
+      );
+    }
   }
 
   Future<void> _changePassword() async {
@@ -552,6 +570,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           const Divider(height: 1),
           ListTile(
+            leading: const Icon(Icons.delete_forever, color: Colors.red),
+            title: Text(
+              l10n.deleteAccountTitle,
+              style: const TextStyle(color: Colors.red),
+            ),
+            onTap: _deleteAccount,
+          ),
+          const Divider(height: 1),
+          ListTile(
             leading: const Icon(Icons.logout, color: Colors.red),
             title: Text(
               l10n.logout,
@@ -711,6 +738,155 @@ class _ChangePasswordDialogState extends State<_ChangePasswordDialog> {
                   child: CircularProgressIndicator(strokeWidth: 2),
                 )
               : Text(l10n.commonSave),
+        ),
+      ],
+    );
+  }
+}
+
+/// Hesap silme diyaloğu (mağaza zorunluluğu). Mevcut parolayla yeniden kimlik
+/// doğrular, ardından bildirim jetonu/aboneliklerini, kullanıcı belgesini ve
+/// Firebase Authentication kaydını temizler. Başarılıysa `true` ile kapanır.
+class _DeleteAccountDialog extends StatefulWidget {
+  const _DeleteAccountDialog();
+
+  @override
+  State<_DeleteAccountDialog> createState() => _DeleteAccountDialogState();
+}
+
+class _DeleteAccountDialogState extends State<_DeleteAccountDialog> {
+  final AuthService _authService = AuthService();
+  final TextEditingController _passwordController = TextEditingController();
+
+  bool _obscure = true;
+  bool _deleting = false;
+  String? _error;
+
+  @override
+  void dispose() {
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _submit() async {
+    final l10n = AppLocalizations.of(context);
+    final password = _passwordController.text;
+
+    if (password.isEmpty) {
+      setState(() => _error = l10n.passwordEmpty);
+      return;
+    }
+
+    setState(() {
+      _deleting = true;
+      _error = null;
+    });
+
+    try {
+      // 1) Hassas işlem: mevcut parolayla yeniden kimlik doğrula.
+      await _authService.reauthenticate(currentPassword: password);
+      // 2) Bildirim jetonu + konu aboneliklerini temizle (yetki hâlâ varken).
+      await NotificationService.instance.clearOnLogout();
+      // 3) Kullanıcı belgesini sil (kural: kendi belgesini silebilir). Belge
+      //    silinemese bile Auth kaydını silmeyi dene.
+      final uid = _authService.currentUser?.uid;
+      if (uid != null) {
+        try {
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(uid)
+              .delete();
+        } catch (_) {
+          // yoksay: Auth silmeye devam et
+        }
+      }
+      // 4) Firebase Authentication kaydını sil.
+      await _authService.deleteCurrentUser();
+
+      if (mounted) {
+        Navigator.pop(context, true);
+      }
+    } on FirebaseAuthException catch (e) {
+      if (!mounted) {
+        return;
+      }
+      final wrongPassword =
+          e.code == 'wrong-password' ||
+          e.code == 'invalid-credential' ||
+          e.code == 'invalid-login-credentials';
+      setState(() {
+        _deleting = false;
+        _error = wrongPassword
+            ? l10n.passwordChangeWrongCurrent
+            : l10n.deleteAccountError;
+      });
+    } catch (_) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _deleting = false;
+        _error = l10n.deleteAccountError;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return AlertDialog(
+      title: Text(l10n.deleteAccountTitle),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(l10n.deleteAccountWarning),
+          const SizedBox(height: 8),
+          Text(
+            l10n.deleteAccountRetentionNote,
+            style: TextStyle(
+              fontSize: 12,
+              color: Theme.of(context).textTheme.bodySmall?.color,
+            ),
+          ),
+          const SizedBox(height: 16),
+          TextField(
+            controller: _passwordController,
+            obscureText: _obscure,
+            decoration: InputDecoration(
+              labelText: l10n.currentPasswordLabel,
+              prefixIcon: const Icon(Icons.lock_outline),
+              suffixIcon: IconButton(
+                icon: Icon(_obscure ? Icons.visibility : Icons.visibility_off),
+                onPressed: () => setState(() => _obscure = !_obscure),
+              ),
+            ),
+            onSubmitted: (_) => _submit(),
+          ),
+          if (_error != null) ...[
+            const SizedBox(height: 12),
+            Text(
+              _error!,
+              style: const TextStyle(color: Colors.red, fontSize: 13),
+            ),
+          ],
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: _deleting ? null : () => Navigator.pop(context),
+          child: Text(l10n.commonCancel),
+        ),
+        FilledButton(
+          style: FilledButton.styleFrom(backgroundColor: Colors.red),
+          onPressed: _deleting ? null : _submit,
+          child: _deleting
+              ? const SizedBox(
+                  width: 18,
+                  height: 18,
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                )
+              : Text(l10n.deleteAccountConfirm),
         ),
       ],
     );

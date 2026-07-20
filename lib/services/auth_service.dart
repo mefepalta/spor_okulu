@@ -46,4 +46,29 @@ class AuthService {
     await user.reauthenticateWithCredential(credential);
     await user.updatePassword(newPassword);
   }
+
+  /// Hesap silmeden önce mevcut parolayla yeniden kimlik doğrular (Firebase,
+  /// hesap silme gibi hassas işlemler için güncel oturum ister). Parola
+  /// yanlışsa `wrong-password`/`invalid-credential` fırlatır.
+  Future<void> reauthenticate({required String currentPassword}) async {
+    final user = _firebaseAuth.currentUser;
+    final email = user?.email;
+    if (user == null || email == null) {
+      throw FirebaseAuthException(
+        code: 'no-current-user',
+        message: 'Oturum bulunamadı.',
+      );
+    }
+    final credential = EmailAuthProvider.credential(
+      email: email,
+      password: currentPassword,
+    );
+    await user.reauthenticateWithCredential(credential);
+  }
+
+  /// Mevcut kullanıcının Firebase Authentication kaydını siler. Çağrılmadan
+  /// önce [reauthenticate] ile yeniden kimlik doğrulanmış olmalıdır.
+  Future<void> deleteCurrentUser() async {
+    await _firebaseAuth.currentUser?.delete();
+  }
 }

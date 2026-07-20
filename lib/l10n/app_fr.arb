@@ -1,5 +1,10 @@
 {
   "@@locale": "fr",
+  "deleteAccountTitle": "Supprimer le compte",
+  "deleteAccountWarning": "Votre compte et les informations de votre profil seront définitivement supprimés. Cette action est irréversible.",
+  "deleteAccountRetentionNote": "Les données du club, comme les élèves et les paiements, sont conservées par l'administrateur.",
+  "deleteAccountConfirm": "Supprimer définitivement mon compte",
+  "deleteAccountError": "Le compte n'a pas pu être supprimé. Réessayez.",
   "commonCancel": "Annuler",
   "commonClose": "Fermer",
   "commonOk": "OK",

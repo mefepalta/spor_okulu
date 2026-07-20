@@ -1,5 +1,10 @@
 {
   "@@locale": "en",
+  "deleteAccountTitle": "Delete Account",
+  "deleteAccountWarning": "Your account and profile information will be permanently deleted. This action cannot be undone.",
+  "deleteAccountRetentionNote": "Club records such as students and payments are retained by the administrator.",
+  "deleteAccountConfirm": "Permanently delete my account",
+  "deleteAccountError": "Account could not be deleted. Please try again.",
   "commonCancel": "Cancel",
   "commonClose": "Close",
   "commonOk": "OK",

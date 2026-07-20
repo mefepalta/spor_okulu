@@ -1,5 +1,10 @@
 {
   "@@locale": "es",
+  "deleteAccountTitle": "Eliminar cuenta",
+  "deleteAccountWarning": "Tu cuenta y la información de tu perfil se eliminarán permanentemente. Esta acción no se puede deshacer.",
+  "deleteAccountRetentionNote": "Los registros del club, como alumnos y pagos, los conserva el administrador.",
+  "deleteAccountConfirm": "Eliminar mi cuenta permanentemente",
+  "deleteAccountError": "No se pudo eliminar la cuenta. Inténtalo de nuevo.",
   "commonCancel": "Cancelar",
   "commonClose": "Cerrar",
   "commonOk": "Aceptar",

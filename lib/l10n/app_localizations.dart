@@ -106,6 +106,36 @@ abstract class AppLocalizations {
     Locale('tr'),
   ];
 
+  /// No description provided for @deleteAccountTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hesabı Sil'**
+  String get deleteAccountTitle;
+
+  /// No description provided for @deleteAccountWarning.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hesabın ve profil bilgilerin kalıcı olarak silinecek. Bu işlem geri alınamaz.'**
+  String get deleteAccountWarning;
+
+  /// No description provided for @deleteAccountRetentionNote.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kulübe ait öğrenci ve ödeme kayıtları yöneticide saklanır.'**
+  String get deleteAccountRetentionNote;
+
+  /// No description provided for @deleteAccountConfirm.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hesabımı kalıcı olarak sil'**
+  String get deleteAccountConfirm;
+
+  /// No description provided for @deleteAccountError.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hesap silinemedi. Lütfen tekrar dene.'**
+  String get deleteAccountError;
+
   /// No description provided for @commonCancel.
   ///
   /// In tr, this message translates to:

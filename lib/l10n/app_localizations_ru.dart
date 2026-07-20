@@ -9,6 +9,24 @@ class AppLocalizationsRu extends AppLocalizations {
   AppLocalizationsRu([String locale = 'ru']) : super(locale);
 
   @override
+  String get deleteAccountTitle => 'Удалить аккаунт';
+
+  @override
+  String get deleteAccountWarning =>
+      'Ваш аккаунт и данные профиля будут удалены безвозвратно. Это действие нельзя отменить.';
+
+  @override
+  String get deleteAccountRetentionNote =>
+      'Клубные записи, такие как ученики и платежи, сохраняются у администратора.';
+
+  @override
+  String get deleteAccountConfirm => 'Удалить мой аккаунт навсегда';
+
+  @override
+  String get deleteAccountError =>
+      'Не удалось удалить аккаунт. Попробуйте ещё раз.';
+
+  @override
   String get commonCancel => 'Отмена';
 
   @override

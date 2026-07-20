@@ -1,5 +1,10 @@
 {
   "@@locale": "ar",
+  "deleteAccountTitle": "حذف الحساب",
+  "deleteAccountWarning": "سيتم حذف حسابك ومعلومات ملفك الشخصي نهائيًا. لا يمكن التراجع عن هذا الإجراء.",
+  "deleteAccountRetentionNote": "تحتفظ الإدارة بسجلات النادي مثل الطلاب والمدفوعات.",
+  "deleteAccountConfirm": "حذف حسابي نهائيًا",
+  "deleteAccountError": "تعذّر حذف الحساب. حاول مرة أخرى.",
   "commonCancel": "إلغاء",
   "commonClose": "إغلاق",
   "commonOk": "حسناً",

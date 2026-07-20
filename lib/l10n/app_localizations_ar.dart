@@ -9,6 +9,23 @@ class AppLocalizationsAr extends AppLocalizations {
   AppLocalizationsAr([String locale = 'ar']) : super(locale);
 
   @override
+  String get deleteAccountTitle => 'حذف الحساب';
+
+  @override
+  String get deleteAccountWarning =>
+      'سيتم حذف حسابك ومعلومات ملفك الشخصي نهائيًا. لا يمكن التراجع عن هذا الإجراء.';
+
+  @override
+  String get deleteAccountRetentionNote =>
+      'تحتفظ الإدارة بسجلات النادي مثل الطلاب والمدفوعات.';
+
+  @override
+  String get deleteAccountConfirm => 'حذف حسابي نهائيًا';
+
+  @override
+  String get deleteAccountError => 'تعذّر حذف الحساب. حاول مرة أخرى.';
+
+  @override
   String get commonCancel => 'إلغاء';
 
   @override
