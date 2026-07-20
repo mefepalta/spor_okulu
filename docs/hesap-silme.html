@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hesap Silme — Spor Okulu</title>
+<meta name="description" content="Spor Okulu uygulamasında hesabınızı nasıl silersiniz veya silme talebinde bulunursunuz.">
+<meta name="theme-color" content="#053791">
+<link rel="icon" href="logo.png">
+<style>
+  :root{
+    --deep:#053791; --primary:#1565C0; --mid:#2979FF;
+    --ink:#0b1220; --muted:#5b6577; --line:#e6ebf5; --bg:#f6f9ff; --card:#fff;
+    --grad:linear-gradient(120deg,var(--deep),var(--mid));
+  }
+  @media(prefers-color-scheme:dark){
+    :root{--ink:#e9f0fb; --muted:#9fb0cc; --line:#1d2740; --bg:#070d1b; --card:#0c1526}
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+    color:var(--ink);background:var(--bg);line-height:1.65;padding:0 20px}
+  .wrap{max-width:760px;margin:0 auto;padding:40px 0 64px}
+  a{color:var(--primary)}
+  .brand{display:flex;align-items:center;gap:12px;margin-bottom:32px}
+  .brand img{width:44px;height:44px;border-radius:12px;box-shadow:0 4px 14px rgba(5,55,145,.3)}
+  .brand b{font-size:20px;font-weight:800;letter-spacing:-.3px}
+  h1{font-size:clamp(26px,5vw,34px);font-weight:800;letter-spacing:-.6px;margin-bottom:14px;line-height:1.15}
+  .lead{color:var(--muted);font-size:17px;margin-bottom:32px}
+  h2{font-size:20px;font-weight:700;margin:32px 0 12px}
+  p{margin-bottom:14px}
+  ol,ul{margin:0 0 16px;padding-inline-start:22px}
+  li{margin-bottom:8px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin:18px 0;
+    box-shadow:0 6px 22px rgba(8,32,80,.05)}
+  .step{background:var(--grad);color:#fff;display:inline-flex;align-items:center;justify-content:center;
+    width:26px;height:26px;border-radius:8px;font-weight:800;font-size:14px;margin-inline-end:8px}
+  .muted{color:var(--muted);font-size:15px}
+  .mail{font-weight:700}
+  hr{border:none;border-top:1px solid var(--line);margin:32px 0}
+  footer{color:var(--muted);font-size:14px}
+  .back{display:inline-block;margin-top:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand"><img src="logo.png" alt="Spor Okulu"><b>Spor Okulu</b></div>
+
+  <h1>Hesabınızı silme</h1>
+  <p class="lead">Spor Okulu hesabınızı ve profil bilgilerinizi dilediğiniz zaman kalıcı olarak silebilirsiniz. Silme işlemi geri alınamaz.</p>
+
+  <h2>Uygulama içinden silme (önerilen)</h2>
+  <div class="card">
+    <p><span class="step">1</span> Uygulamada oturum açın.</p>
+    <p><span class="step">2</span> <b>Profil</b> ekranını açın.</p>
+    <p><span class="step">3</span> En altta <b>“Hesabı Sil”</b> seçeneğine dokunun.</p>
+    <p><span class="step">4</span> Güvenlik için mevcut parolanızı girip onaylayın.</p>
+    <p class="muted" style="margin-top:6px">Hesabınız, profil bilgileriniz ve bildirim kaydınız anında ve kalıcı olarak silinir.</p>
+  </div>
+
+  <h2>Uygulamaya erişemiyorsanız</h2>
+  <p>Oturum açamıyor veya uygulamayı kullanamıyorsanız, silme talebinizi aşağıdaki adrese iletebilirsiniz. Hesabınıza kayıtlı e-posta adresinden yazmanız kimliğinizi doğrulamamıza yardımcı olur.</p>
+  <div class="card">
+    <p>📧 <span class="mail"><!-- TODO: gerçek, izlenen destek adresiyle değiştirin -->destek@sporokulu.example</span></p>
+    <p class="muted">Talebiniz en geç 30 gün içinde sonuçlandırılır ve tamamlandığında bilgilendirilirsiniz.</p>
+  </div>
+
+  <h2>Hangi veriler silinir?</h2>
+  <ul>
+    <li><b>Silinir:</b> hesabınız (kimlik kaydı), profil bilgileriniz (ad, telefon, profil fotoğrafı) ve bildirim jetonunuz.</li>
+    <li><b>Saklanabilir:</b> Kulübe ait öğrenci, yoklama ve ödeme kayıtları gibi kurumsal veriler, yasal yükümlülükler ve kulüp yönetimi gereği yöneticide kalabilir. Bu verilerin silinmesini istiyorsanız kulüp yöneticinizle iletişime geçin.</li>
+  </ul>
+
+  <hr>
+  <footer>
+    <p>Bu sayfa Spor Okulu uygulamasının hesap silme politikasını açıklar.</p>
+    <a class="back" href="index.html">← Ana sayfaya dön</a>
+  </footer>
+</div>
+</body>
+</html>
