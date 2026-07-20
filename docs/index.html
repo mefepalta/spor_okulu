@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spor Okulu — Spor okulunuzu tek uygulamada yönetin</title>
+<meta name="description" content="Öğrenci, yoklama, aidat, ders programı, duyuru ve kulüp sohbeti — spor okulunuzun tüm işleri tek uygulamada.">
+<meta name="theme-color" content="#053791">
+<link rel="icon" href="logo.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Spor Okulu">
+<meta property="og:description" content="Spor okulunuzun tüm işleri tek uygulamada: öğrenci, yoklama, aidat, program, duyuru, sohbet.">
+<meta property="og:image" content="logo.png">
+<style>
+  :root{
+    --deep:#053791; --primary:#1565C0; --mid:#2979FF; --sky:#42A5F5; --glow:#80D8FF;
+    --grad:linear-gradient(120deg,var(--deep),var(--mid));
+    --radius:22px;
+    /* light theme tokens */
+    --ink:#0b1220; --muted:#5b6577; --line:#e6ebf5; --bg:#f6f9ff; --panel:#ffffff; --card:#ffffff;
+    --header:rgba(246,249,255,.82); --shadow:0 22px 60px rgba(8,32,80,.14);
+    --chip:rgba(255,255,255,.18);
+  }
+  html[data-theme="dark"]{
+    --ink:#e9f0fb; --muted:#9fb0cc; --line:#1d2740; --bg:#070d1b; --panel:#0c1526; --card:#0e1830;
+    --header:rgba(7,13,27,.82); --shadow:0 22px 60px rgba(0,0,0,.55);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+    transition:background .3s ease,color .3s ease}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+  .grad-text{background:linear-gradient(120deg,var(--glow),#fff);-webkit-background-clip:text;background-clip:text;color:transparent}
+  html[dir="rtl"] body{font-family:"Segoe UI",system-ui,Tahoma,Arial,sans-serif}
+
+  .btn{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:15px;padding:14px 24px;border-radius:999px;
+    transition:transform .16s ease,box-shadow .16s ease;white-space:nowrap;cursor:pointer;border:none}
+  .btn:hover{transform:translateY(-2px)}
+  .btn-primary{background:#fff;color:var(--deep);box-shadow:0 12px 34px rgba(0,0,0,.22)}
+  .btn-ghost{border:1.5px solid rgba(255,255,255,.5);color:#fff;background:transparent}
+  .btn-dark{background:var(--grad);color:#fff;box-shadow:0 12px 32px rgba(21,101,192,.4)}
+  .btn-lg{padding:16px 30px;font-size:16px}
+
+  /* NAV */
+  header{position:sticky;top:0;z-index:40;background:var(--header);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+  nav{display:flex;align-items:center;justify-content:space-between;height:68px;gap:14px}
+  .brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:18px;letter-spacing:-.3px}
+  .brand img{width:36px;height:36px;border-radius:10px;box-shadow:0 4px 14px rgba(5,55,145,.3)}
+  .nav-links{display:flex;gap:26px;font-size:15px;color:var(--muted);font-weight:500;margin-inline-start:auto}
+  .nav-links a:hover{color:var(--primary)}
+  .nav-tools{display:flex;align-items:center;gap:10px}
+  #lang{appearance:none;-webkit-appearance:none;background:var(--card);color:var(--ink);border:1px solid var(--line);
+    border-radius:10px;padding:9px 12px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+  .icon-btn{width:40px;height:40px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);
+    cursor:pointer;display:grid;place-items:center;transition:background .2s ease}
+  .icon-btn svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  html[data-theme="dark"] .moon{display:none}
+  html:not([data-theme="dark"]) .sun{display:none}
+  @media(max-width:940px){.nav-links{display:none}}
+  @media(max-width:520px){.nav-cta{display:none}}
+
+  /* HERO */
+  .hero{position:relative;overflow:hidden;color:#fff;padding:92px 0 110px;
+    background:radial-gradient(1200px 600px at 70% -10%,#1b4bb0 0%,transparent 60%),
+               linear-gradient(165deg,#04266b 0%,#063a99 48%,#0b58cf 100%)}
+  /* Aydınlık modda hero da uygulamanın açık zeminli dalga arka planı gibi olur */
+  html:not([data-theme="dark"]) .hero{color:var(--ink);
+    background:radial-gradient(1100px 560px at 72% -10%,#cfe0ff 0%,transparent 60%),
+               linear-gradient(165deg,#eef4ff 0%,#e0eaff 55%,#cfe0fb 100%)}
+  html:not([data-theme="dark"]) .hero .pill{background:rgba(21,101,192,.10);border-color:rgba(21,101,192,.22);color:var(--primary)}
+  html:not([data-theme="dark"]) .hero .grad-text{background:linear-gradient(120deg,var(--deep),var(--mid));-webkit-background-clip:text;background-clip:text;color:transparent}
+  html:not([data-theme="dark"]) .hero p.lead{opacity:1;color:var(--muted)}
+  html:not([data-theme="dark"]) .hero-note{opacity:1;color:var(--muted)}
+  html:not([data-theme="dark"]) .hero .btn-ghost{border-color:rgba(21,101,192,.4);color:var(--primary)}
+  html:not([data-theme="dark"]) .hero .btn-primary{background:var(--grad);color:#fff;box-shadow:0 12px 30px rgba(21,101,192,.35)}
+  #waves{position:absolute;inset:0;width:100%;height:100%;z-index:0;display:block}
+  .hero .wrap{position:relative;z-index:2}
+  .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+  .pill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);
+    padding:7px 15px;border-radius:999px;font-size:13px;font-weight:600;margin-bottom:22px;backdrop-filter:blur(4px)}
+  .pill .dot{width:7px;height:7px;border-radius:50%;background:var(--glow);box-shadow:0 0 10px var(--glow)}
+  .hero h1{font-size:clamp(32px,5.4vw,56px);line-height:1.06;letter-spacing:-1.4px;font-weight:800;margin-bottom:20px}
+  .hero p.lead{font-size:clamp(16px,2.3vw,20px);opacity:.92;max-width:520px;margin-bottom:32px}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+  .hero-note{margin-top:18px;font-size:13px;opacity:.72;display:flex;gap:16px;flex-wrap:wrap}
+  .hero-visual{display:flex;justify-content:center;perspective:1400px}
+
+  .phone{width:270px;aspect-ratio:9/19.2;border-radius:42px;padding:11px;background:#0a1330;
+    box-shadow:0 50px 90px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.06);
+    transform:rotateY(-14deg) rotateX(4deg);transition:transform .5s ease}
+  .hero-visual:hover .phone{transform:rotateY(-6deg) rotateX(2deg)}
+  html[dir="rtl"] .phone{transform:rotateY(14deg) rotateX(4deg)}
+  .screen{width:100%;height:100%;border-radius:32px;overflow:hidden;background:#eef3fc;display:flex;flex-direction:column;direction:ltr}
+  .s-head{background:var(--grad);color:#fff;padding:16px 15px 18px;display:flex;align-items:center;gap:9px}
+  .s-head img{width:26px;height:26px;border-radius:7px}
+  .s-head b{font-size:14px;font-weight:700}
+  .s-head .bell{margin-left:auto;opacity:.9}
+  .s-body{padding:13px;display:flex;flex-direction:column;gap:10px;flex:1}
+  .s-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .s-stat{background:#fff;border-radius:12px;padding:10px;box-shadow:0 3px 10px rgba(8,32,80,.06)}
+  .s-stat .k{font-size:9px;color:#8894ab;font-weight:600}
+  .s-stat .v{font-size:17px;font-weight:800;color:var(--deep)}
+  .s-stat .v.green{color:#1b8a4b}
+  .s-card{background:#fff;border-radius:12px;padding:11px;box-shadow:0 3px 10px rgba(8,32,80,.06)}
+  .s-row{display:flex;align-items:center;gap:8px;font-size:11px}
+  .s-row+.s-row{margin-top:9px}
+  .s-av{width:24px;height:24px;border-radius:50%;background:linear-gradient(140deg,var(--sky),var(--primary));flex:none}
+  .s-row .nm{font-weight:700;color:#25324a}
+  .s-row .sm{color:#8894ab;font-size:9px}
+  .s-tag{margin-left:auto;font-size:9px;font-weight:700;padding:3px 8px;border-radius:999px}
+  .s-tag.ok{background:#e3f7ec;color:#1b8a4b}
+  .s-tag.no{background:#fdecec;color:#c62828}
+  .s-chat{display:flex;flex-direction:column;gap:8px}
+  .s-msg{max-width:82%;padding:8px 11px;border-radius:12px;font-size:11px;background:#fff;box-shadow:0 3px 10px rgba(8,32,80,.06);color:#25324a}
+  .s-msg .who{font-size:9px;font-weight:700;color:var(--primary);margin-bottom:2px}
+  .s-msg.me{margin-inline-start:auto;background:var(--primary);color:#fff}
+  .s-msg.me .who{color:rgba(255,255,255,.85)}
+  .shots{display:flex;gap:28px;justify-content:center;flex-wrap:wrap}
+  .shot{display:flex;flex-direction:column;align-items:center;gap:16px}
+  .shot .phone{transform:none;width:238px}
+  .shot .cap{font-weight:600;color:var(--muted);font-size:15px}
+  @media(max-width:860px){.hero-grid{grid-template-columns:1fr}.hero-visual{order:-1;margin-bottom:8px}.phone{width:224px;transform:none}}
+
+  section.block{padding:88px 0;position:relative}
+  .eyebrow{color:var(--primary);font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px}
+  .h2{font-size:clamp(26px,4vw,38px);font-weight:800;letter-spacing:-.8px;margin-bottom:16px;line-height:1.14}
+  .sub{color:var(--muted);font-size:17px;max-width:640px;margin-bottom:52px}
+  .center{text-align:center}.center .sub{margin-left:auto;margin-right:auto}
+
+  .trust{background:var(--panel);border-bottom:1px solid var(--line)}
+  .trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center}
+  .trust .num{font-size:clamp(26px,4vw,36px);font-weight:800;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .trust .lbl{color:var(--muted);font-size:14px;margin-top:4px}
+  @media(max-width:640px){.trust-grid{grid-template-columns:repeat(2,1fr);gap:30px}}
+
+  .bento{display:grid;grid-template-columns:repeat(6,1fr);gap:18px}
+  .b{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:26px;
+     box-shadow:0 6px 22px rgba(8,32,80,.05);transition:transform .18s ease,box-shadow .18s ease;overflow:hidden}
+  .b:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+  .b.span3{grid-column:span 3}.b.span2{grid-column:span 2}
+  .b.feat{background:var(--grad);color:#fff;border:none}
+  .b.feat p{color:rgba(255,255,255,.85)}
+  .ic{width:50px;height:50px;border-radius:14px;display:grid;place-items:center;margin-bottom:16px;background:linear-gradient(150deg,var(--sky),var(--primary));color:#fff}
+  .b.feat .ic{background:rgba(255,255,255,.16)}
+  .ic svg{width:25px;height:25px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .b h3{font-size:19px;font-weight:700;margin-bottom:8px}
+  .b p{color:var(--muted);font-size:15px}
+  .b .mini{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+  .b .chip{font-size:12px;font-weight:600;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.18);color:#fff}
+  @media(max-width:900px){.bento{grid-template-columns:repeat(2,1fr)}.b.span3,.b.span2{grid-column:span 1}}
+  @media(max-width:560px){.bento{grid-template-columns:1fr}}
+
+  .steps{background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .step-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+  @media(max-width:820px){.step-grid{grid-template-columns:1fr}}
+  .step .n{width:44px;height:44px;border-radius:13px;background:var(--grad);color:#fff;display:grid;place-items:center;font-weight:800;font-size:18px;margin-bottom:16px;box-shadow:0 10px 24px rgba(21,101,192,.3)}
+  .step h4{font-size:19px;font-weight:700;margin-bottom:7px}
+  .step p{color:var(--muted);font-size:15px}
+
+  .role-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  @media(max-width:800px){.role-grid{grid-template-columns:repeat(2,1fr)}}
+  .role{padding:26px;border-radius:18px;background:var(--card);border:1px solid var(--line);box-shadow:0 6px 22px rgba(8,32,80,.05);transition:transform .18s ease}
+  .role:hover{transform:translateY(-4px)}
+  .role .emoji{font-size:32px;margin-bottom:12px}
+  .role h4{font-size:17px;font-weight:700;margin-bottom:6px}
+  .role p{font-size:14px;color:var(--muted)}
+
+  .langs{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
+  .lang{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 20px;font-weight:600;box-shadow:0 4px 14px rgba(8,32,80,.05)}
+  .lang .fl{font-size:22px}
+
+  .faq{max-width:780px;margin:0 auto}
+  details{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:4px 22px;margin-bottom:14px;box-shadow:0 4px 14px rgba(8,32,80,.04)}
+  details[open]{box-shadow:var(--shadow)}
+  summary{list-style:none;cursor:pointer;font-weight:700;font-size:17px;padding:18px 0;display:flex;justify-content:space-between;align-items:center;gap:12px}
+  summary::-webkit-details-marker{display:none}
+  summary .plus{width:26px;height:26px;flex:none;border-radius:8px;background:var(--bg);display:grid;place-items:center;color:var(--primary);font-size:20px;transition:transform .2s ease}
+  details[open] summary .plus{transform:rotate(45deg)}
+  details p{color:var(--muted);font-size:15px;padding:0 0 20px}
+
+  .final{position:relative;overflow:hidden;border-radius:30px;color:#fff;text-align:center;padding:70px 30px;
+    background:radial-gradient(800px 400px at 50% -30%,#2b64c8,transparent 60%),linear-gradient(160deg,var(--deep),var(--mid))}
+  html:not([data-theme="dark"]) .final{color:var(--ink);
+    background:radial-gradient(800px 400px at 50% -30%,#cfe0ff,transparent 60%),linear-gradient(160deg,#eef4ff,#d7e6ff)}
+  html:not([data-theme="dark"]) .final p{opacity:1;color:var(--muted)}
+  html:not([data-theme="dark"]) .final .btn-primary{background:var(--grad);color:#fff;box-shadow:0 12px 30px rgba(21,101,192,.35)}
+  #waves2{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+  .final .inner{position:relative;z-index:2}
+  .final h2{font-size:clamp(26px,4vw,40px);font-weight:800;letter-spacing:-.8px;margin-bottom:14px}
+  .final p{opacity:.9;font-size:18px;max-width:520px;margin:0 auto 26px}
+
+  footer{background:#0a1226;color:#aeb8cc;padding:52px 0 32px;font-size:14px}
+  .foot-top{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:30px;margin-bottom:32px}
+  @media(max-width:700px){.foot-top{grid-template-columns:1fr}}
+  .foot-top .brand{color:#fff;font-size:18px;margin-bottom:12px}
+  .foot-col h5{color:#fff;font-size:14px;font-weight:700;margin-bottom:14px}
+  .foot-col a{display:block;padding:5px 0;color:#aeb8cc}
+  .foot-col a:hover{color:#fff}
+  .foot-bottom{border-top:1px solid #1b2540;padding-top:22px;color:#6b7793;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <a class="brand" href="#"><img src="logo.png" alt="Spor Okulu logo"> Spor Okulu</a>
+      <div class="nav-links">
+        <a href="#ozellikler" data-i18n="nav_features">Özellikler</a>
+        <a href="#ekranlar" data-i18n="nav_shots">Ekranlar</a>
+        <a href="#nasil" data-i18n="nav_how">Nasıl çalışır</a>
+        <a href="#kimler" data-i18n="nav_who">Kimler için</a>
+        <a href="#sss" data-i18n="nav_faq">SSS</a>
+      </div>
+      <div class="nav-tools">
+        <select id="lang" aria-label="Dil / Language">
+          <option value="tr">🇹🇷 TR</option>
+          <option value="en">🇬🇧 EN</option>
+          <option value="es">🇪🇸 ES</option>
+          <option value="ru">🇷🇺 RU</option>
+          <option value="fr">🇫🇷 FR</option>
+          <option value="ar">🇸🇦 AR</option>
+        </select>
+        <button class="icon-btn" id="theme" aria-label="Tema">
+          <svg class="moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+          <svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.5"/><path d="M12 1v3M12 20v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1 12h3M20 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+        </button>
+        <a class="btn btn-dark nav-cta" href="#indir" data-i18n="nav_cta">Uygulamayı edinin</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <canvas id="waves"></canvas>
+  <div class="wrap hero-grid">
+    <div>
+      <span class="pill"><span class="dot"></span> <span data-i18n="hero_pill">Türkçe · 6 dil · Android</span></span>
+      <h1><span data-i18n="hero_h1a">Spor okulunuzun her işi</span><br><span class="grad-text" data-i18n="hero_h1b">tek uygulamada</span></h1>
+      <p class="lead" data-i18n="hero_lead">Öğrenci kaydından yoklamaya, aidat takibinden ders programına, duyurulardan kulüp sohbetine — yönetici, antrenör, veli ve öğrenci hepsi aynı yerde.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary btn-lg" href="#indir">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M3 3.5v17c0 .6.7 1 1.2.6l12.6-8.5c.5-.3.5-1 0-1.3L4.2 2.9C3.7 2.5 3 2.9 3 3.5z"/></svg>
+          <span data-i18n="hero_cta1">Uygulamayı indir</span>
+        </a>
+        <a class="btn btn-ghost btn-lg" href="#ozellikler" data-i18n="hero_cta2">Özellikleri gör</a>
+      </div>
+      <div class="hero-note">
+        <span data-i18n="hero_n1">✓ Kurulum kolay</span><span data-i18n="hero_n2">✓ Reklamsız</span><span data-i18n="hero_n3">✓ Verileriniz güvende</span>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="phone">
+        <div class="screen">
+          <div class="s-head">
+            <img src="logo.png" alt=""><b>Spor Okulu</b>
+            <svg class="bell" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+          </div>
+          <div class="s-body">
+            <div class="s-stats">
+              <div class="s-stat"><div class="k" data-i18n="ph_students">Öğrenci</div><div class="v">128</div></div>
+              <div class="s-stat"><div class="k" data-i18n="ph_income">Bu ay tahsilat</div><div class="v green">₺24.500</div></div>
+            </div>
+            <div class="s-card">
+              <div class="s-row"><div class="s-av"></div><div><div class="nm">Ayşe Yılmaz</div><div class="sm">U11 · Basketbol</div></div><span class="s-tag ok" data-i18n="ph_present">Geldi</span></div>
+              <div class="s-row"><div class="s-av"></div><div><div class="nm">Mert Demir</div><div class="sm">U13 · Yüzme</div></div><span class="s-tag no" data-i18n="ph_absent">Yok</span></div>
+              <div class="s-row"><div class="s-av"></div><div><div class="nm">Elif Kaya</div><div class="sm">U9 · Jimnastik</div></div><span class="s-tag ok" data-i18n="ph_present">Geldi</span></div>
+            </div>
+            <div class="s-card">
+              <div class="s-row"><b style="color:var(--deep)" data-i18n="ph_announce">📣 Duyuru</b></div>
+              <div class="sm" style="margin-top:6px;color:#6b7793" data-i18n="ph_announce_txt">Cumartesi antrenmanı 10:00'da başlayacak.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="trust block" style="padding:44px 0">
+  <div class="wrap trust-grid">
+    <div class="reveal"><div class="num" data-i18n="tr1_n">Tek</div><div class="lbl" data-i18n="tr1_l">uygulamada tüm işler</div></div>
+    <div class="reveal"><div class="num">4</div><div class="lbl" data-i18n="tr2_l">rol · her role özel ekran</div></div>
+    <div class="reveal"><div class="num">6</div><div class="lbl" data-i18n="tr3_l">dil · RTL desteği</div></div>
+    <div class="reveal"><div class="num">0₺</div><div class="lbl" data-i18n="tr4_l">reklam yok, gizli ücret yok</div></div>
+  </div>
+</section>
+
+<section class="block" id="ozellikler">
+  <div class="wrap">
+    <div class="eyebrow reveal" data-i18n="feat_eb">Özellikler</div>
+    <h2 class="h2 reveal" data-i18n="feat_h2">Bir spor okulunun ihtiyacı olan her şey</h2>
+    <p class="sub reveal" data-i18n="feat_sub">Ayrı defterler, dağınık WhatsApp grupları ve Excel dosyaları yerine tek, düzenli bir uygulama.</p>
+    <div class="bento">
+      <div class="b span3 feat reveal">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <h3 data-i18n="f1t">Öğrenci, antrenör &amp; grup yönetimi</h3>
+        <p data-i18n="f1d">Kayıtları, grupları ve detayları tek yerden yönetin. Kim hangi grupta, kimin velisi kim — hepsi düzenli.</p>
+        <div class="mini"><span class="chip" data-i18n="c1">Öğrenci</span><span class="chip" data-i18n="c2">Antrenör</span><span class="chip" data-i18n="c3">Grup</span><span class="chip" data-i18n="c4">Veli bağlama</span></div>
+      </div>
+      <div class="b span3 reveal">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+        <h3 data-i18n="f2t">Tek dokunuşla yoklama</h3>
+        <p data-i18n="f2d">Antrenmanda gelenleri işaretleyin; gelmeyen ve mazeretli öğrenciler anında kayıt altında, veliye bildirim gider.</p>
+      </div>
+      <div class="b span2 reveal">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 1v22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <h3 data-i18n="f3t">Aidat &amp; finans</h3>
+        <p data-i18n="f3d">Ödenen/ödenmeyen aidatlar, kulüp kasası ve finansal özet tek bakışta.</p>
+      </div>
+      <div class="b span2 reveal">
+        <div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
+        <h3 data-i18n="f4t">Ders programı</h3>
+        <p data-i18n="f4d">Haftalık, çok oturumlu esnek program. Herkes görür; yönetici ve antrenör düzenler.</p>
+      </div>
+      <div class="b span2 reveal">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></div>
+        <h3 data-i18n="f5t">Duyuru &amp; anlık bildirim</h3>
+        <p data-i18n="f5d">Herkese ya da yalnız velilere/öğrencilere push bildirimiyle ulaşın.</p>
+      </div>
+      <div class="b span2 reveal">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <h3 data-i18n="f6t">Kulüp sohbeti</h3>
+        <p data-i18n="f6d">Kulübe özel ortak sohbet, okunmamış mesaj rozetiyle.</p>
+      </div>
+      <div class="b span2 reveal">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8M8 9h2"/></svg></div>
+        <h3 data-i18n="f7t">Raporlar &amp; CSV</h3>
+        <p data-i18n="f7d">Öğrenci ve aidat listelerini CSV olarak dışa aktarın, Excel'de açın.</p>
+      </div>
+      <div class="b span2 reveal">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6 4.5 2.3 7.1L12 16.6 5.7 21l2.3-7.1-6-4.5h7.6z"/></svg></div>
+        <h3 data-i18n="f8t">Günlük seri &amp; ödül</h3>
+        <p data-i18n="f8d">Her gün giriş yaparak seriyi büyütün; rozet ve renklerle görünün.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="ekranlar">
+  <div class="wrap center">
+    <div class="eyebrow reveal" data-i18n="ss_eb">Ekran görüntüleri</div>
+    <h2 class="h2 reveal" data-i18n="ss_h2">Uygulamayı yakından görün</h2>
+    <p class="sub reveal" data-i18n="ss_sub">Gerçek ekranlardan örnekler — yoklama, aidat ve kulüp sohbeti.</p>
+  </div>
+  <div class="wrap shots">
+    <!-- Yoklama -->
+    <div class="shot reveal">
+      <div class="phone"><div class="screen">
+        <div class="s-head"><img src="logo.png" alt=""><b data-i18n="hd_att">Yoklama</b></div>
+        <div class="s-body">
+          <div class="s-card">
+            <div class="s-row"><div class="s-av"></div><div><div class="nm">Ayşe Yılmaz</div><div class="sm">U11 · Basketbol</div></div><span class="s-tag ok" data-i18n="ph_present">Geldi</span></div>
+            <div class="s-row"><div class="s-av"></div><div><div class="nm">Mert Demir</div><div class="sm">U13 · Yüzme</div></div><span class="s-tag no" data-i18n="ph_absent">Yok</span></div>
+            <div class="s-row"><div class="s-av"></div><div><div class="nm">Elif Kaya</div><div class="sm">U9 · Jimnastik</div></div><span class="s-tag ok" data-i18n="ph_present">Geldi</span></div>
+            <div class="s-row"><div class="s-av"></div><div><div class="nm">Can Aydın</div><div class="sm">U11 · Basketbol</div></div><span class="s-tag ok" data-i18n="ph_present">Geldi</span></div>
+          </div>
+        </div>
+      </div></div>
+      <div class="cap" data-i18n="cap_att">Yoklama al</div>
+    </div>
+    <!-- Aidat -->
+    <div class="shot reveal">
+      <div class="phone"><div class="screen">
+        <div class="s-head"><img src="logo.png" alt=""><b data-i18n="hd_dues">Aidat</b></div>
+        <div class="s-body">
+          <div class="s-stats">
+            <div class="s-stat"><div class="k" data-i18n="ss_collected">Tahsil edildi</div><div class="v green">₺18.900</div></div>
+            <div class="s-stat"><div class="k" data-i18n="ss_pending_lbl">Bekleyen</div><div class="v">₺4.200</div></div>
+          </div>
+          <div class="s-card">
+            <div class="s-row"><div class="s-av"></div><div><div class="nm">Ayşe Yılmaz</div><div class="sm">₺750 · <span data-i18n="ss_month">Bu ay</span></div></div><span class="s-tag ok" data-i18n="ss_paid">Ödendi</span></div>
+            <div class="s-row"><div class="s-av"></div><div><div class="nm">Mert Demir</div><div class="sm">₺750 · <span data-i18n="ss_month">Bu ay</span></div></div><span class="s-tag no" data-i18n="ss_pending">Bekliyor</span></div>
+            <div class="s-row"><div class="s-av"></div><div><div class="nm">Elif Kaya</div><div class="sm">₺600 · <span data-i18n="ss_month">Bu ay</span></div></div><span class="s-tag ok" data-i18n="ss_paid">Ödendi</span></div>
+          </div>
+        </div>
+      </div></div>
+      <div class="cap" data-i18n="cap_dues">Aidat takibi</div>
+    </div>
+    <!-- Sohbet -->
+    <div class="shot reveal">
+      <div class="phone"><div class="screen">
+        <div class="s-head"><img src="logo.png" alt=""><b data-i18n="hd_chat">Kulüp Sohbeti</b></div>
+        <div class="s-body">
+          <div class="s-chat">
+            <div class="s-msg"><div class="who" data-i18n="m_coach">Antrenör Ali</div><span data-i18n="m1">Bugünkü antrenman çok iyiydi 👏</span></div>
+            <div class="s-msg me"><div class="who" data-i18n="m_you">Sen</div><span data-i18n="m2">Eline sağlık hocam 🙏</span></div>
+            <div class="s-msg"><div class="who" data-i18n="m_coach">Antrenör Ali</div><span>👍</span></div>
+          </div>
+        </div>
+      </div></div>
+      <div class="cap" data-i18n="cap_chat">Kulüp sohbeti</div>
+    </div>
+  </div>
+</section>
+
+<section class="block steps" id="nasil">
+  <div class="wrap">
+    <div class="eyebrow reveal" data-i18n="how_eb">Nasıl çalışır</div>
+    <h2 class="h2 reveal" data-i18n="how_h2">Üç adımda okulunuz dijitalde</h2>
+    <p class="sub reveal" data-i18n="how_sub">Kurulum dakikalar sürer. Teknik bilgi gerekmez.</p>
+    <div class="step-grid">
+      <div class="step reveal"><div class="n">1</div><h4 data-i18n="s1t">İndir &amp; hesap oluştur</h4><p data-i18n="s1d">Uygulamayı indirin, okulunuzu tanımlayın ve yönetici hesabınızı oluşturun.</p></div>
+      <div class="step reveal"><div class="n">2</div><h4 data-i18n="s2t">Ekibini &amp; öğrencilerini ekle</h4><p data-i18n="s2d">Antrenörleri davet edin, öğrenci ve grupları girin. Veliler başvurup onayınızla katılır.</p></div>
+      <div class="step reveal"><div class="n">3</div><h4 data-i18n="s3t">Günlük işini yönet</h4><p data-i18n="s3d">Yoklama alın, aidat takip edin, duyuru yayınlayın — hepsi cebinizden, anında.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="kimler">
+  <div class="wrap">
+    <div class="eyebrow reveal" data-i18n="roles_eb">Kimler için</div>
+    <h2 class="h2 reveal" data-i18n="roles_h2">Kulübün herkesi için tek uygulama</h2>
+    <p class="sub reveal" data-i18n="roles_sub">Her role kendi yetkisi ve ekranı: kimse fazlasını görmez, herkes işini kolayca yapar.</p>
+    <div class="role-grid">
+      <div class="role reveal"><div class="emoji">🧑‍💼</div><h4 data-i18n="ra_t">Yönetici</h4><p data-i18n="ra_d">Öğrenci, aidat, program ve duyuruların tamamını yönetir; başvuruları onaylar.</p></div>
+      <div class="role reveal"><div class="emoji">🏃</div><h4 data-i18n="rc_t">Antrenör</h4><p data-i18n="rc_d">Yoklama alır, programı düzenler, gruplarını ve öğrencilerini takip eder.</p></div>
+      <div class="role reveal"><div class="emoji">👨‍👩‍👧</div><h4 data-i18n="rp_t">Veli</h4><p data-i18n="rp_d">Çocuğunun yoklamasını, aidatını, programını ve duyuruları görür.</p></div>
+      <div class="role reveal"><div class="emoji">🧒</div><h4 data-i18n="rs_t">Öğrenci</h4><p data-i18n="rs_d">Kendi programını ve duyuruları görür, kulüp sohbetine katılır.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="block steps center">
+  <div class="wrap">
+    <div class="eyebrow reveal" data-i18n="lang_eb">Çok dilli</div>
+    <h2 class="h2 reveal" data-i18n="lang_h2">Herkesin dilinde</h2>
+    <p class="sub reveal" data-i18n="lang_sub">Altı dil ve sağdan-sola (RTL) tam destek — kulübünüzdeki herkes ana dilinde kullanır.</p>
+    <div class="langs">
+      <div class="lang reveal"><span class="fl">🇹🇷</span> Türkçe</div>
+      <div class="lang reveal"><span class="fl">🇬🇧</span> English</div>
+      <div class="lang reveal"><span class="fl">🇪🇸</span> Español</div>
+      <div class="lang reveal"><span class="fl">🇷🇺</span> Русский</div>
+      <div class="lang reveal"><span class="fl">🇫🇷</span> Français</div>
+      <div class="lang reveal"><span class="fl">🇸🇦</span> العربية</div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="sss">
+  <div class="wrap">
+    <div class="eyebrow reveal center" data-i18n="faq_eb">SSS</div>
+    <h2 class="h2 reveal center" data-i18n="faq_h2">Sık sorulan sorular</h2>
+    <p class="sub reveal center" data-i18n="faq_sub">Aklınıza takılanlar.</p>
+    <div class="faq">
+      <details class="reveal"><summary><span data-i18n="q1">Uygulama ücretli mi?</span> <span class="plus">+</span></summary><p data-i18n="a1">Reklam ya da gizli ücret yok. Kulübünüzü ekleyip temel özellikleri kullanmaya hemen başlayabilirsiniz.</p></details>
+      <details class="reveal"><summary><span data-i18n="q2">Veriler nerede saklanıyor, güvenli mi?</span> <span class="plus">+</span></summary><p data-i18n="a2">Veriler güvenli bulut altyapısında (Google Firebase) tutulur. Her kullanıcı yalnızca yetkisi olan bilgileri görür; roller ve erişim kuralları sunucu tarafında zorunlu kılınır.</p></details>
+      <details class="reveal"><summary><span data-i18n="q3">Veliler ve öğrenciler nasıl katılır?</span> <span class="plus">+</span></summary><p data-i18n="a3">Kayıt olup okulunuza başvururlar; yönetici başvuruyu onayladığında hesapları etkinleşir. Böylece kulübe yalnızca sizin onayladığınız kişiler girer.</p></details>
+      <details class="reveal"><summary><span data-i18n="q4">Hangi cihazlarda çalışır?</span> <span class="plus">+</span></summary><p data-i18n="a4">Şu an Android telefon ve tabletlerde çalışır. Yayın adresi hazır olduğunda Google Play üzerinden indirilebilir olacak.</p></details>
+      <details class="reveal"><summary><span data-i18n="q5">Bildirimler gerçek zamanlı mı?</span> <span class="plus">+</span></summary><p data-i18n="a5">Evet. Duyuru yayınladığınızda hedef kitleye anlık push bildirimi gider; yoklama ve mazeret durumları da ilgili velilere iletilir.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="indir">
+  <div class="wrap">
+    <div class="final reveal">
+      <canvas id="waves2"></canvas>
+      <div class="inner">
+        <h2 data-i18n="fin_h2">Kulübünüzü bugün taşıyın</h2>
+        <p data-i18n="fin_p">Uygulamayı indirin, hesabınızı oluşturun ve okulunuzu dijitale taşıyın.</p>
+        <a class="btn btn-primary btn-lg" href="#" id="downloadBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M3 3.5v17c0 .6.7 1 1.2.6l12.6-8.5c.5-.3.5-1 0-1.3L4.2 2.9C3.7 2.5 3 2.9 3 3.5z"/></svg>
+          <span data-i18n="fin_btn">Google Play'de yakında</span>
+        </a>
+        <p style="margin-top:18px;font-size:14px;opacity:.75" data-i18n="fin_note">Şimdilik Android APK olarak dağıtılabilir. Yayın adresi hazır olduğunda buton güncellenecek.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <div class="brand"><img src="logo.png" alt="" style="width:30px;height:30px;border-radius:8px;vertical-align:middle;margin-right:8px">Spor Okulu</div>
+        <p style="color:#8894ab" data-i18n="foot_tag">Spor okulunuzun tüm işleri — öğrenci, yoklama, aidat, program, duyuru ve sohbet — tek uygulamada.</p>
+      </div>
+      <div class="foot-col">
+        <h5 data-i18n="foot_prod">Ürün</h5>
+        <a href="#ozellikler" data-i18n="nav_features">Özellikler</a>
+        <a href="#nasil" data-i18n="nav_how">Nasıl çalışır</a>
+        <a href="#kimler" data-i18n="nav_who">Kimler için</a>
+        <a href="#indir" data-i18n="hero_cta1">Uygulamayı indir</a>
+      </div>
+      <div class="foot-col">
+        <h5 data-i18n="foot_legal">Yasal</h5>
+        <a href="#" data-i18n="foot_privacy">Gizlilik Politikası</a>
+        <a href="#" data-i18n="foot_kvkk">KVKK Aydınlatma</a>
+        <a href="#" data-i18n="foot_terms">Kullanım Koşulları</a>
+        <a href="#" data-i18n="foot_contact">İletişim</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="yil"></span> Spor Okulu · <span data-i18n="foot_rights">Tüm hakları saklıdır.</span></span>
+      <span data-i18n="foot_made">Türkiye'de ❤ ile yapıldı</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* ---------- i18n ---------- */
+  const I18N = {
+    tr:{}, // Türkçe = HTML'deki varsayılan metinler (boş bırakıldı, değiştirilmez)
+    en:{nav_features:"Features",nav_how:"How it works",nav_who:"Who it's for",nav_faq:"FAQ",nav_cta:"Get the app",
+      hero_pill:"6 languages · Android",hero_h1a:"Run your whole sports school",hero_h1b:"in one app",
+      hero_lead:"From enrollment to attendance, dues to schedules, announcements to club chat — admins, coaches, parents and students, all in one place.",
+      hero_cta1:"Download the app",hero_cta2:"See features",hero_n1:"✓ Easy setup",hero_n2:"✓ No ads",hero_n3:"✓ Your data is safe",
+      ph_students:"Students",ph_income:"Collected this month",ph_present:"Present",ph_absent:"Absent",ph_announce:"📣 Announcement",ph_announce_txt:"Saturday training starts at 10:00.",
+      tr1_n:"One",tr1_l:"app for everything",tr2_l:"roles · a screen for each",tr3_l:"languages · RTL support",tr4_l:"no ads, no hidden fees",
+      feat_eb:"Features",feat_h2:"Everything a sports school needs",feat_sub:"One tidy app instead of scattered notebooks, WhatsApp groups and Excel files.",
+      f1t:"Students, coaches & groups",f1d:"Manage records, groups and details in one place. Who's in which group, whose parent is who — all organized.",
+      c1:"Student",c2:"Coach",c3:"Group",c4:"Link parent",
+      f2t:"One-tap attendance",f2d:"Mark who showed up; absent and excused students are logged instantly and parents get notified.",
+      f3t:"Dues & finance",f3d:"Paid/unpaid dues, club cash and a financial summary at a glance.",
+      f4t:"Class schedule",f4d:"Flexible, multi-session weekly plan. Everyone sees it; admins and coaches edit it.",
+      f5t:"Announcements & push",f5d:"Reach everyone — or only parents/students — with instant push notifications.",
+      f6t:"Club chat",f6d:"A shared club chat room with an unread-message badge.",
+      f7t:"Reports & CSV",f7d:"Export student and dues lists as CSV and open them in Excel.",
+      f8t:"Daily streak & rewards",f8d:"Grow your streak by logging in daily; stand out with badges and colors.",
+      how_eb:"How it works",how_h2:"Your school online in three steps",how_sub:"Setup takes minutes. No technical skills needed.",
+      s1t:"Download & sign up",s1d:"Download the app, define your school and create your admin account.",
+      s2t:"Add your team & students",s2d:"Invite coaches, add students and groups. Parents apply and join once you approve.",
+      s3t:"Run your day",s3d:"Take attendance, track dues, post announcements — all from your pocket, instantly.",
+      roles_eb:"Who it's for",roles_h2:"One app for everyone in the club",roles_sub:"Each role has its own permissions and screen: no one sees more than they should, everyone gets their job done.",
+      ra_t:"Admin",ra_d:"Manages all students, dues, schedules and announcements; approves applications.",
+      rc_t:"Coach",rc_d:"Takes attendance, edits the schedule, follows their groups and students.",
+      rp_t:"Parent",rp_d:"Sees their child's attendance, dues, schedule and announcements.",
+      rs_t:"Student",rs_d:"Sees their own schedule and announcements, joins the club chat.",
+      lang_eb:"Multilingual",lang_h2:"In everyone's language",lang_sub:"Six languages with full right-to-left (RTL) support — everyone in your club uses it in their native language.",
+      faq_eb:"FAQ",faq_h2:"Frequently asked questions",faq_sub:"Things you might wonder.",
+      q1:"Is the app paid?",a1:"No ads or hidden fees. Add your club and start using the core features right away.",
+      q2:"Where is data stored, is it safe?",a2:"Data is kept on secure cloud infrastructure (Google Firebase). Each user sees only what they're allowed to; roles and access rules are enforced server-side.",
+      q3:"How do parents and students join?",a3:"They sign up and apply to your school; their account activates once the admin approves. Only people you approve get in.",
+      q4:"Which devices does it work on?",a4:"It currently runs on Android phones and tablets. It will be available on Google Play once published.",
+      q5:"Are notifications real-time?",a5:"Yes. When you post an announcement, the target audience gets an instant push; attendance and excuse events are sent to the relevant parents.",
+      fin_h2:"Move your club online today",fin_p:"Download the app, create your account and take your school digital.",
+      fin_btn:"Coming soon on Google Play",fin_note:"For now it can be distributed as an Android APK. The button will update once published.",
+      foot_tag:"All of your sports school's work — students, attendance, dues, schedule, announcements and chat — in one app.",
+      foot_prod:"Product",foot_legal:"Legal",foot_privacy:"Privacy Policy",foot_kvkk:"Data Notice",foot_terms:"Terms of Use",foot_contact:"Contact",
+      foot_rights:"All rights reserved.",foot_made:"Made with ❤ in Türkiye"},
+    es:{nav_features:"Funciones",nav_how:"Cómo funciona",nav_who:"Para quién",nav_faq:"Preguntas",nav_cta:"Obtener la app",
+      hero_pill:"6 idiomas · Android",hero_h1a:"Gestiona toda tu escuela deportiva",hero_h1b:"en una sola app",
+      hero_lead:"Desde inscripciones y asistencia hasta cuotas, horarios, anuncios y chat del club — administradores, entrenadores, padres y alumnos, todo en un solo lugar.",
+      hero_cta1:"Descargar la app",hero_cta2:"Ver funciones",hero_n1:"✓ Fácil de instalar",hero_n2:"✓ Sin anuncios",hero_n3:"✓ Tus datos seguros",
+      ph_students:"Alumnos",ph_income:"Cobrado este mes",ph_present:"Presente",ph_absent:"Ausente",ph_announce:"📣 Anuncio",ph_announce_txt:"El entrenamiento del sábado empieza a las 10:00.",
+      tr1_n:"Una",tr1_l:"app para todo",tr2_l:"roles · una pantalla para cada uno",tr3_l:"idiomas · soporte RTL",tr4_l:"sin anuncios ni costes ocultos",
+      feat_eb:"Funciones",feat_h2:"Todo lo que una escuela deportiva necesita",feat_sub:"Una app ordenada en lugar de cuadernos dispersos, grupos de WhatsApp y archivos de Excel.",
+      f1t:"Alumnos, entrenadores y grupos",f1d:"Gestiona registros, grupos y detalles en un solo lugar. Quién está en qué grupo, de quién es padre cada uno — todo ordenado.",
+      c1:"Alumno",c2:"Entrenador",c3:"Grupo",c4:"Vincular padre",
+      f2t:"Asistencia con un toque",f2d:"Marca quién vino; los ausentes y justificados quedan registrados al instante y se avisa a los padres.",
+      f3t:"Cuotas y finanzas",f3d:"Cuotas pagadas/pendientes, caja del club y resumen financiero de un vistazo.",
+      f4t:"Horario de clases",f4d:"Plan semanal flexible y de varias sesiones. Todos lo ven; administradores y entrenadores lo editan.",
+      f5t:"Anuncios y push",f5d:"Llega a todos — o solo a padres/alumnos — con notificaciones push instantáneas.",
+      f6t:"Chat del club",f6d:"Una sala de chat común del club con indicador de mensajes sin leer.",
+      f7t:"Informes y CSV",f7d:"Exporta listas de alumnos y cuotas en CSV y ábrelas en Excel.",
+      f8t:"Racha diaria y premios",f8d:"Aumenta tu racha entrando cada día; destaca con insignias y colores.",
+      how_eb:"Cómo funciona",how_h2:"Tu escuela en línea en tres pasos",how_sub:"La instalación lleva minutos. No se necesitan conocimientos técnicos.",
+      s1t:"Descarga y regístrate",s1d:"Descarga la app, define tu escuela y crea tu cuenta de administrador.",
+      s2t:"Añade tu equipo y alumnos",s2d:"Invita a entrenadores, añade alumnos y grupos. Los padres solicitan y se unen con tu aprobación.",
+      s3t:"Gestiona tu día",s3d:"Toma asistencia, controla cuotas, publica anuncios — todo desde tu bolsillo, al instante.",
+      roles_eb:"Para quién",roles_h2:"Una app para todos en el club",roles_sub:"Cada rol tiene sus permisos y pantalla: nadie ve más de lo debido y todos hacen su trabajo con facilidad.",
+      ra_t:"Administrador",ra_d:"Gestiona todos los alumnos, cuotas, horarios y anuncios; aprueba solicitudes.",
+      rc_t:"Entrenador",rc_d:"Toma asistencia, edita el horario, sigue a sus grupos y alumnos.",
+      rp_t:"Padre/Madre",rp_d:"Ve la asistencia, cuotas, horario y anuncios de su hijo.",
+      rs_t:"Alumno",rs_d:"Ve su propio horario y los anuncios, participa en el chat del club.",
+      lang_eb:"Multilingüe",lang_h2:"En el idioma de todos",lang_sub:"Seis idiomas con soporte completo de derecha a izquierda (RTL) — todos en tu club lo usan en su lengua materna.",
+      faq_eb:"Preguntas",faq_h2:"Preguntas frecuentes",faq_sub:"Lo que quizá te preguntes.",
+      q1:"¿La app es de pago?",a1:"Sin anuncios ni costes ocultos. Añade tu club y empieza a usar las funciones básicas de inmediato.",
+      q2:"¿Dónde se guardan los datos, es seguro?",a2:"Los datos se guardan en una infraestructura en la nube segura (Google Firebase). Cada usuario solo ve lo que le corresponde; los roles y las reglas de acceso se aplican en el servidor.",
+      q3:"¿Cómo se unen padres y alumnos?",a3:"Se registran y solicitan unirse a tu escuela; su cuenta se activa cuando el administrador aprueba. Solo entran las personas que apruebas.",
+      q4:"¿En qué dispositivos funciona?",a4:"Actualmente funciona en teléfonos y tabletas Android. Estará disponible en Google Play una vez publicada.",
+      q5:"¿Las notificaciones son en tiempo real?",a5:"Sí. Al publicar un anuncio, el público objetivo recibe un push instantáneo; las asistencias y justificaciones se envían a los padres correspondientes.",
+      fin_h2:"Lleva tu club en línea hoy",fin_p:"Descarga la app, crea tu cuenta y digitaliza tu escuela.",
+      fin_btn:"Próximamente en Google Play",fin_note:"Por ahora puede distribuirse como APK de Android. El botón se actualizará al publicarse.",
+      foot_tag:"Todo el trabajo de tu escuela deportiva — alumnos, asistencia, cuotas, horario, anuncios y chat — en una app.",
+      foot_prod:"Producto",foot_legal:"Legal",foot_privacy:"Política de privacidad",foot_kvkk:"Aviso de datos",foot_terms:"Términos de uso",foot_contact:"Contacto",
+      foot_rights:"Todos los derechos reservados.",foot_made:"Hecho con ❤ en Türkiye"},
+    ru:{nav_features:"Возможности",nav_how:"Как это работает",nav_who:"Для кого",nav_faq:"Вопросы",nav_cta:"Установить",
+      hero_pill:"6 языков · Android",hero_h1a:"Вся ваша спортшкола",hero_h1b:"в одном приложении",
+      hero_lead:"От записи учеников до посещаемости, взносов, расписаний, объявлений и чата клуба — администраторы, тренеры, родители и ученики в одном месте.",
+      hero_cta1:"Скачать приложение",hero_cta2:"Смотреть возможности",hero_n1:"✓ Простая настройка",hero_n2:"✓ Без рекламы",hero_n3:"✓ Данные под защитой",
+      ph_students:"Ученики",ph_income:"Собрано за месяц",ph_present:"Пришёл",ph_absent:"Нет",ph_announce:"📣 Объявление",ph_announce_txt:"Субботняя тренировка начнётся в 10:00.",
+      tr1_n:"Одно",tr1_l:"приложение для всего",tr2_l:"роли · свой экран для каждой",tr3_l:"языков · поддержка RTL",tr4_l:"без рекламы и скрытых платежей",
+      feat_eb:"Возможности",feat_h2:"Всё, что нужно спортшколе",feat_sub:"Одно аккуратное приложение вместо разрозненных тетрадей, групп WhatsApp и файлов Excel.",
+      f1t:"Ученики, тренеры и группы",f1d:"Управляйте записями, группами и деталями в одном месте. Кто в какой группе, чей родитель кто — всё упорядочено.",
+      c1:"Ученик",c2:"Тренер",c3:"Группа",c4:"Привязать родителя",
+      f2t:"Посещаемость в одно касание",f2d:"Отметьте, кто пришёл; отсутствующие и с уважительной причиной фиксируются мгновенно, родители получают уведомление.",
+      f3t:"Взносы и финансы",f3d:"Оплаченные/неоплаченные взносы, касса клуба и финансовая сводка с одного взгляда.",
+      f4t:"Расписание занятий",f4d:"Гибкий недельный план с несколькими сессиями. Видят все; редактируют администраторы и тренеры.",
+      f5t:"Объявления и push",f5d:"Достучитесь до всех — или только до родителей/учеников — мгновенными push-уведомлениями.",
+      f6t:"Чат клуба",f6d:"Общий чат клуба со счётчиком непрочитанных сообщений.",
+      f7t:"Отчёты и CSV",f7d:"Экспортируйте списки учеников и взносов в CSV и открывайте в Excel.",
+      f8t:"Ежедневная серия и награды",f8d:"Увеличивайте серию, заходя каждый день; выделяйтесь значками и цветами.",
+      how_eb:"Как это работает",how_h2:"Ваша школа онлайн за три шага",how_sub:"Настройка занимает минуты. Технические навыки не нужны.",
+      s1t:"Скачайте и зарегистрируйтесь",s1d:"Скачайте приложение, опишите свою школу и создайте аккаунт администратора.",
+      s2t:"Добавьте команду и учеников",s2d:"Пригласите тренеров, добавьте учеников и группы. Родители подают заявку и присоединяются после вашего одобрения.",
+      s3t:"Ведите свой день",s3d:"Отмечайте посещаемость, следите за взносами, публикуйте объявления — всё из кармана, мгновенно.",
+      roles_eb:"Для кого",roles_h2:"Одно приложение для всех в клубе",roles_sub:"У каждой роли свои права и экран: никто не видит лишнего, каждый спокойно делает своё дело.",
+      ra_t:"Администратор",ra_d:"Управляет всеми учениками, взносами, расписанием и объявлениями; одобряет заявки.",
+      rc_t:"Тренер",rc_d:"Отмечает посещаемость, редактирует расписание, следит за своими группами и учениками.",
+      rp_t:"Родитель",rp_d:"Видит посещаемость, взносы, расписание и объявления своего ребёнка.",
+      rs_t:"Ученик",rs_d:"Видит своё расписание и объявления, участвует в чате клуба.",
+      lang_eb:"Многоязычность",lang_h2:"На языке каждого",lang_sub:"Шесть языков с полной поддержкой письма справа налево (RTL) — все в вашем клубе пользуются на родном языке.",
+      faq_eb:"Вопросы",faq_h2:"Частые вопросы",faq_sub:"То, что может вас интересовать.",
+      q1:"Приложение платное?",a1:"Без рекламы и скрытых платежей. Добавьте клуб и сразу начните пользоваться основными функциями.",
+      q2:"Где хранятся данные, это безопасно?",a2:"Данные хранятся в защищённой облачной инфраструктуре (Google Firebase). Каждый пользователь видит только то, что ему разрешено; роли и правила доступа применяются на стороне сервера.",
+      q3:"Как присоединяются родители и ученики?",a3:"Они регистрируются и подают заявку в вашу школу; аккаунт активируется после одобрения администратором. Входят только те, кого вы одобрили.",
+      q4:"На каких устройствах работает?",a4:"Сейчас работает на телефонах и планшетах Android. После публикации будет доступно в Google Play.",
+      q5:"Уведомления в реальном времени?",a5:"Да. При публикации объявления целевая аудитория получает мгновенный push; события посещаемости и уважительных причин отправляются соответствующим родителям.",
+      fin_h2:"Переведите клуб в онлайн сегодня",fin_p:"Скачайте приложение, создайте аккаунт и переведите школу в цифру.",
+      fin_btn:"Скоро в Google Play",fin_note:"Пока может распространяться как Android APK. Кнопка обновится после публикации.",
+      foot_tag:"Вся работа вашей спортшколы — ученики, посещаемость, взносы, расписание, объявления и чат — в одном приложении.",
+      foot_prod:"Продукт",foot_legal:"Правовое",foot_privacy:"Политика конфиденциальности",foot_kvkk:"Уведомление о данных",foot_terms:"Условия использования",foot_contact:"Контакты",
+      foot_rights:"Все права защищены.",foot_made:"Сделано с ❤ в Türkiye"},
+    fr:{nav_features:"Fonctionnalités",nav_how:"Comment ça marche",nav_who:"Pour qui",nav_faq:"FAQ",nav_cta:"Obtenir l'appli",
+      hero_pill:"6 langues · Android",hero_h1a:"Gérez toute votre école de sport",hero_h1b:"dans une seule appli",
+      hero_lead:"Des inscriptions aux présences, des cotisations aux plannings, des annonces au chat du club — admins, entraîneurs, parents et élèves, tout au même endroit.",
+      hero_cta1:"Télécharger l'appli",hero_cta2:"Voir les fonctions",hero_n1:"✓ Installation facile",hero_n2:"✓ Sans publicité",hero_n3:"✓ Vos données protégées",
+      ph_students:"Élèves",ph_income:"Encaissé ce mois",ph_present:"Présent",ph_absent:"Absent",ph_announce:"📣 Annonce",ph_announce_txt:"L'entraînement de samedi commence à 10:00.",
+      tr1_n:"Une",tr1_l:"appli pour tout",tr2_l:"rôles · un écran pour chacun",tr3_l:"langues · prise en charge RTL",tr4_l:"sans pub ni frais cachés",
+      feat_eb:"Fonctionnalités",feat_h2:"Tout ce dont une école de sport a besoin",feat_sub:"Une appli bien rangée au lieu de carnets épars, de groupes WhatsApp et de fichiers Excel.",
+      f1t:"Élèves, entraîneurs et groupes",f1d:"Gérez les fiches, les groupes et les détails au même endroit. Qui est dans quel groupe, qui est le parent de qui — tout est organisé.",
+      c1:"Élève",c2:"Entraîneur",c3:"Groupe",c4:"Lier un parent",
+      f2t:"Présences en un geste",f2d:"Marquez qui est venu ; les absents et excusés sont enregistrés instantanément et les parents sont prévenus.",
+      f3t:"Cotisations et finances",f3d:"Cotisations payées/impayées, caisse du club et résumé financier en un coup d'œil.",
+      f4t:"Emploi du temps",f4d:"Planning hebdomadaire flexible et multi-séances. Tout le monde le voit ; admins et entraîneurs le modifient.",
+      f5t:"Annonces et push",f5d:"Touchez tout le monde — ou seulement les parents/élèves — avec des notifications push instantanées.",
+      f6t:"Chat du club",f6d:"Un salon de discussion commun avec un badge de messages non lus.",
+      f7t:"Rapports et CSV",f7d:"Exportez les listes d'élèves et de cotisations en CSV et ouvrez-les dans Excel.",
+      f8t:"Série quotidienne et récompenses",f8d:"Augmentez votre série en vous connectant chaque jour ; démarquez-vous avec badges et couleurs.",
+      how_eb:"Comment ça marche",how_h2:"Votre école en ligne en trois étapes",how_sub:"L'installation prend quelques minutes. Aucune compétence technique requise.",
+      s1t:"Téléchargez et inscrivez-vous",s1d:"Téléchargez l'appli, définissez votre école et créez votre compte administrateur.",
+      s2t:"Ajoutez votre équipe et vos élèves",s2d:"Invitez des entraîneurs, ajoutez élèves et groupes. Les parents font une demande et rejoignent après votre approbation.",
+      s3t:"Gérez votre journée",s3d:"Faites l'appel, suivez les cotisations, publiez des annonces — le tout depuis votre poche, instantanément.",
+      roles_eb:"Pour qui",roles_h2:"Une appli pour tout le club",roles_sub:"Chaque rôle a ses droits et son écran : personne ne voit plus que nécessaire, chacun fait son travail facilement.",
+      ra_t:"Administrateur",ra_d:"Gère tous les élèves, cotisations, plannings et annonces ; approuve les demandes.",
+      rc_t:"Entraîneur",rc_d:"Fait l'appel, modifie le planning, suit ses groupes et élèves.",
+      rp_t:"Parent",rp_d:"Voit les présences, cotisations, planning et annonces de son enfant.",
+      rs_t:"Élève",rs_d:"Voit son propre planning et les annonces, participe au chat du club.",
+      lang_eb:"Multilingue",lang_h2:"Dans la langue de chacun",lang_sub:"Six langues avec prise en charge complète de l'écriture de droite à gauche (RTL) — chacun dans votre club l'utilise dans sa langue maternelle.",
+      faq_eb:"FAQ",faq_h2:"Questions fréquentes",faq_sub:"Ce que vous vous demandez peut-être.",
+      q1:"L'appli est-elle payante ?",a1:"Sans publicité ni frais cachés. Ajoutez votre club et commencez à utiliser les fonctions de base tout de suite.",
+      q2:"Où sont stockées les données, est-ce sûr ?",a2:"Les données sont conservées sur une infrastructure cloud sécurisée (Google Firebase). Chaque utilisateur ne voit que ce qui lui est permis ; les rôles et règles d'accès sont appliqués côté serveur.",
+      q3:"Comment parents et élèves rejoignent-ils ?",a3:"Ils s'inscrivent et font une demande à votre école ; leur compte s'active après approbation de l'administrateur. Seules les personnes que vous approuvez entrent.",
+      q4:"Sur quels appareils fonctionne-t-elle ?",a4:"Elle fonctionne actuellement sur téléphones et tablettes Android. Elle sera disponible sur Google Play une fois publiée.",
+      q5:"Les notifications sont-elles en temps réel ?",a5:"Oui. Quand vous publiez une annonce, le public cible reçoit un push instantané ; les présences et excuses sont envoyées aux parents concernés.",
+      fin_h2:"Mettez votre club en ligne dès aujourd'hui",fin_p:"Téléchargez l'appli, créez votre compte et numérisez votre école.",
+      fin_btn:"Bientôt sur Google Play",fin_note:"Pour l'instant, elle peut être distribuée en APK Android. Le bouton sera mis à jour après publication.",
+      foot_tag:"Tout le travail de votre école de sport — élèves, présences, cotisations, planning, annonces et chat — dans une appli.",
+      foot_prod:"Produit",foot_legal:"Légal",foot_privacy:"Politique de confidentialité",foot_kvkk:"Avis sur les données",foot_terms:"Conditions d'utilisation",foot_contact:"Contact",
+      foot_rights:"Tous droits réservés.",foot_made:"Fait avec ❤ en Türkiye"},
+    ar:{nav_features:"الميزات",nav_how:"كيف يعمل",nav_who:"لمن",nav_faq:"الأسئلة",nav_cta:"احصل على التطبيق",
+      hero_pill:"6 لغات · أندرويد",hero_h1a:"أدِر مدرستك الرياضية بالكامل",hero_h1b:"في تطبيق واحد",
+      hero_lead:"من التسجيل إلى الحضور، ومن الاشتراكات إلى الجداول، ومن الإعلانات إلى دردشة النادي — المدراء والمدربون وأولياء الأمور والطلاب في مكان واحد.",
+      hero_cta1:"حمّل التطبيق",hero_cta2:"شاهد الميزات",hero_n1:"✓ إعداد سهل",hero_n2:"✓ بدون إعلانات",hero_n3:"✓ بياناتك آمنة",
+      ph_students:"الطلاب",ph_income:"المحصّل هذا الشهر",ph_present:"حاضر",ph_absent:"غائب",ph_announce:"📣 إعلان",ph_announce_txt:"يبدأ تدريب السبت الساعة 10:00.",
+      tr1_n:"تطبيق",tr1_l:"واحد لكل شيء",tr2_l:"أدوار · شاشة لكل دور",tr3_l:"لغات · دعم الكتابة من اليمين لليسار",tr4_l:"بلا إعلانات أو رسوم خفية",
+      feat_eb:"الميزات",feat_h2:"كل ما تحتاجه مدرسة رياضية",feat_sub:"تطبيق واحد منظّم بدل الدفاتر المتفرقة ومجموعات واتساب وملفات إكسل.",
+      f1t:"الطلاب والمدربون والمجموعات",f1d:"أدِر السجلات والمجموعات والتفاصيل في مكان واحد. من في أي مجموعة، ومن وليّ أمر من — كل شيء منظّم.",
+      c1:"طالب",c2:"مدرب",c3:"مجموعة",c4:"ربط وليّ الأمر",
+      f2t:"حضور بلمسة واحدة",f2d:"علّم من حضر؛ الغائبون وأصحاب الأعذار يُسجّلون فورًا ويصل إشعار لأولياء الأمور.",
+      f3t:"الاشتراكات والمالية",f3d:"الاشتراكات المدفوعة/غير المدفوعة وصندوق النادي وملخّص مالي بنظرة واحدة.",
+      f4t:"جدول الحصص",f4d:"خطة أسبوعية مرنة متعددة الجلسات. يراها الجميع؛ يعدّلها المدراء والمدربون.",
+      f5t:"الإعلانات والإشعارات",f5d:"صِل إلى الجميع — أو إلى أولياء الأمور/الطلاب فقط — بإشعارات فورية.",
+      f6t:"دردشة النادي",f6d:"غرفة دردشة مشتركة للنادي مع مؤشّر للرسائل غير المقروءة.",
+      f7t:"التقارير وCSV",f7d:"صدّر قوائم الطلاب والاشتراكات بصيغة CSV وافتحها في إكسل.",
+      f8t:"سلسلة يومية ومكافآت",f8d:"زِد سلسلتك بالدخول يوميًا؛ تميّز بالأوسمة والألوان.",
+      how_eb:"كيف يعمل",how_h2:"مدرستك على الإنترنت في ثلاث خطوات",how_sub:"الإعداد يستغرق دقائق. لا حاجة لمهارات تقنية.",
+      s1t:"حمّل وأنشئ حسابًا",s1d:"حمّل التطبيق، عرّف مدرستك وأنشئ حساب المدير.",
+      s2t:"أضف فريقك وطلابك",s2d:"ادعُ المدربين، أضف الطلاب والمجموعات. يتقدّم أولياء الأمور وينضمّون بموافقتك.",
+      s3t:"أدِر يومك",s3d:"سجّل الحضور، تابع الاشتراكات، انشر الإعلانات — كل ذلك من جيبك وفورًا.",
+      roles_eb:"لمن",roles_h2:"تطبيق واحد لكل من في النادي",roles_sub:"لكل دور صلاحياته وشاشته: لا أحد يرى أكثر مما ينبغي، والجميع ينجز عمله بسهولة.",
+      ra_t:"المدير",ra_d:"يدير كل الطلاب والاشتراكات والجداول والإعلانات؛ ويوافق على الطلبات.",
+      rc_t:"المدرب",rc_d:"يسجّل الحضور، يعدّل الجدول، ويتابع مجموعاته وطلابه.",
+      rp_t:"وليّ الأمر",rp_d:"يرى حضور ابنه واشتراكاته وجدوله والإعلانات.",
+      rs_t:"الطالب",rs_d:"يرى جدوله والإعلانات، وينضم إلى دردشة النادي.",
+      lang_eb:"متعدّد اللغات",lang_h2:"بلغة الجميع",lang_sub:"ست لغات مع دعم كامل للكتابة من اليمين إلى اليسار (RTL) — يستخدمه الجميع في ناديك بلغتهم الأم.",
+      faq_eb:"الأسئلة",faq_h2:"الأسئلة الشائعة",faq_sub:"ما قد يخطر ببالك.",
+      q1:"هل التطبيق مدفوع؟",a1:"بلا إعلانات أو رسوم خفية. أضف ناديك وابدأ باستخدام الميزات الأساسية فورًا.",
+      q2:"أين تُخزّن البيانات، وهل هي آمنة؟",a2:"تُحفظ البيانات في بنية سحابية آمنة (Google Firebase). يرى كل مستخدم ما يُسمح له به فقط؛ وتُطبَّق الأدوار وقواعد الوصول من جهة الخادم.",
+      q3:"كيف ينضمّ أولياء الأمور والطلاب؟",a3:"يسجّلون ويتقدّمون إلى مدرستك؛ ويُفعَّل حسابهم بعد موافقة المدير. لا يدخل إلا من توافق عليهم.",
+      q4:"على أي أجهزة يعمل؟",a4:"يعمل حاليًا على هواتف وأجهزة أندرويد اللوحية. وسيتوفّر على Google Play بعد النشر.",
+      q5:"هل الإشعارات فورية؟",a5:"نعم. عند نشر إعلان، يصل إشعار فوري للفئة المستهدفة؛ وتُرسَل حالات الحضور والأعذار لأولياء الأمور المعنيين.",
+      fin_h2:"انقل ناديك إلى الإنترنت اليوم",fin_p:"حمّل التطبيق، أنشئ حسابك، ورقمن مدرستك.",
+      fin_btn:"قريبًا على Google Play",fin_note:"يمكن توزيعه حاليًا كملف APK لأندرويد. سيُحدَّث الزر بعد النشر.",
+      foot_tag:"كل أعمال مدرستك الرياضية — الطلاب والحضور والاشتراكات والجدول والإعلانات والدردشة — في تطبيق واحد.",
+      foot_prod:"المنتج",foot_legal:"قانوني",foot_privacy:"سياسة الخصوصية",foot_kvkk:"إشعار البيانات",foot_terms:"شروط الاستخدام",foot_contact:"اتصل بنا",
+      foot_rights:"جميع الحقوق محفوظة.",foot_made:"صُنع بـ ❤ في تركيا"}
+  };
+  // Ekran görüntüleri bölümü çevirileri (tr = HTML'den otomatik)
+  Object.assign(I18N.en,{nav_shots:"Screens",ss_eb:"Screenshots",ss_h2:"A closer look at the app",ss_sub:"Examples from real screens — attendance, dues and club chat.",
+    hd_att:"Attendance",hd_dues:"Dues",hd_chat:"Club Chat",cap_att:"Take attendance",cap_dues:"Track dues",cap_chat:"Club chat",
+    ss_collected:"Collected",ss_pending_lbl:"Pending",ss_paid:"Paid",ss_pending:"Due",ss_month:"This month",
+    m_coach:"Coach Ali",m_you:"You",m1:"Today's training was great 👏",m2:"Thanks coach 🙏"});
+  Object.assign(I18N.es,{nav_shots:"Capturas",ss_eb:"Capturas",ss_h2:"Una mirada más de cerca",ss_sub:"Ejemplos de pantallas reales — asistencia, cuotas y chat del club.",
+    hd_att:"Asistencia",hd_dues:"Cuotas",hd_chat:"Chat del club",cap_att:"Tomar asistencia",cap_dues:"Control de cuotas",cap_chat:"Chat del club",
+    ss_collected:"Cobrado",ss_pending_lbl:"Pendiente",ss_paid:"Pagado",ss_pending:"Pendiente",ss_month:"Este mes",
+    m_coach:"Entrenador Ali",m_you:"Tú",m1:"El entrenamiento de hoy fue genial 👏",m2:"Gracias entrenador 🙏"});
+  Object.assign(I18N.ru,{nav_shots:"Экраны",ss_eb:"Скриншоты",ss_h2:"Взгляд на приложение вблизи",ss_sub:"Примеры реальных экранов — посещаемость, взносы и чат клуба.",
+    hd_att:"Посещаемость",hd_dues:"Взносы",hd_chat:"Чат клуба",cap_att:"Отметить посещаемость",cap_dues:"Учёт взносов",cap_chat:"Чат клуба",
+    ss_collected:"Собрано",ss_pending_lbl:"Ожидает",ss_paid:"Оплачено",ss_pending:"Ожидает",ss_month:"В этом месяце",
+    m_coach:"Тренер Али",m_you:"Вы",m1:"Сегодняшняя тренировка была отличной 👏",m2:"Спасибо, тренер 🙏"});
+  Object.assign(I18N.fr,{nav_shots:"Écrans",ss_eb:"Captures d'écran",ss_h2:"L'appli de plus près",ss_sub:"Exemples d'écrans réels — présences, cotisations et chat du club.",
+    hd_att:"Présences",hd_dues:"Cotisations",hd_chat:"Chat du club",cap_att:"Faire l'appel",cap_dues:"Suivi des cotisations",cap_chat:"Chat du club",
+    ss_collected:"Encaissé",ss_pending_lbl:"En attente",ss_paid:"Payé",ss_pending:"En attente",ss_month:"Ce mois",
+    m_coach:"Coach Ali",m_you:"Vous",m1:"L'entraînement d'aujourd'hui était super 👏",m2:"Merci coach 🙏"});
+  Object.assign(I18N.ar,{nav_shots:"الشاشات",ss_eb:"لقطات الشاشة",ss_h2:"نظرة أقرب على التطبيق",ss_sub:"أمثلة من شاشات حقيقية — الحضور والاشتراكات ودردشة النادي.",
+    hd_att:"الحضور",hd_dues:"الاشتراكات",hd_chat:"دردشة النادي",cap_att:"تسجيل الحضور",cap_dues:"متابعة الاشتراكات",cap_chat:"دردشة النادي",
+    ss_collected:"المحصّل",ss_pending_lbl:"قيد الانتظار",ss_paid:"مدفوع",ss_pending:"مستحق",ss_month:"هذا الشهر",
+    m_coach:"المدرب علي",m_you:"أنت",m1:"كان تدريب اليوم رائعًا 👏",m2:"شكرًا أيها المدرب 🙏"});
+
+  // Türkçe varsayılan metinleri HTML'den yakala (tr sözlüğünü doldur)
+  document.querySelectorAll('[data-i18n]').forEach(el=>{ const k=el.getAttribute('data-i18n'); if(!(k in I18N.tr)) I18N.tr[k]=el.textContent; });
+
+  function setLang(l){
+    const d=I18N[l]||I18N.tr;
+    document.querySelectorAll('[data-i18n]').forEach(el=>{ const k=el.getAttribute('data-i18n'); if(d[k]!=null) el.textContent=d[k]; });
+    document.documentElement.lang=l;
+    document.documentElement.dir=(l==='ar')?'rtl':'ltr';
+    localStorage.setItem('lang',l);
+    const sel=document.getElementById('lang'); if(sel) sel.value=l;
+  }
+
+  function setTheme(t){ document.documentElement.setAttribute('data-theme',t); localStorage.setItem('theme',t);
+    document.querySelector('meta[name=theme-color]').setAttribute('content', t==='dark'?'#070d1b':'#053791');
+    window.dispatchEvent(new Event('themechange')); }
+
+  document.getElementById('yil').textContent = new Date().getFullYear();
+  document.getElementById('lang').addEventListener('change',e=>setLang(e.target.value));
+  document.getElementById('theme').addEventListener('click',()=>{
+    setTheme(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark'); });
+
+  // Kayıtlı tercihler (yoksa tarayıcı tercihi)
+  setTheme(localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));
+  setLang(localStorage.getItem('lang') || (navigator.language||'tr').slice(0,2).toLowerCase() in I18N ? (localStorage.getItem('lang')||(navigator.language||'tr').slice(0,2).toLowerCase()) : 'tr');
+
+  // Kaydırınca beliren içerik
+  const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  /* ---------- Arka plan efekti (dalga + partikül), performans için optimize ----------
+     shadowBlur YOK: parıltı 'lighter' (additive) katmanlı çizimlerle. DPR<=1.5.
+     Görünmeyince / sekme gizliyken animasyon durur. */
+  function waveScene(canvas,forceDark){
+    const ctx=canvas.getContext('2d');
+    const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let W=0,H=0;
+    const strands=[
+      {y:.30,amp:.12,phase:0.0,freq:1.15,w:3.4,op:.60},{y:.37,amp:.10,phase:0.7,freq:1.30,w:2.2,op:.42},
+      {y:.45,amp:.13,phase:1.4,freq:1.05,w:2.8,op:.50},{y:.53,amp:.09,phase:2.0,freq:1.45,w:1.8,op:.36},
+      {y:.62,amp:.14,phase:2.7,freq:1.00,w:3.6,op:.56},{y:.72,amp:.11,phase:3.3,freq:1.35,w:2.4,op:.44},
+      {y:.82,amp:.12,phase:4.0,freq:1.10,w:3.0,op:.50}];
+    let seed=7; const rnd=()=>{seed=(seed*16807)%2147483647;return (seed-1)/2147483646;};
+    const parts=Array.from({length:24},()=>{const r=1.4+rnd()*3.0;
+      // Uygulamadaki gibi: yavaş yatay sürüklenme + ÇOK yavaş dikey salınım (durgun suda sandal)
+      return {y:.06+rnd()*.88,sx:rnd(),r,sp:.26+(3.4-r)*.06+rnd()*.12,bob:.01+rnd()*.025,bf:.3+rnd()*.8,op:.4+rnd()*.5};});
+    function resize(){const dpr=Math.min(devicePixelRatio||1,1.5);W=canvas.clientWidth;H=canvas.clientHeight;
+      canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);}
+    new ResizeObserver(()=>{resize(); if(!running) draw();}).observe(canvas); resize();
+    function path(s,sh){ctx.beginPath();const st=48,by=H*s.y,a=H*s.amp;
+      for(let i=0;i<=st;i++){const t=i/st,x=t*W,y=by+a*Math.sin(s.freq*t*6.2832+s.phase+sh)+a*.35*Math.sin(s.freq*1.9*t*6.2832+s.phase*1.4+sh*1.3);i?ctx.lineTo(x,y):ctx.moveTo(x,y);}}
+    let t=0,running=false,raf=0,visible=false;
+    function dot(x,y,r){ctx.beginPath();ctx.arc(x,y,r,0,6.2832);ctx.fill();}
+    function draw(){
+      const dark=forceDark||document.documentElement.getAttribute('data-theme')==='dark';
+      ctx.clearRect(0,0,W,H);ctx.lineCap='round';
+      const sh=reduce?0:t*1.3;
+      if(dark){
+        // Koyu zemin: additive (lighter) parıltı — parlak mavi dalga + ışıldayan partikül
+        ctx.globalCompositeOperation='lighter';
+        const g=ctx.createLinearGradient(0,0,W,0);g.addColorStop(0,'#2a7fff');g.addColorStop(.5,'#4aa0ff');g.addColorStop(1,'#8fdcff');ctx.strokeStyle=g;
+        for(const s of strands){
+          ctx.globalAlpha=s.op*.16;ctx.lineWidth=s.w*6;path(s,sh);ctx.stroke();
+          ctx.globalAlpha=s.op*.30;ctx.lineWidth=s.w*2.4;path(s,sh);ctx.stroke();
+          ctx.globalAlpha=s.op*.9;ctx.lineWidth=s.w;path(s,sh);ctx.stroke();
+        }
+        for(const p of parts){
+          const x=((p.sx+(reduce?0:t*p.sp))%1)*W,y=(p.y+p.bob*Math.sin((t*p.bf+p.sx)*6.2832))*H,o=Math.min(p.op,1);
+          ctx.globalAlpha=o*.10;ctx.fillStyle='#42A5F5';dot(x,y,p.r*2.8);
+          ctx.globalAlpha=o*.22;ctx.fillStyle='#2979FF';dot(x,y,p.r*1.7);
+          ctx.globalAlpha=o*.8; ctx.fillStyle='#cdeeff';dot(x,y,p.r);
+        }
+      } else {
+        // Açık zemin (uygulamanın light modu gibi): normal karışım, koyu mavi dalgalar
+        ctx.globalCompositeOperation='source-over';
+        const g=ctx.createLinearGradient(0,0,W,0);g.addColorStop(0,'#1565C0');g.addColorStop(.5,'#2979FF');g.addColorStop(1,'#42A5F5');ctx.strokeStyle=g;
+        for(const s of strands){
+          ctx.globalAlpha=s.op*.10;ctx.lineWidth=s.w*5;path(s,sh);ctx.stroke();
+          ctx.globalAlpha=s.op*.5;ctx.lineWidth=s.w;path(s,sh);ctx.stroke();
+        }
+        for(const p of parts){
+          const x=((p.sx+(reduce?0:t*p.sp))%1)*W,y=(p.y+p.bob*Math.sin((t*p.bf+p.sx)*6.2832))*H,o=Math.min(p.op,1);
+          ctx.globalAlpha=o*.10;ctx.fillStyle='#42A5F5';dot(x,y,p.r*2.6);
+          ctx.globalAlpha=o*.18;ctx.fillStyle='#2979FF';dot(x,y,p.r*1.6);
+          ctx.globalAlpha=o*.55;ctx.fillStyle='#1565C0';dot(x,y,p.r);
+        }
+      }
+      ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';
+      if(running) t+=0.0016;
+    }
+    window.addEventListener('themechange',()=>{ if(!running) draw(); });
+    function loop(){draw();raf=requestAnimationFrame(loop);}
+    function start(){if(!running&&!reduce&&visible&&!document.hidden){running=true;raf=requestAnimationFrame(loop);}}
+    function stop(){running=false;cancelAnimationFrame(raf);}
+    new IntersectionObserver(([e])=>{visible=e.isIntersecting;visible?start():stop();},{threshold:.01}).observe(canvas);
+    document.addEventListener('visibilitychange',()=>{document.hidden?stop():start();});
+    draw(); // ilk statik kare: arka plan sekmesinde/gizliyken bile kanvas boş kalmasın
+  }
+  waveScene(document.getElementById('waves'), false);      // hero: temaya uyar
+  waveScene(document.getElementById('waves2'), false);     // indir bandı: temaya uyar
+</script>
+</body>
+</html>
