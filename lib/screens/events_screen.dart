@@ -77,6 +77,19 @@ class _EventsScreenState extends State<EventsScreen> {
     return false;
   }
 
+  /// Bu etkinlik için (çocuklarından herhangi biri adına) daha önce Firestore'a
+  /// KAYDEDİLMİŞ bir cevap var mı? Buton yalnızca gerçekten gönderilmiş cevap
+  /// varken "Gönderildi" göstermeli; aksi halde (çocuğu olmayan ya da henüz
+  /// seçim yapmamış veli) yanlışlıkla "Gönderildi" yazıyordu.
+  bool _hasSavedResponse(PlannedEvent event) {
+    for (final child in widget.children) {
+      if (_saved.containsKey(EventResponse.buildId(event.id, child.id))) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   List<PlannedEvent> get _sortedEvents {
     final events = [...widget.events]
       ..sort((a, b) => a.dateText.compareTo(b.dateText));
@@ -380,6 +393,10 @@ class _EventsScreenState extends State<EventsScreen> {
     final hasChanges = _hasUnsentChanges(event);
     // Gönderim sürerken ya da gönderilecek yeni bir şey yokken buton pasif.
     final enabled = !isSubmitting && hasChanges;
+    // "Gönderildi" YALNIZCA gerçekten kaydedilmiş bir cevap varken ve gönderilecek
+    // yeni değişiklik yokken gösterilir. Çocuğu olmayan / henüz seçim yapmamış
+    // veli için buton "Gönder" (pasif) kalır — yanlış "Gönderildi" gösterilmez.
+    final showSent = !hasChanges && _hasSavedResponse(event);
 
     return ElevatedButton.icon(
       onPressed: enabled ? () => _submitResponses(event) : null,
@@ -389,13 +406,13 @@ class _EventsScreenState extends State<EventsScreen> {
               height: 16,
               child: CircularProgressIndicator(strokeWidth: 2),
             )
-          : Icon(hasChanges ? Icons.send : Icons.check),
+          : Icon(showSent ? Icons.check : Icons.send),
       label: Text(
         isSubmitting
             ? l10n.sendingLabel
-            : hasChanges
-            ? l10n.sendAction
-            : l10n.sentLabel,
+            : showSent
+            ? l10n.sentLabel
+            : l10n.sendAction,
       ),
     );
   }
