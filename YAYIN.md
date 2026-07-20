@@ -36,12 +36,20 @@ release paketlemesini bilinçli olarak **durdurur** (debug imzalı "release"
 
 ### 2.1. Anahtar üretimi
 
-```bash
-keytool -genkey -v -keystore sporokulu-release.jks \
-        -keyalg RSA -keysize 2048 -validity 10000 -alias sporokulu
+**Windows / PowerShell** (tek satır — `\` ile bölme, o Linux'a özgüdür):
+
+```powershell
+keytool -genkey -v -keystore sporokulu-release.jks -keyalg RSA -keysize 2048 -validity 10000 -alias sporokulu
 ```
 
-Sorulan parolaları **güvenli bir yerde sakla** (parola yöneticisi vb.).
+Komut **etkileşimli** sorular sorar:
+1. **Keystore parolası** oluştur (sen belirle, iki kez) — güvenli sakla.
+2. Ad-soyad, birim, kurum, şehir, ülke (istersen boş `Enter` geçebilirsin; ülke için `TR`).
+3. "Is CN=... correct?" → `yes` yaz.
+4. **Anahtar (key) parolası**: "Enter key password (RETURN if same as keystore password)"
+   → keystore parolasıyla aynı olsun diye sadece `Enter`'a bas (önerilir).
+
+Parolaları **güvenli bir yerde sakla** (parola yöneticisi vb.).
 
 > ⚠️ **Anahtar deposu veya parola kaybolursa uygulama bir daha güncellenemez.**
 > `.jks` dosyasını ve parolaları yedekle. Google **Play App Signing**'i
@@ -50,11 +58,15 @@ Sorulan parolaları **güvenli bir yerde sakla** (parola yöneticisi vb.).
 
 ### 2.2. `android/key.properties` (bu dosya git'e GİRMEZ — .gitignore'da)
 
+`android` klasörünün içine `key.properties` adlı dosya oluştur. Yol için **düz eğik
+çizgi** (`/`) kullan (ters `\` sorun çıkarır). Yukarıdaki komutu `C:\dev\spor_okulu`
+içinde çalıştırdıysan `.jks` orada oluşur, yani:
+
 ```properties
-storeFile=C:/mutlak/yol/sporokulu-release.jks
-storePassword=****
+storeFile=C:/dev/spor_okulu/sporokulu-release.jks
+storePassword=<keystore parolan>
 keyAlias=sporokulu
-keyPassword=****
+keyPassword=<key parolan (aynı yaptıysan keystore ile aynı)>
 ```
 
 ### 2.3. İmzalı paket üretimi (APK değil **AAB**)
