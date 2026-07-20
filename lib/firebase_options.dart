@@ -56,7 +56,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '309972626596',
     projectId: 'mefe-spor-okulu-2026',
     storageBucket: 'mefe-spor-okulu-2026.firebasestorage.app',
-    iosBundleId: 'com.example.sporOkulu',
+    iosBundleId: 'com.mefepalta.sporokulu',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(

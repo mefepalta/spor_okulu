@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -60,6 +62,19 @@ class NotificationService {
         await _localNotifications.initialize(
           settings: const InitializationSettings(
             android: AndroidInitializationSettings('@mipmap/ic_launcher'),
+            // iOS/macOS (Darwin): bildirim iznini burada İSTEME; tek izin
+            // istemi aşağıdaki `_messaging.requestPermission()` üzerinden gider
+            // (ikisi de aynı OS iznini paylaşır, çift diyalog olmasın).
+            iOS: DarwinInitializationSettings(
+              requestAlertPermission: false,
+              requestBadgePermission: false,
+              requestSoundPermission: false,
+            ),
+            macOS: DarwinInitializationSettings(
+              requestAlertPermission: false,
+              requestBadgePermission: false,
+              requestSoundPermission: false,
+            ),
           ),
         );
         await _localNotifications
@@ -83,28 +98,46 @@ class NotificationService {
   /// kullanıcının belgesinden siler ve tüm konu aboneliklerini kaldırır.
   /// Böylece paylaşılan bir cihazda çıkış yapmış kullanıcıya push gitmez.
   /// Abonelikler bir sonraki girişte yeniden kurulur.
+  ///
+  /// ÖNEMLİ: Bu metot çıkışı (signOut) **asla bloklamamalı**. Aksi hâlde:
+  ///  - Firestore yazımı çevrimdışıyken sunucu onayına dek askıda kalır,
+  ///  - FCM `unsubscribeFromTopic` ağ/APNS hazır değilse (özellikle iOS) askıda
+  ///    kalır — ve `try/catch` hiç tamamlanmayan bir Future'ı yakalayamaz.
+  /// Bu yüzden konu abonelikleri BEKLENMEDEN (fire-and-forget) kaldırılır ve
+  /// jeton silme kısa bir zaman aşımıyla korunur; süre dolsa da çıkış ilerler.
   Future<void> clearOnLogout() async {
     final uid = FirebaseAuth.instance.currentUser?.uid;
-    try {
-      if (uid != null) {
+
+    // Konu abonelikleri cihaz (token) düzeyindedir, oturumdan bağımsız kaldırılabilir.
+    // Beklenmez ki çıkışı geciktirmesin; her biri kendi hatasını yutar.
+    if (!kIsWeb) {
+      for (final topic in const [
+        'all',
+        'role_admin',
+        'role_coach',
+        'role_veli',
+        'role_ogrenci',
+      ]) {
+        unawaited(
+          _messaging.unsubscribeFromTopic(topic).catchError((Object error) {
+            debugPrint('Konu aboneliği kaldırılamadı ($topic): $error');
+          }),
+        );
+      }
+    }
+
+    // Jeton silme yetki gerektirir (signOut ÖNCESİ yapılmalı). Firestore yazımı
+    // çevrimdışıyken askıda kalabildiğinden kısa zaman aşımı koy; süre dolarsa
+    // yazım kuyrukta kalır (çevrimiçi olunca silinir) ama çıkış beklemez.
+    if (uid != null) {
+      try {
         await FirebaseFirestore.instance.collection('users').doc(uid).set({
           'fcmToken': FieldValue.delete(),
           'fcmUpdatedAt': FieldValue.serverTimestamp(),
-        }, SetOptions(merge: true));
+        }, SetOptions(merge: true)).timeout(const Duration(seconds: 2));
+      } catch (error) {
+        debugPrint('Bildirim çıkış temizliği hatası: $error');
       }
-      if (!kIsWeb) {
-        await _messaging.unsubscribeFromTopic('all');
-        for (final topic in const [
-          'role_admin',
-          'role_coach',
-          'role_veli',
-          'role_ogrenci',
-        ]) {
-          await _messaging.unsubscribeFromTopic(topic);
-        }
-      }
-    } catch (error) {
-      debugPrint('Bildirim çıkış temizliği hatası: $error');
     }
   }
 
@@ -123,6 +156,12 @@ class NotificationService {
           importance: Importance.high,
           priority: Priority.high,
           icon: '@mipmap/ic_launcher',
+        ),
+        // iOS'ta ön planda gelen bildirimi göstermek için Darwin detayları.
+        iOS: const DarwinNotificationDetails(
+          presentAlert: true,
+          presentBadge: true,
+          presentSound: true,
         ),
       ),
     );
