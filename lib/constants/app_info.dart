@@ -15,8 +15,8 @@ class AppInfo {
   /// sürümü göstermez.
   static String version = '';
 
-  static const String supportPhone = '(555) 000 00 00';
-  static const String supportEmail = 'iletisim@sporokulu.com';
+  static const String supportPhone = '(543) 484 78 30';
+  static const String supportEmail = 'mefepalta@gmail.com';
 
   /// Sürümü paketten (pubspec.yaml `version`, `+build` hariç) yükler. Uygulama
   /// açılışında bir kez çağrılır; hata olursa [version] boş kalır (sessiz).
