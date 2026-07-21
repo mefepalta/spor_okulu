@@ -50,9 +50,8 @@ class InfoTextScreen extends StatelessWidget {
 /// Bilgi sayfalarının içerikleri (Türkçe / varsayılan). Hukuk danışmanı
 /// gözden geçirmesinden geçmiş metinler.
 ///
-/// DOLDURULACAK: [Spor Okulu Unvanı ve Adresi] alanı gerçek okul bilgileriyle
-/// doldurulmalıdır (veri sorumlusunun kimliği olmadan aydınlatma metni geçersiz
-/// sayılır). Diğer diller için bkz. data/info_pages_l10n.dart.
+/// Veri sorumlusu: MefeSpor Okulu İZMİR/Torbalı (KVKK aydınlatma metninde geçer).
+/// Değişirse burada ve data/info_pages_l10n.dart'taki 5 dilde güncellenmeli.
 class InfoPages {
   InfoPages._();
 
@@ -85,8 +84,8 @@ class InfoPages {
 
   static const List<String> kvkk = <String>[
     'İşbu aydınlatma metni, 6698 sayılı Kişisel Verilerin Korunması Kanunu '
-        '("KVKK") m.10 uyarınca, veri sorumlusu sıfatıyla [Spor Okulu '
-        'Unvanı ve Adresi] tarafından hazırlanmıştır.',
+        '("KVKK") m.10 uyarınca, veri sorumlusu sıfatıyla MefeSpor Okulu '
+        'İZMİR/Torbalı tarafından hazırlanmıştır.',
     'İşlenen veriler: kimlik verisi (ad-soyad), iletişim verisi (e-posta, '
         'telefon), görsel veri (profil fotoğrafı) ile öğrencinin devam, '
         'performans ve ödeme kayıtlarıdır. Öğrencinin 18 yaşından küçük '

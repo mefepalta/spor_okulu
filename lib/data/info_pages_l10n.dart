@@ -10,8 +10,7 @@ import '../screens/info_text_screen.dart';
 /// Türkçe metin esastır, çeviriler ideal olarak ana dili konuşan bir çevirmence
 /// doğrulanmalıdır.
 ///
-/// DOLDURULACAK: [Veri Sorumlusu / Spor Okulu Unvanı ve Adresi] gibi köşeli
-/// parantezli alanlar gerçek okul bilgileriyle doldurulmalıdır.
+/// Veri sorumlusu: MefeSpor Okulu İZMİR/Torbalı (tüm dillerin `kvkk` metninde).
 /// [pageId]: 'contact' | 'terms' | 'kvkk' | 'privacy'.
 List<String> localizedInfoParagraphs(String pageId, Locale locale) {
   final byId = _infoByLocale[locale.languageCode];
@@ -72,7 +71,7 @@ const Map<String, List<String>> _en = {
   'kvkk': [
     'This privacy notice has been prepared pursuant to Article 10 of the '
         'Turkish Personal Data Protection Law No. 6698 ("KVKK") by '
-        '[Sports School Trade Name and Address], acting in its capacity as '
+        'MefeSpor Okulu İZMİR/Torbalı, acting in its capacity as '
         'data controller.',
     'Data processed: identity data (name-surname), contact data (email, '
         'phone), visual data (profile photo), and the student\'s attendance, '
@@ -154,7 +153,7 @@ const Map<String, List<String>> _es = {
   'kvkk': [
     'Este texto informativo ha sido preparado conforme al artículo 10 de la '
         'Ley de Protección de Datos Personales de Turquía n.º 6698 ("KVKK") '
-        'por [Denominación y dirección de la escuela deportiva], en calidad '
+        'por MefeSpor Okulu İZMİR/Torbalı, en calidad '
         'de responsable del tratamiento.',
     'Datos tratados: datos de identidad (nombre y apellidos), datos de '
         'contacto (correo, teléfono), datos visuales (foto de perfil) y los '
@@ -240,7 +239,7 @@ const Map<String, List<String>> _ru = {
   'kvkk': [
     'Настоящий информационный текст подготовлен в соответствии со статьёй '
         '10 Закона Турции о защите персональных данных № 6698 («KVKK») '
-        '[наименование и адрес спортивной школы], выступающей в качестве '
+        'MefeSpor Okulu İZMİR/Torbalı, выступающей в качестве '
         'оператора данных.',
     'Обрабатываемые данные: идентификационные данные (имя и фамилия), '
         'контактные данные (эл. почта, телефон), визуальные данные (фото '
@@ -326,8 +325,8 @@ const Map<String, List<String>> _fr = {
   'kvkk': [
     'Le présent texte d\'information a été préparé conformément à l\'article '
         '10 de la loi turque n° 6698 sur la protection des données '
-        'personnelles (« KVKK ») par [dénomination et adresse de l\'école de '
-        'sport], agissant en qualité de responsable du traitement.',
+        'personnelles (« KVKK ») par MefeSpor Okulu İZMİR/Torbalı, agissant '
+        'en qualité de responsable du traitement.',
     'Données traitées : données d\'identité (nom et prénom), données de '
         'contact (e-mail, téléphone), données visuelles (photo de profil), '
         'ainsi que les enregistrements de présence, de performance et de '
@@ -407,7 +406,7 @@ const Map<String, List<String>> _ar = {
   ],
   'kvkk': [
     'أُعدَّ نص الإفصاح هذا وفقاً للمادة 10 من قانون حماية البيانات الشخصية '
-        'التركي رقم 6698 ("KVKK") من قبل [اسم مدرسة الرياضة وعنوانها] بصفتها '
+        'التركي رقم 6698 ("KVKK") من قبل MefeSpor Okulu İZMİR/Torbalı بصفتها '
         'المسؤول عن البيانات.',
     'البيانات المُعالَجة: بيانات الهوية (الاسم واللقب)، وبيانات الاتصال '
         '(البريد الإلكتروني والهاتف)، والبيانات المرئية (صورة الملف الشخصي)، '
