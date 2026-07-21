@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kayıt Ol — Spor Okulu</title>
+<meta name="description" content="Spor Okulu uygulamasına veli veya öğrenci olarak kayıt olun. Başvurunuz okul yönetimince onaylandıktan sonra giriş yapabilirsiniz.">
+<meta name="theme-color" content="#053791">
+<link rel="icon" href="logo.png">
+<style>
+  :root{
+    --deep:#053791; --primary:#1565C0; --mid:#2979FF;
+    --ink:#0b1220; --muted:#5b6577; --line:#e6ebf5; --bg:#f6f9ff; --card:#fff;
+    --field:#fff; --grad:linear-gradient(120deg,var(--deep),var(--mid));
+    --ok:#0f9d58; --err:#d93025;
+  }
+  @media(prefers-color-scheme:dark){
+    :root{--ink:#e9f0fb; --muted:#9fb0cc; --line:#1d2740; --bg:#070d1b; --card:#0c1526; --field:#0a1424;
+      --ok:#4ac26b; --err:#ff6b5e}
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+    color:var(--ink);background:var(--bg);line-height:1.6;padding:0 20px}
+  .wrap{max-width:520px;margin:0 auto;padding:34px 0 64px}
+  a{color:var(--primary)}
+  .brand{display:flex;align-items:center;gap:12px;margin-bottom:24px}
+  .brand img{width:42px;height:42px;border-radius:12px;box-shadow:0 4px 14px rgba(5,55,145,.3)}
+  .brand b{font-size:19px;font-weight:800;letter-spacing:-.3px}
+  h1{font-size:clamp(24px,5vw,30px);font-weight:800;letter-spacing:-.5px;margin-bottom:6px;line-height:1.15}
+  .lead{color:var(--muted);font-size:15px;margin-bottom:24px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;
+    box-shadow:0 10px 34px rgba(8,32,80,.07)}
+  label.fl{display:block;font-weight:600;font-size:14px;margin:14px 0 6px}
+  input[type=text],input[type=email],input[type=password]{
+    width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:11px;
+    background:var(--field);color:var(--ink);font-size:15px;font-family:inherit;transition:border-color .15s}
+  input:focus{outline:none;border-color:var(--primary)}
+  .row2{display:flex;gap:12px}
+  .row2>div{flex:1}
+  .roles{display:flex;gap:10px;margin-top:6px}
+  .roles label{flex:1;position:relative;cursor:pointer}
+  .roles input{position:absolute;opacity:0;pointer-events:none}
+  .roles .opt{display:flex;flex-direction:column;align-items:center;gap:6px;
+    border:1.5px solid var(--line);border-radius:13px;padding:14px 8px;text-align:center;
+    font-weight:700;font-size:14px;transition:.15s;background:var(--field)}
+  .roles .opt .em{font-size:24px}
+  .roles input:checked + .opt{border-color:var(--primary);
+    background:linear-gradient(120deg,rgba(21,101,192,.10),rgba(41,121,255,.06));
+    box-shadow:0 4px 14px rgba(21,101,192,.15)}
+  .consent{display:flex;gap:10px;align-items:flex-start;margin-top:18px;font-size:13.5px;color:var(--muted)}
+  .consent input{margin-top:3px;width:17px;height:17px;flex:none;accent-color:var(--primary)}
+  .btn{width:100%;margin-top:20px;border:none;border-radius:13px;padding:14px;
+    background:var(--grad);color:#fff;font-size:16px;font-weight:800;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;gap:9px;transition:.15s;font-family:inherit}
+  .btn:hover{filter:brightness(1.06)}
+  .btn:disabled{opacity:.6;cursor:not-allowed}
+  .spin{width:17px;height:17px;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;
+    border-radius:50%;animation:sp .7s linear infinite;display:none}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .msg{margin-top:16px;padding:12px 14px;border-radius:11px;font-size:14px;display:none}
+  .msg.err{display:block;background:rgba(217,48,37,.10);color:var(--err);border:1px solid rgba(217,48,37,.3)}
+  .hint{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .success{display:none;text-align:center;padding:8px 4px}
+  .success .ic{width:64px;height:64px;border-radius:50%;background:rgba(15,157,88,.14);
+    display:flex;align-items:center;justify-content:center;font-size:34px;margin:8px auto 18px}
+  .success h2{font-size:22px;font-weight:800;margin-bottom:10px}
+  .success p{color:var(--muted);font-size:15px;margin-bottom:12px}
+  .steps{text-align:left;background:var(--field);border:1px solid var(--line);border-radius:13px;
+    padding:16px 18px;margin:16px 0;font-size:14px}
+  .steps li{margin:8px 0 8px 4px;padding-left:6px}
+  .back{display:inline-block;margin-top:22px;color:var(--muted);font-size:14px;text-align:center;width:100%}
+  .toggle{position:relative}
+  .toggle button{position:absolute;right:8px;top:50%;transform:translateY(-50%);
+    background:none;border:none;cursor:pointer;color:var(--muted);font-size:13px;padding:6px;font-family:inherit}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a href="index.html" style="text-decoration:none;color:inherit">
+    <div class="brand"><img src="logo.png" alt="Spor Okulu"><b>Spor Okulu</b></div>
+  </a>
+
+  <div id="formView">
+    <h1>Kayıt Ol</h1>
+    <p class="lead">Veli veya öğrenci olarak başvurun. Başvurunuz okul yönetimince onaylandıktan sonra uygulamadan giriş yapabilirsiniz.</p>
+
+    <div class="card">
+      <form id="regForm" novalidate>
+        <div class="row2">
+          <div>
+            <label class="fl" for="firstName">Ad</label>
+            <input type="text" id="firstName" autocomplete="given-name" required>
+          </div>
+          <div>
+            <label class="fl" for="lastName">Soyad</label>
+            <input type="text" id="lastName" autocomplete="family-name" required>
+          </div>
+        </div>
+
+        <label class="fl" for="email">E-posta</label>
+        <input type="email" id="email" autocomplete="email" placeholder="ornek@eposta.com" required>
+
+        <label class="fl" for="password">Şifre</label>
+        <div class="toggle">
+          <input type="password" id="password" autocomplete="new-password" required>
+          <button type="button" id="togglePw" aria-label="Şifreyi göster">Göster</button>
+        </div>
+        <div class="hint">En az 6 karakter.</div>
+
+        <label class="fl" for="password2">Şifre (tekrar)</label>
+        <input type="password" id="password2" autocomplete="new-password" required>
+
+        <label class="fl">Hesap türü</label>
+        <div class="roles">
+          <label>
+            <input type="radio" name="role" value="veli" checked>
+            <div class="opt"><span class="em">👪</span>Veli</div>
+          </label>
+          <label>
+            <input type="radio" name="role" value="ogrenci">
+            <div class="opt"><span class="em">🎓</span>Öğrenci</div>
+          </label>
+        </div>
+
+        <label class="consent">
+          <input type="checkbox" id="consent" required>
+          <span><a href="gizlilik.html#gizlilik" target="_blank">Gizlilik Politikası</a>, <a href="gizlilik.html#kvkk" target="_blank">KVKK Aydınlatma Metni</a> ve <a href="gizlilik.html#kosullar" target="_blank">Kullanım Koşulları</a>'nı okudum, kabul ediyorum.</span>
+        </label>
+
+        <button type="submit" class="btn" id="submitBtn">
+          <span class="spin" id="spin"></span>
+          <span id="btnText">Başvuruyu gönder</span>
+        </button>
+
+        <div class="msg err" id="errBox"></div>
+      </form>
+    </div>
+
+    <a class="back" href="index.html">← Ana sayfaya dön</a>
+  </div>
+
+  <div class="card success" id="successView">
+    <div class="ic">✓</div>
+    <h2>Başvurunuz alındı</h2>
+    <p>Hesabınız oluşturuldu. Şimdi iki adım kaldı:</p>
+    <ol class="steps">
+      <li><b>E-postanızı doğrulayın.</b> Size bir doğrulama bağlantısı gönderdik — gelen kutunuzu (ve spam klasörünü) kontrol edin.</li>
+      <li><b>Onay bekleyin.</b> Okul yönetimi başvurunuzu onayladığında uygulamadan e-posta ve şifrenizle giriş yapabilirsiniz.</li>
+    </ol>
+    <p>Uygulamayı henüz indirmediyseniz <a href="index.html#indir">buradan</a> edinebilirsiniz.</p>
+    <a class="back" href="index.html">← Ana sayfaya dön</a>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, createUserWithEmailAndPassword, updateProfile, sendEmailVerification, signOut }
+    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, serverTimestamp }
+    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  // Firebase web yapılandırması herkese açıktır; güvenlik Firestore kurallarıyla sağlanır.
+  const firebaseConfig = {
+    apiKey: "AIzaSyDhMh5bWu7maLe9tNLqK9DvdsmUFibUNl8",
+    authDomain: "mefe-spor-okulu-2026.firebaseapp.com",
+    projectId: "mefe-spor-okulu-2026",
+    storageBucket: "mefe-spor-okulu-2026.firebasestorage.app",
+    messagingSenderId: "309972626596",
+    appId: "1:309972626596:web:5a4779b6f632c341454a31",
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  const $ = (id) => document.getElementById(id);
+  const form = $("regForm"), errBox = $("errBox"), submitBtn = $("submitBtn"),
+        spin = $("spin"), btnText = $("btnText");
+
+  // Şifre göster/gizle
+  $("togglePw").addEventListener("click", () => {
+    const pw = $("password");
+    const show = pw.type === "password";
+    pw.type = show ? "text" : "password";
+    $("togglePw").textContent = show ? "Gizle" : "Göster";
+  });
+
+  function showErr(text){ errBox.textContent = text; errBox.style.display = "block"; }
+  function clearErr(){ errBox.style.display = "none"; }
+  function setLoading(on){
+    submitBtn.disabled = on;
+    spin.style.display = on ? "inline-block" : "none";
+    btnText.textContent = on ? "Gönderiliyor…" : "Başvuruyu gönder";
+  }
+
+  const ERRORS = {
+    "auth/email-already-in-use": "Bu e-posta ile zaten bir hesap var. Giriş yapmayı deneyin veya farklı bir e-posta kullanın.",
+    "auth/invalid-email": "Geçersiz e-posta adresi.",
+    "auth/weak-password": "Şifre en az 6 karakter olmalı.",
+    "auth/network-request-failed": "İnternet bağlantısı kurulamadı. Bağlantınızı kontrol edip tekrar deneyin.",
+    "auth/operation-not-allowed": "Kayıt şu anda kapalı. Lütfen okul yönetimiyle iletişime geçin.",
+    "auth/unauthorized-domain": "Bu alan adı Firebase'de yetkili değil. Okul yönetimine bildirin.",
+  };
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    clearErr();
+
+    const firstName = $("firstName").value.trim();
+    const lastName = $("lastName").value.trim();
+    const email = $("email").value.trim();
+    const password = $("password").value;
+    const password2 = $("password2").value;
+    const role = form.role.value; // "veli" | "ogrenci"
+
+    if (!firstName || !lastName) return showErr("Ad ve soyad gerekli.");
+    if (!email.includes("@")) return showErr("Geçerli bir e-posta girin.");
+    if (password.length < 6) return showErr("Şifre en az 6 karakter olmalı.");
+    if (password !== password2) return showErr("Şifreler eşleşmiyor.");
+    if (!$("consent").checked) return showErr("Devam etmek için yasal metinleri kabul etmelisiniz.");
+
+    setLoading(true);
+    try {
+      const displayName = `${firstName} ${lastName}`.trim();
+      const cred = await createUserWithEmailAndPassword(auth, email, password);
+      const user = cred.user;
+
+      await updateProfile(user, { displayName });
+
+      // Uygulamadaki kayıt akışıyla birebir aynı belge: viewer + pending başvuru.
+      await setDoc(doc(db, "users", user.uid), {
+        email,
+        displayName,
+        role: "viewer",
+        requestedRole: role,
+        roleRequestStatus: "pending",
+        createdAt: serverTimestamp(),
+      });
+
+      await sendEmailVerification(user);
+      await signOut(auth);
+
+      $("formView").style.display = "none";
+      $("successView").style.display = "block";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (err) {
+      console.error(err);
+      showErr(ERRORS[err?.code] || "Bir hata oluştu, lütfen tekrar deneyin.");
+      // Auth hesabı oluşup Firestore yazımı kural nedeniyle başarısız olursa
+      // yarım hesabı temizle ki kullanıcı tekrar deneyebilsin.
+      try { if (auth.currentUser) { await auth.currentUser.delete(); } } catch (_) {}
+    } finally {
+      setLoading(false);
+    }
+  });
+</script>
+</body>
+</html>
