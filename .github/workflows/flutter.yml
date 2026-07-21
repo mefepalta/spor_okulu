@@ -44,21 +44,25 @@ jobs:
       # base64 olarak eklenip adımda çözülmeli (denetim: D-2, ertelendi).
       - run: flutter build apk --debug
 
-  ios:
-    runs-on: macos-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: subosito/flutter-action@v2
-        with:
-          flutter-version: "3.44.4"
-          cache: true
-
-      - run: flutter pub get
-
-      - run: |
-          cd ios
-          pod install --repo-update
-
-      - run: flutter build ios --no-codesign
+  # iOS derlemesi GEÇICI olarak devre disi. macOS runner'lari ucretsiz CI
+  # dakikasini 10 kat tuketir ve iOS su an ertelendi (Mac + Apple Developer
+  # hesabi yok — denetim: K-3). iOS'a gecildiginde asagidaki blogun yorumunu
+  # kaldirmak yeterli.
+  # ios:
+  #   runs-on: macos-latest
+  #
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #
+  #     - uses: subosito/flutter-action@v2
+  #       with:
+  #         flutter-version: "3.44.4"
+  #         cache: true
+  #
+  #     - run: flutter pub get
+  #
+  #     - run: |
+  #         cd ios
+  #         pod install --repo-update
+  #
+  #     - run: flutter build ios --no-codesign
