@@ -6,6 +6,7 @@ import 'package:share_plus/share_plus.dart';
 
 import '../l10n/app_localizations.dart';
 import '../theme/app_colors.dart';
+import '../utils/share_origin.dart';
 import '../widgets/wave_background.dart';
 
 /// Sosyal medya paylaşımı: kullanıcı foto + metin hazırlar, "Paylaş" ile
@@ -71,6 +72,8 @@ class _SocialShareScreenState extends State<SocialShareScreen> {
         ShareParams(
           text: text.isEmpty ? null : text,
           files: photo != null ? [photo] : null,
+          // iPad'de paylaşım popover'ı için zorunlu çapa.
+          sharePositionOrigin: shareOriginOf(context),
         ),
       );
     } finally {

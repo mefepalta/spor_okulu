@@ -7,6 +7,7 @@ import '../l10n/app_localizations.dart';
 import '../models/app_models.dart';
 import '../utils/csv_export.dart';
 import '../utils/period_l10n.dart';
+import '../utils/share_origin.dart';
 import '../utils/status_l10n.dart';
 
 class ReportsScreen extends StatelessWidget {
@@ -162,7 +163,9 @@ class ReportsScreen extends StatelessWidget {
           SizedBox(
             width: double.infinity,
             child: FilledButton.icon(
-              onPressed: students.isEmpty ? null : () => _exportStudents(l10n),
+              onPressed: students.isEmpty
+                  ? null
+                  : () => _exportStudents(context, l10n),
               icon: const Icon(Icons.download),
               label: Text(l10n.exportStudentsCsv),
             ),
@@ -171,7 +174,9 @@ class ReportsScreen extends StatelessWidget {
           SizedBox(
             width: double.infinity,
             child: FilledButton.tonalIcon(
-              onPressed: payments.isEmpty ? null : () => _exportPayments(l10n),
+              onPressed: payments.isEmpty
+                  ? null
+                  : () => _exportPayments(context, l10n),
               icon: const Icon(Icons.download),
               label: Text(l10n.exportPaymentsCsv),
             ),
@@ -181,7 +186,10 @@ class ReportsScreen extends StatelessWidget {
     );
   }
 
-  Future<void> _exportStudents(AppLocalizations l10n) async {
+  Future<void> _exportStudents(
+    BuildContext context,
+    AppLocalizations l10n,
+  ) async {
     final headers = [
       l10n.fieldFullName,
       l10n.fieldAge,
@@ -207,10 +215,17 @@ class ReportsScreen extends StatelessWidget {
           s.medicalNote,
         ],
     ];
-    await shareCsv('ogrenciler.csv', buildCsv(headers, rows));
+    await shareCsv(
+      'ogrenciler.csv',
+      buildCsv(headers, rows),
+      sharePositionOrigin: shareOriginOf(context),
+    );
   }
 
-  Future<void> _exportPayments(AppLocalizations l10n) async {
+  Future<void> _exportPayments(
+    BuildContext context,
+    AppLocalizations l10n,
+  ) async {
     final headers = [
       l10n.roleStudent,
       l10n.fieldPeriod,
@@ -230,7 +245,11 @@ class ReportsScreen extends StatelessWidget {
           p.note,
         ],
     ];
-    await shareCsv('aidatlar.csv', buildCsv(headers, rows));
+    await shareCsv(
+      'aidatlar.csv',
+      buildCsv(headers, rows),
+      sharePositionOrigin: shareOriginOf(context),
+    );
   }
 
   String _buildSummaryText(AppLocalizations l10n) {

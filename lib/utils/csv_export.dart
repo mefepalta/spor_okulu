@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:ui' show Rect;
 
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
@@ -28,11 +29,20 @@ String buildCsv(List<String> headers, List<List<String>> rows) {
 
 /// CSV'yi geçici bir dosyaya yazıp cihazın paylaş menüsüyle paylaşır.
 /// Başa BOM eklenir ki Excel Türkçe karakterleri doğru açsın.
-Future<void> shareCsv(String filename, String csv) async {
+/// [sharePositionOrigin] iPad'de popover çapası için zorunludur
+/// (bkz. utils/share_origin.dart).
+Future<void> shareCsv(
+  String filename,
+  String csv, {
+  Rect? sharePositionOrigin,
+}) async {
   final dir = await getTemporaryDirectory();
   final file = File('${dir.path}/$filename');
   await file.writeAsString('﻿$csv', encoding: utf8);
   await SharePlus.instance.share(
-    ShareParams(files: [XFile(file.path, mimeType: 'text/csv')]),
+    ShareParams(
+      files: [XFile(file.path, mimeType: 'text/csv')],
+      sharePositionOrigin: sharePositionOrigin,
+    ),
   );
 }
