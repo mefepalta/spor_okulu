@@ -36,7 +36,13 @@ jobs:
           cache: true
 
       - run: flutter pub get
-      - run: flutter build apk --release
+      # CI yalnızca derlemeyi doğrular. Release imzalama anahtarı (keystore) ve
+      # key.properties git'e GİRMEZ; K-1 koruması da anahtarsız release
+      # paketlemesini bilerek durdurur. Bu yüzden CI'da DEBUG derlenir.
+      # İmzalı AAB, key.properties bulunan yerel makinede/manuel üretilir
+      # (bkz. YAYIN.md). CI'da imzalı çıktı istenirse keystore GitHub Secrets'a
+      # base64 olarak eklenip adımda çözülmeli (denetim: D-2, ertelendi).
+      - run: flutter build apk --debug
 
   ios:
     runs-on: macos-latest
